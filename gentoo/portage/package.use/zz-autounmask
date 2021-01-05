@@ -1,0 +1,4 @@
+# required by x11-drivers/xf86-video-intel-2.99.917_p20200515::gentoo
+# required by @selected
+# required by @world (argument)
+>=x11-libs/libdrm-2.4.103 video_cards_intel
