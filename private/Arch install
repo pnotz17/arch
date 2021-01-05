@@ -1,0 +1,195 @@
+#########################################################################################################
+### ARCH INSTALL #############################################################################################################
+
+### VERIFY THE BOOT MODE ####################################################################################
+
+If UEFI mode is enabled on an UEFI motherboard, Archiso will boot Arch Linux accordingly via systemd-boot. To verify this, list the efivars directory:
+
+ls /sys/firmware/efi/efivars
+
+If the directory does not exist, the system may be booted in BIOS or CSM mode. Refer to your motherboard's manual for details.
+
+timedatectl set-ntp true
+
+### COMPLETELY WIPE DISK CMND #####################################################################
+
+cfdisk
+
+wipefs -a /dev/sda
+
+If that is not working for you, you can try this one as well:
+
+sgdisk -Z /dev/sda
+
+### SWAP ################################################################################################
+
+mkswap /dev/sdX2
+
+swapon /dev/sdX2
+
+### CREATE FILE YSTEM ##########################################################################
+
+mkfs.ext4 /dev/sdX1
+
+### SELECT YOUR MIRRORS ######################################################################
+
+nano /etc/pacman.d/mirrorlist
+
+uncomment
+
+### PACSTRAP COMMAND #########################################################################
+
+pacstrap /mnt base base-devel linux linux-firmware 
+
+### FSTAB #########################################################################
+
+Generate an fstab file (use -U or -L to define by UUID or labels, respectively):
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+
+### TIME SETUP #####################################################################
+
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+
+hwclock --systohc
+
+### LOCALIZATION ########################################################################
+
+Uncomment en_US.UTF-8 UTF-8 and other needed locales in /etc/locale.gen, and generate them with:
+
+locale-gen
+
+### CREATE LOCALE CONFIG FILE AND SET THE LANGUAGE ACCORDINGLY ################################
+
+/etc/locale.conf
+
+LANG=en_US.UTF-8
+
+### CREATE THE COMPUTERS HOSTNAME FILE ##########################################################################
+
+/etc/hostname
+
+myhostname
+
+### ROOT PASSWORD ################################################################
+
+passwd
+
+### INSTALL THE BOOTLOADER #########################################################################
+
+pacman -S syslinux
+
+### ADD A USER #################################################
+
+useradd -m -G wheel -s /bin/bash Yourname
+
+passwd Yourname (user password setup)
+
+### SUDOERS SETUP ########################################################################
+
+nano /etc/sudoers
+
+(add after root username "Yourname ALL=(ALL) ALL",
+
+remove hashmark after wheel ALL=(ALL) NOPASSWD: ALL)
+
+### EDIT PACMAN ###################################################
+
+nano /etc/pacman.conf
+
+uncomment multilib
+
+ILoveCandy
+
+### ENABLE NETWORK MANAGER SERVICE BEFORE REBOOT TO PING INTERNET ###########################################################
+
+sudo pacman -S networkmanager
+
+systemctl enable NetworkManager.service
+
+### RUN #####################
+
+syslinux-install_update -i -a -m
+
+mkinitcpio -P
+
+exit
+
+umount -R /mnt
+
+reboot
+
+### DISPLAY MANAGER #############################################################################################
+
+sudo pacman -S lxdm
+
+### INSTALL XORG DISPLAY SERVER ####################################################################
+
+pacman -S xorg-server xorg-xrandr xorg-xkill xorg-setxkbmap xorg-xrdb 
+
+INTEL DRIVER=xf86-video-intel
+
+### SOUND/ALSA  ############################################################################################
+
+sudo pacman -S alsa-utils
+
+THEN
+
+amixer sset Master unmute
+
+speaker-test -c2
+
+sudo alsactl store
+ 
+### INSTALL GIT ####################################################################
+
+# sudo pacman -S git
+
+### YAY INSTALL ##########################################################
+
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd ..
+
+### ENABLE SYSTEM SERVICES ##################################
+
+sudo systemctl enable NetworkManager.service
+systemctl enable lightdm.service
+systemctl enable lxdm.service
+
+YOUR DONE REBOOT!!!!!!!!!!!!!!!!!!!!
+
+IF ANYTHING ELSE IS NEEDED
+
+### WIFI ###################################################################
+
+pacman -S wireless_tools wpa_supplicant wifimenu
+
+### PRINTER SUPPORT #################################################
+
+sudo pacman -S cups hplip system-config-printer
+
+Enable Cups Service:
+
+sudo systemctl enable cups.service
+sudo systemctl start cups.service
+Reboot
+
+#go into web browser   
+
+http://localhost:631/
+
+### SCANNING ##################################################
+
+ xsane
+
+#gimp integration
+
+sudo pacman -S gimp  xsane-gimp
+
+### MOUNTING ANDROID PHONES ############################
+
+sudo pacman -S mtp-gvfs

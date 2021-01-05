@@ -1,0 +1,388 @@
+################################################################################
+############                 POLYBAR-COLORS                       ###############################
+################################################################################
+
+[colors]
+background = #121212
+foreground = #A2A2A2
+foreground-alt = #555
+background-alt = #444
+alert = #FF0000
+primary = #ffb52a
+secondary = #e60053
+format-underline = #484753
+
+################################################################################
+################################################################################
+############                   BAR-HERBST                        ###################################
+################################################################################
+################################################################################
+
+[bar/bar-herbst]
+;monitor = ${env:MONITOR:VGA1}
+width = 100%
+height = 22
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+fixed-center = true
+bottom = false
+separator = |
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+;override-redirect = true
+
+; Enable support for inter-process messaging
+; See the Messaging wiki page for more details.
+enable-ipc = true
+
+;border-size = 0
+;border-left-size = 0
+;border-right-size = 25
+border-top-size = 0
+border-bottom-size = 25
+;border-color = #00000000
+
+padding-left = 1
+padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = "UbuntuMono Nerd Font:size=11;0"
+font-1 = "Noto Sans:size=11;0"
+font-2 = "Noto Sans Mono:size=11;0"
+font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=13;1"
+font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=13;1"
+font-5 = "Font Awesome 5 Brands:pixelsize=13;1"
+
+modules-left =ewmh
+modules-center =
+modules-right = pacman-updates cpu memory temp alsa date
+
+;tray-detached = false
+;tray-offset-x = 0
+;tray-offset-y = 0
+;tray-padding = 2
+;tray-maxsize = 22
+;tray-scale = 1.0
+;tray-position = right
+;tray-background = ${colors.background}
+
+scroll-up = herbstclient use_index +1
+scroll-down = herbstclient use_index -1
+
+################################################################################
+################################################################################
+############                   BAR-OPENBOX                    ###################################
+################################################################################
+################################################################################
+
+[bar/bar-openbox]
+;monitor = ${env:MONITOR:VGA1}
+width = 100%
+height = 26
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+fixed-center = true
+bottom = false
+separator = |
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+;override-redirect = true
+
+; Enable support for inter-process messaging
+; See the Messaging wiki page for more details.
+enable-ipc = true
+
+border-size = 2
+;border-left-size = 0
+;border-right-size = 25
+;border-top-size = 0
+;border-bottom-size = 25
+border-color = #00000000
+
+padding-left = 0
+padding-right = 1
+
+module-margin-left = 3
+module-margin-right = 3
+
+font-0 = "Noto Sans:size=10;0"
+font-1 = "Noto Sans:size=10;0"
+font-2 = "Noto Sans Mono:size=10;0"
+font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=13;1"
+font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=13;1"
+font-5 = "Font Awesome 5 Brands:pixelsize=13;1"
+
+modules-left =ewmh
+modules-center =
+modules-right = pacman-updates pkgs imap cpu memory temp date
+
+;tray-detached = false
+;tray-offset-x = 0
+;tray-offset-y = 0
+;tray-padding = 2
+;tray-maxsize = 22
+;tray-scale = 1.0
+;tray-position = right
+;tray-background = ${colors.background}
+
+################################################################################
+################################################################################
+############                   BAR-BSPWM                       ####################################
+################################################################################
+################################################################################
+
+[bar/bar-bspwm]
+;monitor = ${env:MONITOR:VGA1}
+width = 100%
+height = 26
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+fixed-center = true
+bottom = false
+separator = |
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+wm-restack = bspwm
+;override-redirect = true
+
+; Enable support for inter-process messaging
+; See the Messaging wiki page for more details.
+enable-ipc = true
+
+border-size = 1
+;border-left-size = 0
+;border-right-size = 25
+;border-top-size = 0
+;border-bottom-size = 25
+border-color = #00000000
+
+padding-left = 0
+padding-right = 1
+
+module-margin-left = 3
+module-margin-right = 3
+
+font-0 = "Noto Sans:size=11;0"
+font-1 = "Noto Sans:size=11;0"
+font-2 = "Noto Sans Mono:size=11;0"
+font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=13;1"
+font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=13;1"
+font-5 = "Font Awesome 5 Brands:pixelsize=13;1"
+
+modules-left =bspwm
+modules-center =
+modules-right = pacman-updates kernel pkgs imap  cpu memory temp  date
+
+;tray-detached = false
+;tray-offset-x = 0
+;tray-offset-y = 0
+;tray-padding = 2
+;tray-maxsize = 22
+;tray-scale = 1.0
+;tray-position = right
+;tray-background = ${colors.background}
+
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+
+################################################################################
+################################################################################
+############              MODULES A-Z               #########################################
+################################################################################
+################################################################################
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %index%
+label-focused-background =#444
+label-focused-underline= ${colors.format-underline}
+
+label-focused-padding = 2
+
+label-occupied = %index%
+label-occupied-padding = 2
+
+label-urgent = %index%!
+label-urgent-background = ${colors.format-underline}
+label-urgent-padding = 2
+
+label-empty = %index%
+label-empty-foreground = foreground
+label-empty-padding = 2
+
+;Separator in between workspaces
+;label-separator = |
+
+[module/ewmh]
+type = internal/xworkspaces
+
+pin-workspaces = false
+enable-click = true
+enable-scroll = true
+reverse-scroll = true
+
+;extra icons to choose from
+;http://fontawesome.io/cheatsheet/
+;       v     
+
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+#icon-8 = 9;
+#icon-9 = 10;
+#icon-default = " "
+format = <label-state>
+label-monitor = %name%
+
+label-active = %name%
+label-active-foreground = ${colors.foreground}
+label-active-background = ${colors.background}
+label-active-underline= ${colors.format-underline}
+label-active-padding = 2
+
+label-occupied = %name%
+label-occupied-background = ${colors.background}
+label-occupied-padding = 2
+
+label-urgent = %name%
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.alert}
+label-urgent-underline = ${colors.alert}
+label-urgent-padding = 2
+
+label-empty = %name%
+label-empty-foreground = ${colors.foreground}
+label-empty-padding = 2
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+[module/pacman-updates]
+type = custom/script
+exec =./.config/polybar/scripts/updates.sh
+interval = 100
+label =%output%
+format-foreground =${colors.alert}
+
+[module/pkgs]
+type = custom/script
+exec = pacman -Q  |  wc -l
+format-prefix = "  "
+interval = 100
+label =  %output%
+;format-underline = ${colors.format-underline}
+
+[module/kernel]
+type = custom/script
+exec = uname -r
+tail = false
+interval = 1024
+
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+format-prefix = "   "
+;format-prefix-foreground = ${colors.foreground}
+;format-underline = ${colors.background}
+
+[module/imap]
+type = custom/script
+exec = python3 ~/.config/polybar/scripts/imap.py
+interval = 100
+label = %output%
+format-prefix = "   "
+;format-underline = ${colors.format-underline}
+click-left = thunderbird &
+
+[module/weather]
+type = custom/script
+exec = ~/.config/polybar//scripts/weather.sh
+interval = 100
+format = <label>
+format-prefix = ""
+
+[module/alsa]
+type = internal/alsa
+master-mixer = Master
+format-volume-padding = 1
+label-volume-foreground = ${colors.foreground}
+label-volume  =   %percentage%
+format-volume =<label-volume>
+label-muted = " muted "
+label-muted-foreground = ${colors.alert}
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "  "
+format-prefix-foreground = foreground
+;format-underline = ${colors.format-underline}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "  "
+format-prefix-foreground = foreground
+;format-underline = ${colors.format-underline}
+label = %percentage_used%%
+
+[module/date]
+type = internal/date
+interval = 5
+
+;date =
+;date-alt = " %Y-%m-%d"
+date ="%a %b %d, %Y"
+;date-alt = " %a %b %d, %Y"
+time = %l:%M %p
+;time-alt = %l:%M%p
+
+format-prefix-foreground = foreground
+;format-underline = ${colors.format-underline}
+format-prefix = "  "
+label = %date% %time%
+
+[module/temp]
+type = custom/script
+exec = ~/.config/polybar/scripts/temp.sh
+label = "%output%"
+format-prefix=" "
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini

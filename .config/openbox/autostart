@@ -1,0 +1,32 @@
+
+### Start Tint 2###
+tint2 &
+
+### Start The Compositor ###
+#picom -b &
+
+### Start Nitrogen ###
+#nitrogen --restore &
+
+### Start the volume icon ###
+#volumeicon &
+
+### Start Polybar ###
+#sleep 3s && polybar openbox-bar &
+
+### Start Pamac Tray ###
+#pamac-tray &
+
+### Start The Authentication Manager ###
+#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+### Start The Network Manager Applet ###
+#nm-applet &
+
+### Start Your Custom Keybindings ###
+#sxhkd &
+
+###Start plank ###
+#plank &
+
+### Custom Resolution ###
