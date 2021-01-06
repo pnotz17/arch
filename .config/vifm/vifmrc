@@ -68,7 +68,7 @@ autocmd DirEnter * :filter
 set vifminfo=bookmarks,tui,state,cs,savedirs,dhistory,chistory,shistory,phistory,fhistory,dirstack,registers
 
 """ Theme
-colorscheme dracula
+colorscheme iceberg
 
 """ Filetypes
 set classify='  :dir:/, :exe:, :reg:, :link:'
