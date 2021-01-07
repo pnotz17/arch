@@ -1,0 +1,789 @@
+#######################################################
+### MY CONFIGURATIONS #####################################################
+###################################################################################################
+
+##############################################################
+### IF CLOCK IS WRONG DL #######################################
+
+tzdata
+
+###################################################################
+### SET CLOCK TO LOCALTIME ##########################################
+
+timedatectl set-local-rtc 1  SET CLOCK TO LOCALTIME
+install ntp pkg
+sudo ntpd -qg
+
+##########################################################################
+### CREATE Openbox Config FIRST #############################################
+
+mkdir -p ~/.config/openbox
+cp -a /etc/xdg/openbox/. ~/.config/openbox/
+
+#############################################################################################
+### SAVE LAYOUT IN ARANDR THEN PUT IN AUTOSTART OR ~/.xprofile ############################################
+
+ #!/bin/sh
+xrandr --output VGA1 --primary --mode 1536x864_59.00 --pos 0x0 --rotate normal --output VIRTUAL1 --off
+
+##################################################################################################################
+
+### UPDATE GRUB ####################################################################################################
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+########################################################################################################################
+### CREATE BASH SCRIPT FOR LIGHTDM #################################################################################
+
+#!/bin/sh
+xrandr --output DVI-0 --primary --mode ????x????
+Save this on your desktop as “lightdmxrandr.sh
+
+###TEST THE SCRIPT###
+
+cd ~/Desktop
+Now we need to make it executable
+chmod a+rx lightdmxrandr.sh
+Now run it
+./lightdmxrandr.sh
+(If your screen automatically auto-corrects after log in you probably won’t see a difference so you may want to use a test resolution that is different but you know works while testing)
+Set the LightDM resolution…
+We should move the script somewhere more appropriate
+sudo mv ~/Desktop/lightdmxrandr.sh /usr/share/.
+EDIT sudo nano /etc/lightdm/lightdm.conf
+display-setup-script=/usr/share/lightdmxrandr.sh
+
+############################################################################################################
+### CREATE CUSTOM RESOLUTION WITH XRANDR ###################################################################################################################
+
+cvt 1680 1050 60
+xrandr --newmode "1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync
+xrandr --addmode VGA-0 1680x1050_60.00
+The changes are lost after reboot, to set up the resolution persistently, create the file ~/.xprofile with the content:
+#!/bin/sh
+xrandr --newmode "1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync
+xrandr --addmode VGA-0 1680x1050_60.00
+
+#####################################################################################################################################
+### EDIT GRUB TIMEOUT #########################################################################################################
+
+sudo nano  /etc/default/grub
+
+GRUB_TIMEOUT=1 or 0
+UPDATE GRUB_
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+#######################################################################################################
+### IN ORDER FOR OBMENU-GENERATORTO WORK ADD THIS IN ~/.config/openbox/menu.xml ###############
+
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu>
+    <menu id="root-menu" label="OpenBox 3" execute="/usr/bin/obmenu-generator">
+    </menu>
+</openbox_menu>
+
+###############################################################################################
+### EDIT PACMAN MIRRORLIST ###
+
+nano /etc/pacman.d/mirrorlist
+
+#############################################
+### EDIT PACMAN CONFIG #################
+
+sudo nano /etc/pacman.conf
+ILoveCandy
+
+################################################################################################
+### SWAPPINESS ################################################################################
+
+cat /proc/sys/vm/swappiness
+vm.swappiness=0
+
+#############################################################################################################################
+### SCROT SCREENSHOT CMND ################################################################################################
+
+scrot -d 5   for screenshot
+
+##########################################################################################################################
+### ENTER BELOW CMND TO SEE WHAT PKGS ARE ON YOUR SYSTEM ###############################################################
+
+sudo pacman -Qqe > pkglist.txt
+sudo pacman -Qn > pkglist.txt
+
+###############################################################################################################
+### AUTOSTART ################################################################################################
+
+SOMETIMES YOU HAVE TO PUT THE SCREEN RESOLUTION BASH SCRIPT IN ~/.xprofile
+
+#!/bin/sh
+xrandr --output VGA1 --primary --mode 1536x864_59.00 --pos 0x0 --rotate normal --output VIRTUAL1 --off
+
+tint2 &
+nitrogen --restore &
+volumeicon &
+nm-applet &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+pamac-tray &
+(sleep 2s && nitrogen --restore && tint2 &) &
+add sleep 2s showing abone if nitrogen doesnt set the wallpaper correctly
+sleep 2s && nitrogen --restore && tint2 &
+sleep 1;nitrogen --restore &
+
+######################################################################################################################
+### EDIT XORG ######################################################################################################
+
+EDIT THIS TO MAKE A CUSTOM RESOLUTION AND FORCE ARANDR LIGHTDM AND WITHOUT EDITING AUTOSTART OR .XPROFILE
+ 
+ ###CREATE###
+ /etc/X11/xorg.conf.d/10-monitor.conf
+
+Section "Monitor"
+    Identifier "VGA1"
+    Modeline "1280x1024_60.00"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync
+    Option "PreferredMode" "1280x1024_60.00"
+EndSection
+
+Section "Screen"
+    Identifier "Screen0"
+    Monitor "VGA1"
+    DefaultDepth 24
+    SubSection "Display"
+        Modes "1280x1024_60.00"
+    EndSubSection
+EndSection
+
+Section "Device"
+    Identifier "Device0"
+    Driver "intel"
+EndSection
+
+
+IF ALL ALL THAT DOES NOT WORK REMOVE THE SCREEN AND DEVICE SECTION
+
+Example
+
+Section "Monitor"
+    Identifier "VGA1"
+    Option      "Primary" "true"
+    Modeline "1536x864_60.00"  109.25  1536 1624 1784 2032  864 867 872 897 -hsync +vsync
+    Option "PreferredMode" "1536x864_60.00"
+    Option "TearFree" "true"
+    Option      "AccelMethod"  "uxa"
+EndSection
+
+Section "Screen"
+    Identifier "Screen0"
+    Monitor "VGA1"
+    DefaultDepth 24
+    SubSection "Display"
+    Modes "1536x864_60.00"
+    EndSubSection
+EndSection
+
+Section "Device"
+     Identifier "Intel Graphics"
+     Driver "intel"
+EndSection
+
+
+#######################################################################################
+### FIND MODELINE FOR RESOLUTION ######################################################
+
+grep Modeline /var/log/Xorg.0.log
+
+####################################################################################
+### SETTINGS PRIMARY MONITOR WITH DUAL DISPLAYS #################################
+
+Section "Monitor"
+        Identifier      "laptop panel"
+        Option  "ignore"        "true"
+EndSection
+Section "Monitor"
+        Identifier      "big display"
+EndSection
+Section "Device"
+        Identifier      "onboard"
+        Option  "Monitor-LVDS1" "laptop panel"
+        Option  "Monitor-DVI1" "big display"
+EndSection
+
+EXAMPLE
+
+ Section "Monitor"
+        Identifier      "laptop panel"
+        Option  "ignore"        "true"
+EndSection
+Section "Monitor"
+        Identifier      "big display"
+         Option      "Primary" "true"
+         Option "PreferredMode" "1920x1080"
+EndSection
+Section "Device"
+        Identifier      "onboard"
+        Option  "Monitor-LVDS-1" "laptop panel"
+        Option  "Monitor-HDMI-1" "big display"
+EndSection
+
+add modeline in there for custom resolution
+
+#########################################################################
+### COMPRESSING WITH TAR #############################################
+
+cd Desktop
+tar -zcvf Filename
+tar -zcvf file.tar.gz *      ALL FILES
+
+tar -zcvf filename       name of desired file
+tar -zcvf file.tar.gz dracula-Openbox-master
+
+######################################################################################################################
+### FONTS IN LXAPPEARANCE TO WORK with AUTOHINTING ####################################################################
+
+You have to edit ( or create ) two files, '~/.Xdefaults' and '~/.config/fontconfig/fonts.conf'
+
+~/.Xdefaults
+
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.dpi: 96
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+
+
+AND
+
+~/.config/fontconfig/fonts.conf
+
+<?xml version='1.0'?>
+<!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
+<fontconfig>
+ <match target="font">
+  
+  <edit mode="assign" name="rgba">
+   <const>rgb</const>
+  </edit>
+
+  <edit mode="assign" name="hinting">
+   <bool>true</bool>
+  </edit>
+
+  <edit mode="assign" name="hintstyle">
+   <const>hintslight</const>
+  </edit>
+
+  <edit mode="assign" name="antialias">
+   <bool>true</bool>
+  </edit>
+
+  <edit mode="assign" name="lcdfilter">
+    <const>lcddefault</const>
+  </edit>
+ 
+ </match>
+</fontconfig>
+
+
+
+If you put things in .Xresources, you need to merge them on start of X with
+
+$ xrdb -merge $HOME/.Xresources 
+
+Also when you change anything in that file, it needs to be remerged.
+
+
+#######################################################################################################################
+### Shutdown restart logout entry in obmenu-generator schema in openbox ################################################
+ 
+  # Exit category
+    {begin_cat => ['Leave', 'leave']},
+        #          COMMAND                 LABEL                ICON
+        {item => ['openbox --exit',      'Log out',      'system-run']},
+        {item => ['systemctl poweroff',  'Shutdown',      'system-run']},
+        {item => ['systemctl reboot',    'Restart',       'system-run']},
+    {end_cat => undef}
+   
+]
+
+###############################################################################################
+### ADD KEYBOARD LAYOUT ######################################################################
+
+###edit sudo nano /etc/X11/xorg.conf.d/00-keyboard.conf
+
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "us,gr"
+        Option "XkbModel" "pc104"
+        Option "XkbVariant" ",dvorak"
+        Option "XkbOptions" "grp:alt_shift_toggle"
+EndSection
+
+#in xprofile
+
+#!/bin/sh
+setxkbmap "us,gr" -option "grp:alt_shift_toggle"
+
+
+###check if activated 
+localectl
+###activate service
+sudo systemctl status systemd-localed.service 
+
+#############################################################################################
+### REFLECTOR ########################################################################
+
+sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
+sudo reflector --latest 200 --sort rate --save /etc/pacman.d/mirrorlist
+
+You can create a pacman hook that will run reflector and remove the .pacnew file created every time pacman-mirrorlist gets an upgrade.
+
+/etc/pacman.d/hooks/mirrorupgrade.hook
+
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = pacman-mirrorlist
+
+[Action]
+Description = Updating pacman-mirrorlist with reflector and removing pacnew...
+When = PostTransaction
+Depends = reflector
+Exec = /bin/sh -c "sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
+
+############################################################################################################################################################################
+### TERMITE #######################
+
+[colors]
+background = rgba(0, 0, 0, 0.9)
+
+color0=#111111
+color1=#ff4136
+color2=#2ecc40
+color3=#ffdc00
+color4=#0074d9
+color5=#b10dc9
+color6=#7fdbff
+color7=#bbbbbb
+color8=#777777
+color9=#ff4136
+color10=#2ecc40
+color11=#ffdc00
+color12=#0074d9
+color13=#b10dc9
+color14=#7fdbff
+color15=#ffffff
+
+color16=#ff851b
+color17=#85144b
+color18=#333333
+color19=#555555
+color20=#999999
+color21=#dddddd
+
+#ADD IN PICOM CONFIG
+
+opacity-rule = ["85:class_g = 'Termite'"];
+
+###############################################################
+#### OPENBOX  AND TINT2 THEMES #######
+
+#OPENBOX
+git clone https://github.com/addy-dclxvi/openbox-theme-collections ~/.themes
+
+#TINT2
+ git clone https://github.com/addy-dclxvi/tint2-theme-collections ~/.config/tint2 --depth 1 
+#add the tint2 themes in .config 
+
+#################################################################
+### POPYBAR SCRIPTS & MODULES #################################################
+
+### Email Script
+
+#!/usr/bin/python
+
+    import imaplib
+    obj = imaplib.IMAP4_SSL(‘MYIMAPSERVER’,993)
+    obj.login(‘MYUSERNAME’,‘MYPASSWD’)
+    obj.select()
+    print(len(obj.search(None, ‘UnSeen’)[1][0].split()))
+    
+ # Weather Script
+ 
+ #!/bin/python
+# -*- coding: utf-8 -*-
+
+# Procedure
+# Surf to https://openweathermap.org/city
+# Fill in your CITY
+# e.g. Antwerp Belgium
+# Check url
+# https://openweathermap.org/city/2803138
+# you will the city code at the end
+# create an account on this website
+# create an api key (free)
+# LANG included thanks to krive001 on discord
+
+import requests
+
+CITY = "736229"
+API_KEY = "acd3cf98daa78bad758310081bd62b3c"
+UNITS = "Metric"
+UNIT_KEY = "C"
+#UNIT_KEY = "F"
+LANG = "en"
+
+REQ = requests.get("http://api.openweathermap.org/data/2.5/weather?id={}&lang={}&appid={}&units={}".format(CITY, LANG,  API_KEY, UNITS))
+try:
+    # HTTP CODE = OK
+    if REQ.status_code == 200:
+        CURRENT = REQ.json()["weather"][0]["description"].capitalize()
+        TEMP = int(float(REQ.json()["main"]["temp"]))
+        print("{}, {} °{}".format(CURRENT, TEMP, UNIT_KEY))
+    else:
+        print("Error: BAD HTTP STATUS CODE " + str(REQ.status_code))
+except (ValueError, IOError):
+    print("Error: Unable print the data")
+    
+ ###Tempreture Script
+ 
+ #!/bin/sh
+
+sensors | grep Core | awk '{print substr($3, 2, length($3)-5)}' | tr "\\n" " " | sed 's/ /°C  /g' | sed 's/  $//'
+
+### Pacman Update Script
+
+#!/bin/sh
+#source https://github.com/x70b1/polybar-scripts
+
+
+if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
+    updates_arch=0
+fi
+
+# if ! updates_aur=$(cower -u 2> /dev/null | wc -l); then
+if ! updates_aur=$(yay -Su --aur --quiet | wc -l); then
+    updates_aur=0
+fi
+
+updates=$(("$updates_arch" + "$updates_aur"))
+
+if [ "$updates" -gt 0 ]; then
+    echo " $updates"
+else
+    echo "0"
+fi
+
+ ### MODULES ###
+[module/pkgs]
+type = custom/script
+exec = pacman -Q  |  wc -l
+interval = 10
+label = Pkgs: %output%
+format-prefix = ""
+format-prefix-foreground =#ADFF2F
+################################################################################
+[module/pacman-updates]
+type = custom/script
+exec = checkupdates | wc -l
+interval = 10
+label = Pacman: %output%
+format-prefix = "  "
+format-prefix-foreground =#FFA500
+################################################################################
+[module/temp]
+type = custom/script
+exec = ~/.config/polybar/scripts/temp.sh
+label = "%output%"
+format-prefix=" "
+format-prefix-foreground =#FF0000
+################################################################################
+[module/kernel]
+type = custom/script
+exec = uname -r
+tail = true
+interval = 1000
+format-prefix = "   "
+format-prefix-foreground =#00FFFF
+################################################################################
+[module/file]
+type = custom/script
+format-prefix = "  "
+exec = echo "File"
+click-left = "pcmanfm >/dev/null 2>&1 &"
+format-prefix-foreground =#00FFFF
+################################################################################
+[module/term]
+type = custom/script
+format-prefix = "  "
+exec = echo "Term"
+click-left = "termite >/dev/null 2>&1 &"
+format-prefix-foreground =#00ced1
+################################################################################
+[module/editor]
+type = custom/script
+format-prefix = "  "
+exec = echo "Geany"
+click-left = "geany >/dev/null 2>&1 &"
+format-prefix-foreground =#9932CC
+################################################################################
+[module/broswer]
+type = custom/script
+format-prefix = "  "
+exec = echo "Firefox"
+click-left = "firefox >/dev/null 2>&1 &"
+format-prefix-foreground =#e25822
+################################################################################
+[module/imap]
+type = custom/script
+exec = python3 ~/.config/polybar/scripts/imap.py
+interval = 100
+label = Mail: %output%
+format-prefix = " "
+format-prefix-foreground =#FFFAF0
+click-left = thunderbird &
+################################################################################
+[module/weather]
+type = custom/script
+exec = ~/.config/polybar/scripts/weather.sh
+interval = 100
+format = <label>
+format-prefix = " "
+format-prefix-foreground = #ADD8E6
+################################################################################
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+################################################################################
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground =#00CED1
+format-prefix-underline = ${colors.secondary}
+
+label-layout = %layout%
+label-layout-underline = ${colors.secondary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+################################################################################
+[module/filesystem]
+type = internal/fs
+interval = 25
+label-mounted-foreground =#ffcccb
+
+mount-0 = /
+
+label-mounted =   %free%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+################################################################################
+[module/eth]
+type = internal/network
+interface = enp2s0
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = " "
+format-connected-prefix-foreground =#808080
+label-connected = %local_ip%
+################################################################################
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = ""
+label = %percentage:2%%
+format-prefix-foreground =#FFA500
+################################################################################
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = ""
+format-prefix-foreground =#FF1493
+label = %percentage_used%%
+################################################################################
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %Y-%m-%d"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground =#808080
+format-underline = #0a6cf5
+
+label = %date% %time%
+################################################################################
+[module/alsa]
+type = internal/alsa
+master-mixer = Master
+format-volume-padding = 1
+label-volume-foreground =#ADFF2F
+label-volume  = " "%percentage%
+format-volume =<label-volume>
+label-muted = " muted "
+label-muted-foreground = #FF0000
+################################################################################
+[module/powermenu]
+type = custom/menu
+
+expand-right = false
+
+format-spacing = 1
+
+label-open =
+label-open-foreground = ${colors.secondary}
+label-close =  cancel
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = RESTART
+menu-0-0-exec = systemctl reboot
+menu-0-1 = SHUTDOWN
+menu-0-1-exec = systemctl poweroff
+menu-0-2 = LOGOUT	
+menu-0-2-exec = pkill -KILL -u panos21
+################################################################################
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+################################################################################
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
+################################################################################
+
+#################################################################################
+### 	PATCHING  & DWM ##################
+
+#INSTALL
+wget
+wget https://dl.suckless.org/dwm/dwm-6.2.tar.gz
+wget https://dl.suckless.org/st/st-0.8.3.tar.gz
+
+#EXTRACT
+tar  -xzvf dwm-6.2.tar.gz 
+tar  -xzvf st-0.8.3.tar.gz
+
+#CREATE A SESSION IN /usr/share/xsessions
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=dwm
+Comment=dwm window manager
+Exec=/usr/local/bin/dwm
+Type=Application
+
+#PATCHING
+patch < dwm-colorbar-6.2.diff
+sudo cp config.def.h config.h
+sudo make clean install    
+
+ REMOVE PATCH 
+ patch -R < dwm-colorbar-6.2.diff 
+
+in .dwm/autostart.sh
+
+# Statusbar
+/home/$panos21/dwm-bar/dwm_bar.sh &
+
+# Start dwm
+exec dwm
+
+#!/bin/sh
+while true; do
+                        dwm >/dev/null 2>&1
+done
+##############################################
+### CHANGE TYPING SPEED ################################
+
+in .xprofile
+
+xset dpms 600 900 1200
+xset r rate 350 60
+
+#######################################
+### INCREASE TTY FONT SIZE ###########
+
+/etc/vconsole.conf
+
+KEYMAP="us"
+FONT="ter-v32b"
+
+############################################################
+### RELOASD FONTS ###########################################
+
+fc-cache 
+
+### MEGE XRESOURCES WITH XDEFAULTS #######################################
+
+Load a resource file (such as the conventional .Xresources), replacing any current settings:
+
+xrdb ~/.Xresources
+
+Load a resource file, and merge with the current settings:
+
+xrdb -merge ~/.Xresources
+
+##################################################################################
+###DWM XSETROOT BASH SCRIPT FOR THE BAR ########################################
+
+#!/usr/bin/env bash
+while true; do
+
+        date '+%m-%d-%Y|%R ' > /tmp/CurTime.tmp
+
+        sleep 60s
+done &
+
+while true; do
+        Pkgs=$(checkupdates 2> /dev/null |pacman -Q  |  wc -l)
+        PACMAN=$(checkupdates 2> /dev/null | wc -l )
+        TEMP=$(sensors | grep Core | awk '{print substr($3, 2, length($3)-5)}' | tr "\\n" " " | sed 's/ /°C  /g' | sed 's/  $//')
+        DISKROOT=$(df -Ph | grep "/dev/sda1" | awk {'print $5'})
+        DISKHOME=$(df -Ph | grep "/dev/sda2" | awk {'print $5'})
+        LOCALTIME=$(< /tmp/CurTime.tmp)
+        DISKROOT=$(df -Ph | grep "/dev/sda1" | awk {'print $5'})
+        DISKHOME=$(df -Ph | grep "/dev/sda2" | awk {'print $5'})
+        MEM=$(free -h --kilo | awk '/^Mem:/ {print $3 "/" $2}')
+        LINUX=$(uname -r)
+        CPU=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')
+        WEATHER=$(curl wttr.in/Florina?format="%l:+%m+%p+%w+%t+%c+%C")
+        VOL="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')" 
+        xsetroot -name "|  UPDATES $PACMAN  |  TEMP $TEMP  |  CPU $CPU  |  MEM $MEM  |  VOL $VOL  |  $LOCALTIME |"
+
+        sleep 10s
+done &
+
+##################################################################################################
+
+### SWAPFILE
+
+1. Create a file called, for example, /swapfile of a needed size (if this example 1M means 1 million blocks, which will give you a 512MB file):
+dd if=/dev/zero of=/swapfile bs=1M count=8200M	
+
+2. Use mkswap to get your file ready for swaping:
+mkswap /swapfile	
+chmod 600 /swapfile 
+
+3. Make a fstab entry:
+/swapfile none sw,loop 0 0	
+
+4. Run as root to activate your file swap space:
+swapon /swapfile

@@ -12,9 +12,9 @@ import os
 mod = "mod4"                        
 
 # Colors 
-GREY = "#808080"
-TCSB ="#262626"
-BAR  ="#111111"
+grey ="#808080"
+tcsb ="#262626"
+barc ="#111111"
 
 keys = [
     Key([mod], "h", lazy.layout.left()),
@@ -27,6 +27,8 @@ keys = [
     Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
     Key([mod, "shift"], "space", lazy.layout.flip()),
     Key([mod, "shift"], "Return", lazy.spawn("st")),
+    Key([mod, "shift"], "b", lazy.spawn("qutebrowser")),
+    Key([mod, "shift"], "f", lazy.spawn("pcmanfm")),
     Key([mod, "shift"], "c", lazy.window.kill()),
     Key([mod], "i", lazy.layout.grow()),
     Key([mod], "d", lazy.layout.shrink()),
@@ -42,16 +44,15 @@ keys = [
     Key([], "Print", lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),
 ]
 
-group_names = [("1", {'layout': 'monadtall'}),
-			   ("2", {'layout': 'monadtall'}),
-			   ("3", {'layout': 'monadtall'}),
-			   ("4", {'layout': 'monadtall'}),
-			   ("5", {'layout': 'monadtall'}),
-			   ("6", {'layout': 'monadtall'}),
-			   ("7", {'layout': 'monadtall'}),
-			   ("8", {'layout': 'monadtall'}),
-			   ("9", {'layout': 'monadtall'}),
-            ]
+group_names = [("dev", {'layout': 'monadtall'}),
+			   ("web", {'layout': 'monadtall'}),
+			   ("code", {'layout': 'monadtall'}),
+			   ("doc", {'layout': 'monadtall'}),
+			   ("mail", {'layout': 'monadtall'}),
+			   ("media", {'layout': 'monadtall'}),
+			   ("down", {'layout': 'monadtall'}),
+			   ("etc", {'layout': 'monadtall'}),
+			   ("misc", {'layout': 'monadtall'}),]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
@@ -60,7 +61,7 @@ for i, (name, kwargs) in enumerate(group_names, 1):
     keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
 
 def init_layout_theme():
-    return {"margin":6,
+    return {"margin":1,
             "border_width":1,
             "border_focus": "#807F94",
             "border_normal": "#807F94"
@@ -89,34 +90,34 @@ screens = [
     Screen(
         top=bar.Bar(
             [    
-               # widget.Image(
-               # filename = "~/.config/qtile/arch.jpg",),
+               widget.Image(
+               filename = "~/.config/qtile/3",),
                   
-               # widget.Sep(
-               # linewidth = 1,
-               # padding = 12,),
+               widget.Sep(
+               linewidth = 1,
+               padding = 12,),
                
                widget.GroupBox(
                rounded=False,
                spacing=10, 
                padding=0,
-               this_current_screen_border=TCSB,
+               this_current_screen_border=tcsb,
                highlight_method = "block",
-               active = GREY,
-               inactive = GREY,),   
+               active = "#ffffff",
+               inactive = grey,),   
                
                widget.Sep(
                linewidth = 1,
                padding = 12,),
                
                widget.CurrentLayout(
-               foreground =GREY,),
+               foreground =grey,),
                
                widget.Sep(linewidth = 1,
                padding = 12,),
                
                widget.WindowName(
-               foreground = GREY,
+               foreground = grey,
                margin_x=6,), 
                
                widget.Spacer(),
@@ -134,7 +135,7 @@ screens = [
                # padding = 12,),
                
                # widget.ThermalSensor(
-               # foreground =WHITE,
+               # foreground =grey,
                # fmt ='temp {}',),
                
                widget.Sep(
@@ -143,14 +144,14 @@ screens = [
               
                widget.CPU(
                format = 'cpu: {load_percent}%',
-               foreground = GREY,),
+               foreground = grey,),
                
                widget.Sep(
                linewidth = 1,
                padding = 12,),
                
 			   widget.Memory(
-               foreground = GREY,
+               foreground = grey,
                format = "mem: " '{MemUsed}M',
                update_interval = 1,),
                
@@ -159,7 +160,7 @@ screens = [
                padding = 12,),
                
                widget.Volume(
-               foreground =GREY,
+               foreground =grey,
                fmt ='vol: {}',),
                
                widget.Sep(
@@ -167,7 +168,7 @@ screens = [
                padding = 12,),
                
                widget.Clock(
-               foreground = GREY,
+               foreground = grey,
                format = "%A, %B %d %H:%M",),
                      
                widget.Sep(
@@ -179,7 +180,7 @@ screens = [
 
             ],
             18,
-            background=BAR,opacity=0.99
+            background=barc,opacity=0.99
         ),
     ),
 ]
@@ -188,31 +189,32 @@ screens = [
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(),start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(),start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front())
+    Click([mod],"Button2", lazy.window.bring_to_front())
 ]
 
-dgroups_key_binder = None
-dgroups_app_rules = []  # type: List
-main = None  # WARNING: this is deprecated and will be removed soon
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-
-floating_types = ["notification", "toolbar", "splash", "dialog"]
-
 floating_layout = layout.Floating(float_rules=[
-    # Run the utility of `xprop` to see the wm class and name of an X client.
-    {'wmclass': 'confirm'},{'wmclass': 'dialog'},{'wmclass': 'download'},{'wmclass': 'error'},{'wmclass': 'file_progress'},
-    {'wmclass': 'notification'},{'wmclass': 'splash'},{'wmclass': 'toolbar'},{'wmclass': 'confirmreset'}, {'wmclass': 'makebranch'},  
-    {'wmclass': 'maketag'}, {'wname': 'branchdialog'}, {'wname': 'pinentry'}, {'wmclass': 'ssh-askpass'},  
-],  fullscreen_border_width = 0, border_width = 0)
+    {'wmclass': 'Confirm"'},
+    {'wmclass': 'dialog'},
+    {'wmclass': 'download'},
+    {'wmclass': 'error'},
+    {'wmclass': 'file_progress'},
+    {'wmclass': 'notification'},
+    {'wmclass': 'splash'},
+    {'wmclass': 'toolbar'},
+    {'wmclass': 'confirmreset'},
+    {'wmclass': 'makebranch'},
+    {'wmclass': 'maketag'},
+    {'wmclass': 'mpv'},
+    {'wname': 'branchdialog'},
+    {'wname': 'Open File'},
+    {'wname': 'pinentry'},
+    {'wmclass': 'ssh-askpass'},
+],  **layout_theme) #fullscreen_border_width = 0, border_width = 0)
+
 auto_fullscreen = True
+focus_on_window_activation = "smart"
 
-focus_on_window_activation = "focus" # or smart
-
-@hook.subscribe.startup_once
-def autostart():
-    home = os.path.expanduser('~')
-    subprocess.Popen([home + '/.config/qtile/autostart.sh'])  
-
-wmname = "qtile"
+wmname = "LG3D"

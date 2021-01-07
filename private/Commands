@@ -1,0 +1,240 @@
+### USEFUL COMMANDS #######################################################
+
+### ClEAN UP ARCH  ########################
+
+sudo ls /var/cache/pacman/pkg/ | wc -l
+du -sh /var/cache/pacman/pkg/
+sudo paccache -ruk0
+sudo pacman -Scc
+yay -Yc
+yay -Scc
+du -sh  ~/.cache
+sudo rm -rf ~/.cache/*
+sudo journalctl --rotate --vacuum-time=1s
+history -c
+history -p
+
+### GET PACKAGE # ######################################################################
+
+pacman -Q  |  wc -l
+
+###  WRING ISO TO USB ##################################################################################
+
+sudo dd bs=4M if=/path/to/archlinux...iso of=/dev/sdb status=progress && sync
+
+### GET DWM,ST,DMENU #####################################################################
+
+git clone https://git.suckless.org/dwm
+git clone https://git.suckless.org/st
+git clone https://git.suckless.org/dmenu
+
+################ DOTFILES ##############################################################
+
+ git clone https://github.com/pnotz17/dotfiles.git
+
+### XRANDR SET RESOLUTION NO GUI ##########################################
+
+xrandr -s 1920x1080
+
+### DELETE ORPHANED PKGS #####################################
+
+pacman -Qdtq | sudo pacman -Rns - or pacman -Qdttq | sudo pacman -Rns -
+sudo pacman -Rns $(pacman -Qtdq)
+sudo pacman -Rsn $(pacman -Qdtq)
+sudo pacman -Rscnd <program>
+
+### PACMAN TIPS AND TRICKS ##############################################
+
+pacman -Qqet --> lists all explicitly installed packages
+pacman -Qqdt --> lists all packages which are orphans
+List all native packages (installed from the sync database(s)): pacman -Qn
+List all explicitly installed native packages (i.e. present in the sync database) that are not direct or optional dependencies: pacman -Qent
+
+### GENERATE TEXT FILE IN HOME WITH ALL INSTALLED PKGS ##########################################################################################
+
+sudo pacman -Qqe > pkglist.txt
+sudo pacman -Qn > pkglist.txt
+
+### SEE HOW MANY FILES ARE IN PACMAN CACHE ########################################
+
+sudo ls /var/cache/pacman/pkg/ | wc -l
+
+###CHECK HOW MUCH DISK SPACE THEIR USING###
+
+du -sh /var/cache/pacman/pkg/
+
+### CLEAN PKG CACHE ###############################################
+
+sudo paccache -ruk0
+
+###NUCLEAR###
+
+sudo pacman -Scc
+sudo pacman -Sc
+
+### CLEAN CACHE IN HOME ##################
+
+CHECK DISK
+sudo du -sh ~/.cache/
+sudo rm -rf ~/.cache/*
+
+###CLEAN JOURNALCTL################################
+
+sudo journalctl --rotate
+sudo journalctl --vacuum-time=1s
+sudo journalctl --rotate --vacuum-size=500M
+sudo journalctl --rotate --vacuum-time=1s
+
+### CLEAN BASH HISTORY ###############################################
+
+history -c
+
+history -p
+
+### UPDATE GRUB ####################################################
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+### UPDATE KERNEL ###############################################
+
+mkinitcpio -P
+
+### COMPRESSING FILES WITH TAR ##########################################
+
+#Extracting
+
+cd Desktop or location of tarbal
+
+tar -xvzf filename.tar.gz
+
+#Compressing
+
+tar -zcvf file.tar.gz *      ALL FILES
+
+tar -zcvf filename       name of desired file
+
+####ZIP AND UNZIP##############################################
+
+sudo pacman -S zip unzip
+
+#List the Contents of a Zip File
+unzip -l filename.zip
+
+#Unzip a ZIP file
+unzip filename.zip
+
+#Unzip Multiple ZIP Files
+unzip '*.zip'
+
+###MAKE SCRIPTS EXECUTABLE ###########################################
+
+cd  Desktop or location of file
+chmod +x filename
+
+### OVERWRITE ##########################################
+
+sudo pacman -S mypackage --overwrite='*'
+
+### RELOAD FONTS ###########################################
+
+fc-cache
+
+### MERGE XRESOURCES WITH XDEFAULTS #######################################
+
+Load a resource file (such as the conventional .Xresources), replacing any current settings:
+
+xrdb ~/.Xresources
+
+xrdb ~/.Xdefaults
+
+Load a resource file, and merge with the current settings:
+
+xrdb -merge ~/.Xresources
+
+xrdb -merge ~/.Xdefaults
+
+xrdb -query\
+
+### STORE ALSA CONFIGURATIN-SETTINGS #####################################
+
+sudo alsactl store
+
+###RELOAD ZHSRC ###################################################
+
+source .zshrc
+
+### RECOMPILE XMONAD ####################################################
+
+xmonad --recompile
+
+##check for errors
+
+sudo ghc-pkg recache
+
+### FEH ##################################################
+
+feh --bg-fill --randomize ~/Pictures/wallpapers
+
+### IMPORT KEYS IN YAY MANUALY ##########################
+
+gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
+
+### UUID ################################################################
+
+ls -l /dev/disk/by-uuid/
+
+### UPDATE SYSLINUX ##########################################################
+
+syslinux-install_update -i -a -m
+
+### CONVERT .XFC TO .PNG ###################################################
+
+convert FILENAME.xcf FILENAME.png
+
+### To manually mount a removable drive, for example /dev/sdc: #################################
+
+$ udisksctl mount -b /dev/sdc1
+
+To unmount:
+
+$ udisksctl unmount -b /dev/sdc1
+
+See udisksctl --help for more. 
+### ziping a directory ######################################################
+
+zip -r myfiles.zip mydir
+
+### git setup ################################################
+Git global setup
+git config --global user.name "Panagiotis Natsis"
+git config --global user.email "pnotz17@gmail.com"
+
+Create a new repository
+git clone https://gitlab.com/pnotz17/dotfiles.git
+cd dotfiles
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+
+Push an existing folder
+cd existing_folder
+git init
+git remote add origin https://gitlab.com/pnotz17/dotfiles.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+
+Push an existing Git repository
+cd existing_repo
+git remote rename origin old-origin
+git remote add origin https://gitlab.com/pnotz17/dotfiles.git
+git push -u origin --all
+git push -u origin --tags
+
+git config --global user.email "pnotz17@gmail.com"
+git config --global user.name "Panagiotis A Natsis"
+git add .blah/
+git add -u
+git status
+git push
