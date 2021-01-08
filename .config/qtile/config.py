@@ -8,14 +8,21 @@ from libqtile import hook
 import subprocess
 import os
 
-# Variables 
-mod = "mod4"                        
+# Main variables 
+wmname = "LG3D"
+mod    = "mod4"                        
+auto_fullscreen     = True
+follow_mouse_focus  = True
+bring_front_click   = False
+cursor_warp         = False
+focus_on_window_activation = "smart"
 
 # Colors 
 grey ="#808080"
 tcsb ="#262626"
 barc ="#111111"
 
+# Key bindings
 keys = [
     Key([mod], "h", lazy.layout.left()),
     Key([mod], "l", lazy.layout.right()),
@@ -25,7 +32,7 @@ keys = [
     Key([mod, "shift"], "l", lazy.layout.swap_right()),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
-    Key([mod, "shift"], "space", lazy.layout.flip()),
+    Key([mod, "shift"], "space", lazy.next_layout()),
     Key([mod, "shift"], "Return", lazy.spawn("st")),
     Key([mod, "shift"], "b", lazy.spawn("qutebrowser")),
     Key([mod, "shift"], "f", lazy.spawn("pcmanfm")),
@@ -36,14 +43,20 @@ keys = [
     Key([mod], "o", lazy.layout.maximize()),
     Key([mod], "f", lazy.window.toggle_fullscreen()),
     Key([mod], "p", lazy.spawn("dmenu_run")),
-    Key([mod], "Tab", lazy.next_layout()),
+    Key([mod], "Tab", lazy.layout.flip()),
     Key([mod], "space", lazy.window.toggle_floating()),
     Key([mod, "control"], "r", lazy.restart()),
     Key([], "F12", lazy.spawn("amixer set Master Front 3+")),
     Key([], "F11", lazy.spawn("amixer set Master Front 3-")),
-    Key([], "Print", lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),
-]
+    Key([], "Print", lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
 
+# Mouse bindings
+mouse = [
+    Drag([mod], "Button1", lazy.window.set_position_floating(),start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(),start=lazy.window.get_size()),
+    Click([mod],"Button2", lazy.window.bring_to_front())]
+
+# Groups
 group_names = [("dev", {'layout': 'monadtall'}),
 			   ("web", {'layout': 'monadtall'}),
 			   ("code", {'layout': 'monadtall'}),
@@ -51,8 +64,8 @@ group_names = [("dev", {'layout': 'monadtall'}),
 			   ("mail", {'layout': 'monadtall'}),
 			   ("media", {'layout': 'monadtall'}),
 			   ("down", {'layout': 'monadtall'}),
-			   ("etc", {'layout': 'monadtall'}),
-			   ("misc", {'layout': 'monadtall'}),]
+			   ("misc", {'layout': 'monadtall'}),
+			   ("etc", {'layout': 'monadtall'}),]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
@@ -60,15 +73,16 @@ for i, (name, kwargs) in enumerate(group_names, 1):
     keys.append(Key([mod], str(i), lazy.group[name].toscreen()))        # Switch to another group
     keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
 
+# Layout variables
 def init_layout_theme():
     return {"margin":1,
             "border_width":1,
             "border_focus": "#807F94",
-            "border_normal": "#807F94"
-            }
+            "border_normal": "#807F94"}
 
 layout_theme = init_layout_theme()
 
+# Layouts
 layouts = [
     layout.MonadTall(**layout_theme),
     layout.MonadWide(**layout_theme),
@@ -76,22 +90,23 @@ layouts = [
     layout.Bsp(**layout_theme),
     layout.Floating(**layout_theme),
     layout.RatioTile(**layout_theme),
-    layout.Max(**layout_theme)
-]
+    layout.Max(**layout_theme)]
 
+# Widget variables
 widget_defaults = dict(
     font='Ubuntu Mono',
     fontsize=14,
-    padding=3,
-)
+    padding=3,)
+
 extension_defaults = widget_defaults.copy()
 
+# Screen variables
 screens = [
     Screen(
         top=bar.Bar(
             [    
                widget.Image(
-               filename = "~/.config/qtile/3",),
+               filename = "~/.config/qtile/images/3",),
                   
                widget.Sep(
                linewidth = 1,
@@ -178,23 +193,12 @@ screens = [
                widget.Systray(
                padding = 5,),
 
-            ],
-            18,
-            background=barc,opacity=0.99
+            ],18,background=barc,opacity=0.99
         ),
     ),
 ]
 
-# Drag floating layouts.
-mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(),start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),start=lazy.window.get_size()),
-    Click([mod],"Button2", lazy.window.bring_to_front())
-]
-
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
+# Floating rules
 floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'Confirm"'},
     {'wmclass': 'dialog'},
@@ -211,10 +215,4 @@ floating_layout = layout.Floating(float_rules=[
     {'wname': 'branchdialog'},
     {'wname': 'Open File'},
     {'wname': 'pinentry'},
-    {'wmclass': 'ssh-askpass'},
-],  **layout_theme) #fullscreen_border_width = 0, border_width = 0)
-
-auto_fullscreen = True
-focus_on_window_activation = "smart"
-
-wmname = "LG3D"
+    {'wmclass': 'ssh-askpass'},],  **layout_theme) #fullscreen_border_width = 0, border_width = 0)
