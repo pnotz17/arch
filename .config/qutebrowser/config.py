@@ -1,60 +1,54 @@
 # Uncomment this to still load settings configured via autoconfig.yml
-# config.load_autoconfig()
+config.load_autoconfig() 
 
-# Adjust font and font size
-c.fonts.default_family                           = "UbuntuMono Nerd Font"
-c.fonts.default_size                             = "12pt"
-c.fonts.web.family.standard                      = "UbuntuMono Nerd Font"
-c.fonts.web.size.default                         = 16
-
-# your editor of choice
-c.editor.command                                 = ['st', '-e', 'vim', '{}']
-
-# Download location
-c.downloads.location.directory                   = '/home/panos21/Downloads'
-
-# Tab width & height
-c.tabs.padding                                   = {"top": 2, "bottom": 2, "left": 2, "right": 2}
-
-# Hide tabs & status bar by default
-c.tabs.show                                      = "never"
-c.statusbar.show                                 = "never"
-
-#Other settings
-c.content.headers.user_agent                     = 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}'
-c.content.host_blocking.lists                    = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
-c.content.headers.accept_language                = 'en-US,en;q=0.9'
-c.content.host_blocking.enabled                  = True
-c.content.headers.do_not_track                   = True
-c.content.geolocation                            = False
-c.content.pdfjs                                  = True
-c.backend                                        = 'webengine'
-c.content.host_blocking.whitelist = []
-
-# javascript
-c.content.javascript.alert                       = True
-c.content.javascript.can_access_clipboard        = False
-c.content.javascript.can_close_tabs              = False
-c.content.javascript.can_open_tabs_automatically = False
-c.content.javascript.enabled                     = True
-c.content.javascript.modal_dialog                = False
-c.content.javascript.prompt                      = True
-c.content.javascript.enabled                     = True
-
-# zoom levels
-c.zoom.default                                   = '100%'
-c.zoom.levels                                    = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%', '175%', '200%', '250%', '300%', '400%', '500%']
+# Settings
+c.content.headers.accept_language = 'en-US,en;q=0.9'
+c.auto_save.session = False
+c.editor.command = ['st', '-e', 'vim', '{}']
+c.backend = 'webengine'
+c.fonts.default_size = "13pt"
+c.fonts.web.size.default = 16
+c.fonts.default_family = "UbuntuMono Nerd Font"
+c.fonts.web.family.standard = "UbuntuMono Nerd Font"
+c.downloads.location.directory = '/home/panos21/Downloads'
+c.tabs.padding = {"top": 2, "bottom": 2, "left": 2, "right": 2}
+c.tabs.show = "never"
+c.statusbar.show = "never"
+c.hints.uppercase = True
+c.content.pdfjs = True
+c.zoom.default = '100%'
+c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%', '175%', '200%', '250%', '300%', '400%', '500%']
+c.content.headers.user_agent = 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}'
+c.content.blocking.hosts.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
+c.content.blocking.whitelist = []
+c.content.headers.do_not_track = True
+c.content.blocking.enabled= True
+c.content.cache.appcache = True
+c.content.canvas_reading = False
+c.content.cookies.accept = 'all'
+c.content.cookies.store = False
+c.content.dns_prefetch = True
+c.content.headers.referer = 'never'
+c.content.register_protocol_handler = False
+c.content.ssl_strict = False
+c.content.geolocation = False
+c.content.webgl =False
+c.content.webrtc_ip_handling_policy = 'disable-non-proxied-udp'
+c.downloads.open_dispatcher = None
+c.qt.highdpi = False
+c.qt.low_end_device_mode = 'auto'
 
 # Search engines with keybindings
 c.url.searchengines = {
 'DEFAULT': 'https://duckduckgo.com/?q={}',
 'aw': 'https://wiki.archlinux.org/?search={}',
-'gl': 'https://www.google.com/search?q={}', 
-'re': 'https://www.reddit.com/r/{}', 
-'pb': 'https://thepiratebay.zone/search/{}', 
-'kt': 'https://kickasstorrents.to/usearch/{}', 
-'sx': 'https://searx.fmac.xyz/{}', 
-'yt': 'https://www.youtube.com/results?search_query={}'}
+'gw': 'https://wiki.gentoo.org/?search={}',
+'g': 'https://www.google.com/search?q={}', 
+'r': 'https://www.reddit.com/r/{}', 
+'p': 'https://thepiratebay.zone/search/{}', 
+'k': 'https://kickasstorrents.to/usearch/{}', 
+'x': 'https://searx.fmac.xyz/{}', 
+'y': 'https://www.youtube.com/results?search_query={}'}
 
 # Toggle status bar & tabs
 config.bind('xb', 'config-cycle statusbar.show always never')
@@ -70,35 +64,35 @@ config.bind('D', 'hint links spawn st -e youtube-dl {hint-url}')
 config.set("colors.webpage.darkmode.enabled", True)
 
 # set qutebrowser colors
-c.colors.completion.fg                           = ['#9cc4ff', 'white', 'white']
-c.colors.completion.odd.bg                       = '#121212'
-c.colors.completion.even.bg                      = '#191919'
-c.colors.completion.category.fg                  = '#e1acff'
-c.colors.completion.category.bg                  = 'qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #000000, stop:1 #191919)'
-c.colors.completion.category.border.top          = '#3f4147'
-c.colors.completion.category.border.bottom       = '#3f4147'
-c.colors.completion.item.selected.fg             = '#151515'
-c.colors.completion.item.selected.bg             = '#ecbe7b'
-c.colors.completion.item.selected.match.fg       = '#c678dd'
-c.colors.completion.match.fg                     = '#c678dd'
-c.colors.completion.scrollbar.fg                 = 'white'
-c.colors.downloads.bar.bg                        = '#151515'
-c.colors.downloads.error.bg                      = '#ff6c6b'
-c.colors.hints.fg                                = '#151515'
-c.colors.hints.match.fg                          = '#98be65'
-c.colors.messages.info.bg                        = '#151515'
-c.colors.statusbar.normal.bg                     = '#151515'
-c.colors.statusbar.insert.fg                     = 'white'
-c.colors.statusbar.insert.bg                     = '#497920'
-c.colors.statusbar.passthrough.bg                = '#34426f'
-c.colors.statusbar.command.bg                    = '#151515'
-c.colors.statusbar.url.warn.fg                   = 'yellow'
-c.colors.tabs.bar.bg                             = '#1c1f34'
-c.colors.tabs.odd.bg                             = '#151515'
-c.colors.tabs.even.bg                            = '#151515'
-c.colors.tabs.selected.odd.bg                    = '#151515'
-c.colors.tabs.selected.even.bg                   = '#151515'
-c.colors.tabs.pinned.odd.bg                      = 'seagreen'
-c.colors.tabs.pinned.even.bg                     = 'darkseagreen'
-c.colors.tabs.pinned.selected.odd.bg             = '#151515'
-c.colors.tabs.pinned.selected.even.bg            = '#151515'
+c.colors.completion.fg = ['#9cc4ff', 'white', 'white']
+c.colors.completion.odd.bg = '#121212'
+c.colors.completion.even.bg = '#191919'
+c.colors.completion.category.fg = '#e1acff'
+c.colors.completion.category.bg = 'qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #000000, stop:1 #191919)'
+c.colors.completion.category.border.top = '#3f4147'
+c.colors.completion.category.border.bottom = '#3f4147'
+c.colors.completion.item.selected.fg = '#151515'
+c.colors.completion.item.selected.bg = '#ecbe7b'
+c.colors.completion.item.selected.match.fg = '#c678dd'
+c.colors.completion.match.fg = '#c678dd'
+c.colors.completion.scrollbar.fg = 'white'
+c.colors.downloads.bar.bg = '#151515'
+c.colors.downloads.error.bg = '#ff6c6b'
+c.colors.hints.fg = '#151515'
+c.colors.hints.match.fg = '#98be65'
+c.colors.messages.info.bg = '#151515'
+c.colors.statusbar.normal.bg = '#151515'
+c.colors.statusbar.insert.fg = 'white'
+c.colors.statusbar.insert.bg = '#497920'
+c.colors.statusbar.passthrough.bg = '#34426f'
+c.colors.statusbar.command.bg = '#151515'
+c.colors.statusbar.url.warn.fg = 'yellow'
+c.colors.tabs.bar.bg = '#1c1f34'
+c.colors.tabs.odd.bg = '#151515'
+c.colors.tabs.even.bg = '#151515'
+c.colors.tabs.selected.odd.bg = '#151515'
+c.colors.tabs.selected.even.bg = '#151515'
+c.colors.tabs.pinned.odd.bg = 'seagreen'
+c.colors.tabs.pinned.even.bg = 'darkseagreen'
+c.colors.tabs.pinned.selected.odd.bg = '#151515'
+c.colors.tabs.pinned.selected.even.bg = '#151515'
