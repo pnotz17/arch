@@ -1,44 +1,48 @@
-# Uncomment this to still load settings configured via autoconfig.yml
-config.load_autoconfig() 
+# Change the argument to True to still load settings configured via autoconfig.yml
+config.load_autoconfig(False)
 
 # Settings
-c.content.headers.accept_language = 'en-US,en;q=0.9'
+c.backend = 'webengine'
 c.auto_save.session = False
 c.editor.command = ['st', '-e', 'vim', '{}']
-c.backend = 'webengine'
-c.fonts.default_size = "13pt"
-c.fonts.web.size.default = 16
-c.fonts.default_family = "UbuntuMono Nerd Font"
-c.fonts.web.family.standard = "UbuntuMono Nerd Font"
-c.downloads.location.directory = '/home/panos21/Downloads'
-c.tabs.padding = {"top": 2, "bottom": 2, "left": 2, "right": 2}
-c.tabs.show = "never"
-c.statusbar.show = "never"
-c.hints.uppercase = True
+c.content.canvas_reading = False
+c.content.cookies.accept = 'no-unknown-3rdparty'
+c.content.cookies.store = False
+c.content.unknown_url_scheme_policy = 'disallow'
+c.content.desktop_capture = False
+c.content.dns_prefetch = True
+c.content.geolocation = False
+c.content.mouse_lock = False
+c.content.headers.do_not_track = True
+c.content.headers.referer = 'never'
+c.content.headers.user_agent = 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}'
+c.content.blocking.enabled = True
+c.content.blocking.hosts.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
+c.content.blocking.method = 'auto'
+c.content.blocking.whitelist = []
+c.content.javascript.alert = False
+c.content.javascript.prompt = False
+c.content.javascript.enabled = True
+c.content.local_content_can_access_file_urls = False
+c.content.media.audio_capture = False
+c.content.media.audio_video_capture = False
+c.content.media.video_capture = False
+c.content.notifications = False
 c.content.pdfjs = True
+c.content.persistent_storage = False
+c.content.proxy = 'system'
+c.content.register_protocol_handler = False
+c.content.ssl_strict = True
+c.content.webgl = False
+c.content.webrtc_ip_handling_policy = 'default-public-interface-only'
+c.downloads.location.directory = '/home/panos21/Downloads'
+c.statusbar.show = 'never'
+c.tabs.padding = {'top': 2, 'bottom': 2, 'left': 2, 'right': 2}
+c.tabs.show = 'never'
 c.zoom.default = '100%'
 c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%', '175%', '200%', '250%', '300%', '400%', '500%']
-c.content.headers.user_agent = 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}'
-c.content.blocking.hosts.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
-c.content.blocking.whitelist = []
-c.content.headers.do_not_track = True
-c.content.blocking.enabled= True
-c.content.cache.appcache = True
-c.content.canvas_reading = False
-c.content.cookies.accept = 'all'
-c.content.cookies.store = False
-c.content.dns_prefetch = True
-c.content.headers.referer = 'never'
-c.content.register_protocol_handler = False
-c.content.ssl_strict = False
-c.content.geolocation = False
-c.content.webgl =False
-c.content.webrtc_ip_handling_policy = 'disable-non-proxied-udp'
-c.downloads.open_dispatcher = None
-c.qt.highdpi = False
-c.qt.low_end_device_mode = 'auto'
 
-# Search engines with keybindings
+# Search engines 
 c.url.searchengines = {
 'DEFAULT': 'https://duckduckgo.com/?q={}',
 'aw': 'https://wiki.archlinux.org/?search={}',
@@ -50,20 +54,24 @@ c.url.searchengines = {
 'x': 'https://searx.fmac.xyz/{}', 
 'y': 'https://www.youtube.com/results?search_query={}'}
 
-# Toggle status bar & tabs
+# Dark Mode
+c.colors.webpage.darkmode.enabled = True
+
+# Fonts
+c.fonts.default_family = 'UbuntuMono Nerd Font'
+c.fonts.default_size = '13pt'
+c.fonts.web.family.standard = 'UbuntuMono Nerd Font'
+c.fonts.web.size.default = 16
+
+# Bindings for normal mode
+config.bind('D', 'hint links spawn st -e youtube-dl {hint-url}')
+config.bind('M', 'hint links spawn --detach mpv {hint-url}')
+config.bind('t', 'set-cmd-text -s :open -t')
 config.bind('xb', 'config-cycle statusbar.show always never')
 config.bind('xt', 'config-cycle tabs.show always never')
 config.bind('xx', 'config-cycle statusbar.show always never;; config-cycle tabs.show always never')
-config.bind('t', 'set-cmd-text -s :open -t')
 
-# Play videos with mpv
-config.bind('M', 'hint links spawn --detach mpv {hint-url}')
-config.bind('D', 'hint links spawn st -e youtube-dl {hint-url}')
-
-# Dark mode
-config.set("colors.webpage.darkmode.enabled", True)
-
-# set qutebrowser colors
+#  Colors
 c.colors.completion.fg = ['#9cc4ff', 'white', 'white']
 c.colors.completion.odd.bg = '#121212'
 c.colors.completion.even.bg = '#191919'
@@ -96,3 +104,4 @@ c.colors.tabs.pinned.odd.bg = 'seagreen'
 c.colors.tabs.pinned.even.bg = 'darkseagreen'
 c.colors.tabs.pinned.selected.odd.bg = '#151515'
 c.colors.tabs.pinned.selected.even.bg = '#151515'
+
