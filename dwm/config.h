@@ -1,21 +1,21 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;     /* border pixel of windows */
 static const unsigned int gappx     = 3;        /* gaps between windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const int vertpad            = 0;        /* vertical padding of bar */
-static const int sidepad            = 0;        /* horizontal padding of bar */
-static const char *fonts[]          ={"ubuntuMono Nerd Font:size=11:antialias=true:autohint=true" };
-static const char dmenufont[]       = "ubuntuMono Nerd Font:size=11:antialias=true:autohint=true";
-static const char col_gray1[]       = "#111111"; // bar color
-static const char col_gray2[]       = "#444444"; // unfocused window border color
+static const unsigned int snap        = 32;     /* snap pixel */
+static const int showbar             = 1;        /* 0 means no bar */
+static const int topbar                 = 1;         /* 0 means bottom bar */
+static const int vertpad               = 0;        /* vertical padding of bar */
+static const int sidepad               = 0;        /* horizontal padding of bar */
+static const char *fonts[]               ={"ubuntuMono Nerd Font:size=11:antialias=true:autohint=true" };
+static const char dmenufont[]    =  "ubuntuMono Nerd Font:size=11:antialias=true:autohint=true";
+static const char col_gray1[]        = "#111111";     // bar color
+static const char col_gray2[]       = "#444444";// unfocused window border color
 static const char col_gray3[]       = "#999999"; // bar foreground color on right & left // make this a little lighter than the one below so tags & everything on the right are brigter or the same color
 static const char col_gray4[]       = "#939393"; // tag and tasklist foreground color
-static const char col_cyan[]        = "#222222"; // highlighted tag color // tasklist border color // focused window border color
-static const char *colors[][3]      = {
+static const char col_cyan[]          = "#222222";  // highlighted tag color // tasklist border color // focused window border color
+static const char *colors[][3]       = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
@@ -24,7 +24,8 @@ static const char *colors[][3]      = {
 /* tagging */
 //static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 //static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; //font-awesome
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };   // nerd-font-glyphs
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };  // nerd-font-glyphs
+
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -108,7 +109,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,		 XK_b,	    spawn,	   {.v = webcmd } },
 	{ MODKEY|ShiftMask,		 XK_f,	    spawn,	   {.v = filescmd } },
-	{ MODKEY|ShiftMask,      XK_p,      spawn,          SHCMD("/home/panos21/dwm/power.sh") },
+	{ MODKEY|ShiftMask,      XK_p,      spawn,          SHCMD("/home/panos21/.local/bin/power.sh") },
 	{ MODKEY|ShiftMask,      XK_r,      spawn,          SHCMD("feh --no-fehbg --randomize --bg-scale ~/Pictures/Wallpapers/*") },
 	{ 0,                            XK_Print,   spawn,          {.v = print_screen_cmd } },
     { 0,                            XK_F12,     spawn,          {.v = upvol   } },

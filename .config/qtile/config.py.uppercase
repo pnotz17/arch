@@ -58,15 +58,15 @@ mouse = [
 
 # Groups
 group_names = [
-	("dev", {'layout': 'monadtall'}),
-	("web", {'layout': 'monadtall'}),
-	("code", {'layout': 'monadtall'}),
-	("doc", {'layout': 'monadtall'}),
-	("mail", {'layout': 'monadtall'}),
-	("media", {'layout': 'monadtall'}),
-	("down", {'layout': 'monadtall'}),
-	("misc", {'layout': 'monadtall'}),
-	("etc", {'layout': 'monadtall'}),]
+	("DEV", {'layout': 'monadtall'}),
+	("WEB", {'layout': 'monadtall'}),
+	("CODE", {'layout': 'monadtall'}),
+	("DOC", {'layout': 'monadtall'}),
+	("MAIL", {'layout': 'monadtall'}),
+	("MEDIA", {'layout': 'monadtall'}),
+	("DOWN", {'layout': 'monadtall'}),
+	("MISC", {'layout': 'monadtall'}),
+	("ETC", {'layout': 'monadtall'}),]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
@@ -109,7 +109,7 @@ screens = [Screen(top=bar.Bar(
 	
 	widget.Sep(
 	linewidth = 1,
-	padding = 13,),
+	padding = 12,),
 	
 	widget.GroupBox(
 	rounded=False,
@@ -144,20 +144,20 @@ screens = [Screen(top=bar.Bar(
 	no_update_string = '',
 	update_interval=60),
 	
-	# widget.Sep(
-	# linewidth = 1,
-	# padding = 12,),
+	widget.Sep(
+	linewidth = 1,
+	padding = 12,),
 	
-	# widget.ThermalSensor(
-	# foreground =grey,
-	# fmt ='temp {}',),
+	widget.ThermalSensor(
+	foreground =grey,
+	fmt ='TEMP {}',),
 	
 	widget.Sep(
 	linewidth = 1,
 	padding = 12,),
 	
 	widget.CPU(
-	format = 'cpu: {load_percent}%',
+	format = 'CPU: {load_percent}%',
 	foreground = grey,),
 	
 	widget.Sep(
@@ -166,7 +166,7 @@ screens = [Screen(top=bar.Bar(
 	
 	widget.Memory(
 	foreground = grey,
-	format = "mem: " '{MemUsed}M',
+	format = "MEM: " '{MemUsed}M',
 	update_interval = 1,),
 	
 	widget.Sep(
@@ -175,7 +175,7 @@ screens = [Screen(top=bar.Bar(
 	
 	widget.Volume(
 	foreground =grey,
-	fmt ='vol: {}',),
+	fmt ='VOL: {}',),
 	
 	widget.Sep(
 	linewidth = 1,
