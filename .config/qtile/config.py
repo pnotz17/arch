@@ -20,7 +20,7 @@ focus_on_window_activation = "smart"
 # Colors 
 grey ="#808080"
 tcsb ="#262626"
-barc ="#0A0A0A"
+barc ="#141414"
 
 # Key bindings
 keys = [
@@ -58,15 +58,15 @@ mouse = [
 
 # Groups
 group_names = [
-	("dev", {'layout': 'monadtall'}),
-	("web", {'layout': 'monadtall'}),
-	("code", {'layout': 'monadtall'}),
-	("doc", {'layout': 'monadtall'}),
-	("mail", {'layout': 'monadtall'}),
-	("media", {'layout': 'monadtall'}),
-	("down", {'layout': 'monadtall'}),
-	("misc", {'layout': 'monadtall'}),
-	("etc", {'layout': 'monadtall'}),]
+	("DEV", {'layout': 'monadtall'}),
+	("WEB", {'layout': 'monadtall'}),
+	("CODE", {'layout': 'monadtall'}),
+	("DOC", {'layout': 'monadtall'}),
+	("MAIL", {'layout': 'monadtall'}),
+	("MEDIA", {'layout': 'monadtall'}),
+	("DOWN", {'layout': 'monadtall'}),
+	("MISC", {'layout': 'monadtall'}),
+	("ETC", {'layout': 'monadtall'}),]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
@@ -95,9 +95,9 @@ layouts = [
 
 # Widget variables
 widget_defaults = dict(
-	font='Ubuntu ',
-	fontsize=12,
-	padding=0,)
+	font='UbuntuMono ',
+	fontsize=14,
+	padding=5.25,)
 
 extension_defaults = widget_defaults.copy()
 
@@ -108,27 +108,22 @@ screens = [Screen(top=bar.Bar(
 	filename = "~/.config/qtile/images/3",),
 	
 	widget.Sep(
-	linewidth = 1,
-	padding = 13,),
+	linewidth = 1,),
 	
 	widget.GroupBox(
 	rounded=False,
-	spacing=10, 
-	padding=0,
 	this_current_screen_border=tcsb,
 	highlight_method = "block",
 	active = "#ffffff",
 	inactive = grey,),   
 	
 	widget.Sep(
-	linewidth = 1,
-	padding = 12,),
+	linewidth = 1,),
 	
 	widget.CurrentLayout(
 	foreground =grey,),
 	
-	widget.Sep(linewidth = 1,
-	padding = 12,),
+	widget.Sep(linewidth = 1,),
 	
 	# widget.WindowName(
 	# foreground = grey,
@@ -143,56 +138,57 @@ screens = [Screen(top=bar.Bar(
 	execute = '/home/panos21/.local/bin/pacupdate', 
 	no_update_string = '',
 	update_interval=60),
-	
-	# widget.Sep(
-	# linewidth = 1,
-	# padding = 12,),
-	
-	# widget.ThermalSensor(
-	# foreground =grey,
-	# fmt ='temp {}',),
+	           
+	widget.Sep(
+	linewidth = 1,),	
+
+	widget.ThermalSensor(
+	foreground =grey,
+	fmt ='TEMP {}',),
 	
 	widget.Sep(
-	linewidth = 1,
-	padding = 12,),
+	linewidth = 1,),
 	
 	widget.CPU(
-	format = 'cpu: {load_percent}%',
+	format = 'CPU: {load_percent}%',
 	foreground = grey,),
 	
 	widget.Sep(
-	linewidth = 1,
-	padding = 12,),
+	linewidth = 1,),
 	
 	widget.Memory(
 	foreground = grey,
-	format = "mem: " '{MemUsed}M',
+	format = "MEM: " '{MemUsed}M',
 	update_interval = 1,),
 	
 	widget.Sep(
-	linewidth = 1,
-	padding = 12,),
+	linewidth = 1,),
 	
 	widget.Volume(
 	foreground =grey,
-	fmt ='vol: {}',),
+	fmt ='VOL: {}',),
 	
 	widget.Sep(
-	linewidth = 1,
-	padding = 12,),
+	linewidth = 1,),
+		
+	widget.Net(
+	interface = "enp2s0",
+	foreground =grey,
+	format = ' UP: {up} DO:{down} ', ),
+
+	widget.Sep(
+	linewidth = 1,),
 	
 	widget.Clock(
 	foreground = grey,
-	# format = "%^a, %d %^b  %H:%M",),
-     format = "%a, %b %d  %H:%M",),
+	format = "%^a, %d %^b  %H:%M",),
 
 	widget.Sep(
-	linewidth = 1,
-	padding = 12,),
+	linewidth = 1,),
 	
 	widget.Systray(
 	padding = 5,),
-
+	
 ],18,background=barc,opacity=0.99),),
 ]
 
