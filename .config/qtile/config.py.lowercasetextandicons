@@ -21,7 +21,7 @@ focus_on_window_activation = "smart"
 grey1 ="#808080"
 grey2 ="#4A4A4A"
 tcsb ="#262626"
-barc ="#0A0A0A"
+barc ="#141414"
 
 # Key bindings
 keys = [
@@ -169,7 +169,7 @@ screens = [Screen(top=bar.Bar(
 
 	widget.ThermalSensor(
 	foreground =grey1,
-	fmt ='tem:   {}',),
+	fmt ='Temp:   {}',),
 	
 	widget.TextBox(
 	fmt ='',
@@ -203,7 +203,7 @@ screens = [Screen(top=bar.Bar(
 	widget.Net(
 	interface = "enp2s0",
 	foreground =grey1,
-	format = 'up:   {up}  do:  {down}', ),
+	format = 'up:   {up}  do:  {down}', ),
 
 	widget.TextBox(
 	fmt ='',
@@ -211,7 +211,7 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Clock(
 	foreground = grey1,
-	format ="   %a, %b %d  %H:%M",),
+	format ="  %a, %b %d  %H:%M",),
 	
 	widget.TextBox(
 	fmt ='',
