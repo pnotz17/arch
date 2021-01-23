@@ -101,11 +101,19 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 -- Separators
 spr = wibox.widget.textbox('   |   ')
 
--- OS
+--OS
 oswidget = wibox.widget.textbox()
-oswidget:set_align('right')
-vicious.register(oswidget, vicious.widgets.os,'$2', 9000)
-vicious.cache(oswidget)
+vicious.register(oswidget, vicious.widgets.os,'   $2', 9000)
+
+-- Thermal widget
+local function script_output()
+    local f = io.popen("/home/panos21/.local/bin/temp.sh")
+    local out = f:read("*a")
+    f:close()
+    return { out }
+end
+thermalwidget  = wibox.widget.textbox()
+vicious.register(thermalwidget, script_output, "tem:   $1")
 
 -- Pacman Widget
 pacwidget = wibox.widget.textbox()
@@ -125,27 +133,17 @@ vicious.register(pacwidget, vicious.widgets.pkg,
 		    end
                     pacwidget_t:set_text(str)
                     s:close()	
-                    return "pcn:  "   .. i .. ""
+                    return "pcm:   "   .. i .. ""
                 
 		end , 1800, "Arch")
-
--- Thermal widget
-local function script_output()
-    local f = io.popen("/home/panos21/.local/bin/temp.sh")
-    local out = f:read("*a")
-    f:close()
-    return { out }
-end
-thermalwidget  = wibox.widget.textbox()
-vicious.register(thermalwidget, script_output, "tem:  $1")
 		
 -- CPU
 cpuwidget = wibox.widget.textbox()
-vicious.register(cpuwidget, vicious.widgets.cpu, "cpu:  $1%")
+vicious.register(cpuwidget, vicious.widgets.cpu, "cpu:    $1%")
 
 -- Memory
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, "mem:  $1%")
+vicious.register(memwidget, vicious.widgets.mem, "mem:    $1%")
 
 -- Volume
 volumewidget = wibox.widget.textbox()
@@ -157,18 +155,21 @@ function update_volume(widget)
 	local status = fd:read("*all")
 	fd:close()
 
+	-- local volume = tonumber(string.match(status, "(%d?%d?%d)%%")) / 100
 	local volume = string.match(status, "(%d?%d?%d)%%")
 	volume = string.format("% 3d", volume)
 
 	status = string.match(status, "%[(o[^%]]*)%]")
 
 	if string.find(status, "on", 1, true) then
+	-- For the volume numbers
 	volume = volume .. "%"
 	else
+	-- For the mute button
 	volume = volume .. "M"
 
 	end
-	widget:set_markup("vol:" .. volume)
+	widget:set_markup("vol:   " .. volume)
 end
 
 update_volume(volumewidget)
@@ -179,14 +180,14 @@ mytimer:start()
 
 -- Net 
 netwidget = wibox.widget.textbox()
-vicious.register(netwidget, vicious.widgets.net, 'up  ${enp2s0 up_mb}   do  ${enp2s0 down_mb}', 2)
+vicious.register(netwidget, vicious.widgets.net, 'up:     ${enp2s0 up_mb}   do:     ${enp2s0 down_mb}', 2)
 
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Time and Date 
 datewidget = wibox.widget.textbox()
-vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
+vicious.register(datewidget, vicious.widgets.date, "   %b %d, %R")
 
 -- {{{ Define the Wibar
 -- Each screen has its own tag table.
@@ -268,8 +269,8 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            --spr,
-            --oswidget,
+            spr,
+            oswidget,
             spr,
             pacwidget,
             spr,

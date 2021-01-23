@@ -11,7 +11,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Ubuntu 10"
+theme.font          = "mononoki-Regular Nerd Font  9"
 
 theme.bg_normal     = "#111111"
 theme.bg_focus      = "#222222"
@@ -27,7 +27,7 @@ theme.fg_minimize   = "#ffffff"
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(1)
 theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_focus  = "#808080"
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
