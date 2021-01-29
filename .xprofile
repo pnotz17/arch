@@ -1,12 +1,13 @@
 # Autostart
-xrandr --output VGA1 --scale 1.25x1.25 &
-/home/panos21/.local/bin/dwmbartextandicons.sh &
-feh --no-fehbg --bg-scale /home/panos21/Pictures/Wallpapers/017.jpg &
+xrandr --output VGA1 --mode 1408x792_60.00 --scale-from 1920x1080
+#xrandr --output VGA1 --scale 1.25x1.25 &
 xclickroot -r /home/panos21/xmenu/xmenu.sh &
+/home/panos21/.local/bin/dwmbartextandicons.sh &
 /home/panos21/.local/bin/xsessionautoremover.sh &
-#picom -b &
+~/.fehbg &
 xset dpms 600 900 1200
 xset r rate 350 60
+#picom -b &
 
 # Keymap
 #!/bin/sh
