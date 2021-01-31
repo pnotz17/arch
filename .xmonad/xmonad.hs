@@ -80,9 +80,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	, ((modm              , xK_b     					), sendMessage ToggleStruts)    														-- Toggle the status bar gap
 	, ((modm .|. shiftMask, xK_q     		), io (exitWith ExitSuccess))    																-- Quit xmonad
 	, ((modm              , xK_q     					), spawn "xmonad --recompile; xmonad --restart")    				-- Restart xmonad
-	, ((modm .|. shiftMask, xK_i     			), spawn "amixer set Master Front 2+")    										-- Multimedia
-	, ((modm .|. shiftMask, xK_d     		), spawn "amixer set Master Front 2-")    										-- Multimedia
-	, ((modm .|. shiftMask, xK_m     		), spawn "amixer -q set Master toggle")											-- Multimedia
+	, ((modm .|. shiftMask, xK_i     			), spawn "amixer set Master Front 2+")    										-- Increase volume
+	, ((modm .|. shiftMask, xK_d     		), spawn "amixer set Master Front 2-")    										-- Decrease volume
+	, ((modm .|. shiftMask, xK_m     		), spawn "amixer -q set Master toggle")											-- Toggle/Untoggle Volume
 	, ((modm .|. shiftMask, xK_Print     ), spawn  "scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'")	-- Screenshot
 	]
 	
@@ -121,11 +121,11 @@ myLogHook :: Handle -> X ()
 myLogHook
 	xmproc													= dynamicLogWithPP xmobarPP
 	{ ppOutput											= \x -> hPutStrLn xmproc x  >> hPutStrLn xmproc x
-	, ppCurrent											= xmobarColor "#FCFCFC" "" . wrap "[" "]" 								-- Current workspace in xmobar
+	, ppCurrent											= xmobarColor "#FCFCFC" "" . wrap "[" "]" 							-- Current workspace in xmobar
 	, ppVisible											= xmobarColor "#b3afc2" ""                											-- Visible but not current workspace
 	, ppHidden											= xmobarColor "#b3afc2" "" . wrap "*" ""   								-- Hidden workspaces in xmobar
 	, ppHiddenNoWindows 				= xmobarColor "#b3afc2" ""        													-- Hidden workspaces (no windows)
-	, ppTitle 												= xmobarColor "#b3afc2" "" . shorten 85     							-- Title of active window in xmobar
+	, ppTitle 												= xmobarColor "#b3afc2" "" . shorten 85     								-- Title of active window in xmobar
 	, ppSep 												=  "<fc=#b3afc2> | </fc>"                     											-- Separators in xmobar
 	, ppUrgent 											= xmobarColor "#C45500" "" . wrap "!" "!"  							-- Urgent workspace
 	, ppOrder  											= \(ws:l:t:ex) -> [ws,l]++ex++[t]
