@@ -14,10 +14,10 @@ Config { font    = "xft:UbuntuMono Nerd Font:pixelsize=15:antialias=true:hinting
                     , Run Com "/home/panos21/.local/bin/temp.sh" [] "temp" 2
                     , Run Cpu ["-t", "cpu: (<total>%)","-H","50","--high","red"] 20
 					, Run Memory ["-t", "mem: <used>M (<usedratio>%)"] 20
-					, Run Com "/home/panos21/bin/getvolume.sh" [] "vol" 2
+					, Run Com "/home/panos21/.local/bin/getvolume.sh" [] "vol" 2
 					, Run Date "%b %d %Y (%H:%M)" "date" 50
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc> %UnsafeStdinReader% }{ <fc=#b3afc2>  %pacupdate%</fc><fc=#b3afc2>| </fc><fc=#b3afc2> temp: %temp% </fc><fc=#b3afc2>| </fc><fc=#b3afc2>  %cpu% </fc><fc=#b3afc2>| </fc><fc=#b3afc2>  %memory% </fc><fc=#b3afc2>|</fc><fc=#b3afc2> 墳 %vol% </fc><fc=#b3afc2>| </fc><fc=#b3afc2>  %date% </fc>"
+       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#666666>|</fc> %UnsafeStdinReader% }{ <fc=#b3afc2>  %pacupdate%</fc><fc=#d8dee9>| </fc><fc=#b3afc2> temp: %temp% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %cpu% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %memory% </fc><fc=#d8dee9>|</fc><fc=#b3afc2> 墳 %vol% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %date% </fc>"
        }

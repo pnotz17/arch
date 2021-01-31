@@ -1,6 +1,6 @@
-Config { font    = "xft:UbuntuMono Nerd Font:pixelsize=15:antialias=true:hinting=true"
-       , additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
-         bgColor = "#111111"
+Config { 
+font= "xft:  GohuFont Nerd Font:style=uni-13:pixelsize=13:antialias=true:hinting=true"
+         bgColor = "#0A0A0A"
        , fgColor = "#b3afc2"     
        , position = TopW L 100
        , lowerOnStart = True
@@ -8,14 +8,14 @@ Config { font    = "xft:UbuntuMono Nerd Font:pixelsize=15:antialias=true:hinting
        , allDesktops = True
        , persistent = True
        , iconRoot = "/home/panos21/.xmonad/xpm/"  -- default: "."
-       , commands = [ 
-                      Run UnsafeStdinReader
-                    , Run Com "/home/panos21/.local/bin/pacupdate" [] "pacupdate" 36000
-                    , Run Cpu ["-t", "cpu: (<total>%)","-H","50","--high","red"] 20
-					, Run Memory ["-t", "mem: <used>M (<usedratio>%)"] 20
-					, Run Com "/home/panos21/.local/bin/getvolume.sh" [] "vol" 2
-					, Run Date "%b %d %Y (%H:%M)" "date" 50
-                    ]
+	   , commands = [ 
+									  Run UnsafeStdinReader
+									, Run Com "/home/panos21/.local/bin/pacupdate" [] "pacupdate" 36000
+									, Run Cpu ["-t", "cpu: (<total>%)","-H","70","--high","red"] 20
+									, Run Memory ["-t", "mem: <used>M (<usedratio>%)"] 20
+									, Run Com "/home/panos21/.local/bin/getvolume.sh" [] "vol" 2
+									, Run Date "%b %d %Y (%H:%M)" "date" 50
+									]
        , sepChar = "%"
        , alignSep = "}{"
        , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc> %UnsafeStdinReader% }{ <fc=#b3afc2>  %cpu% </fc><fc=#b3afc2>| </fc><fc=#b3afc2>  %memory% </fc><fc=#b3afc2>|</fc><fc=#b3afc2>   %vol% </fc><fc=#b3afc2>| </fc><fc=#b3afc2>  %date% </fc>"
