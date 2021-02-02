@@ -50,7 +50,7 @@ clock() {
 	dte=$(date +"%D")
 	time=$(date +"%H:%M")
 
-	echo "  $dte    $time"
+	echo "  $dte |   $time"
 }
 main() {
 	while true; do

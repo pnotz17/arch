@@ -7,5 +7,5 @@ killall -q polybar
 
 # Launch bar1 and bar2
 echo "---" | tee -a /tmp/polybar1.log /tmp/polybar2.log
-polybar --reload bar-bspwm &
+polybar --reload bspwm &
 echo "Bars launched..."
