@@ -1,5 +1,5 @@
 [colors]
-background = #E60F0F0F
+background = #E6080808
 foreground = #999999
 alert = #FF0000
 sep = #ffb52a
@@ -26,14 +26,14 @@ wm-restack = bspwm
 
 ; Enable support for inter-process messaging
 ; See the Messaging wiki page for more details.
-enable-ipc = true
+;enable-ipc = true
 
-border-size = 0
+;border-size = 0
 ;border-left-size = 0
 ;border-right-size = 25
 ;border-top-size = 0
 ;border-bottom-size = 25
-border-color = #00000000
+;border-color = #00000000
 
 padding-left = 0
 padding-right = 0
@@ -45,7 +45,7 @@ font-0 ="UbuntuMono Nerd Font:style=Regular:pixelsize=11:antialias=true:hinting=
 
 modules-left = bspwm
 modules-center =
-modules-right = pacman-updates sep filesystem sep pkgs sep imap sep temp sep cpu sep memory sep alsa sep network sep date sep time sep
+modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory sep alsa sep network sep date sep time sep
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
@@ -54,7 +54,7 @@ tray-detached = false
 tray-offset-x = 0
 tray-offset-y = 0
 tray-position = right
-tray-padding = 2
+tray-padding = 0
 tray-maxsize = 20
 tray-scale = 1.0
 tray-background = ${colors.background}
@@ -69,11 +69,11 @@ enable-scroll = true
 reverse-scroll = true
 pin-workspaces = true
 
-ws-icon-0 = I;
-ws-icon-1 = II;
-ws-icon-2 = III;
-ws-icon-3 = IV;"
-ws-icon-4 = V;
+ws-icon-0 = 1;dev
+ws-icon-1 = 2;www
+ws-icon-2 = 3;code
+ws-icon-3 = 4;sys
+ws-icon-4 = 5;doc
 ;ws-icon-5 = VI;
 ;ws-icon-6 = VII;
 ;ws-icon-7 = VIII;
@@ -106,7 +106,7 @@ label-tiled = "  "
 label-tiled-foreground = ${colors.foreground}
 label-fullscreen = "  "
 label-fullscreen-foreground = ${colors.foreground}
-label-floating = "  "
+label-floating = "    "
 label-floating-foreground = ${colors.foreground}
 label-pseudotiled = "  "
 label-pseudotiled-foreground = ${colors.foreground}
@@ -181,7 +181,7 @@ format-prefix = "  "
 type = custom/script
 exec =~/.local/bin/temp.sh
 label = "%output%"
-format-prefix="  "
+format-prefix="  "
 
 [module/cpu]
 type = internal/cpu

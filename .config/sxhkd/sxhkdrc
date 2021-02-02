@@ -1,30 +1,18 @@
-#
-# wm independent hotkeys
-#
-
-# terminal emulator
-super + Return
-	st
-
-# program launcher
-super + @space
-	dmenu_run
+# WM INDEPENDENT KEYBINDINGS
 
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
 
-#
-# bspwm hotkeys
-#
+# BSPWM HOTKEYS
 
 # quit/restart bspwm
-super + alt + {q,r}
+super + ctrl + {q,r}
 	bspc {quit,wm -r}
 
 # close and kill
-super + {_,shift + }w
-	bspc node -{c,k}
+super + shift + c
+	bspc node -c
 
 # alternate between the tiled and monocle layout
 super + m
@@ -34,13 +22,11 @@ super + m
 super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
-# swap the current node and the biggest window
+# swap the current node and the biggest node
 super + g
-	bspc node -s biggest.window
+	bspc node -s biggest
 
-#
-# state/flags
-#
+# STATE/FLAGS
 
 # set the window state
 super + {t,shift + t,s,f}
@@ -50,9 +36,7 @@ super + {t,shift + t,s,f}
 super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
-#
-# focus/swap
-#
+# FOCUS/SWAP
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
@@ -62,9 +46,9 @@ super + {_,shift + }{h,j,k,l}
 super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
-# focus the next/previous window in the current desktop
-super + {_,shift + }c
-	bspc node -f {next,prev}.local.!hidden.window
+# focus the next/previous node in the current desktop
+super + {_,shift + }n
+	bspc node -f {next,prev}.local
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -82,11 +66,9 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+	bspc {desktop -f,node -d} focused:'^{1-9,10}'
 
-#
-# preselect
-#
+# PRESELECT
 
 # preselect the direction
 super + ctrl + {h,j,k,l}
@@ -104,16 +86,14 @@ super + ctrl + space
 super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
-#
-# move/resize
-#
+# MOVE/RESIZE
 
 # expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
+ctrl + alt + {h,j,k,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
+ctrl + shift + {h,j,k,l}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
@@ -123,6 +103,14 @@ super + {Left,Down,Up,Right}
 #
 # My keys
 #
+
+# terminal emulator
+super + {_,shift + }Return
+	st
+
+# program launcher
+super + p
+	dmenu_run
 
 # Launch a file manager
 super + {_,shift + }f
@@ -137,13 +125,17 @@ super + {_,shift + }p
 		/home/panos21/.local/bin/power.sh	
 
 # Volume up
-super + F10
+super + F12
 	amixer set Master Front 2+
 
 # Volume down
-super + F9
+super + F11
 	amixer set Master Front 2-
+	
+# Volume mute
+super + F10
+amixer -q set Master toggle
 
-# screenshot
+# Screenshot
 Print
 	scrot ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png
