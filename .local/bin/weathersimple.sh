@@ -1,12 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 
-curl -s "wttr.in/$florina" > "$HOME/.local/share/weatherreport" || exit 1 ;
+ weather="${XDG_DATA_HOME:-$HOME/.cache/}weather"
 
+ getweather="$(curl -sf 'https://wttr.in/Florina,Greece?format=%t' > "$weather" || exit 1 ;)"
 
-rain=$(sed '16q;d' "$HOME/.local/share/weatherreport" | grep -wo "[0-9]*%" | sort -n | sed -e '$!d' | sed -e "s/^/ /g" | tr -d '%\n')
+ showweather() { cat "$weather" ;} 
 
-lowest=$(sed '13q;d' "$HOME/.local/share/weatherreport" | sed 's/\x1b\[[0-9;]*m//g' | grep -o "[0-9][0-9]" | sort -n | head -n 1 | sed -e "s/^/ /g" | tr -d '\n' | sed -e '$ s/$/°C/')
+ case $BLOCK_BUTTON in
+                 1) setsid -f "$TERMINAL" -e less -Srf "$weatherreport" ;;
+                 2) getweather && showweather ;;
+                 3) notify-send "�� Weather module" "\- Left click for full forecast.
+                 - Middle click to update forecast." ;;
+                 6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+         esac
 
-highest=$(sed '13q;d' "$HOME/.local/share/weatherreport" | sed 's/\x1b\[[0-9;]*m//g' | grep -o "[0-9][0-9]" | sort -n | tail -n 1 | sed -e "s/^/ /g" | tr -d '\n' | sed -e "$ s/$/°C/")
+ #printf "%s" "$weather"
 
-printf "$rain%% $lowest $highest"
+ [ "$(stat -c %y "$weather" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
+                 getweather
+
+ showweather

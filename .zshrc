@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Set the list of directories that Zsh searches for programs.
-#export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # Setting up Defaults
 export EDITOR='vim'
@@ -14,6 +14,7 @@ export TERMINAL='st'
 export BROWSER="/usr/bin/qutebrowser" 
 
 # Aliases
+alias sudo='doas'
 alias sv='sudo vim'
 alias sp='sudo pcmanfm'
 alias vim='vim -S ~/.vimrc'
@@ -75,19 +76,16 @@ bashcompinit
 zmodload -i zsh/complist
 
 WORDCHARS=''
-
-unsetopt menu_complete   # do not autoselect the first completion entry
+unsetopt menu_complete   
 unsetopt flowcontrol
-setopt auto_menu         # show completion menu on successive tab press
+setopt auto_menu        
 setopt complete_in_word
 setopt always_to_end
 
 # Autocompletion with an arrow-key driven interface
 zstyle ':completion:*:*:*:*:*' menu select
-
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors ''
-
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)
 ([0-9a-z-]#)*=01;34=0=01'
 
@@ -125,6 +123,7 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 ## Prompt color scripts
 #/opt/shell-color-scripts/colorscripts/pacman
+#colorscript random
 
 #typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme

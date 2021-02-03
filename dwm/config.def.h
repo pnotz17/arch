@@ -1,5 +1,4 @@
 /* See LICENSE file for copyright and license details. */
-
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx		= 1;        /* gaps between windows */
@@ -8,7 +7,7 @@ static const int showbar						= 1;        /* 0 means no bar */
 static const int topbar							= 1;        /* 0 means bottom bar */
 static const char *fonts[]						= {"ubuntuMono Nerd Font:size=11:antialias=true:autohint=true",};
 static const char dmenufont[]			=   "ubuntuMono Nerd Font:size=11:antialias=true:autohint=true";
-static const char col_gray1[]				= "#0A0A0A";				// bar color
+static const char col_gray1[]				= "#080808";				// bar color
 static const char col_gray2[]				= "#444444";				// unfocused window border color
 static const char col_gray3[]				= "#999999"; 				// bar foreground color on right & left // make this a little lighter than the one below so tags & everything on the right are brigter or the same color
 static const char col_gray4[]				= "#939393"; 				// tag and tasklist foreground color
@@ -20,9 +19,9 @@ static const char *colors[][3]				= {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-// nerd-font-glyphs
+//static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 //static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
+static const char *tags[] = { "dev", "www", "code", "sys", "doc"};
 
 static const Rule rules[] = {
 	//* xprop(1):
