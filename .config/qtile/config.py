@@ -117,8 +117,8 @@ layouts = [
 	
 # Widget variables
 widget_defaults = dict(
-	font='Tinos Nerd Font ',
-	fontsize=15,
+	font='Mononoki-Regular Nerd Font  ',
+	fontsize=14,
 	padding=4.75,)
 
 extension_defaults = widget_defaults.copy()
@@ -246,5 +246,4 @@ floating_layout = layout.Floating(float_rules=[
 	{'wname': 'Open File'},
 	{'wname': 'pinentry'},
 	{'wmclass': 'ssh-askpass'},],  **layout_theme) #fullscreen_border_width = 0, border_width = 0)
-
 
