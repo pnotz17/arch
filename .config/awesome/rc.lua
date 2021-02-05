@@ -114,16 +114,16 @@ function(widget,args)
 end
 	pacwidget_t:set_text(str)
 	s:close()	
-	return "pcm: "   .. i .. "" 
+    return "pcm:     "   .. i .. ""
 end , 1800, "Arch")
 		
 --OS widget
 oswidget = wibox.widget.textbox()
-vicious.register(oswidget, vicious.widgets.os,'os:  $2', 9000)
+vicious.register(oswidget, vicious.widgets.os,'   $2', 9000)
 
 -- hdd widget
 fswidget = wibox.widget.textbox()
-vicious.register(fswidget, vicious.widgets.fs, " hdd  ${/ used_p}%", 10)
+vicious.register(fswidget, vicious.widgets.fs, " hdd:     ${/ used_p}%", 10)
 
 -- Thermal widget
 local function script_output()
@@ -134,15 +134,15 @@ local function script_output()
 end
 
 thermalwidget  = wibox.widget.textbox()
-vicious.register(thermalwidget, script_output, "tem:  $1")
+vicious.register(thermalwidget, script_output, "tem:    $1")
 
 -- CPU widget
 cpuwidget = wibox.widget.textbox()
-vicious.register(cpuwidget, vicious.widgets.cpu, "cpu:  $1%")
+vicious.register(cpuwidget, vicious.widgets.cpu, "cpu:    $1%")
 
 -- Memory widget
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, "mem:  $1%")
+vicious.register(memwidget, vicious.widgets.mem, "mem:    $1%")
 
 -- Volume widget
 volumewidget = wibox.widget.textbox()
@@ -159,9 +159,9 @@ function update_volume(widget)
 	if string.find(status, "on", 1, true) then
 	volume = volume .. "%"
 	else
-	volume = volume .. "M"
+	volume = volume .. "婢"
 end
-	widget:set_markup("vol: " .. volume) 
+	widget:set_markup("vol:   " .. volume)
 end
 
 update_volume(volumewidget)
@@ -172,14 +172,14 @@ mytimer:start()
 
 -- Net widget
 netwidget = wibox.widget.textbox()
-vicious.register(netwidget, vicious.widgets.net, 'up:  ${enp2s0 up_mb}   do:  ${enp2s0 down_mb}', 2)
+vicious.register(netwidget, vicious.widgets.net, 'up:     ${enp2s0 up_mb}   do:     ${enp2s0 down_mb}', 2)
 
 -- Keyboard map indicator widget
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Time and Date widget
 datewidget = wibox.widget.textbox()
-vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
+vicious.register(datewidget, vicious.widgets.date, "   %b %d, %R")
 
 ----- {{{ Define the Wibar}}} -----
 -----------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ s.mytasklist = awful.widget.tasklist {
 	buttons = tasklist_buttons}
 
 -- Create the wibox
-s.mywibox = awful.wibar({ position = "top", screen = s, bg = beautiful.bg_normal .. "100",opacity = .88 })
+s.mywibox = awful.wibar({ position = "top", screen = s,opacity = .95 })
 
 -- Add widgets to the wibox
 s.mywibox:setup {layout = wibox.layout.align.horizontal,

@@ -6,38 +6,7 @@
 
 config_version: 2
 settings:
-  content.blocking.method:
-    global: auto
-  content.cookies.accept:
-    global: no-unknown-3rdparty
-  content.desktop_capture:
-    global: false
-  content.headers.user_agent:
-    global: Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko)
-      {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}
-  content.javascript.alert:
-    global: false
-  content.javascript.enabled:
-    global: true
-  content.javascript.prompt:
-    global: false
-  content.local_content_can_access_file_urls:
-    global: false
-  content.media.audio_capture:
-    global: false
-  content.media.audio_video_capture:
-    global: false
-  content.media.video_capture:
-    global: false
-  content.mouse_lock:
-    global: false
-  content.persistent_storage:
-    global: false
-  content.proxy:
-    global: system
-  content.ssl_strict:
-    global: true
-  content.unknown_url_scheme_policy:
-    global: disallow
-  content.webrtc_ip_handling_policy:
-    global: default-public-interface-only
+  statusbar.show:
+    global: never
+  tabs.show:
+    global: never

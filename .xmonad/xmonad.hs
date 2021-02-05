@@ -48,7 +48,7 @@ xmobarEscape = concatMap doubleLts
 myWorkspaces :: [String]
 myWorkspaces = clickable . (map xmobarEscape)
     -- $ [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
-    $ ["1: doc","2: web","3: code","4: etc","5: misc"] 
+    $ ["1: dev","2: www","3: code","4: sys","5: doc"] 
 
   where
   clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
@@ -79,7 +79,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	, ((modm              , xK_period				), sendMessage (IncMasterN (-1)))    												-- Deincrement the number of windows in the master area
 	, ((modm              , xK_b     					), sendMessage ToggleStruts)    														-- Toggle the status bar gap
 	, ((modm .|. shiftMask, xK_q     		), io (exitWith ExitSuccess))    																-- Quit xmonad
-	, ((modm              , xK_q     					), spawn "xmonad --recompile; xmonad --restart")    				-- Restart xmonad
+	, ((modm .|. controlMask, xK_r     	), spawn "xmonad --recompile; xmonad --restart")    				-- Restart xmonad
 	, ((modm .|. shiftMask, xK_i     			), spawn "amixer set Master Front 2+")    										-- Increase volume
 	, ((modm .|. shiftMask, xK_d     		), spawn "amixer set Master Front 2-")    										-- Decrease volume
 	, ((modm .|. shiftMask, xK_m     		), spawn "amixer -q set Master toggle")											-- Toggle/Untoggle Volume
@@ -151,5 +151,5 @@ myConfig xmproc								= withNavigation2DConfig def {
 	layoutHook											= avoidStruts  $ desktopLayoutModifiers $ smartBorders $ mkToggle (NOBORDERS ?? FULL ?? EOT) myLayout,
 	manageHook										= myManageHook <+> manageHook desktopConfig,
 	handleEventHook							= myEventHook <+> handleEventHook desktopConfig,
-	logHook												= (myLogHook xmproc) <+>fadeInactiveLogHook 0.90 <+> logHook desktopConfig,
+	logHook												= (myLogHook xmproc) <+>fadeInactiveLogHook 0.95 <+> logHook desktopConfig,
 	startupHook										= myStartupHook}

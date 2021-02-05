@@ -1,12 +1,11 @@
 [colors]
-background = #E6080808
+background = #F20A0A0A
 foreground = #999999
 alert = #FF0000
 sep = #ffb52a
 
-[bar/bspwm]
-monitor = ${env:MONITOR}
-;monitor-fallback = HDMI1
+[bar/mybar]
+;monitor = ${env:MONITOR:VGA1}
 width = 100%
 height = 20
 ;offset-x = 1%
@@ -18,22 +17,16 @@ bottom = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 1
-line-color = "#f00"
+;line-size = 2
+;line-color = "#f00"
 
 wm-restack = bspwm
 ;override-redirect = true
 
-; Enable support for inter-process messaging
-; See the Messaging wiki page for more details.
 ;enable-ipc = true
 
 ;border-size = 0
-;border-left-size = 0
-;border-right-size = 25
-;border-top-size = 0
-;border-bottom-size = 25
-;border-color = #00000000
+;border-color = ;00000000
 
 padding-left = 0
 padding-right = 0
@@ -41,26 +34,19 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 ="UbuntuMono Nerd Font:style=Regular:pixelsize=11:antialias=true:hinting=true"
+font-0 ="UbuntuMono Nerd Font:style=Regular:pixelsize=12:antialias=true:hinting=true"
 
 modules-left = bspwm
 modules-center =
-modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory sep alsa sep network sep date sep time sep
+modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory sep alsa sep speedup sep speeddown sep date sep time sep
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
-tray-detached = false
-tray-offset-x = 0
-tray-offset-y = 0
-tray-position = right
-tray-padding = 0
-tray-maxsize = 20
-tray-scale = 1.0
-tray-background = ${colors.background}
+;tray-position = right
+;tray-background = ${colors.background}
 
-;MODULES A-Z  
-
+; MODULES A-Z  
 [module/bspwm]
 type = internal/bspwm
 
@@ -85,7 +71,6 @@ format = <label-state> <label-mode>
 
 label-focused = %icon%
 label-focused-background = ${colors.background}
-label-focused-underline= ${colors.sep}
 label-focused-padding = 2
 label-focused-foreground = ${colors.foreground}
 
@@ -106,7 +91,7 @@ label-tiled = "  "
 label-tiled-foreground = ${colors.foreground}
 label-fullscreen = "  "
 label-fullscreen-foreground = ${colors.foreground}
-label-floating = "    "
+label-floating = "  "
 label-floating-foreground = ${colors.foreground}
 label-pseudotiled = "  "
 label-pseudotiled-foreground = ${colors.foreground}
@@ -120,7 +105,6 @@ label-private-foreground = ${colors.foreground}
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
-;Separator in between workspaces
 label-separator = |
 label-separator-padding = 0
 label-separator-foreground 				= ${colors.sep}
@@ -132,35 +116,17 @@ content-foreground = ${colors.sep}
 
 [module/pacman-updates]
 type = custom/script
-exec =./.local/bin/updates.sh
+exec =~/.local/bin/updates.sh
 interval = 100
 label =%output%
 format-foreground =${colors.alert}
 
-[module/kernel]
-type = custom/script
-exec = uname -r
-tail = false
-interval = 1024
-format-prefix = "   "
-
-[module/filesystem]
-type = internal/fs
-interval = 25
-label-mounted-foreground =colors.foreground}
-
-mount-0 = /
-
-label-mounted =   %free%
-label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.primary}
-
 [module/pkgs]
 type = custom/script
 exec = pacman -Q  |  wc -l
+format-prefix = "   "
 interval = 100
 label =  %output%
-format-prefix = "   "
 
 [module/imap]
 type = custom/script
@@ -181,42 +147,49 @@ format-prefix = "  "
 type = custom/script
 exec =~/.local/bin/temp.sh
 label = "%output%"
-format-prefix="  "
+format-prefix="  "
 
 [module/cpu]
 type = internal/cpu
 interval = 2
-label = %percentage:2%%
 format-prefix = "  "
+label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
-label = %percentage_used%%
 format-prefix = "  "
+label = %percentage_used%%
 
 [module/alsa]
 type = internal/alsa
 master-mixer = Master
 format-volume-padding = 1
-label-volume  = "  %percentage%%"
+label-volume  =   %percentage%
 format-volume =<label-volume>
-label-muted = "ﱝ"
+label-muted = " muted "
 label-muted-foreground = ${colors.alert}
 
-[module/network]
+[module/speedup]
 type = internal/network
 interface = "enp2s0"
 interval = 1.0
-label-connected = "  %downspeed%    %upspeed%"
+label-connected = "  %upspeed%"
+
+[module/speeddown]
+type = internal/network
+interface = "enp2s0"
+interval = 1.0
+label-connected = "  %downspeed%"
 
 [module/date]
 type = custom/script
-interval = 1
 exec =date +"  %a, %d %b"
+interval = 1
 
 [module/time]
 type = internal/date
 interval = 5
-label = %time%
 time ="  %I:%M"
+time-alt = %H:%M:%S
+label = %time%

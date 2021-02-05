@@ -19,5 +19,5 @@ Config { font    = "xft:UbuntuMono Nerd Font:pixelsize=15:antialias=true:hinting
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#666666>|</fc> %UnsafeStdinReader% }{ <fc=#b3afc2>  %pacupdate%</fc><fc=#d8dee9>| </fc><fc=#b3afc2> temp: %temp% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %cpu% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %memory% </fc><fc=#d8dee9>|</fc><fc=#b3afc2> 墳 %vol% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %date% </fc>"
+       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#666666>|</fc> %UnsafeStdinReader% }{ <fc=#b3afc2>  %pacupdate%</fc><fc=#d8dee9>| </fc><fc=#b3afc2>  temp: %temp% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %cpu% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %memory% </fc><fc=#d8dee9>|</fc><fc=#b3afc2> 墳 %vol% </fc><fc=#d8dee9>| </fc><fc=#b3afc2>  %date% </fc>"
        }

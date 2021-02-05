@@ -3,12 +3,12 @@
 cputemp()
 {
 	CPU_TEMP="$(sensors | grep Core | awk '{print substr($3, 2, length($3)-5)}' | tr "\\n" " " | sed 's/ /°C  /g' | sed 's/  $//')"
-	PREFIX='t  '
+	PREFIX='tem:'
 
 	if [ "$CPU_TEMP" -ge $WARNING_LEVEL ]; then
 		PREFIX="$PREFIX"
 	fi
-	echo "$PREFIX$CPU_TEMP"
+	echo "$PREFIX $CPU_TEMP"
 }
 
 cpu() {
@@ -18,12 +18,12 @@ cpu() {
 	read -r cpu a b c idle rest < /proc/stat
 	total=$((a+b+c+idle))
 	cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
-	echo " $cpu"%
+	echo cpu: "$cpu"%
 }
 
 ram() {
 	mem=$(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')
-	echo " $mem"
+	echo mem: "$mem"
 }
 
 netspeed()
@@ -50,22 +50,22 @@ update() {
 rx=$(update /sys/class/net/[ew]*/statistics/rx_bytes)
 tx=$(update /sys/class/net/[ew]*/statistics/tx_bytes)
 
-printf "down %4sB up %4sB\\n" $(numfmt --to=iec $rx) $(numfmt --to=iec $tx)
+printf "up: %4sB\\n down: %4sB" $(numfmt --to=iec $rx) $(numfmt --to=iec $tx)
 }
 
 pkgs() {
 	pkgs=$(pacman -Q  |  wc -l)
-	echo " $pkgs"
+	echo pkg: "$pkgs"
 }
 
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )
-	echo " $updates"
+	echo pcm: "$updates"
 }
 
 weather() {
 	weather=$(curl 'https://wttr.in/Florina,Greece?format=%t')
-	echo " $weather"
+	echo wea: "$weather"
 }
 
 volume_alsa() {
@@ -102,7 +102,7 @@ clock() {
 
 main() {
 	while true; do
-		xsetroot -name "$(updates) | $(pkgs) | $(weather) | $(cputemp) | $(cpu) | $(ram) | $(volume_alsa) | $(netspeed) | $(clock) |"
+		xsetroot -name "$(updates) | $(pkgs) | $(weather) | $(cpu) | $(ram) | $(volume_alsa) | $(netspeed) | $(clock) |"
 		sleep 1
 	done
 }

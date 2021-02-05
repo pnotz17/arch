@@ -1,8 +1,10 @@
 #! /bin/sh
-./.config/polybar/launch.sh &
+
+$HOME/.config/polybar/launch.sh
 pgrep -x sxhkd > /dev/null || sxhkd &
 picom -b &
-bspc monitor -d I II III IV V #VI VII VIII IX X
+
+bspc monitor -d 1 2 3 4 5 
 bspc config border_width         1
 bspc config window_gap          2
 

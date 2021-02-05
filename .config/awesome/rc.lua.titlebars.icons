@@ -134,7 +134,7 @@ local function script_output()
 end
 
 thermalwidget  = wibox.widget.textbox()
-vicious.register(thermalwidget, script_output, "tem:   $1")
+vicious.register(thermalwidget, script_output, "tem:    $1")
 
 -- CPU widget
 cpuwidget = wibox.widget.textbox()
@@ -387,7 +387,7 @@ globalkeys = gears.table.join(
 		local c = client.focus                                            
 			if c then c.opacity = c.opacity - 0.1 end
 		end,                    
-			{description = "decrease window opacity"})
+			{description = "decrease window opacity"}),
     awful.key({ modkey,           }, "[",
 			function()           
 		local c = client.focus                                            

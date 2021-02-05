@@ -102,7 +102,7 @@ clock() {
 
 main() {
 	while true; do
-		xsetroot -name "$(updates) | $(pkgs) | $(weather) | $(cputemp) | $(cpu) | $(ram) | $(volume_alsa) | $(netspeed) | $(clock) |"
+		xsetroot -name "$(updates) | $(pkgs) | $(weather) | $(cpu) | $(ram) | $(volume_alsa) | $(netspeed) | $(clock) |"
 		sleep 1
 	done
 }

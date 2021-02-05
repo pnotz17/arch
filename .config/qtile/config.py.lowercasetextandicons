@@ -19,9 +19,9 @@ focus_on_window_activation = "smart"
 
 # Colors 
 grey1 ="#808080"
-grey2 ="#4A4A4A"
+grey2 ="#808080"
 tcsb ="#262626"
-barc ="#141414"
+barc ="#080808"
 
 # Key bindings
 keys = [
@@ -61,8 +61,8 @@ keys = [
 	# Extras
 	Key([mod, "shift"], "b", lazy.spawn("qutebrowser")),
 	Key([mod, "shift"], "f", lazy.spawn("pcmanfm")),
-	Key([], "F12", lazy.spawn("amixer set Master Front 3+")),
-	Key([], "F11", lazy.spawn("amixer set Master Front 3-")),
+	Key([], "F12", lazy.spawn("amixer set Master Front 2+")),
+	Key([], "F11", lazy.spawn("amixer set Master Front 2-")),
 	Key([], "Print", lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
 
 # Mouse bindings
@@ -73,11 +73,11 @@ mouse = [
 
 # Groups
 group_names = [
-	("doc", {'layout': 'monadtall'}),
-	("web", {'layout': 'monadtall'}),
-	("code", {'layout': 'monadtall'}),
-	("etc", {'layout': 'monadtall'}),
-	("misc", {'layout': 'monadtall'}),]
+	("dev", {'layout': 'Tile'}),
+	("www", {'layout': 'Tile'}),
+	("code", {'layout': 'Tile'}),
+	("sys", {'layout': 'Tile'}),
+	("doc", {'layout': 'Tile'}),]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
@@ -87,7 +87,7 @@ for i, (name, kwargs) in enumerate(group_names, 1):
 
 # Layout variables
 def init_layout_theme():
-	return {"margin":10,
+	return {"margin":1,
 	"border_width":0,
 	"border_focus": "#ffffff",
 	"border_normal": "#808080"}
@@ -96,12 +96,9 @@ layout_theme = init_layout_theme()
 
 # Layouts
 layouts = [
+	layout.Tile(shift_windows=True, **layout_theme),
 	layout.MonadTall(**layout_theme),
 	layout.MonadWide(**layout_theme),
-	layout.Tile(shift_windows=True, **layout_theme),
-	layout.RatioTile(**layout_theme),
-	layout.Max(**layout_theme),
-	layout.Floating(**layout_theme),
 	layout.TreeTab(          
     font = "Ubuntu",          
     fontsize = 14,          
@@ -114,14 +111,14 @@ layouts = [
     inactive_fg = "a0a0a0",          
     padding_y = 5,          
     section_top = 10,   
-    panel_width = 116),
+    panel_width = 250),
     layout.Max(**layout_theme),
 	layout.Floating(**layout_theme,)]
 	
 # Widget variables
 widget_defaults = dict(
 	font='Tinos Nerd Font ',
-	fontsize=13,
+	fontsize=15,
 	padding=4.75,)
 
 extension_defaults = widget_defaults.copy()
@@ -130,7 +127,7 @@ extension_defaults = widget_defaults.copy()
 screens = [Screen(top=bar.Bar(
 [    
 	widget.Image(
-	filename = "~/.config/qtile/images/3",),
+	filename = "~/.config/qtile/images/1",),
 	
 	widget.TextBox(
 	fmt ='',
@@ -163,20 +160,20 @@ screens = [Screen(top=bar.Bar(
 	no_update_string = '',
 	update_interval=60),
 	
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
+	# widget.TextBox(
+	# fmt ='',
+	# foreground = grey2,),
 
-	widget.ThermalSensor(
-	foreground =grey1,
-	fmt ='Temp:   {}',),
+	# widget.ThermalSensor(
+	# foreground =grey1,
+	# fmt ='tem:    {}',),
 	
 	widget.TextBox(
 	fmt ='',
 	foreground = grey2,),
 
 	widget.CPU(
-	format = 'cpu:    {load_percent}%',
+	format = 'cpu:   {load_percent}%',
 	foreground = grey1,),
 	
 	widget.TextBox(
@@ -185,7 +182,7 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Memory(
 	foreground = grey1,
-	format = "mem:    " '{MemUsed}M',
+	format = "mem:   {MemUsed}M",
 	update_interval = 1,),
 	
 	widget.TextBox(
@@ -194,7 +191,7 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Volume(
 	foreground =grey1,
-	fmt ='vol:    {}',),
+	fmt ='vol:   {}',),
 	
 	widget.TextBox(
 	fmt ='',
@@ -203,15 +200,24 @@ screens = [Screen(top=bar.Bar(
 	widget.Net(
 	interface = "enp2s0",
 	foreground =grey1,
-	format = 'up:   {up}  do:  {down}', ),
-
+	format = 'up:   {up}', ),
+	
+	widget.TextBox(
+	fmt ='',
+	foreground = grey2,),
+	
+	widget.Net(
+	interface = "enp2s0",
+	foreground =grey1,
+	format = 'do:   {down}', ),
+	
 	widget.TextBox(
 	fmt ='',
 	foreground = grey2,),
 
 	widget.Clock(
 	foreground = grey1,
-	format ="  %a, %b %d  %H:%M",),
+	format ="   %a, %b %d  %H:%M",),
 	
 	widget.TextBox(
 	fmt ='',
@@ -220,8 +226,9 @@ screens = [Screen(top=bar.Bar(
 	widget.Systray(
 	padding = 5,),
 	
-],18,background=barc,opacity=0.99),),
+],20,background=barc,opacity=0.95),),
 ]
+
 # Floating rules
 floating_layout = layout.Floating(float_rules=[
 	{'wmclass': 'Confirm"'},
@@ -240,4 +247,5 @@ floating_layout = layout.Floating(float_rules=[
 	{'wname': 'Open File'},
 	{'wname': 'pinentry'},
 	{'wmclass': 'ssh-askpass'},],  **layout_theme) #fullscreen_border_width = 0, border_width = 0)
-	
+
+
