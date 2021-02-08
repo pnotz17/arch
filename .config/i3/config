@@ -1,5 +1,5 @@
 set $mod Mod4
-font pango:Ubuntu Regular 10.5
+font pango:'UbuntuMono Nerd Font 11
 floating_modifier $mod
 gaps inner 4
 gaps outer 4
@@ -58,8 +58,7 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
+# Define names for default workspaces 
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -130,35 +129,30 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+	# Theme colors 
+	# class                   				border  		backgr. 		text    			indic.child_border
+	client.focused					#556064 	#556064 	#80FFF9 	#FDF6E3
+	client.focused_inactive	#2F3D44		#2F3D44 	#AD69AF 	#454948
+	client.unfocused				#2F3D44		#2F3D44 	#AD69AF 	#454948
+	client.urgent						#CB4B16		#FDF6E3 	#AD69AF 	#268BD2
+	client.placeholder			#000000 	#0c0c0c		#ffffff 			#000000 
+	client.background			#2B2C2B
 
-# Theme colors 
-# class                   border  backgr. text    indic.   child_border
-  client.focused          #556064 #556064 #80FFF9 #FDF6E3
-  client.focused_inactive #2F3D44 #2F3D44 #AD69AF #454948
-  client.unfocused        #2F3D44 #2F3D44 #AD69AF #454948
-  client.urgent           #CB4B16 #FDF6E3 #AD69AF #268BD2
-  client.placeholder      #000000 #0c0c0c #ffffff #000000 
-
-  client.background       #2B2C2B
-  
 # Bar settings
 bar {
-status_command i3status --config /home/panos21/.config/i3status/i3status.conf
+status_command i3blocks 
 position top
 height 22
-    
-     colors {
-    background #0A0A0A
-    statusline #0
-    separator  #000000
-
-    focused_workspace  #000000 #000000 #FFFFFF
-    active_workspace   #000000 #000000 #FFFFFF
-    inactive_workspace #000000 #000000 #888888
-    urgent_workspace   #000000 #000000 #FFFFFF
-    binding_mode       #000000 #000000 #FFFFFF
-    }
-}
+colors {
+	background					#0A0A0A
+	statusline						#999999
+	separator						#7F7F7F
+	focused_workspace	#000000 #7F7F7F #000000
+	active_workspace		#000000 #000000 #FFFFFF
+	inactive_workspace	#000000 #000000 #888888
+	urgent_workspace		#000000 #000000 #FFFFFF
+	binding_mode				#000000 #000000 #FFFFFF
+}}
 
 # i3 Logout menu #
 mode "exit: [l]ogout, [r]eboot, [s]hutdown" {
@@ -172,10 +166,10 @@ mode "exit: [l]ogout, [r]eboot, [s]hutdown" {
 ### My key-bindings ###
 
 # start a terminal
-bindsym $mod+Return exec st
+bindsym $mod+Shift+Return exec st
 
 # start dmenu 
-bindsym $mod+d exec  dmenu_run -fn 'Mononoki Nerd Font:size=10' -nb '#292d3e' -nf '#bbc5ff' -sb '#82AAFF' -sf '#292d3e' -p 'dmenu:'
+bindsym $mod+p exec  dmenu_run -fn 'Mononoki Nerd Font:size=12' -nb '#080808' -nf '#bbc5ff' -sb '#82AAFF' -sf '#292d3e' -p 'dmenu:'
 
 # kill focused window
 bindsym $mod+Shift+c kill

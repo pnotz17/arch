@@ -52,8 +52,8 @@ tray-scale = 1.0
 font-0 ="UbuntuMono Nerd Font:style=Regular:pixelsize=11:antialias=true:hinting=true"
 
 modules-left = bspwm
-modules-center =
-modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory sep alsa sep speedup sep speeddown sep date sep time sep
+modules-center =date sep time
+modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory sep alsa sep speedup sep speeddown sep 
 
 [module/bspwm]
 type = internal/bspwm

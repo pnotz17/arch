@@ -1,0 +1,37 @@
+command=/usr/lib/i3blocks/$BLOCK_NAME
+separator_block_width=50
+markup=none
+
+
+[packages]
+command=echo pcm: " $(sudo pacman -Qu | wc -l)"
+interval=1800
+signal=3
+
+#[temp]
+#command=echo "tem:   $(~/.local/bin/temp.sh)"
+#interval=10
+
+[cpu_usage]
+command=echo "cpu:   $(~/.local/bin/cpu.sh)"
+interval=1
+min_width=100.00
+
+[memory]
+interval=1
+command=echo "mem:   $(~/.local/bin/memory.sh)"
+
+[net]
+command=echo " $(~/.local/bin/bandwidth.sh)"
+interval=1
+
+
+[volume]
+command=echo "vol:  $(~/.local/bin/vol.sh)"
+interval=once
+signal=1
+
+[clock]
+command=echo " $(~/.local/bin/time.sh)   "
+interval=5
+

@@ -130,7 +130,7 @@ screens = [Screen(top=bar.Bar(
 	filename = "~/.config/qtile/images/1",),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt ='|',
 	foreground = grey2,),
 	
 	widget.GroupBox(
@@ -140,28 +140,28 @@ screens = [Screen(top=bar.Bar(
 	inactive = grey1,),
 	              
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.CurrentLayout(
 	foreground =grey1,),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Spacer(),
 	
 	widget.CheckUpdates(
 	distro='Arch_checkupdates',
-	display_format=' Updates: {updates}',
+	display_format=' pcm:  {updates}',
 	colour_have_updates="#FF0000",
-	execute = '/home/panos21/.local/bin/pacupdate', 
+	execute = '/home/panos21/.local/pacupdate', 
 	no_update_string = '',
 	update_interval=60),
 	
 	# widget.TextBox(
-	# fmt ='',
+	# fmt ='|',
 	# foreground = grey2,),
 
 	# widget.ThermalSensor(
@@ -169,7 +169,7 @@ screens = [Screen(top=bar.Bar(
 	# fmt ='tem:    {}',),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.CPU(
@@ -177,7 +177,7 @@ screens = [Screen(top=bar.Bar(
 	foreground = grey1,),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Memory(
@@ -186,7 +186,7 @@ screens = [Screen(top=bar.Bar(
 	update_interval = 1,),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Volume(
@@ -194,7 +194,7 @@ screens = [Screen(top=bar.Bar(
 	fmt ='vol:   {}',),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Net(
@@ -203,7 +203,7 @@ screens = [Screen(top=bar.Bar(
 	format = 'up:   {up}', ),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 	
 	widget.Net(
@@ -212,7 +212,7 @@ screens = [Screen(top=bar.Bar(
 	format = 'do:   {down}', ),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Clock(
@@ -220,7 +220,7 @@ screens = [Screen(top=bar.Bar(
 	format ="   %a, %b %d  %H:%M",),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Systray(
