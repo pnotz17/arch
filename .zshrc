@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Set the list of directories that Zsh searches for programs.
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin 
 
 # Setting up Defaults
 export EDITOR='vim'
@@ -39,7 +39,7 @@ alias pkglist='sudo pacman -Qqe > pkglist.txt'
 alias pkgs='pacman -Q  |  wc -l'
 alias rmo='sudo pacman -Rns $(pacman -Qtdq)'
 alias import='gpg --keyserver ha.pool.sks-keyservers.net --recv-keys'
-alias srm='sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist'
+alias srm=' sudo reflector --verbose --country Greece --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist'
 alias xr='xmonad --recompile'
 alias gu='git config --global user.email "pnotz17@gmail.com"'
 alias gn='git config --global user.name "Panagiotis A Natsis"'

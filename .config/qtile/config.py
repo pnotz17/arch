@@ -117,7 +117,7 @@ layouts = [
 	
 # Widget variables
 widget_defaults = dict(
-	font='Mononoki-Regular Nerd Font  ',
+	font='Literation Mono Nerd Font',
 	fontsize=14,
 	padding=4.75,)
 
@@ -154,7 +154,7 @@ screens = [Screen(top=bar.Bar(
 	
 	widget.CheckUpdates(
 	distro='Arch_checkupdates',
-	display_format=' pcm:  {updates}',
+	display_format=' updates:   {updates}',
 	colour_have_updates="#FF0000",
 	execute = '/home/panos21/.local/pacupdate', 
 	no_update_string = '',

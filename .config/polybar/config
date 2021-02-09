@@ -20,7 +20,7 @@ format-background = ${colors.background}
 
 [bar/mybar]
 width = 100%
-height = 24
+height = 22
 border-size = 0
 border-top-size = 0
 border-bottom-size = 1
@@ -33,7 +33,7 @@ fixed-center = true
 border-color = ${colors.border}
 background = ${colors.background}
 foreground = ${colors.foreground}
-module-margin = 0.0
+module-margin = 0
 padding-right = 0
 padding-left = 0
 separator =
@@ -50,7 +50,7 @@ font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=12:antialias=true:hinting=true"
 
 modules-left = bspwm
 modules-center =
-modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory  sep speedup sep speeddown sep alsa sep date sep time sep
+modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory  sep speedup sep speeddown sep alsa sep weather sep date sep time sep
 
 [module/bspwm]
 type = internal/bspwm
@@ -69,8 +69,8 @@ ws-icon-3 = IV;
 ws-icon-4 = V;
 ws-icon-5 = VI;
 ws-icon-6 = VII;
-ws-icon-7 = VIII;
-ws-icon-8 = IX;
+ws-icon-7 = VIII;
+ws-icon-8 = IX;
 ws-icon-9 = X;
 ;ws-icon-default = ♟
 format = <label-state> <label-mode>
