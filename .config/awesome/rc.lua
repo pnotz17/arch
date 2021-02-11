@@ -33,10 +33,10 @@ end
 beautiful.init("/home/panos21/.config/awesome/default/theme.lua") 
 beautiful.gap_single_client = true
 beautiful.useless_gap = 1
+modkey = "Mod4"
 terminal = "st"
 editor = "vim"
 editor_cmd = terminal .. " -e " .. editor
-modkey = "Mod4"
 
 ------ {{{ Layouts }}} ------
 awful.layout.layouts = {
@@ -93,8 +93,7 @@ mymainmenu = makeMenu()
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menu = mymainmenu })
 
------ {{{ Define your widgets}}} -----
------------------------------------------------------------------------------------
+----- {{{ Widgets}}} -----
 -- Separator widget
 spr = wibox.widget.textbox('   |   ')
 
@@ -181,8 +180,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 datewidget = wibox.widget.textbox()
 vicious.register(datewidget, vicious.widgets.date, "   %b %d, %R")
 
------ {{{ Define the Wibar}}} -----
------------------------------------------------------------------------------------
+----- {{{ Wibar}}} -----
 -- Tags
 --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 awful.tag({ "dev", "www", "code", "sys", "doc" }, s, awful.layout.layouts[1])
@@ -352,9 +350,13 @@ globalkeys = gears.table.join(
               {description = "run prompt", group = "launcher"}),
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
+
 -- My keybindings
     awful.key({ modkey, "Shift" }, "b", 
 		function () awful.util.spawn("qutebrowser") 
+    end),
+    awful.key({ modkey, "Shift" }, "p", 
+		function () awful.util.spawn("~/.local/bin/power.sh") 
     end),
     awful.key({ modkey, "Shift" }, "f", 
 		function () awful.util.spawn("pcmanfm") 
@@ -365,17 +367,17 @@ globalkeys = gears.table.join(
     awful.key({ }, "F10", 
 		function ()awful.util.spawn("amixer set Master toggle",
 	 false) end),
-    awful.key({ }, "F11", 
+	 awful.key({ }, "F11", 
 		function ()awful.util.spawn("amixer set Master 2%-", 
 	false) end),
-    awful.key({ }, "F12", 
+	awful.key({ }, "F12", 
 		function ()awful.util.spawn("amixer set Master 2%+", 
 	false) end),
 	awful.key({ }, "Print", 
 		function () awful.util.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'", 
     false) end),    
     awful.key({ modkey }, "b", function ()
-            for s in screen do
+		for s in screen do
                 s.mywibox.visible = not s.mywibox.visible
                 if s.mybottomwibox then
                     s.mybottomwibox.visible = not s.mybottomwibox.visible
@@ -396,6 +398,7 @@ globalkeys = gears.table.join(
 		end,                    
 			{description = "increase window opacity"})
 )
+
 ----- {{{ Functions }}} ------
 clientkeys = gears.table.join(
     awful.key({ modkey,           }, "f",
@@ -443,6 +446,7 @@ clientkeys = gears.table.join(
         end ,
         {description = "(un)maximize horizontally", group = "client"}))
 
+----- {{{ Tag bindings }}} ------
 for i = 1, 9 do
     globalkeys = gears.table.join(globalkeys,
         awful.key({ modkey }, "#" .. i + 9,
@@ -508,29 +512,26 @@ clientbuttons = gears.table.join(
 root.keys(globalkeys)
 
 ------ {{{  Rules }}} ------
-awful.rules.rules = {
+ awful.rules.rules = {
 { rule = { },
-properties = 
-   { border_width = beautiful.border_width,
-	  border_color = beautiful.border_normal,
-	  focus = true,
-	  keys = clientkeys,
-	  buttons = clientbuttons,
-	  size_hints_honor = false,
-	  maximized_horizontal = false,
-	  maximized_vertical = false,
-	  maximized = false,}},
+	properties = { border_width = beautiful.border_width,
+	border_color = beautiful.border_normal,
+	focus = awful.client.focus.filter,
+	raise = true,
+	keys = clientkeys,
+	buttons = clientbuttons,
+	screen = awful.screen.preferred,
+	placement = awful.placement.no_overlap+awful.placement.no_offscreen + awful.placement.centered,
+	size_hints_honor = false}},
 
--- Floating clients.
-	{ rule_any = {
-	class = {
-	"gimp",
-	"mpv"},       
-	}, properties = { floating = true }},
-
--- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-    }, properties = { titlebars_enabled = false }},
+------ {{{  Floating windows }}} ------
+	{ rule = { class = "mpv" },
+	properties = { floating = true } },
+	{ rule = { class = "gimp" },
+	properties = { floating = true } },
+	
+	{ rule_any = {type = { "normal", "dialog" }
+	}, properties = { titlebars_enabled = false }},
 }
 
 ------ {{{  Signals }}} ------
@@ -542,7 +543,7 @@ awful.placement.no_offscreen(c)
     end
 end)
 
--- Add a titlebar if titlebars_enabled is set to true in the rules.
+------ {{{  Add a titlebar  }}} ------
 client.connect_signal("request::titlebars", function(c)
 local buttons = gears.table.join(
 awful.button({ }, 1, function()
@@ -554,21 +555,22 @@ awful.button({ }, 3, function()
 	awful.mouse.client.resize(c)
 end))
 
+------ {{{ Titlebar Settings }}} ------
 awful.titlebar(c, { size = 15}) : setup {
-{ -- Left
-awful.titlebar.widget.iconwidget(c),
+
+-- Left
+	{ awful.titlebar.widget.iconwidget(c),
 buttons = buttons,
 layout  = wibox.layout.fixed.horizontal},
 
-{ -- Middle
-{ -- Title
-align  = "center",
+-- Middle
+	{ { align  = "center",
 widget = awful.titlebar.widget.titlewidget(c)},
 buttons = buttons,
 layout  = wibox.layout.flex.horizontal},
 
-{ -- Right
-awful.titlebar.widget.floatingbutton (c),
+-- Right
+	{ awful.titlebar.widget.floatingbutton (c),
 awful.titlebar.widget.maximizedbutton(c),
 awful.titlebar.widget.stickybutton   (c),
 awful.titlebar.widget.ontopbutton    (c),
