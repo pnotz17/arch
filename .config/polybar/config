@@ -46,7 +46,7 @@ tray-offset-y = 0
 tray-padding = 1
 tray-scale = 1.0
 
-font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=12:antialias=true:hinting=true"
+font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=11:antialias=true:hinting=true"
 
 modules-left = bspwm
 modules-center =
@@ -113,7 +113,7 @@ content-foreground = ${colors.trim}
 
 [module/pacman-updates]
 type = custom/script
-exec =~/.local/bin/check-all-updates.sh
+exec =~/.local/bin/updates.sh
 interval = 100
 label =%output%
 format-foreground =${colors.urgent}

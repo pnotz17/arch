@@ -4,7 +4,7 @@
 cat <<EOF | xmenu -r | sh &
 File manager	pcmanfm
 Terminal 	st
-Web browser	firefox	
+Web browser	/usr/bin/waterfox-g3	
 Accessories
 	feh	feh  ~/Pictures/Wallpapers/*
 	vim	st -e vim
@@ -15,8 +15,7 @@ Graphics
 	gimp	gimp
 	xsane-scanning	xsane
 Network 
-	qutebrowser	/usr/bin/qutebrowser
-	firefox	firefox
+	waterfox	/usr/bin/waterfox-g3
 	transmission	transmission-gtk
 Multimedia
 	alsa mixer	st -e alsamixer

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cupd=$(checkupdates | wc -l)
-echo updates: "$cupd "
+echo  System Updates: "$cupd "

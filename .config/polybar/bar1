@@ -103,7 +103,7 @@ content-foreground = ${colors.sep}
 
 [module/pacman-updates]
 type = custom/script
-exec =~/.local/bin/check-all-updates.sh
+exec =~/.local/bin/updates.sh
 interval = 100
 label =%output%
 format-foreground =${colors.alert}

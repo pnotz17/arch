@@ -96,7 +96,9 @@ super + ctrl + space
 super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
-# MOVE/RESIZE
+#
+# move/resize
+#
 
 # expand a window by moving one of its side outward
 ctrl + alt + {h,j,k,l}

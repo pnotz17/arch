@@ -1,9 +1,9 @@
 static struct Config config = {
 	/* font, separate different fonts with comma */
-	.font = "UbuntuMono Nerd Font:size=7",
+	.font = "Ubuntu:size=7",
 
 	/* colors */
-	.background_color = "#111111",
+	.background_color = "#080808",
     .foreground_color = "#808080",
     .selbackground_color = "#222222",
     .selforeground_color = "#ffffff",
