@@ -94,11 +94,11 @@ volume_alsa() {
 }
 
 clock() {
-	dte=$(date +"%D")
-	time=$(date +"%H:%M")
+	time=$(date +"%b %d, %R")
 
-	echo "  $dte |   $time"
+	echo "  $time "
 }
+
 
 main() {
 	while true; do
