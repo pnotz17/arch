@@ -26,6 +26,27 @@ ram() {
 	echo mem: "$mem"
 }
 
+pkgs() {
+	pkgs=$(pacman -Q  |  wc -l)
+	echo pkg: "$pkgs"
+}
+
+updates() {
+	updates=$(checkupdates 2> /dev/null | wc -l )
+	echo pcm: "$updates"
+}
+
+weather() {
+	weather=$(curl 'https://wttr.in/Florina,Greece?format=%t')
+	echo wea: "$weather"
+}
+
+clock() {
+	time=$(date +"%b %d, %R")
+
+	echo "$time"
+}
+
 netspeed()
 {
 	case $BLOCK_BUTTON in
@@ -50,22 +71,7 @@ update() {
 rx=$(update /sys/class/net/[ew]*/statistics/rx_bytes)
 tx=$(update /sys/class/net/[ew]*/statistics/tx_bytes)
 
-printf "up: %4sB down: %4sB\\n" $(numfmt --to=iec $tx) $(numfmt --to=iec $rx) 
-}
-
-pkgs() {
-	pkgs=$(pacman -Q  |  wc -l)
-	echo pkg: "$pkgs"
-}
-
-updates() {
-	updates=$(checkupdates 2> /dev/null | wc -l )
-	echo pcm: "$updates"
-}
-
-weather() {
-	weather=$(curl 'https://wttr.in/Florina,Greece?format=%t')
-	echo wea: "$weather"
+printf "up: %4sB do: %4sB\\n" $(numfmt --to=iec $tx) $(numfmt --to=iec $rx) 
 }
 
 volume_alsa() {
@@ -93,16 +99,10 @@ volume_alsa() {
 	fi
 }
 
-clock() {
-	time=$(date +"%b %d, %R")
-
-	echo "$time"
-}
-
 main() {
 	while true; do
-		xsetroot -name "$(updates) | $(pkgs) | $(weather) | $(cpu) | $(ram) | $(volume_alsa) | $(netspeed) | $(clock) |"
-		sleep 1
+		xsetroot -name "$(updates) | $(pkgs) | $(cpu) | $(ram) | $(volume_alsa) | $(netspeed) | $(clock) |"
+		sleep 3
 	done
 }
 
