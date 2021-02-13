@@ -1,5 +1,20 @@
 #!/bin/sh
 
+updates() {
+	updates=$(checkupdates 2> /dev/null | wc -l )
+	echo pcm: "  $updates"
+}
+
+pkgs() {
+	pkgs=$(pacman -Q  |  wc -l)
+	echo pkg: "  $pkgs"
+}
+
+weather() {
+	weather=$(curl 'https://wttr.in/Florina,Greece?format=%t')
+	echo wea: "  $weather"
+}
+
 cputemp() {
 	temp ="$(sensors | grep Core | awk '{print substr($3, 2, length($3)-5)}' | tr "\\n" " " | sed 's/ /°C  /g' | sed 's/  $//')"
 	echo "tem:   $cputemp"
@@ -20,28 +35,26 @@ ram() {
 	echo mem: "  $mem"
 }
 
-pkgs() {
-	pkgs=$(pacman -Q  |  wc -l)
-	echo pkg: "  $pkgs"
+upspeed() {
+T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+sleep 1
+T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+TBPS=`expr $T2 - $T1`
+TKBPS=`expr $TBPS / 1024`
+echo -e "up:    $TKBPS KB/s"
 }
 
-updates() {
-	updates=$(checkupdates 2> /dev/null | wc -l )
-	echo pcm: "  $updates"
-}
-
-weather() {
-	weather=$(curl 'https://wttr.in/Florina,Greece?format=%t')
-	echo wea: "  $weather"
-}
-
-clock() {
-	time=$(date +"%b %d, %R")
-	echo "  $time"
+downspeed() {
+R1=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+sleep 1
+R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+RBPS=`expr $R2 - $R1`
+RKBPS=`expr $RBPS / 1024`
+echo -e "do:    $RKBPS KB/s"
 }
 
 alsa() {
-	volume_alsa=$(amixer -M sget Master | grep Mono: | awk '{ print $2 }')
+	mono=$(amixer -M sget Master | grep Mono: | awk '{ print $2 }')
 	if [ -z "$mono" ]; then
 		muted=$(amixer -M sget Master | awk 'FNR == 6 { print $7 }' | sed 's/[][]//g')
 		vol=$(amixer -M sget Master | awk 'FNR == 6 { print $5 }' | sed 's/[][]//g; s/%//g')
@@ -63,37 +76,15 @@ alsa() {
 	fi
 }
 
-netspeed() {
-	case $BLOCK_BUTTON in
-	1) setsid -f "$TERMINAL" -e bmon ;;
-	3) notify-send "🌐 Network traffic module" "🔻: Traffic received
-🔺: Traffic transmitted" ;;
-	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
-esac
-
-update() {
-    sum=0
-    for arg; do
-        read -r i < "$arg"
-        sum=$(( sum + i ))
-    done
-    cache=${XDG_CACHE_HOME:-$HOME/.cache}/${1##*/}
-    [ -f "$cache" ] && read -r old < "$cache" || old=0
-    printf %d\\n "$sum" > "$cache"
-    printf %d\\n $(( sum - old ))
-}
-
-rx=$(update /sys/class/net/[ew]*/statistics/rx_bytes)
-tx=$(update /sys/class/net/[ew]*/statistics/tx_bytes)
-
-printf "up:    %4sB\\n | do:   %4sB" $(numfmt --to=iec $tx) $(numfmt --to=iec $rx) 
+clock() {
+	time=$(date +"%b %d, %R")
+	echo "  $time"
 }
 
 main() {
 	while true; do
-		xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(netspeed) | $(clock) |"
+		xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
 		sleep 2
 	done
 }
-
 main
