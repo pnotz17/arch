@@ -1,122 +1,112 @@
 [colors]
-background = #E6080808
-foreground = #a4a4a4
-moderate = #ebcb8b
-urgent = #bf616a
-trim = #919ba0
-blue = #a2d1ec
-purple = #b48ead
-border = #c0c5ce
-
-[settings]
-compositing-background = source
-compositing-foreground = source
-compositing-overline = source
-compositing-underline = source
-compositing-border = source
-screenchange-reload = true
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
+background = #F20A0A0A
+foreground = #999999
+alert = #FF0000
+sep = #999999
 
 [bar/mybar]
+;monitor = ${env:MONITOR:VGA1}
 width = 100%
-height = 22
-border-size = 0
-border-top-size = 0
-border-bottom-size = 1
-radius = 0
-bottom = false
-line-size = 3
-offset-x = 0
-offset-y = 0
+height = 20
+offset-x = 0%
+offset-y = 0%
+radius = 0.0
 fixed-center = true
-border-color = ${colors.border}
+bottom = false
+;border-size = 0
+;border-color = ;00000000
+line-size = 2
+;line-color = "#f00"
 background = ${colors.background}
 foreground = ${colors.foreground}
-module-margin = 0
-padding-right = 0
+wm-restack = bspwm
+;override-redirect = true
+;enable-ipc = true
 padding-left = 0
-separator =
+padding-right = 0
+module-margin-left = 1
+module-margin-right = 1
 cursor-click = pointer
-tray-position = right
-tray-detached = false
-tray-maxsize = 16
-tray-offset-x = 0
-tray-offset-y = 0
-tray-padding = 1
-tray-scale = 1.0
 
 font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=11:antialias=true:hinting=true"
 
 modules-left = bspwm
 modules-center =
-modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory  sep speedup sep speeddown sep alsa sep weather sep date sep time sep
+modules-right =  pacman-updates sep  imap sep cpu sep memory sep alsa sep speedup sep speeddown sep time sep
 
+;tray-position = right
+;tray-background = ${colors.background}
+
+; MODULES A-Z  
 [module/bspwm]
 type = internal/bspwm
-pin-workspaces = true
-inline-mode = false
 enable-click = true
 enable-scroll = true
 reverse-scroll = true
-fuzzy-match = false
-; ws-icon-[0-9]+ = label;icon
-; Note that the label needs to correspond with the bspwm workspace name
-ws-icon-0 = I;
-ws-icon-1 = II;
-ws-icon-2 = III;
-ws-icon-3 = IV;
-ws-icon-4 = V;
-ws-icon-5 = VI;
-ws-icon-6 = VII;
-ws-icon-7 = VIII;
-ws-icon-8 = IX;
-ws-icon-9 = X;
-;ws-icon-default = ♟
+pin-workspaces = true
+
+ws-icon-0 = 1;dev
+ws-icon-1 = 2;www
+ws-icon-2 = 3;code
+ws-icon-3 = 4;sys
+ws-icon-4 = 5;doc
+;ws-icon-5 = VI;
+;ws-icon-6 = VII;
+;ws-icon-7 = VIII;
+;ws-icon-8 = IX;
+;ws-icon-9 = X;
+ws-icon-default = " "
+
 format = <label-state> <label-mode>
-label-monitor = %name%
-label-mode-padding = 1
-label-focused = %icon% %name%
-label-focused-padding = 1
-label-occupied = %icon% %name%
-label-occupied-padding = 1
-label-urgent = %icon% %name%
-label-urgent-padding = 1
-label-empty = %icon% %name%
-label-empty-padding = 1
-label-dimmed-foreground = ${colors.purple}
-label-dimmed-underline = ${colors.purple}
-label-dimmed-focused-background = ${colors.purple}
-label-focused-foreground = ${colors.blue}
-label-focused-underline = ${colors.blue}
-label-occupied-underline = ${colors.purple}
-label-urgent-foreground = ${colors.urgent}
-label-urgent-underline = ${colors.urgent}
-; The following labels will be used to indicate the layout/mode
-; for the focused workspace. Requires <label-mode>
-label-monocle = "  "
-label-tiled = "  "
+label-focused = %icon%
+label-focused-background = ${colors.background}
+label-focused-underline = ${colors.sep}
+label-focused-padding = 2
+label-focused-foreground = ${colors.foreground}
+label-occupied = %icon%
+label-occupied-padding = 2
+label-occupied-background = ${colors.background}
+label-urgent = %icon%
+label-urgent-padding = 2
+label-empty = %icon%
+label-empty-foreground = ${colors.foreground}
+label-empty-padding = 2
+label-empty-background = ${colors.background}
+label-monocle = "   "
+label-monocle-foreground = ${colors.foreground}
+label-tiled = "   "
+label-tiled-foreground = ${colors.foreground}
 label-fullscreen = "  "
-label-floating = "  "
-label-pseudotiled = P
-label-locked = "  "
-label-sticky = "  "
-label-private =  "     "
-label-sticky-foreground = ${colors.purple}
-label-locked-foreground = ${colors.moderate}
-label-private-foreground = ${colors.urgent}
+label-fullscreen-foreground = ${colors.foreground}
+label-floating = "   "
+label-floating-foreground = ${colors.foreground}
+label-pseudotiled = "   "
+label-pseudotiled-foreground = ${colors.foreground}
+label-locked = "   "
+label-locked-foreground = ${colors.foreground}
+label-sticky = "   "
+label-sticky-foreground = ${colors.foreground}
+label-private =  "    "
+label-private-foreground = ${colors.foreground}
+
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+label-separator = |
+label-separator-padding = 0
+label-separator-foreground 				= ${colors.sep}
 
 [module/sep]
 type = custom/text
 content =" | "
-content-foreground = ${colors.trim}
+content-foreground = ${colors.sep}
 
 [module/pacman-updates]
 type = custom/script
-exec =~/.local/bin/updates.sh
+exec =~/.local/bin/check-all-updates.sh
 interval = 100
 label =%output%
-format-foreground =${colors.urgent}
+format-foreground =${colors.alert}
 
 [module/pkgs]
 type = custom/script
@@ -165,7 +155,7 @@ format-volume-padding = 1
 label-volume  =   %percentage%
 format-volume =<label-volume>
 label-muted = " muted "
-label-muted-foreground = ${colors.urgent}
+label-muted-foreground = ${colors.alert}
 
 [module/speedup]
 type = internal/network
@@ -179,16 +169,8 @@ interface = "enp2s0"
 interval = 1.0
 label-connected = "  %downspeed%"
 
-[module/date]
-type = custom/script
-exec =date +"  %a, %d %b"
-interval = 1
-
 [module/time]
-type = internal/date
-interval = 5
-time ="  %I:%M"
-time-alt = %H:%M:%S
-label = %time%
-
+type = custom/script
+exec =date +"  %b %d, %R"
+interval = 1
 

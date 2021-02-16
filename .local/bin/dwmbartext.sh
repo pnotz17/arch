@@ -1,7 +1,7 @@
 #!/bin/sh
 
 updates() {
-	updates=$(checkupdates 2> /dev/null | wc -l )
+	updates=$(checkupdates 2> /dev/null | wc -l )  
 	echo pcm: "$updates"
 }
 
@@ -21,12 +21,7 @@ cputemp() {
 }
 
 cpufrequency() {
-	read -r cpu a b c previdle rest < /proc/stat
-	prevtotal=$((a+b+c+previdle))
-	sleep 0.5
-	read -r cpu a b c idle rest < /proc/stat
-	total=$((a+b+c+idle))
-	cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
+	cpu=$(awk '{u=$2+$4; t=$2+$4+$5;if (NR==1){u1=u; t1=t;} else printf("%d%%", ($2+$4-u1) * 100 / (t-t1) "%");}' <(grep 'cpu ' /proc/stat) <(sleep 0.5; grep 'cpu ' /proc/stat))
 	echo cpu: "$cpu"%
 }
 
@@ -42,7 +37,6 @@ alsa() {
 
 upspeed() {
 T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
-sleep 1
 T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
 TBPS=`expr $T2 - $T1`
 TKBPS=`expr $TBPS / 1024`
@@ -51,7 +45,6 @@ echo -e "up:  $TKBPS KB/s"
 
 downspeed() {
 R1=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
-sleep 1
 R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
 RBPS=`expr $R2 - $R1`
 RKBPS=`expr $RBPS / 1024`
@@ -63,10 +56,9 @@ clock() {
 	echo "$time"
 }
 
-main() {
-	while true; do
-		xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
-		sleep 2
-	done
-}
-main
+while true; do
+	xsetroot -name " $(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
+	sleep 2
+done &
+
+

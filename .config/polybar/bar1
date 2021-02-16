@@ -2,7 +2,7 @@
 background = #F20A0A0A
 foreground = #999999
 alert = #FF0000
-sep = #ffb52a
+sep = #999999
 
 [bar/mybar]
 ;monitor = ${env:MONITOR:VGA1}
@@ -32,7 +32,7 @@ font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=11:antialias=true:hinting=true"
 
 modules-left = bspwm
 modules-center =
-modules-right =  pacman-updates sep pkgs sep imap sep cpu sep memory sep alsa sep speedup sep speeddown sep date sep time sep
+modules-right =  pacman-updates sep  imap sep cpu sep memory sep alsa sep speedup sep speeddown sep time sep
 
 ;tray-position = right
 ;tray-background = ${colors.background}
@@ -72,21 +72,21 @@ label-empty = %icon%
 label-empty-foreground = ${colors.foreground}
 label-empty-padding = 2
 label-empty-background = ${colors.background}
-label-monocle = "  "
+label-monocle = "   "
 label-monocle-foreground = ${colors.foreground}
-label-tiled = "  "
+label-tiled = "   "
 label-tiled-foreground = ${colors.foreground}
 label-fullscreen = "  "
 label-fullscreen-foreground = ${colors.foreground}
-label-floating = "  "
+label-floating = "   "
 label-floating-foreground = ${colors.foreground}
-label-pseudotiled = "  "
+label-pseudotiled = "   "
 label-pseudotiled-foreground = ${colors.foreground}
-label-locked = "  "
+label-locked = "   "
 label-locked-foreground = ${colors.foreground}
-label-sticky = "  "
+label-sticky = "   "
 label-sticky-foreground = ${colors.foreground}
-label-private =  "     "
+label-private =  "    "
 label-private-foreground = ${colors.foreground}
 
 format-foreground = ${colors.foreground}
@@ -103,7 +103,7 @@ content-foreground = ${colors.sep}
 
 [module/pacman-updates]
 type = custom/script
-exec =~/.local/bin/updates.sh
+exec =~/.local/bin/check-all-updates.sh
 interval = 100
 label =%output%
 format-foreground =${colors.alert}
@@ -169,14 +169,8 @@ interface = "enp2s0"
 interval = 1.0
 label-connected = "  %downspeed%"
 
-[module/date]
+[module/time]
 type = custom/script
-exec =date +"  %a, %d %b"
+exec =date +"  %b %d, %R"
 interval = 1
 
-[module/time]
-type = internal/date
-interval = 5
-time ="  %I:%M"
-time-alt = %H:%M:%S
-label = %time%

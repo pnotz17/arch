@@ -1,5 +1,5 @@
 #!/bin/sh
-
+	
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )
 	echo pcm: "  $updates"
@@ -36,21 +36,19 @@ ram() {
 }
 
 upspeed() {
-T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
-sleep 1
-T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
-TBPS=`expr $T2 - $T1`
-TKBPS=`expr $TBPS / 1024`
-echo -e "up:    $TKBPS KB/s"
+	T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+	T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+	TBPS=`expr $T2 - $T1`
+	TKBPS=`expr $TBPS / 1024`
+	echo -e "up:    $TKBPS KB/s"
 }
 
 downspeed() {
-R1=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
-sleep 1
-R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
-RBPS=`expr $R2 - $R1`
-RKBPS=`expr $RBPS / 1024`
-echo -e "do:    $RKBPS KB/s"
+	R1=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+	R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+	RBPS=`expr $R2 - $R1`
+	RKBPS=`expr $RBPS / 1024`
+	echo -e "do:    $RKBPS KB/s"
 }
 
 alsa() {
@@ -81,10 +79,10 @@ clock() {
 	echo "  $time"
 }
 
-main() {
-	while true; do
-		xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
-		sleep 2
-	done
-}
-main
+while true; do
+	xsetroot -name "$(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
+	sleep 1
+done &
+
+
+
