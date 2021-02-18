@@ -61,6 +61,7 @@ keys = [
 	# Extras
 	Key([mod, "shift"], "b", lazy.spawn("qutebrowser")),
 	Key([mod, "shift"], "f", lazy.spawn("pcmanfm")),
+	Key([mod, "shift"], "p", lazy.spawn(".local/bin/power.sh")),
 	Key([], "F12", lazy.spawn("amixer set Master Front 2+")),
 	Key([], "F11", lazy.spawn("amixer set Master Front 2-")),
 	Key([], "Print", lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
@@ -88,9 +89,9 @@ for i, (name, kwargs) in enumerate(group_names, 1):
 # Layout variables
 def init_layout_theme():
 	return {"margin":1,
-	"border_width":0,
-	"border_focus": "#ffffff",
-	"border_normal": "#808080"}
+	"border_width":1,
+	"border_focus": "#b3afc2",
+	"border_normal": "#b3afc2"}
 	
 layout_theme = init_layout_theme()
 
@@ -118,7 +119,7 @@ layouts = [
 # Widget variables
 widget_defaults = dict(
 	font='Literation Mono Nerd Font',
-	fontsize=14,
+	fontsize=13,
 	padding=4.75,)
 
 extension_defaults = widget_defaults.copy()
@@ -156,7 +157,7 @@ screens = [Screen(top=bar.Bar(
 	distro='Arch_checkupdates',
 	display_format=' updates:   {updates}',
 	colour_have_updates="#FF0000",
-	execute = '/home/panos21/.local/pacupdate', 
+	execute = '~/.local/bin/check-all-updates.sh', 
 	no_update_string = '',
 	update_interval=60),
 	
@@ -228,6 +229,7 @@ screens = [Screen(top=bar.Bar(
 	
 ],20,background=barc,opacity=0.95),),
 ]
+
 # Floating rules
 floating_layout = layout.Floating(float_rules=[
 	{'wmclass': 'Confirm"'},

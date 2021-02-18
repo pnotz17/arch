@@ -264,8 +264,8 @@ s.mytasklist,
 -- Right widgets
 { layout = wibox.layout.fixed.horizontal,
 	--spr,oswidget,
+	--spr,fswidget,
 	spr,pacwidget,
-	spr,fswidget,
 	--spr,thermalwidget,
 	spr,cpuwidget,
 	spr,memwidget,
@@ -356,7 +356,7 @@ globalkeys = gears.table.join(
 		function () awful.util.spawn("qutebrowser") 
     end),
     awful.key({ modkey, "Shift" }, "p", 
-		function () awful.util.spawn("~/.local/bin/power.sh") 
+		function () awful.util.spawn(".local/bin/power.sh") 
     end),
     awful.key({ modkey, "Shift" }, "f", 
 		function () awful.util.spawn("pcmanfm") 

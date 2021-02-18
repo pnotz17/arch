@@ -18,7 +18,7 @@ import XMonad.Layout.GridVariants
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.GridSelect
 import XMonad.Actions.UpdatePointer
-import XMonad.Actions.SpawnOn
+import XMonad.Util.SpawnOnce
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -36,8 +36,9 @@ myModMask											= mod4Mask
 myEventHook										= mempty
 
 myStartupHook = do
-  setWMName "LG3D"
-  startupHook desktopConfig
+	spawnOnce "picom -b &"
+	setWMName "LG3D"
+	startupHook desktopConfig
 
 xmobarEscape :: String -> String
 xmobarEscape = concatMap doubleLts
