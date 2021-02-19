@@ -42,11 +42,14 @@ static const Rule rules[] = {
 static const float mfact											= 0.50; 
 static const int nmaster											= 1;   
 static const int resizehints										= 0;    
+#include "layouts.c"
 
 static const Layout layouts[] = {
 	{ "[]=",      tile },    
 	{ "><>",      NULL },    
 	{ "[M]",      monocle },
+	{ "HHH",      grid },
+	{ NULL,       NULL },
 };
 
 /* key definitions */
@@ -90,6 +93,9 @@ static Key keys[] = {
 	{ MODKEY,                       				XK_t,      			setlayout,      							{.v = &layouts[0]} },
 	{ MODKEY,                       				XK_f,      			setlayout,      							{.v = &layouts[1]} },
 	{ MODKEY,                       				XK_m,      			setlayout,      							{.v = &layouts[2]} },
+	{ MODKEY,                       				XK_g,      			setlayout,      							{.v = &layouts[3]} },
+	{ MODKEY|ControlMask,			XK_comma,  	cyclelayout,    						{.i = -1 } },
+	{ MODKEY|ControlMask,           XK_period, 	cyclelayout,    						{.i = +1 } },
 	{ MODKEY,                       				XK_space,  		setlayout,      							{0} },
 	{ MODKEY|ShiftMask,            	XK_space,		togglefloating, 						{0} },
 	{ MODKEY,                       				XK_0,      			view,           								{.ui = ~0 } },
@@ -100,6 +106,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,            	XK_period, 		tagmon,         							{.i = +1 } },
 	{ MODKEY,                       				XK_minus,  	setgaps,        							{.i = -1 } },
 	{ MODKEY,                       				XK_equal,  		setgaps,        							{.i = +1 } },
+	{ MODKEY|ShiftMask,            	XK_equal,  		setgaps,        							{.i = 0  } },
 	{ MODKEY|ShiftMask,				XK_q, quit,           												{0} },
 	{ MODKEY|ShiftMask,				XK_b,	    		spawn,	   									{.v = webcmd } },
 	{ MODKEY|ShiftMask,				XK_f,	    			spawn,	   									{.v = filescmd } },
@@ -108,7 +115,6 @@ static Key keys[] = {
 	{ 0,                            							XK_Print,			spawn,          							{.v = print_screen_cmd } },
     { 0,                            							XK_F12,			spawn,          							{.v = upvol   } },
 	{ 0,                            							XK_F11,			spawn,          							{.v = downvol } },
-	{ MODKEY|ShiftMask,            	XK_equal,  		setgaps,        							{.i = 0  } },
 	TAGKEYS(                        				XK_1,                      												0)
 	TAGKEYS(                        				XK_2,                      												1)
 	TAGKEYS(                        				XK_3,                      												2)

@@ -37,6 +37,7 @@ ram() {
 
 upspeed() {
 	T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+	sleep 1
 	T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
 	TBPS=`expr $T2 - $T1`
 	TKBPS=`expr $TBPS / 1024`
@@ -45,6 +46,7 @@ upspeed() {
 
 downspeed() {
 	R1=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+	sleep 1
 	R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
 	RBPS=`expr $R2 - $R1`
 	RKBPS=`expr $RBPS / 1024`

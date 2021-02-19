@@ -36,19 +36,21 @@ alsa() {
 }
 
 upspeed() {
-T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
-T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
-TBPS=`expr $T2 - $T1`
-TKBPS=`expr $TBPS / 1024`
-echo -e "up:  $TKBPS KB/s"
+	T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+	sleep 1
+	T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+	TBPS=`expr $T2 - $T1`
+	TKBPS=`expr $TBPS / 1024`
+	printf  "up:  $TKBPS kb"
 }
 
 downspeed() {
-R1=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
-R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
-RBPS=`expr $R2 - $R1`
-RKBPS=`expr $RBPS / 1024`
-echo -e "do:  $RKBPS KB/s"
+	R1=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+	sleep 1
+	R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+	RBPS=`expr $R2 - $R1`
+	RKBPS=`expr $RBPS / 1024`
+	printf  "do:  $RKBPS kb"
 }
 
 clock() {
