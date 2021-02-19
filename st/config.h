@@ -1,21 +1,10 @@
 /* See LICENSE file for copyright and license details. */
 
-/*
- * appearance
- *
- * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
- */
+ // appearance
 static char *font = "UbuntuMono Nerd Font:pixelsize=21:antialias=true:autohint=true";
 static int borderpx = 1;
 
-/*
- * What program is execed by st depends of these precedence rules:
- * 1: program passed with -e
- * 2: scroll and/or utmp
- * 3: SHELL environment variable
- * 4: value of shell in /etc/passwd
- * 5: value of shell in config.h
- */
+// What program is execed by st depends of these precedence rules:
 static char *shell = "/usr/bin/zsh";
 char *utmp = NULL;
 /* scroll program: to enable use a string like "scroll" */
@@ -29,11 +18,7 @@ char *vtiden = "\033[?6c";
 static float cwscale = 1.0;
 static float chscale = 1.0;
 
-/*
- * word delimiter string
- *
- * More advanced example: L" `'\"()[]{}"
- */
+ // word delimiter string
 wchar_t *worddelimiters = L" ";
 
 /* selection timeouts (in milliseconds) */
@@ -43,54 +28,26 @@ static unsigned int tripleclicktimeout = 600;
 /* alt screens */
 int allowaltscreen = 1;
 
-/* allow certain non-interactive (insecure) window operations such as:
-   setting the clipboard text */
+/* allow certain non-interactive (insecure) window operations such as setting the clipboard text */
 int allowwindowops = 0;
 
-/*
- * draw latency range in ms - from new content/keypress/etc until drawing.
- * within this range, st draws when content stops arriving (idle). mostly it's
- * near minlatency, but it waits longer for slow updates to avoid partial draw.
- * low minlatency will tear/flicker more, as it can "detect" idle too early.
- */
+ // draw latency range in ms 
 static double minlatency = 8;
 static double maxlatency = 33;
 
-/*
- * blinking timeout (set to 0 to disable blinking) for the terminal blinking
- * attribute.
- */
+ // blinking timeout (set to 0 to disable blinking) for the terminal blinking
 static unsigned int blinktimeout = 800;
 
-/*
- * thickness of underline and bar cursors
- */
+ // thickness of underline and bar cursors
 static unsigned int cursorthickness = 2;
 
-/*
- * bell volume. It must be a value between -100 and 100. Use 0 for disabling
- * it
- */
+ // bell volume. It must be a value between -100 and 100. Use 0 for disabling it
 static int bellvolume = 0;
 
 /* default TERM value */
 char *termname = "st-256color";
 
-/*
- * spaces per tab
- *
- * When you are changing this value, don't forget to adapt the »it« value in
- * the st.info and appropriately install the st.info in the environment where
- * you use this st version.
- *
- *	it#$tabspaces,
- *
- * Secondly make sure your kernel is not expanding tabs. When running `stty
- * -a` »tab0« should appear. You can tell the terminal to not expand tabs by
- *  running following command:
- *
- *	stty tabs
- */
+ // spaces per tab
 unsigned int tabspaces = 8;
 
 /* bg opacity */
@@ -118,68 +75,44 @@ static const char *colorname[] = {
 	/* more colors can be added after 255 to use with DefaultXX */
 	"#add8e6", /* 256 -> cursor */
 	"#555555", /* 257 -> rev cursor*/
-	"#111111", /* 258 -> bg */
+	"#080808", /* 258 -> bg */
 	"#BBBBBB", /* 259 -> fg */
 };
 
-/*
- * Default colors (colorname index)
- * foreground, background, cursor, reverse cursor
- */
+ // Default colors (colorname index)foreground, background, cursor, reverse cursor
 unsigned int defaultfg = 259;
 unsigned int defaultbg = 258;
 unsigned int defaultcs = 256;
 unsigned int defaultrcs = 257;
 
-/*
- * Default shape of cursor
- * 2: Block ("█")
- * 4: Underline ("_")
- * 6: Bar ("|")
- * 7: Snowman ("☃")
- */
+ // Default shape of cursor
 static unsigned int cursorshape = 2;
 
-/*
- * Default columns and rows numbers
- */
-
+ // Default columns and rows numbers
 static unsigned int cols = 80;
 static unsigned int rows = 24;
 
-/*
- * Default colour and shape of the mouse cursor
- */
+ // Default colour and shape of the mouse cursor
 static unsigned int mouseshape = XC_xterm;
 static unsigned int mousefg = 7;
 static unsigned int mousebg = 0;
 
-/*
- * Color used to display font attributes when fontconfig selected a font which
- * doesn't match the ones requested.
- */
+ // Color used to display font attributes when fontconfig selected a font which doesn't match the ones requested.
 static unsigned int defaultattr = 11;
 
-/*
- * Force mouse select/shortcuts while mask is active (when MODE_MOUSE is set).
- * Note that if you want to use ShiftMask with selmasks, set this to an other
- * modifier, set to 0 to not use it.
- */
+ // Force mouse select/shortcuts while mask is active (when MODE_MOUSE is set).
 static uint forcemousemod = ShiftMask;
 
-/*
- * Internal mouse shortcuts.
- * Beware that overloading Button1 will disable the selection.
- */
+ // Internal mouse shortcuts.
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
-	{ XK_ANY_MOD,           Button4, kscrollup,      {.i = 1},      0, /* !alt */ -1 },
-	{ XK_ANY_MOD,           Button5, kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
-	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
-	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
-	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
-	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
-	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+	{ XK_ANY_MOD,				Button4, kscrollup,				{.i = 1},      0, /* !alt */ -1 },
+	{ XK_ANY_MOD,				Button5, kscrolldown,		{.i = 1},      0, /* !alt */ -1 },
+	{ XK_ANY_MOD,				Button2, selpaste,				{.i = 0},      1 },
+	{ ShiftMask,						Button4, ttysend,				{.s = "\033[5;2~"} },
+	{ XK_ANY_MOD,				Button4, ttysend,				{.s = "\031"} },
+	{ ShiftMask,						Button5, ttysend,				{.s = "\033[6;2~"} },
+	{ XK_ANY_MOD,				Button5, ttysend,				{.s = "\005"} },
 };
 
 /* Internal keyboard shortcuts. */
@@ -187,32 +120,24 @@ static MouseShortcut mshortcuts[] = {
 #define TERMMOD (Mod4Mask|ShiftMask)
 
 static Shortcut shortcuts[] = {
-	/* mask                 keysym          function        argument */
-	
-	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
-	{ MODKEY,               XK_Home,        zoomreset,      {.f =  0} },
-	
-	{ MODKEY,               XK_c,           clipcopy,       {.i =  0} },
-	{ ShiftMask,             XK_Insert,      clippaste,      {.i =  0} },
-	{ MODKEY,               XK_v,           clippaste,      {.i =  0} },
-	
-	{ XK_ANY_MOD,		Button2,	selpaste,	{.i =  0} },
-	
-	{ ShiftMask,             XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ ShiftMask,             XK_Page_Down,   kscrolldown,    {.i = -1} },
-	{ MODKEY,               XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ MODKEY,               XK_Page_Down,   kscrolldown,    {.i = -1} },
-	
-    { MODKEY,               XK_Up,          kscrollup,      {.i =  1} },
-	{ MODKEY,               XK_Down,        kscrolldown,    {.i =  1} },
-    { MODKEY,               XK_u,           kscrollup,      {.i = -1} },
-	{ MODKEY,               XK_d,           kscrolldown,    {.i = -1} },
-	
-	{ TERMMOD,              XK_Up,          zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Down,        zoom,           {.f = -1} },
-	
-	
+	/* mask                 			   keysym          			   function                 argument */
+	{ TERMMOD,						XK_Prior,					zoom,						{.f = +1} },
+	{ TERMMOD, 					XK_Next,					zoom,						{.f = -1} },
+	{ MODKEY, 						XK_Home,        			zoomreset,			{.f =  0} },
+	{ MODKEY,						XK_c,           				clipcopy,				{.i =  0} },
+	{ ShiftMask,						XK_Insert,					clippaste,				{.i =  0} },
+	{ MODKEY,						XK_v,							clippaste,				{.i =  0} },
+	{ XK_ANY_MOD,				Button2,					selpaste,				{.i =  0} },
+	{ ShiftMask,            			XK_Page_Up,     		kscrollup,  		    {.i = -1} },
+	{ ShiftMask,            			XK_Page_Down,   	kscrolldown,    		{.i = -1} },
+	{ MODKEY,               			XK_Page_Up,     		kscrollup,      		{.i = -1} },
+	{ MODKEY,               			XK_Page_Down,   	kscrolldown,    		{.i = -1} },
+    { MODKEY,               			XK_Up,          				kscrollup,      		{.i =  1} },
+	{ MODKEY,               			XK_Down,        			kscrolldown,    		{.i =  1} },
+    { MODKEY,               			XK_u,           				kscrollup,      		{.i = -1} },
+	{ MODKEY,               			XK_d,           				kscrolldown,    		{.i = -1} },
+	{ TERMMOD,              		XK_Up,						zoom,           			{.f = +1} },
+	{ TERMMOD,              		XK_Down,        			zoom,           			{.f = -1} },
 };
 /*
  * Special keys (change & recompile st.info accordingly)

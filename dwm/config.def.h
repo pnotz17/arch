@@ -15,7 +15,7 @@ static const char col_cyan[]									= "#b3afc2";  				// highlighted tag color 
 static const unsigned int baralpha						= 235;								// OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all
 static const unsigned int borderalpha				= 235;
 static const char *colors[][3]									= {
-	
+
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
@@ -26,10 +26,10 @@ static const unsigned int alphas[][3]      = {
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
- 
+
 /* tagging */
 //static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-//static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
+//static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 static const char *tags[] = { "dev", "www", "code", "sys", "doc"};
 
 static const Rule rules[] = {
@@ -39,14 +39,14 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact											= 0.50; 
-static const int nmaster											= 1;   
-static const int resizehints										= 0;    
+static const float mfact											= 0.50;
+static const int nmaster											= 1;
+static const int resizehints										= 0;
 #include "layouts.c"
 
 static const Layout layouts[] = {
-	{ "[]=",      tile },    
-	{ "><>",      NULL },    
+	{ "[]=",      tile },
+	{ "><>",      NULL },
 	{ "[M]",      monocle },
 	{ "HHH",      grid },
 	{ NULL,       NULL },
@@ -55,10 +55,10 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       								KEY,      view,           		{.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           				KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             					KEY,      tag,            			{.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, 	KEY,      toggletag,      	{.ui = 1 << TAG} },
+	{ MODKEY,                       											KEY,      view,					{.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           							KEY,      toggleview,		{.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             								KEY,      tag,            			{.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask|ShiftMask, 				KEY,      toggletag,      	{.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -132,14 +132,14 @@ static Button buttons[] = {
 	/* click                					event mask     button          		function        		argument */
 	{ ClkLtSymbol,					0,              			Button1,        		setlayout,      		{0} },
 	{ ClkLtSymbol,					0,              			Button3,        		setlayout,      		{.v = &layouts[2]} },
-	{ ClkWinTitle,					0,              			Button2,        		zoom,           		{0} },
+	{ ClkWinTitle,						0,              			Button2,        		zoom,           		{0} },
 	{ ClkStatusText,				0,              			Button2,        		spawn,          		{.v = termcmd } },
 	{ ClkTagBar,            			0,              			Button1,        		view,           			{0} },
 	{ ClkTagBar,            			0,              			Button3,       		toggleview,    	{0} },
 	{ ClkTagBar,            			MODKEY,		Button1,        		tag,           				{0} },
 	{ ClkTagBar,            			MODKEY,		Button3,        		toggletag,      		{0} },
-	{ ClkClientWin,         		MODKEY,		Button1,        		movemouse,      {0} },
-	{ ClkClientWin,         		MODKEY,		Button2,        		togglefloating, 	{0} },
-	{ ClkClientWin,         		MODKEY,		Button3,        		resizemouse,    	{0} },
+	{ ClkClientWin,         			MODKEY,		Button1,        		movemouse,      {0} },
+	{ ClkClientWin,         			MODKEY,		Button2,        		togglefloating, 	{0} },
+	{ ClkClientWin,         			MODKEY,		Button3,        		resizemouse,    	{0} },
 };
 

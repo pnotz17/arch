@@ -30,7 +30,7 @@ end)
 end
 
 ------ {{{ Variable definitions }}} ------
-beautiful.init("/home/panos21/.config/awesome/default/theme.lua") 
+beautiful.init("~/.config/awesome/default/theme.lua") 
 beautiful.gap_single_client = true
 beautiful.useless_gap = 1
 modkey = "Mod4"
@@ -57,10 +57,8 @@ local makeMenu = function()
 menu["apps"] = {
 { "vim", "st -e vim" },
 { "qutebrowser", "/usr/bin/qutebrowser" },
-{ "firefox", "firefox" },
+{ "waterfox", "waterfox-g3" },
 { "gimp", "gimp" },
-{ "keepassxc", "keepassxc" },
-{ "xsane", "xsane" },
 { "transmission", "transmission-gtk" },
 { "alsa mixer", "st -e alsamixer" },
 { "lxappearance", "lxappearance" },
@@ -201,7 +199,6 @@ local taglist_buttons = gears.table.join(
                                           end),
                     awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
                     awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end))
-
 local tasklist_buttons = gears.table.join(
                      awful.button({ }, 1, function (c)
                                               if c == client.focus then
@@ -223,9 +220,7 @@ local tasklist_buttons = gears.table.join(
                      awful.button({ }, 5, function ()
                                               awful.client.focus.byidx(-1)
                                           end))
-
 awful.screen.connect_for_each_screen(function(s)
-
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
@@ -263,10 +258,7 @@ s.mytasklist,
 
 -- Right widgets
 { layout = wibox.layout.fixed.horizontal,
-	--spr,oswidget,
-	--spr,fswidget,
 	spr,pacwidget,
-	--spr,thermalwidget,
 	spr,cpuwidget,
 	spr,memwidget,
 	spr,volumewidget,

@@ -25,6 +25,7 @@ barc ="#080808"
 
 # Key bindings
 keys = [
+	
 	# Window manager controls
 	Key([mod, "control"], "r", lazy.restart()),
 	Key([mod, "control"], "q", lazy.restart()),
@@ -126,8 +127,7 @@ extension_defaults = widget_defaults.copy()
 
 # Screen variables
 screens = [Screen(top=bar.Bar(
-[    
-	widget.Image(
+[	widget.Image(
 	filename = "~/.config/qtile/images/1",),
 	
 	widget.TextBox(

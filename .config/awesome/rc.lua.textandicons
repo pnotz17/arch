@@ -30,7 +30,7 @@ end)
 end
 
 ------ {{{ Variable definitions }}} ------
-beautiful.init("/home/panos21/.config/awesome/default/theme.lua") 
+beautiful.init("~/.config/awesome/default/theme.lua") 
 beautiful.gap_single_client = true
 beautiful.useless_gap = 1
 modkey = "Mod4"
@@ -59,7 +59,6 @@ menu["apps"] = {
 { "qutebrowser", "/usr/bin/qutebrowser" },
 { "firefox", "firefox" },
 { "gimp", "gimp" },
-{ "keepassxc", "keepassxc" },
 { "xsane", "xsane" },
 { "transmission", "transmission-gtk" },
 { "alsa mixer", "st -e alsamixer" },
@@ -264,8 +263,8 @@ s.mytasklist,
 -- Right widgets
 { layout = wibox.layout.fixed.horizontal,
 	--spr,oswidget,
+	--spr,fswidget,
 	spr,pacwidget,
-	spr,fswidget,
 	--spr,thermalwidget,
 	spr,cpuwidget,
 	spr,memwidget,
@@ -356,7 +355,7 @@ globalkeys = gears.table.join(
 		function () awful.util.spawn("qutebrowser") 
     end),
     awful.key({ modkey, "Shift" }, "p", 
-		function () awful.util.spawn("~/.local/bin/power.sh") 
+		function () awful.util.spawn(".local/bin/power.sh") 
     end),
     awful.key({ modkey, "Shift" }, "f", 
 		function () awful.util.spawn("pcmanfm") 
