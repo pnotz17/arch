@@ -257,7 +257,7 @@ s.mywibox:setup {layout = wibox.layout.align.horizontal,
 s.mytasklist, 
 
 -- Right widgets
-{ layout = wibox.layout.fixed.horizontal,
+{ 	layout = wibox.layout.fixed.horizontal,
 	spr,pacwidget,
 	spr,cpuwidget,
 	spr,memwidget,
