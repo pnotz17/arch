@@ -10,7 +10,6 @@ Accessories
 	vim	st -e vim
 Development
 	geany	geany
-	keepassxc	keepassxc
 Graphics
 	gimp	gimp
 	xsane-scanning	xsane

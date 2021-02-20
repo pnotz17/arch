@@ -103,8 +103,7 @@ extension_defaults = widget_defaults.copy()
 
 # Screen variables
 screens = [Screen(top=bar.Bar(
-[    
-	widget.Image(
+[	widget.Image(
 	filename = "~/.config/qtile/images/3",),
 	
 	widget.Sep(
@@ -133,7 +132,7 @@ screens = [Screen(top=bar.Bar(
 	
 	widget.CheckUpdates(
 	distro='Arch_checkupdates',
-	display_format=' Updates: {updates}',
+	display_format=' UPDATES:   {updates}',
 	colour_have_updates="#FF0000",
 	execute = '/home/panos21/.local/bin/pacupdate', 
 	no_update_string = '',
@@ -144,13 +143,13 @@ screens = [Screen(top=bar.Bar(
 
 	widget.ThermalSensor(
 	foreground =grey,
-	fmt ='TEMP {}',),
+	fmt ='TEM:    {}',),
 	
 	widget.Sep(
 	linewidth = 1,),
 	
 	widget.CPU(
-	format = 'CPU: {load_percent}%',
+	format = 'CPU:   {load_percent}%',
 	foreground = grey,),
 	
 	widget.Sep(
@@ -158,7 +157,7 @@ screens = [Screen(top=bar.Bar(
 	
 	widget.Memory(
 	foreground = grey,
-	format = "MEM: " '{MemUsed}M',
+	format = "MEM:   {MemUsed}M",
 	update_interval = 1,),
 	
 	widget.Sep(
@@ -166,7 +165,7 @@ screens = [Screen(top=bar.Bar(
 	
 	widget.Volume(
 	foreground =grey,
-	fmt ='VOL: {}',),
+	fmt ='VOL:   {}',),
 	
 	widget.Sep(
 	linewidth = 1,),
@@ -174,8 +173,17 @@ screens = [Screen(top=bar.Bar(
 	widget.Net(
 	interface = "enp2s0",
 	foreground =grey,
-	format = ' UP: {up} DO:{down} ', ),
-
+	format = 'UP:   {up}', ),
+	
+	widget.TextBox(
+	fmt =' | ',
+	foreground = grey2,),
+	
+	widget.Net(
+	interface = "enp2s0",
+	foreground =grey1,
+	format = 'DO:   {down}', ),
+	
 	widget.Sep(
 	linewidth = 1,),
 	

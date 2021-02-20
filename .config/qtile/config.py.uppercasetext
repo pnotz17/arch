@@ -8,7 +8,7 @@ from libqtile import hook
 import subprocess
 import os
 
-#  Variables 
+# Main variables 
 wmname = "LG3D"
 mod    = "mod4"                        
 auto_fullscreen     = True
@@ -18,49 +18,34 @@ cursor_warp         = False
 focus_on_window_activation = "smart"
 
 # Colors 
-grey2 ="#4A4A4A"
 grey ="#808080"
 tcsb ="#262626"
 barc ="#141414"
 
 # Key bindings
 keys = [
-	# Window manager controls
-	Key([mod, "control"], "r", lazy.restart()),
-	Key([mod, "control"], "q", lazy.restart()),
-	Key([mod, "shift"], "Return", lazy.spawn("st")),
-	Key([mod, "shift"], "space", lazy.next_layout()),
-	Key([mod, "shift"], "c", lazy.window.kill()),
-	Key([mod], "p", lazy.spawn("dmenu_run")),
-	Key([mod], "t", lazy.window.toggle_floating()),
-	Key([mod], "f", lazy.window.toggle_fullscreen()),
-	
-	# Move Focus
 	Key([mod], "h", lazy.layout.left()),
 	Key([mod], "l", lazy.layout.right()),
 	Key([mod], "j", lazy.layout.down()),
 	Key([mod], "k", lazy.layout.up()),
-	
-	# Move Window
 	Key([mod, "shift"], "h", lazy.layout.swap_left()),
 	Key([mod, "shift"], "l", lazy.layout.swap_right()),
 	Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
 	Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
-	Key([mod], "Return", lazy.layout.swap_main()),
-	
-	# Alter Window Size
-	Key([mod, "shift"], 'h', lazy.layout.shrink()),
-	Key([mod, "shift"],  'l', lazy.layout.grow()),
-	Key([mod, "shift"],  'n', lazy.layout.reset()),
-	Key([mod, "shift"], 'm', lazy.layout.maximize()),
-	  
-	# Treetab controls          
-	Key([mod, "control"], "k",lazy.layout.section_up()),          
-	Key([mod, "control"], "j", lazy.layout.section_down()),
-	    
-	# Extras
+	Key([mod, "shift"], "space", lazy.next_layout()),
+	Key([mod, "shift"], "Return", lazy.spawn("st")),
 	Key([mod, "shift"], "b", lazy.spawn("qutebrowser")),
 	Key([mod, "shift"], "f", lazy.spawn("pcmanfm")),
+	Key([mod, "shift"], "c", lazy.window.kill()),
+	Key([mod], "i", lazy.layout.grow()),
+	Key([mod], "d", lazy.layout.shrink()),
+	Key([mod], "n", lazy.layout.reset()),
+	Key([mod], "o", lazy.layout.maximize()),
+	Key([mod], "f", lazy.window.toggle_fullscreen()),
+	Key([mod], "p", lazy.spawn("dmenu_run")),
+	Key([mod], "Tab", lazy.layout.flip()),
+	Key([mod], "space", lazy.window.toggle_floating()),
+	Key([mod, "control"], "r", lazy.restart()),
 	Key([], "F12", lazy.spawn("amixer set Master Front 3+")),
 	Key([], "F11", lazy.spawn("amixer set Master Front 3-")),
 	Key([], "Print", lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
@@ -73,24 +58,28 @@ mouse = [
 
 # Groups
 group_names = [
-	("doc", {'layout': 'monadtall'}),
-	("web", {'layout': 'monadtall'}),
-	("code", {'layout': 'monadtall'}),
-	("etc", {'layout': 'monadtall'}),
-	("misc", {'layout': 'monadtall'}),]
+	("DEV", {'layout': 'monadtall'}),
+	("WEB", {'layout': 'monadtall'}),
+	("CODE", {'layout': 'monadtall'}),
+	("DOC", {'layout': 'monadtall'}),
+	("MAIL", {'layout': 'monadtall'}),
+	("MEDIA", {'layout': 'monadtall'}),
+	("DOWN", {'layout': 'monadtall'}),
+	("MISC", {'layout': 'monadtall'}),
+	("ETC", {'layout': 'monadtall'}),]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
-    keys.append(Key([mod], str(i), lazy.group[name].toscreen()))                # Switch to another group
+    keys.append(Key([mod], str(i), lazy.group[name].toscreen()))        # Switch to another group
     keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
 
 # Layout variables
 def init_layout_theme():
-	return {"margin":10,
-	"border_width":0,
-	"border_focus": "#ffffff",
-	"border_normal": "#808080"}
+	return {"margin":1,
+	"border_width":1,
+	"border_focus": "#807F94",
+	"border_normal": "#807F94"}
 	
 layout_theme = init_layout_theme()
 
@@ -98,61 +87,47 @@ layout_theme = init_layout_theme()
 layouts = [
 	layout.MonadTall(**layout_theme),
 	layout.MonadWide(**layout_theme),
-	layout.Tile(shift_windows=True, **layout_theme),
-	layout.RatioTile(**layout_theme),
-	layout.Max(**layout_theme),
+	layout.Matrix(**layout_theme),
+	layout.Bsp(**layout_theme),
 	layout.Floating(**layout_theme),
-	layout.TreeTab(          
-    font = "Ubuntu",          
-    fontsize = 14,          
-    sections = ["FIRST", "SECOND"],          
-    section_fontsize = 15,          
-    bg_color = "141414",          
-    active_bg = "90C435",          
-    active_fg = "000000",          
-    inactive_bg = "384323",          
-    inactive_fg = "a0a0a0",          
-    padding_y = 5,          
-    section_top = 10,   
-    panel_width = 116),
-    layout.Max(**layout_theme),
-	layout.Floating(**layout_theme,)]
-	
+	layout.RatioTile(**layout_theme),
+	layout.Max(**layout_theme)]
+
 # Widget variables
 widget_defaults = dict(
-	font='UbuntuMono',
+	font='UbuntuMono ',
 	fontsize=14,
-	padding=3.75,)
+	padding=5.25,)
 
 extension_defaults = widget_defaults.copy()
 
 # Screen variables
 screens = [Screen(top=bar.Bar(
-[    
-	widget.Image(
+[	widget.Image(
 	filename = "~/.config/qtile/images/3",),
 	
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
+	widget.Sep(
+	linewidth = 1,),
 	
 	widget.GroupBox(
+	rounded=False,
 	this_current_screen_border=tcsb,
 	highlight_method = "block",
 	active = "#ffffff",
-	inactive = grey,),
-	              
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
-
+	inactive = grey,),   
+	
+	widget.Sep(
+	linewidth = 1,),
+	
 	widget.CurrentLayout(
 	foreground =grey,),
 	
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
-
+	widget.Sep(linewidth = 1,),
+	
+	# widget.WindowName(
+	# foreground = grey,
+	# margin_x=6,), 
+	
 	widget.Spacer(),
 	
 	widget.CheckUpdates(
@@ -163,65 +138,68 @@ screens = [Screen(top=bar.Bar(
 	no_update_string = '',
 	update_interval=60),
 	           
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
+	widget.Sep(
+	linewidth = 1,),	
 
 	widget.ThermalSensor(
 	foreground =grey,
 	fmt ='TEMP {}',),
 	
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
-
+	widget.Sep(
+	linewidth = 1,),
+	
 	widget.CPU(
 	format = 'CPU: {load_percent}%',
 	foreground = grey,),
 	
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
-
+	widget.Sep(
+	linewidth = 1,),
+	
 	widget.Memory(
 	foreground = grey,
 	format = "MEM: " '{MemUsed}M',
 	update_interval = 1,),
 	
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
-
+	widget.Sep(
+	linewidth = 1,),
+	
 	widget.Volume(
 	foreground =grey,
 	fmt ='VOL: {}',),
 	
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
-
+	widget.Sep(
+	linewidth = 1,),
+		
 	widget.Net(
 	interface = "enp2s0",
 	foreground =grey,
-	format = ' UP: {up} DO:{down} ', ),
-
+	format = 'UP: {up}', ),
+	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
+	
+	widget.Net(
+	interface = "enp2s0",
+	foreground =grey1,
+	format = 'DO: {down}', ),
 
+	widget.Sep(
+	linewidth = 1,),
+	
 	widget.Clock(
 	foreground = grey,
 	format = "%^a, %d %^b  %H:%M",),
-	
-	widget.TextBox(
-	fmt ='',
-	foreground = grey2,),
 
+	widget.Sep(
+	linewidth = 1,),
+	
 	widget.Systray(
 	padding = 5,),
 	
-],18,background=barc,opacity=0.90),),
+],18,background=barc,opacity=0.99),),
 ]
+
 # Floating rules
 floating_layout = layout.Floating(float_rules=[
 	{'wmclass': 'Confirm"'},
