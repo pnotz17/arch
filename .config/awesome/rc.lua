@@ -249,8 +249,9 @@ s.mywibox:setup {layout = wibox.layout.align.horizontal,
 
 -- Left widgets
 { layout = wibox.layout.fixed.horizontal,
-	mylauncher,
+	mylauncher,spr,
 	s.mytaglist,
+	spr,s.mylayoutbox,spr,
 	s.mypromptbox,},
 
 -- Middle widget
@@ -263,8 +264,7 @@ s.mytasklist,
 	spr,memwidget,
 	spr,volumewidget,
 	spr,netwidget,
-	spr,datewidget,
-	spr,s.mylayoutbox,
+	spr,datewidget,spr,
 	wibox.widget.systray(),},}
 end)
 

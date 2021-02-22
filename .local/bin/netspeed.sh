@@ -9,4 +9,4 @@ TBPS=`expr $T2 - $T1`
 RBPS=`expr $R2 - $R1`
 TKBPS=`expr $TBPS / 1024`
 RKBPS=`expr $RBPS / 1024`
-printf  "up:  $TKBPS kb | do:  $RKBPS kb"
+printf  "up:   $TKBPS kb | do:   $RKBPS kb"

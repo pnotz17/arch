@@ -1,4 +1,3 @@
-/* See LICENSE file for copyright and license details. */
 /* appearance */
 static const unsigned int borderpx  					= 1;        								/* border pixel of windows */
 static const unsigned int gappx							= 1;        								/* gaps between windows */
@@ -15,22 +14,21 @@ static const char col_cyan[]									= "#b3afc2";  				// highlighted tag color 
 static const unsigned int baralpha						= 235;								// OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all
 static const unsigned int borderalpha				= 235;
 static const char *colors[][3]									= {
-	
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	/*               					  fg         			bg				  border   */
+	[SchemeNorm]	= { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]		= { col_gray4, col_cyan,  col_cyan  },
 };
 
 static const unsigned int alphas[][3]      = {
-	/*               fg      bg        border     */
-	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	/*               					  fg      		  bg        		   border     */
+	[SchemeNorm]	=	{ OPAQUE, baralpha, borderalpha },
+	[SchemeSel]		=	{ OPAQUE, baralpha, borderalpha },
 };
  
 /* tagging */
-//static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-//static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
-static const char *tags[] = { "dev", "www", "code", "sys", "doc"};
+//static const char *tags[]	= { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+//static const char *tags[]	= { "", "", "", "", "", "", "", "", "" }; 
+static const char *tags[]		= { "dev", "www", "code", "sys", "doc"};
 
 static const Rule rules[] = {
 	//* xprop(1):
@@ -39,17 +37,16 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact											= 0.50; 
-static const int nmaster											= 1;   
-static const int resizehints										= 0;    
 #include "layouts.c"
-
+static const float mfact		= 0.50; 
+static const int nmaster		= 1;   
+static const int resizehints	= 0;    
 static const Layout layouts[] = {
-	{ "[]=",      tile },    
-	{ "><>",      NULL },    
-	{ "[M]",      monocle },
-	{ "HHH",      grid },
-	{ NULL,       NULL },
+	{ "[]=",		tile },    
+	{ "><>",	NULL },    
+	{ "[M]",		monocle },
+	{ "HHH",	grid },
+	{ NULL,		NULL },
 };
 
 /* key definitions */
@@ -127,7 +124,6 @@ static Key keys[] = {
 };
 
 /* button definitions */
-/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                					event mask     button          		function        		argument */
 	{ ClkLtSymbol,					0,              			Button1,        		setlayout,      		{0} },
