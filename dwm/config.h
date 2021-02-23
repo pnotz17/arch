@@ -4,9 +4,9 @@ static const unsigned int gappx							= 1;        								/* gaps between window
 static const unsigned int snap								= 32;     								/* snap pixel */
 static const int showbar											= 1;        								/* 0 means no bar */
 static const int topbar												= 1;        								/* 0 means bottom bar */
-static const char *fonts[]											= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true",};
+static const char *fonts[]											= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true","JoyPixels:pixelsize=10:antialias=true:autohint=true"};
 static const char dmenufont[]								=   "TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true";
-static const char col_gray1[]									= "#080808";				// bar color
+static const char col_gray1[]									= "#111111";				// bar color
 static const char col_gray2[]									= "#B3AFC2";				// unfocused window border color
 static const char col_gray3[]									= "#B5B5B5"; 				// bar foreground color on right & left // make this a little lighter than the one below so tags & everything on the right are brigter or the same color
 static const char col_gray4[]									= "#000000"; 				// focused tag and tasklist foreground color

@@ -41,7 +41,7 @@ upspeed() {
 	T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
 	TBPS=`expr $T2 - $T1`
 	TKBPS=`expr $TBPS / 1024`
-	printf  "up:  $TKBPS kb"
+	printf  "up: $TKBPS kb"
 }
 
 downspeed() {
@@ -50,7 +50,7 @@ downspeed() {
 	R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
 	RBPS=`expr $R2 - $R1`
 	RKBPS=`expr $RBPS / 1024`
-	printf  "do:  $RKBPS kb"
+	printf  "do: $RKBPS kb"
 }
 
 clock() {
