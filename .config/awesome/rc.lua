@@ -162,9 +162,13 @@ mytimer = timer({ timeout = 0.2 })
 mytimer:connect_signal("timeout", function () update_volume(volumewidget) end)
 mytimer:start()
 
--- Net widget
-netwidget = wibox.widget.textbox()
-vicious.register(netwidget, vicious.widgets.net, 'up:     ${enp2s0 up_mb}   do:     ${enp2s0 down_mb}', 2)
+-- Upload Speed widget
+netupwidget = wibox.widget.textbox()
+vicious.register(netupwidget, vicious.widgets.net, 'up:     ${enp2s0 up_mb}', 2)
+
+-- Download Speed widget
+netdownwidget = wibox.widget.textbox()
+vicious.register(netdownwidget, vicious.widgets.net, 'do:     ${enp2s0 down_mb}', 2)
 
 -- Time and Date widget
 datewidget = wibox.widget.textbox()
@@ -254,7 +258,8 @@ s.mytasklist,
 	spr,cpuwidget,
 	spr,memwidget,
 	spr,volumewidget,
-	spr,netwidget,
+	spr,netupwidget,
+	spr,netdownwidget,
 	spr,datewidget,
 	spr,s.mylayoutbox,
 	wibox.widget.systray(),},}

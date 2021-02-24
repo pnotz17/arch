@@ -162,14 +162,17 @@ end
 end
 
 update_volume(volumewidget)
-
 mytimer = timer({ timeout = 0.2 })
 mytimer:connect_signal("timeout", function () update_volume(volumewidget) end)
 mytimer:start()
 
--- Net widget
-netwidget = wibox.widget.textbox()
-vicious.register(netwidget, vicious.widgets.net, 'up:  ${enp2s0 up_mb}   do:  ${enp2s0 down_mb}', 2)
+-- Upload Speed widget
+netupwidget = wibox.widget.textbox()
+vicious.register(netupwidget, vicious.widgets.net, 'up:  ${enp2s0 up_mb}', 2)
+
+-- Download Speed widget
+netdownwidget = wibox.widget.textbox()
+vicious.register(netdownwidget, vicious.widgets.net, 'do:  ${enp2s0 down_mb}', 2)
 
 -- Keyboard map indicator widget
 mykeyboardlayout = awful.widget.keyboardlayout()
@@ -575,6 +578,5 @@ end)
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
-
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
