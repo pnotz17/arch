@@ -2,7 +2,7 @@
 
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo "🗃 $updates"
+	echo "🔔 $updates"
 }
 
 pkgs() {
@@ -59,7 +59,7 @@ upspeed() {
 	T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
 	TBPS=`expr $T2 - $T1`
 	TKBPS=`expr $TBPS / 1024`
-	printf  "🔺 $TKBPS kb"
+	printf  "📤 $TKBPS kb"
 }
 
 downspeed() {
@@ -68,7 +68,7 @@ downspeed() {
 	R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
 	RBPS=`expr $R2 - $R1`
 	RKBPS=`expr $RBPS / 1024`
-	printf  "🔻 $RKBPS kb"
+	printf  "📥 $RKBPS kb"
 }
 
 clock() {
