@@ -4,14 +4,13 @@ static const unsigned int gappx							= 1;        								/* gaps between window
 static const unsigned int snap								= 32;     								/* snap pixel */
 static const int showbar											= 1;        								/* 0 means no bar */
 static const int topbar												= 1;        								/* 0 means bottom bar */
-static const char *fonts[]											= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true",
-																								 "Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true"};
+static const char *fonts[]											= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true","Font Awesome:size:10:antialias=true:autohint=true",};
 static const char dmenufont[]								=   "TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true";
-static const char col_gray1[]									= "#111111";				// bar color
+static const char col_gray1[]									= "#080808";				// bar color
 static const char col_gray2[]									= "#B3AFC2";				// unfocused window border color
 static const char col_gray3[]									= "#B5B5B5"; 				// bar foreground color on right & left // make this a little lighter than the one below so tags & everything on the right are brigter or the same color
-static const char col_gray4[]									= "#000000"; 				// focused tag and tasklist foreground color
-static const char col_cyan[]									= "#b3afc2";  				// highlighted tag color // tasklist border color // focused window border color
+static const char col_gray4[]									= "#B5B5B5"; 				// focused tag and tasklist foreground color
+static const char col_cyan[]									= "#080808";  				// highlighted tag color // tasklist border color // focused window border color
 static const unsigned int baralpha						= 235;								// OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all
 static const unsigned int borderalpha				= 235;
 static const char *colors[][3]									= {
