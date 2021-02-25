@@ -1,18 +1,12 @@
 #!/bin/sh
-
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo pcm: "$updates"
-}
-
-pkgs() {
-	pkgs=$(pacman -Q  |  wc -l)
-	echo pkg: "$pkgs"
+	echo "pcm: $updates"
 }
 
 weather() {
 	weather=$(curl 'https://wttr.in/Florina,Greece?format=%t')
-	echo wea: "$weather"
+	echo "wea: $weather"
 }
 
 cputemp() {
@@ -22,12 +16,12 @@ cputemp() {
 
 cpufrequency() {
 	cpu=$(awk '{u=$2+$4; t=$2+$4+$5;if (NR==1){u1=u; t1=t;} else printf("%d%%", ($2+$4-u1) * 100 / (t-t1) "%");}' <(grep 'cpu ' /proc/stat) <(sleep 0.5; grep 'cpu ' /proc/stat))
-	echo cpu: "$cpu"%
+	echo "cpu: $cpu"%
 }
 
 ram() {
 	mem=$(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')
-	echo mem: "$mem"
+	echo "mem: $mem"
 }
 
 alsa() {
