@@ -26,19 +26,20 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.FadeInactive
 import XMonad.Util.Run
 
-myTerminal												= "st"
-myFocusFollowsMouse						= True
-myClickJustFocuses								= False
-myBorderWidth										= 2
-myNormalBorderColor							= "#03FFCB"
-myFocusedBorderColor						= "#D4FF00"
-myModMask												= mod4Mask
-myEventHook											= mempty
+myTerminal											= "st"
+myFocusFollowsMouse					= True
+myClickJustFocuses							= False
+myBorderWidth									= 1
+myNormalBorderColor						= "#b3afc2"
+myFocusedBorderColor					= "#b3afc2"
+myModMask											= mod4Mask
+myEventHook										= mempty
 
 myStartupHook = do
-  spawnOnce "picom -b &"
-  setWMName "LG3D"
- 
+	spawnOnce "picom -b &"
+	setWMName "LG3D"
+	startupHook desktopConfig
+
 xmobarEscape :: String -> String
 xmobarEscape = concatMap doubleLts
   where
@@ -75,15 +76,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	, ((modm,               xK_h     					), sendMessage Shrink)    																		-- Shrink the master area
 	, ((modm,               xK_l     					), sendMessage Expand)    																	-- Expand the master area
 	, ((modm,               xK_t     					), withFocused $ windows . W.sink)    												-- Push window back into tiling
-	, ((modm              , xK_comma 			), sendMessage (IncMasterN 1))    													-- Increment the number of windows in the master area
-	, ((modm              , xK_period				), sendMessage (IncMasterN (-1)))    												-- Deincrement the number of windows in the master area
-	, ((modm              , xK_b     					), sendMessage ToggleStruts)    														-- Toggle the status bar gap
+	, ((modm              ,xK_comma 			), sendMessage (IncMasterN 1))    													-- Increment the number of windows in the master area
+	, ((modm              ,xK_period				), sendMessage (IncMasterN (-1)))    												-- Deincrement the number of windows in the master area
+	, ((modm              ,xK_b     					), sendMessage ToggleStruts)    														-- Toggle the status bar gap
 	, ((modm .|. shiftMask, xK_q     		), io (exitWith ExitSuccess))    																-- Quit xmonad
 	, ((modm .|. controlMask, xK_r     	), spawn "xmonad --recompile; xmonad --restart")    				-- Restart xmonad
-	, ((modm .|. shiftMask, xK_i     			), spawn "amixer set Master Front 2+")    										-- Increase volume
-	, ((modm .|. shiftMask, xK_d     		), spawn "amixer set Master Front 2-")    										-- Decrease volume
-	, ((modm .|. shiftMask, xK_m     		), spawn "amixer -q set Master toggle")											-- Toggle/Untoggle Volume
-	, ((modm .|. shiftMask, xK_Print     ), spawn  "scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'")	-- Screenshot
+	, ((0						,xK_F10), 						spawn "amixer -q set Master toggle")										-- Toggle/Untoggle Volume
+	, ((0						,xK_F11), 						spawn "amixer set Master 2-")														-- Decrease volume
+	, ((0						,xK_F12), 						spawn "amixer set Master 2+")														-- Increase volume
+	, ((0						,xK_Print), 					spawn  "scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'")	-- Screenshot
 	]
 	
 	++
@@ -121,12 +122,12 @@ myLogHook :: Handle -> X ()
 myLogHook
 	xmproc													= dynamicLogWithPP xmobarPP
 	{ ppOutput											= \x -> hPutStrLn xmproc x  >> hPutStrLn xmproc x
-	, ppCurrent											= xmobarColor "#D4FF00" "" . wrap "[" "]" 							-- Current workspace in xmobar
-	, ppVisible											= xmobarColor "#C7A395" ""                											-- Visible but not current workspace
-	, ppHidden											= xmobarColor "#FF3D00" "" . wrap "*" ""   							-- Hidden workspaces in xmobar
-	, ppHiddenNoWindows 				= xmobarColor "#00FFFF" ""        													-- Hidden workspaces (no windows)
+	, ppCurrent											= xmobarColor "#FCFCFC" "" . wrap "[" "]" 							-- Current workspace in xmobar
+	, ppVisible											= xmobarColor "#b3afc2" ""                											-- Visible but not current workspace
+	, ppHidden											= xmobarColor "#b3afc2" "" . wrap "*" ""   								-- Hidden workspaces in xmobar
+	, ppHiddenNoWindows 				= xmobarColor "#b3afc2" ""        													-- Hidden workspaces (no windows)
 	, ppTitle 												= xmobarColor "#b3afc2" "" . shorten 85     								-- Title of active window in xmobar
-	, ppSep 												=  "<fc=#666666> | </fc>"                     											-- Separators in xmobar
+	, ppSep 												=  "<fc=#b3afc2> | </fc>"                     											-- Separators in xmobar
 	, ppUrgent 											= xmobarColor "#C45500" "" . wrap "!" "!"  							-- Urgent workspace
 	, ppOrder  											= \(ws:l:t:ex) -> [ws,l]++ex++[t]
 	}
@@ -134,7 +135,6 @@ myLogHook
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar"
     xmonad $ myConfig xmproc  
-
 myConfig xmproc								= withNavigation2DConfig def {
 	defaultTiledNavigation					= centerNavigation} 
 	$ def {
@@ -148,7 +148,7 @@ myConfig xmproc								= withNavigation2DConfig def {
 	focusedBorderColor						= myFocusedBorderColor,
 	keys														= myKeys,
 	mouseBindings								= myMouseBindings,
-	layoutHook											= avoidStruts  $ desktopLayoutModifiers $ mkToggle (NOBORDERS ?? FULL ?? EOT) myLayout,
+	layoutHook											= avoidStruts  $ desktopLayoutModifiers $ smartBorders $ mkToggle (NOBORDERS ?? FULL ?? EOT) myLayout,
 	manageHook										= myManageHook <+> manageHook desktopConfig,
 	handleEventHook							= myEventHook <+> handleEventHook desktopConfig,
 	logHook												= (myLogHook xmproc) <+>fadeInactiveLogHook 0.95 <+> logHook desktopConfig,
