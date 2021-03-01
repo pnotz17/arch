@@ -1,5 +1,11 @@
 #!/bin/sh
 
+mail() {
+	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
+	echo  "📬 $mail"
+}
+
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
 	echo "🔔 $updates"

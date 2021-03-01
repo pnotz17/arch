@@ -1,5 +1,12 @@
 #!/bin/sh
-updates() {
+
+mail() {
+	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
+	echo "inb: $mail"
+}
+
+ updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
 	echo "pcm: $updates"
 }
@@ -53,7 +60,7 @@ clock() {
 }
 
 while true; do
-	xsetroot -name " $(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
+	xsetroot -name "  $(mail) | $(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
 	sleep 2
 done &
 
