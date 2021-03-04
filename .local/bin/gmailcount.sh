@@ -1,4 +1,4 @@
 #!/bin/sh
-	count=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
-	count=`echo "$COUNT" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
-	echo  "$count"
+	mail=`curl -su pnotz17:KaDfYnUyjb64XGK https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
+	echo "$mail"

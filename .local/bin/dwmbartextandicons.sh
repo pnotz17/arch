@@ -1,39 +1,39 @@
 #!/bin/sh
 
 mail() {
-	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`curl -su pnotz17:KaDfYnUyjb64XGK https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo  "inb:   $mail"
 }
 
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo "pcm:  $updates"
+	echo "pcm:   $updates"
 }
 
 pkgs() {
 	pkgs=$(pacman -Q  |  wc -l)
-	echo "pkg:  $pkgs"
+	echo "pkg:   $pkgs"
 }
 
 weather() {
 	weather=$(curl 'https://wttr.in/Florina,Greece?format=%t')
-	echo "wea:️  $weather"
+	echo "wea: ️  $weather"
 }
 
 cputemp() {
 	cputemp=$(sensors | grep Core | awk '{print substr($3, 2, length($3)-5)}' | tr "\\n" " " | sed 's/ /°C  /g' | sed 's/  $//')
-	echo "tem:  $cputemp"
+	echo "tem:   $cputemp"
 }
 
 cpufrequency() {
 	cpu=$(awk '{u=$2+$4; t=$2+$4+$5;if (NR==1){u1=u; t1=t;} else printf("%d%%", ($2+$4-u1) * 100 / (t-t1) "%");}' <(grep 'cpu ' /proc/stat) <(sleep 0.5; grep 'cpu ' /proc/stat))
-	echo "cpu:  $cpu"%
+	echo "cpu:   $cpu"%
 }
 
 ram() {
 	mem=$(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')
-	echo "mem:  $mem"
+	echo "mem:   $mem"
 }
 
 alsa() {
@@ -47,14 +47,14 @@ alsa() {
 	fi
 
 	if [ "$muted" = "off" ]; then
-		echo "vol:  muted"
+		echo "vol:   muted"
 	else
 		if [ "$vol" -ge 65 ]; then
-			echo "vol:  $vol%"
+			echo "vol:   $vol%"
 		elif [ "$vol" -ge 40 ]; then
-			echo "vol:墳  $vol%"
+			echo "vol: 墳  $vol%"
 		elif [ "$vol" -ge 0 ]; then
-			echo"vol:  $vol%"	
+			echo"vol:   $vol%"	
 		fi
 	fi
 }
@@ -65,7 +65,7 @@ upspeed() {
 	T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
 	TBPS=`expr $T2 - $T1`
 	TKBPS=`expr $TBPS / 1024`
-	printf  "up:   $TKBPS kb"
+	printf  "up:    $TKBPS kb"
 }
 
 downspeed() {
@@ -74,7 +74,7 @@ downspeed() {
 	R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
 	RBPS=`expr $R2 - $R1`
 	RKBPS=`expr $RBPS / 1024`
-	printf  "do:   $RKBPS kb"
+	printf  "do:    $RKBPS kb"
 }
 
 clock() {
@@ -83,7 +83,7 @@ clock() {
 }
 
 while true; do
-	xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
+	xsetroot -name "^c#FFA500^$(mail)  |  ^c#25E80D^$(updates)  |  ^c#00FFF9^$(cpufrequency)  |  ^c#D400CF^$(ram)  |  ^c#ADD8E6^$(upspeed)  |  ^c#FFC0CB^$(downspeed)  |  ^c#FFFFFF^$(alsa)  |  ^c#FFFF00^$(clock)  |"	#xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
 	sleep 2
 done &
 

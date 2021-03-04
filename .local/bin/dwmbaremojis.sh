@@ -1,7 +1,7 @@
 #!/bin/sh
 
 mail() {
-	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`curl -su pnotz17:KaDfYnUyjb64XGK https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo  "📬 $mail"
 }
@@ -83,7 +83,7 @@ clock() {
 }
 
 while true; do
-	xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
+	xsetroot -name "$(mail) | $(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
 	sleep 2
 done &
 

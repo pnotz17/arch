@@ -57,7 +57,7 @@ local makeMenu = function()
 menu["apps"] = {
 { "vim", "st -e vim" },
 { "qutebrowser", "/usr/bin/qutebrowser" },
-{ "firefox", "firefox" },
+{ "waterfox", "waterfox-g3" },
 { "gimp", "gimp" },
 { "transmission", "transmission-gtk" },
 { "alsa mixer", "st -e alsamixer" },
@@ -113,10 +113,6 @@ end
 	s:close()	
     return "pcm:     "   .. i .. ""
 end , 1800, "Arch")
-		
---OS widget
-oswidget = wibox.widget.textbox()
-vicious.register(oswidget, vicious.widgets.os,'   $2', 9000)
 
 -- hdd widget
 fswidget = wibox.widget.textbox()
@@ -124,15 +120,24 @@ vicious.register(fswidget, vicious.widgets.fs, " hdd:     ${/ used_p}%", 10)
 
 -- Thermal widget
 local function script_output()
-    local f = io.popen("/home/panos21/.local/bin/temp.sh")
+    local f = io.popen("~/.local/bin/temp.sh")
     local out = f:read("*a")
     f:close()
     return { out }
 end
-
 thermalwidget  = wibox.widget.textbox()
 vicious.register(thermalwidget, script_output, "tem:    $1")
 
+--Gmail Widget
+function run_script()
+    local filedescriptor = io.popen("~/.local/bin/gmailcount.sh")
+    local value = filedescriptor:read()
+   filedescriptor:close()
+    return {value}
+end
+mailwidget = wibox.widget.textbox()
+vicious.register(mailwidget, run_script, 'inb:     $1', 20)
+ 
 -- CPU widget
 cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu, "cpu:    $1%")
@@ -162,7 +167,6 @@ end
 end
 
 update_volume(volumewidget)
-
 mytimer = timer({ timeout = 0.2 })
 mytimer:connect_signal("timeout", function () update_volume(volumewidget) end)
 mytimer:start()
@@ -174,9 +178,6 @@ vicious.register(netupwidget, vicious.widgets.net, 'up:     ${enp2s0 up_mb}',
 -- Download Speed widget
 netdownwidget = wibox.widget.textbox()
 vicious.register(netdownwidget, vicious.widgets.net, 'do:     ${enp2s0 down_mb}', 2)
-
--- Keyboard map indicator widget
-mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Time and Date widget
 datewidget = wibox.widget.textbox()
@@ -262,11 +263,13 @@ s.mytasklist,
 
 -- Right widgets
 { layout = wibox.layout.fixed.horizontal,
+	spr,mailwidget,
 	spr,pacwidget,
 	spr,cpuwidget,
 	spr,memwidget,
 	spr,volumewidget,
-	spr,netwidget,
+	spr,netupwidget,
+	spr,netdownwidget,
 	spr,datewidget,
 	spr,s.mylayoutbox,
 	wibox.widget.systray(),},}

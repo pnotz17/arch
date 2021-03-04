@@ -120,15 +120,24 @@ vicious.register(fswidget, vicious.widgets.fs, " hdd:     ${/ used_p}%", 10)
 
 -- Thermal widget
 local function script_output()
-    local f = io.popen("/home/panos21/.local/bin/temp.sh")
+    local f = io.popen("~/.local/bin/temp.sh")
     local out = f:read("*a")
     f:close()
     return { out }
 end
-
 thermalwidget  = wibox.widget.textbox()
 vicious.register(thermalwidget, script_output, "tem:    $1")
 
+--Gmail Widget
+function run_script()
+    local filedescriptor = io.popen("~/.local/bin/gmailcount.sh")
+    local value = filedescriptor:read()
+   filedescriptor:close()
+    return {value}
+end
+mailwidget = wibox.widget.textbox()
+vicious.register(mailwidget, run_script, 'inb:     $1', 20)
+ 
 -- CPU widget
 cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu, "cpu:    $1%")
@@ -254,6 +263,7 @@ s.mytasklist,
 
 -- Right widgets
 { layout = wibox.layout.fixed.horizontal,
+	spr,mailwidget,
 	spr,pacwidget,
 	spr,cpuwidget,
 	spr,memwidget,
