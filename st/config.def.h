@@ -2,6 +2,7 @@
 
  // appearance
 static char *font = "UbuntuMono Nerd Font:pixelsize=21:antialias=true:autohint=true";
+static char *font2[] = {"Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true", };
 static int borderpx = 1;
 
 // What program is execed by st depends of these precedence rules:
@@ -55,7 +56,7 @@ float alpha = 0.95;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	"#282828", /* hard contrast: #1d2021 / soft contrast: #32302f */
+	"#282828", 	/* hard contrast: #1d2021 / soft contrast: #32302f */
 	"#cc241d",
 	"#98971a",
 	"#d79921",
@@ -73,10 +74,10 @@ static const char *colorname[] = {
 	"#ebdbb2",
 	[255] = 0,
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#add8e6", /* 256 -> cursor */
-	"#555555", /* 257 -> rev cursor*/
-	"#080808", /* 258 -> bg */
-	"#BBBBBB", /* 259 -> fg */
+	"#add8e6", 	/* 256 -> cursor */
+	"#555555", 	/* 257 -> rev cursor*/
+	"#080808", 	/* 258 -> bg */
+	"#BBBBBB", 	/* 259 -> fg */
 };
 
  // Default colors (colorname index)foreground, background, cursor, reverse cursor
@@ -121,22 +122,22 @@ static MouseShortcut mshortcuts[] = {
 
 static Shortcut shortcuts[] = {
 	/* mask                 			   keysym          			   function                 argument */
-	{ TERMMOD,						XK_Prior,					zoom,						{.f = +1} },
-	{ TERMMOD, 					XK_Next,					zoom,						{.f = -1} },
-	{ MODKEY, 						XK_Home,        			zoomreset,			{.f =  0} },
-	{ MODKEY,						XK_c,           				clipcopy,				{.i =  0} },
+	{ TERMMOD,						XK_Prior,						zoom,						{.f = +1} },
+	{ TERMMOD, 						XK_Next,						zoom,						{.f = -1} },
+	{ MODKEY, 							XK_Home,        			zoomreset,				{.f =  0} },
+	{ MODKEY,							XK_c,           					clipcopy,					{.i =  0} },
 	{ ShiftMask,						XK_Insert,					clippaste,				{.i =  0} },
-	{ MODKEY,						XK_v,							clippaste,				{.i =  0} },
-	{ XK_ANY_MOD,				Button2,					selpaste,				{.i =  0} },
-	{ ShiftMask,            			XK_Page_Up,     		kscrollup,  		    {.i = -1} },
+	{ MODKEY,							XK_v,								clippaste,				{.i =  0} },
+	{ XK_ANY_MOD,				Button2,						selpaste,					{.i =  0} },
+	{ ShiftMask,            			XK_Page_Up,     		kscrollup,  		    	{.i = -1} },
 	{ ShiftMask,            			XK_Page_Down,   	kscrolldown,    		{.i = -1} },
-	{ MODKEY,               			XK_Page_Up,     		kscrollup,      		{.i = -1} },
+	{ MODKEY,               			XK_Page_Up,     		kscrollup,      			{.i = -1} },
 	{ MODKEY,               			XK_Page_Down,   	kscrolldown,    		{.i = -1} },
-    { MODKEY,               			XK_Up,          				kscrollup,      		{.i =  1} },
+    { MODKEY,               			XK_Up,          				kscrollup,      			{.i =  1} },
 	{ MODKEY,               			XK_Down,        			kscrolldown,    		{.i =  1} },
-    { MODKEY,               			XK_u,           				kscrollup,      		{.i = -1} },
-	{ MODKEY,               			XK_d,           				kscrolldown,    		{.i = -1} },
-	{ TERMMOD,              		XK_Up,						zoom,           			{.f = +1} },
+    { MODKEY,               			XK_u,           					kscrollup,      			{.i = -1} },
+	{ MODKEY,               			XK_d,           					kscrolldown,    		{.i = -1} },
+	{ TERMMOD,              		XK_Up,							zoom,           			{.f = +1} },
 	{ TERMMOD,              		XK_Down,        			zoom,           			{.f = -1} },
 };
 /*
