@@ -1,27 +1,27 @@
 /* See LICENSE file for copyright and license details. */
 /* appearance */
+static const char *fonts[]											= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true","Font Awesome:size:10:antialias=true:autohint=true",};
+static const char dmenufont[]								= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true"};
 static const unsigned int borderpx  					= 1;        								/* border pixel of windows */
 static const unsigned int gappx							= 1;        								/* gaps between windows */
 static const unsigned int snap								= 32;     								/* snap pixel */
 static const int showbar											= 1;        								/* 0 means no bar */
 static const int topbar												= 1;        								/* 0 means bottom bar */
-static const char *fonts[]											= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true","Font Awesome:size:10:antialias=true:autohint=true",};
-static const char dmenufont[]								=   "TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true";
-static const char col_bar[]										= "#080808";				// bar color
-static const char  col_uwb[]									= "#B3AFC2";				// unfocused window border color
-static const char  col_barfg[]									= "#B5B5B5"; 				// bar foreground color on right & left // make this a little lighter than the one below so tags & everything on the right are brigter or the same color
-static const char  col_fttf[]										= "#B5B5B5"; 				// focused tag and tasklist foreground color
-static const char col_httfwb[]								= "#2B2B2B";  				// highlighted tag color // tasklist border color // focused window border color
-static const unsigned int baralpha						= 235;								// OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all
+static const char col_bar[]										= "#080808";				/* bar color */
+static const char  col_uwb[]									= "#B3AFC2";				/*unfocused window border color*/
+static const char  col_barfg[]									= "#B5B5B5"; 				/*bar foreground color on right & left*/
+static const char  col_fttf[]										= "#3AFF00"; 				/*focused tag and tasklist foreground color*/
+static const char col_httfwb[]								= "#2B2B2B";  				/*highlighted tag  // tasklist   // focused window foreground color*/
+static const unsigned int baralpha						= 235;								/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha				= 235;
 static const char *colors[][3]									= {
-	/*               					  fg         			bg				  border   */
+	/*               					  fg         		   bg		    border   */                    
 	[SchemeNorm]	= { col_barfg,col_bar, col_uwb },
 	[SchemeSel]		= { col_fttf,col_httfwb, col_httfwb},
 };
 
 static const unsigned int alphas[][3]      = {
-	/*               					  fg      		  bg        		   border     */
+	/*               					   fg      		  bg        		   border     */
 	[SchemeNorm]	=	{ OPAQUE, baralpha, borderalpha },
 	[SchemeSel]		=	{ OPAQUE, baralpha, borderalpha },
 };
@@ -31,6 +31,7 @@ static const char *tags[]	= { "01", "02", "03", "04", "05", "06", "07", "08", "0
 //static const char *tags[]	= { "", "", "", "", "", "", "", "", "" }; 
 //static const char *tags[]		= { "dev", "www", "code", "sys", "doc"};
 
+/* rules(s) */
 static const Rule rules[] = {
 	//* xprop(1):
 	//* class     instance  title           tags mask    isfloating     monitor */
@@ -39,9 +40,9 @@ static const Rule rules[] = {
 
 /* layout(s) */
 #include "layouts.c"
-static const float mfact     = 0.52; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static const float mfact     = 0.52; 						/* factor of master area size [0.05..0.95] */
+static const int nmaster     = 1;    						/* number of clients in master area */
+static const int resizehints = 0;    						/* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	{ "[]=",		tile },    
@@ -50,6 +51,7 @@ static const Layout layouts[] = {
 	{ "HHH",      grid },
 	{ NULL,		NULL },
 };
+
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
@@ -62,7 +64,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2]										= "0"; /* component of dmenucmd, manipulated in spawn() */
+static char dmenumon[2]										= "0"; 									/* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] 							= { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bar, "-nf", col_barfg, "-sb",col_httfwb, "-sf",col_fttf, NULL };
 static const char *termcmd[]									= { "st", NULL };
 static const char *print_screen_cmd[]				= { "scrot", "-d3", "~/Pictures/Screenshots/%Y-%m-%d-%s_$wx$h.jpg", NULL };
@@ -72,6 +74,7 @@ static const char *webcmd[]									= { "qutebrowser", NULL };
 static const char *filescmd[]									= { "pcmanfm", NULL };
 #include "movestack.c"
 
+/* keys bindings*/
 static Key keys[] = {
 	/* modifier                    				 	key        				function        							argument */
 	{ MODKEY,                       				XK_p,				spawn,										{.v = dmenucmd } },
