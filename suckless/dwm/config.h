@@ -1,4 +1,3 @@
-/* See LICENSE file for copyright and license details. */
 /* appearance */
 static const char *fonts[]											= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true","Font Awesome:size:10:antialias=true:autohint=true",};
 static const char dmenufont[]								= {"TerminessTTF Nerd Font:style=Medium:size=11:antialias=true:autohint=true"};
@@ -8,18 +7,21 @@ static const unsigned int snap								= 32;     								/* snap pixel */
 static const int showbar											= 1;        								/* 0 means no bar */
 static const int topbar												= 1;        								/* 0 means bottom bar */
 static const char col_bar[]										= "#080808";				/* bar color */
-static const char  col_uwb[]									= "#B3AFC2";				/*unfocused window border color*/
-static const char  col_barfg[]									= "#B5B5B5"; 				/*bar foreground color on right & left*/
-static const char  col_fttf[]										= "#3AFF00"; 				/*focused tag and tasklist foreground color*/
-static const char col_httfwb[]								= "#2B2B2B";  				/*highlighted tag  // tasklist   // focused window foreground color*/
+static const char  col_uwb[]									= "#B3AFC2";				/* unfocused window border color*/
+static const char  col_barfg[]									= "#B5B5B5"; 				/* bar foreground color on right & left*/
+static const char  col_fttf[]										= "#3AFF00"; 				/* focused tag and tasklist foreground color*/
+static const char col_httfwb[]								= "#2B2B2B";  				/* highlighted tag  // tasklist   // focused window foreground color*/
 static const unsigned int baralpha						= 235;								/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha				= 235;
+
+/* cololr scheme order*/
 static const char *colors[][3]									= {
 	/*               					  fg         		   bg		    border   */                    
 	[SchemeNorm]	= { col_barfg,col_bar, col_uwb },
 	[SchemeSel]		= { col_fttf,col_httfwb, col_httfwb},
 };
 
+/* transparency order*/
 static const unsigned int alphas[][3]      = {
 	/*               					   fg      		  bg        		   border     */
 	[SchemeNorm]	=	{ OPAQUE, baralpha, borderalpha },
@@ -64,14 +66,15 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2]										= "0"; 									/* component of dmenucmd, manipulated in spawn() */
+static char dmenumon[2]										= "0"; 						/* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] 							= { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bar, "-nf", col_barfg, "-sb",col_httfwb, "-sf",col_fttf, NULL };
 static const char *termcmd[]									= { "st", NULL };
 static const char *print_screen_cmd[]				= { "scrot", "-d3", "~/Pictures/Screenshots/%Y-%m-%d-%s_$wx$h.jpg", NULL };
-static const char *upvol[]										= { "amixer", "set", "Master", "2+",     NULL };
-static const char *downvol[]									= { "amixer", "set", "Master", "2-",     NULL };
+static const char *upvol[]										= { "amixer", "set", "Master", "1+",     NULL };
+static const char *downvol[]									= { "amixer", "set", "Master", "1-",     NULL };
 static const char *webcmd[]									= { "qutebrowser", NULL };
 static const char *filescmd[]									= { "pcmanfm", NULL };
+static const char *mailcmd[]  								= { "st","-e","mutt", NULL };
 #include "movestack.c"
 
 /* keys bindings*/
@@ -111,6 +114,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,				XK_q, quit,           												{0} },
 	{ MODKEY|ShiftMask,				XK_b,	    		spawn,	   									{.v = webcmd } },
 	{ MODKEY|ShiftMask,				XK_f,	    			spawn,	   									{.v = filescmd } },
+	{ MODKEY|ShiftMask,				XK_m,	    		spawn,	   									{.v = mailcmd } },
 	{ MODKEY|ShiftMask,				XK_p,      			spawn,          							SHCMD("~/.local/bin/power.sh") },
 	{ MODKEY|ShiftMask,				XK_r,      			spawn,          							SHCMD("feh --no-fehbg --randomize --bg-scale ~/Pictures/Wallpapers/*") },
 	{ 0,                            							XK_Print,			spawn,          							{.v = print_screen_cmd } },
