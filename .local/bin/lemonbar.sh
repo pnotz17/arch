@@ -26,13 +26,13 @@ tot (){
 }
 
 mail() {
-	mail=`curl -su pnotz17:KaDfYnUyjb64XGK https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo "%{F$peachColor}INB: $mail %{F-}"
 }
 
 weather() {
-	weather=$(curl 'https://wttr.in/Florina,Greece?format=%t')
+	weather=$(curl 'https://wttr.in/YOURCITY,Greece?format=%t')
 	echo "%{F#FF0000}WEA: $weather %{F-}"
 }
 
