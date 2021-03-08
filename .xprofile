@@ -1,13 +1,13 @@
 # Autostart
-xrandr --output VGA1 --mode 1408x792_60.00 --scale-from 1920x1080
+xrandr --output VGA1 --mode 1408x792_60.00 --scale-from 1920x1080 &
 #xrandr --output VGA1 --scale 1.25x1.25 &
-xclickroot -r /home/panos21/xmenu/xmenu.sh &
-/home/panos21/.local/bin/dwmbartextandicons.sh &
-/home/panos21/.local/bin/xsessionautoremover.sh &
+xclickroot -r ~/Giitclones/xmenu/xmenu.sh &
+~/.local/bin/dwmbartextuppercase.sh &
+~/.local/bin/xsessionautoremover.sh &
 ~/.fehbg &
 xset dpms 600 900 1200
 xset r rate 350 60
-#picom -b &
+picom -b &
 
 # Keymap
 #!/bin/sh
@@ -19,6 +19,10 @@ setxkbmap "us,gr" -option "grp:alt_shift_toggle"
  xrandr --addmode VGA1 1408x792_60.00
 
 #dwm restart loop
-#while true; do
-    #/usr/local/bin/dwm 2> /dev/null
-#done
+while true; do
+    /usr/local/bin/dwm 2> /dev/null
+done
+
+
+
+

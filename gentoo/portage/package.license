@@ -1,4 +1,0 @@
-# required by x11-base/xorg-drivers-1.20-r2::gentoo[video_cards_nvidia]
-# required by @selected
-# required by @world (argument)
-=x11-drivers/nvidia-drivers-455.28 NVIDIA-r2
