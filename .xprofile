@@ -1,7 +1,7 @@
 # Autostart
 xrandr --output VGA1 --mode 1408x792_60.00 --scale-from 1920x1080 &
 #xrandr --output VGA1 --scale 1.25x1.25 &
-xclickroot -r ~/Git/xmenu/xmenu.sh &
+xclickroot -r ~/git/xmenu/xmenu.sh &
 ~/.local/bin/dwmbartextuppercase.sh &
 ~/.local/bin/xsessionautoremover.sh &
 ~/.fehbg &
