@@ -18,7 +18,7 @@ Config {
 									, Run Com ".local/bin/getvolume.sh" [] "vol" 2
 									, Run Com ".local/bin/upspeed.sh" [] "up" 20																
 									, Run Com ".local/bin/downspeed.sh" [] "down" 20
-									, Run Date "%b %d %Y (%H:%M)" "date" 50
+									, Run Date "%b %d %Y %H:%M" "date" 50
 									]
        , sepChar = "%"
        , alignSep = "}{"
