@@ -10,7 +10,7 @@ Config {
        , iconRoot = ".xmonad/xpm/"  -- default: "."
        , commands = [ 
 									  Run UnsafeStdinReader
-									, Run Com ".local/bin/pcmupdates" [] "pacupdate" 36000
+									, Run Com ".local/bin/pacupdate" [] "pacupdate" 36000
 									, Run Com ".local/bin/temp.sh" [] "temp" 2
 									, Run Com ".local/bin/mail.sh" [] "mail" 2
 									, Run Cpu ["-t", "cpu: (<total>%)","-H","70","--high","red"] 20
@@ -22,7 +22,7 @@ Config {
 									]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{ <fc=#b3afc2>  %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %memory% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> vol: %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2>%date% </fc>"
+       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{ <fc=#b3afc2>  %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %memory% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> vol: %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %date% </fc><fc=#b3afc2> | </fc>"
        }
 
 

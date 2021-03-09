@@ -1,6 +1,6 @@
 Config { 
 		 font   = "xft: mononoki Nerd Font:style=Regular:pixelsize=13:antialias=true:hinting=true", additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
-         bgColor = "#111111"
+         bgColor = "#080808"
        , fgColor = "#b3afc2"     
        , position = TopW L 100
        , lowerOnStart = True
@@ -13,16 +13,16 @@ Config {
 									, Run Com ".local/bin/pacupdate" [] "pacupdate" 36000
 									, Run Com ".local/bin/temp.sh" [] "temp" 2
 									, Run Com ".local/bin/mail.sh" [] "mail" 2
-									, Run Cpu ["-t", "cpu:   (<total>%)","-H","70","--high","red"] 20
-									, Run Memory ["-t", "mem:   (<usedratio>%)"] 20
+									, Run Cpu ["-t", "cpu:   <total>%","-H","70","--high","red"] 20
+									, Run Memory ["-t", "mem:   <usedratio>%"] 20
 									, Run Com ".local/bin/getvolumetexticon.sh" [] "vol" 2
 									, Run Com ".local/bin/uptexticon.sh" [] "up" 20																
 									, Run Com ".local/bin/downtexticon.sh" [] "down" 20
-									, Run Date "  %b %d %Y (%H:%M)" "date" 50
+									, Run Date "  %b %d %Y %H:%M" "date" 50
 									]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{<fc=#b3afc2>  %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %memory% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2>%date% </fc>"
+       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{<fc=#b3afc2>  %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %memory% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %date% </fc><fc=#b3afc2> | </fc>"
        }
 
 
