@@ -22,7 +22,7 @@ Config {
 									]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{<fc=#b3afc2>  %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %memory% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %date% </fc><fc=#b3afc2> | </fc>"
+       , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{<fc=#b3afc2>|</fc> <fc=#b3afc2> %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %memory% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %date% </fc><fc=#b3afc2> | </fc>"
        }
 
 
