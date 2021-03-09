@@ -12,7 +12,7 @@ fi
 updates=$(("$pacmanupdates" + "$aurupdates"))
 
 if [ "$updates" -gt 0 ]; then
-    echo " System Updates: $updates"
+    echo "  updates: $updates"
 else
     echo ""
 fi

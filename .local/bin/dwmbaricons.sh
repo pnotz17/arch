@@ -1,7 +1,7 @@
 #!/bin/sh
 
 mail() {
-	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`curl -su USERNAME:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo  "  $mail"
 }
@@ -17,8 +17,8 @@ pkgs() {
 }
 
 weather() {
-	weather=$(curl 'https://wttr.in/YOURCITY,Greece?format=%t')
-	echo "️  $weather"
+	weather=$(curl 'https://wttr.in/YOURCITY,YOURCOUNTRY?format=%t')
+	echo "  $weather"
 }
 
 cputemp() {
@@ -83,7 +83,7 @@ clock() {
 }
 
 while true; do
-	xsetroot -name "^c#FFA500^$(mail)  |  ^c#25E80D^$(updates)  |  ^c#00FFF9^$(cpufrequency)  |  ^c#D400CF^$(ram)  |  ^c#ADD8E6^$(upspeed)  |  ^c#FFC0CB^$(downspeed)  |  ^c#FFFFFF^$(alsa)  |  ^c#FFFF00^$(clock)  |"	#xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
+	xsetroot -name "^c#FFA500^$(mail)  |  ^c#25E80D^$(updates)  |  ^c#00FFF9^$(cpufrequency)  |  ^c#D400CF^$(ram)  |  ^c#ADD8E6^$(upspeed)  |  ^c#FFC0CB^$(downspeed)  |  ^c#FFFFFF^$(alsa)  |  ^c#FFFF00^$(clock)  |"	 #xsetroot -name "$(updates) | $(mail) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |" 
 	sleep 2
 done &
 

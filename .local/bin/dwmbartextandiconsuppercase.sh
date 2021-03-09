@@ -3,37 +3,37 @@
 mail() {
 	mail=`curl -su USERNAME:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
-	echo  "📬 $mail"
+	echo  "INB:   $mail"
 }
 
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo "🔔 $updates"
+	echo "PCM:   $updates"
 }
 
 pkgs() {
 	pkgs=$(pacman -Q  |  wc -l)
-	echo "🧊 $pkgs"
+	echo "PKG:   $pkgs"
 }
 
 weather() {
 	weather=$(curl 'https://wttr.in/YOURCITY,YOURCOUNTRY?format=%t')
-	echo "🌩️$weather"
+	echo "WEA: ️  $weather"
 }
 
 cputemp() {
 	cputemp=$(sensors | grep Core | awk '{print substr($3, 2, length($3)-5)}' | tr "\\n" " " | sed 's/ /°C  /g' | sed 's/  $//')
-	echo "🔥 $cputemp"
+	echo "TEM:   $cputemp"
 }
 
 cpufrequency() {
 	cpu=$(awk '{u=$2+$4; t=$2+$4+$5;if (NR==1){u1=u; t1=t;} else printf("%d%%", ($2+$4-u1) * 100 / (t-t1) "%");}' <(grep 'cpu ' /proc/stat) <(sleep 0.5; grep 'cpu ' /proc/stat))
-	echo "🖥 $cpu"%
+	echo "CPU:   $cpu"%
 }
 
 ram() {
 	mem=$(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')
-	echo "💻 $mem"
+	echo "MEM:   $mem"
 }
 
 alsa() {
@@ -47,14 +47,14 @@ alsa() {
 	fi
 
 	if [ "$muted" = "off" ]; then
-		echo "🔇 muted"
+		echo "VOL:   muted"
 	else
 		if [ "$vol" -ge 65 ]; then
-			echo "🔊 $vol%"
+			echo "VOL:   $vol%"
 		elif [ "$vol" -ge 40 ]; then
-			echo "🔉 $vol%"
+			echo "VOL: 墳  $vol%"
 		elif [ "$vol" -ge 0 ]; then
-			echo "🔈 $vol%"	
+			echo"VOL:   $vol%"	
 		fi
 	fi
 }
@@ -65,7 +65,7 @@ upspeed() {
 	T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
 	TBPS=`expr $T2 - $T1`
 	TKBPS=`expr $TBPS / 1024`
-	printf  "🔺 $TKBPS kb"
+	printf  "UP:    $TKBPS kb"
 }
 
 downspeed() {
@@ -74,16 +74,16 @@ downspeed() {
 	R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
 	RBPS=`expr $R2 - $R1`
 	RKBPS=`expr $RBPS / 1024`
-	printf  "🔻 $RKBPS kb"
+	printf  "DO:    $RKBPS kb"
 }
 
 clock() {
-	time=$(date +"%b %d, %R")
-	echo "📆 $time"
+	time=$(date +"%^b %d,%R")
+	echo "  $time"
 }
 
 while true; do
-	xsetroot -name "$(mail) | $(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
+	xsetroot -name "^c#FFFFFF^$(mail)  |  ^c#FFA500^$(updates)  |  ^c#FFFFFF^$(cpufrequency)  |  ^c#FFA500^$(ram)  |  ^c#FFFFFF^$(upspeed)  |  ^c#FFA500^$(downspeed)  |  ^c#FFFFFF^$(alsa)  |  ^c#FFA500^$(clock)  |"	#xsetroot -name "$(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
 	sleep 2
 done &
 

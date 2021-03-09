@@ -39,7 +39,7 @@ vol() {
 
 ## Updates
 updates() {
-updates="$(/home/panos21/.local/bin/pacupdate)"
+updates="$(~/.local/bin/pacupdate)"
 echo -e "pcm: $updates"
 }
 	
