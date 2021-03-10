@@ -48,12 +48,12 @@ xmobarEscape = concatMap doubleLts
 
 myWorkspaces :: [String]
 myWorkspaces = clickable . (map xmobarEscape)
-    -- $ [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
-    $ ["1: dev","2: www","3: code","4: sys","5: doc"] 
+    $ [" 01 ", " 02 ", " 03 ", " 04 ", " 05 ", " 06 ", " 07 ", " 08 ", " 09 "]
+    -- $ ["1: dev","2: www","3: code","4: sys","5: doc"] 
 
   where
   clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-    (i,ws) <- zip [1..5] l,
+    (i,ws) <- zip [1..9] l,
     let n = i ]
 	
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -66,6 +66,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	, ((modm .|. shiftMask, xK_space 	), setLayout $ XMonad.layoutHook conf)    									-- Reset the layouts on the current workspace to default
 	, ((modm,               xK_n     					), refresh)    																								-- Resize viewed windows to the correct size
 	, ((modm,               xK_f							), sendMessage $ Toggle FULL)   														-- Toggle current focus window to fullscreen
+	, ((modm,               xK_b 						), sendMessage ToggleStruts)															-- Toggle current focus window to fullscreen over xmobar  
 	, ((modm,               xK_Tab   				), windows W.focusDown)    																-- Move focus to the next window
 	, ((modm,               xK_j     					), windows W.focusDown)    																-- Move focus to the next window
 	, ((modm,               xK_k    	 				), windows W.focusUp  )    																	-- Move focus to the previous window
@@ -82,8 +83,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	, ((modm .|. shiftMask, xK_q     		), io (exitWith ExitSuccess))    																-- Quit xmonad
 	, ((modm .|. controlMask, xK_r     	), spawn "xmonad --recompile; xmonad --restart")    				-- Restart xmonad
 	, ((0						,xK_F10), 						spawn "amixer -q set Master toggle")										-- Toggle/Untoggle Volume
-	, ((0						,xK_F11), 						spawn "amixer set Master 2-")														-- Decrease volume
-	, ((0						,xK_F12), 						spawn "amixer set Master 2+")														-- Increase volume
+	, ((0						,xK_F11), 						spawn "amixer set Master 1-")														-- Decrease volume
+	, ((0						,xK_F12), 						spawn "amixer set Master 1+")														-- Increase volume
 	, ((0						,xK_Print), 					spawn  "scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'")	-- Screenshot
 	]
 	
@@ -135,6 +136,7 @@ myLogHook
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar"
     xmonad $ myConfig xmproc  
+
 myConfig xmproc								= withNavigation2DConfig def {
 	defaultTiledNavigation					= centerNavigation} 
 	$ def {
