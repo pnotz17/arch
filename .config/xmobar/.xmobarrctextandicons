@@ -2,6 +2,7 @@ Config {
 		 font   = "xft: mononoki Nerd Font:style=Regular:pixelsize=13:antialias=true:hinting=true", additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
          bgColor = "#080808"
        , fgColor = "#b3afc2"     
+       , alpha = 200
        , position = TopW L 100
        , lowerOnStart = True
        , hideOnStart = False
