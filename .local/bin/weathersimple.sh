@@ -2,7 +2,7 @@
 
  weather="${XDG_DATA_HOME:-$HOME/.cache/}weather"
 
- getweather="$(curl -sf 'https://wttr.in/Florina,Greece?format=%t' > "$weather" || exit 1 ;)"
+ getweather="$(curl -sf 'https://wttr.in/YOURCITY,YOURCOUNTRY?format=%t' > "$weather" || exit 1 ;)"
 
  showweather() { cat "$weather" ;} 
 

@@ -111,12 +111,12 @@ function(widget,args)
 end
 	pacwidget_t:set_text(str)
 	s:close()	
-    return "pcm:     "   .. i .. ""
+    return "pcm: "   .. i .. ""
 end , 1800, "Arch")
 
 -- hdd widget
 fswidget = wibox.widget.textbox()
-vicious.register(fswidget, vicious.widgets.fs, " hdd:     ${/ used_p}%", 10)
+vicious.register(fswidget, vicious.widgets.fs, " hdd:  ${/ used_p}%", 10)
 
 -- Thermal widget
 local function script_output()
@@ -126,25 +126,25 @@ local function script_output()
     return { out }
 end
 thermalwidget  = wibox.widget.textbox()
-vicious.register(thermalwidget, script_output, "tem:    $1")
+vicious.register(thermalwidget, script_output, "tem: $1")
 
 --Gmail Widget
 function run_script()
-    local filedescriptor = io.popen("~/.local/bin/gmailcount.sh")
+    local filedescriptor = io.popen("~/.local/bin/gmailtext.sh")
     local value = filedescriptor:read()
    filedescriptor:close()
     return {value}
 end
 mailwidget = wibox.widget.textbox()
-vicious.register(mailwidget, run_script, 'inb:     $1', 20)
+vicious.register(mailwidget, run_script, '$1', 20)
  
 -- CPU widget
 cpuwidget = wibox.widget.textbox()
-vicious.register(cpuwidget, vicious.widgets.cpu, "cpu:    $1%")
+vicious.register(cpuwidget, vicious.widgets.cpu, "cpu: $1%")
 
 -- Memory widget
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, "mem:    $1%")
+vicious.register(memwidget, vicious.widgets.mem, "mem: $1%")
 
 -- Volume widget
 volumewidget = wibox.widget.textbox()
@@ -163,7 +163,7 @@ function update_volume(widget)
 	else
 	volume = volume .. "婢"
 end
-	widget:set_markup("vol:   " .. volume)
+	widget:set_markup("vol:" .. volume)
 end
 
 update_volume(volumewidget)
@@ -173,20 +173,20 @@ mytimer:start()
 
 -- Upload Speed widget
 netupwidget = wibox.widget.textbox()
-vicious.register(netupwidget, vicious.widgets.net, 'up:     ${enp2s0 up_mb}', 2)
+vicious.register(netupwidget, vicious.widgets.net, 'up:  ${enp2s0 up_mb}', 2)
 
 -- Download Speed widget
 netdownwidget = wibox.widget.textbox()
-vicious.register(netdownwidget, vicious.widgets.net, 'do:     ${enp2s0 down_mb}', 2)
+vicious.register(netdownwidget, vicious.widgets.net, 'do:  ${enp2s0 down_mb}', 2)
 
 -- Time and Date widget
 datewidget = wibox.widget.textbox()
-vicious.register(datewidget, vicious.widgets.date, "   %b %d, %R")
+vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 
 ----- {{{ Wibar}}} -----
 -- Tags
---awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-awful.tag({ "dev", "www", "code", "sys", "doc" }, s, awful.layout.layouts[1])
+awful.tag({ "01", "02", "03", "04", "05", "06", "07", "08", "09" }, s, awful.layout.layouts[1])
+--awful.tag({ "dev", "www", "code", "sys", "doc" }, s, awful.layout.layouts[1])
 
 -- Create a wibox 
 local taglist_buttons = gears.table.join(

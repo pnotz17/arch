@@ -111,35 +111,40 @@ function(widget,args)
 end
 	pacwidget_t:set_text(str)
 	s:close()	
-	return "pcm: "   .. i .. "" 
+    return "pcm: "   .. i .. ""
 end , 1800, "Arch")
-		
+
 -- hdd widget
 fswidget = wibox.widget.textbox()
-vicious.register(fswidget, vicious.widgets.fs, " hdd  ${/ used_p}%", 10)
-
---OS widget
-oswidget = wibox.widget.textbox()
-vicious.register(oswidget, vicious.widgets.os,'os:  $2', 9000)
+vicious.register(fswidget, vicious.widgets.fs, " hdd:  ${/ used_p}%", 10)
 
 -- Thermal widget
 local function script_output()
-    local f = io.popen("/home/panos21/.local/bin/temp.sh")
+    local f = io.popen("~/.local/bin/temp.sh")
     local out = f:read("*a")
     f:close()
     return { out }
 end
-
 thermalwidget  = wibox.widget.textbox()
-vicious.register(thermalwidget, script_output, "tem:  $1")
+vicious.register(thermalwidget, script_output, "tem: $1")
 
+--Gmail Widget
+function run_script()
+    local filedescriptor = io.popen("~/.local/bin/gmailtext.sh")
+    local value = filedescriptor:read()
+   filedescriptor:close()
+    return {value}
+end
+mailwidget = wibox.widget.textbox()
+vicious.register(mailwidget, run_script, '$1', 20)
+ 
 -- CPU widget
 cpuwidget = wibox.widget.textbox()
-vicious.register(cpuwidget, vicious.widgets.cpu, "cpu:  $1%")
+vicious.register(cpuwidget, vicious.widgets.cpu, "cpu: $1%")
 
 -- Memory widget
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, "mem:  $1%")
+vicious.register(memwidget, vicious.widgets.mem, "mem: $1%")
 
 -- Volume widget
 volumewidget = wibox.widget.textbox()
@@ -156,9 +161,9 @@ function update_volume(widget)
 	if string.find(status, "on", 1, true) then
 	volume = volume .. "%"
 	else
-	volume = volume .. "M"
+	volume = volume .. "婢"
 end
-	widget:set_markup("vol: " .. volume) 
+	widget:set_markup("vol:" .. volume)
 end
 
 update_volume(volumewidget)
@@ -174,16 +179,13 @@ vicious.register(netupwidget, vicious.widgets.net, 'up:  ${enp2s0 up_mb}', 2)
 netdownwidget = wibox.widget.textbox()
 vicious.register(netdownwidget, vicious.widgets.net, 'do:  ${enp2s0 down_mb}', 2)
 
--- Keyboard map indicator widget
-mykeyboardlayout = awful.widget.keyboardlayout()
-
 -- Time and Date widget
 datewidget = wibox.widget.textbox()
 vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 
 ----- {{{ Wibar}}} -----
 -- Tags
---awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+--awful.tag({ "01", "02", "03", "04", "05", "06", "07", "08", "09" }, s, awful.layout.layouts[1])
 awful.tag({ "dev", "www", "code", "sys", "doc" }, s, awful.layout.layouts[1])
 
 -- Create a wibox 
@@ -261,11 +263,13 @@ s.mytasklist,
 
 -- Right widgets
 { layout = wibox.layout.fixed.horizontal,
+	spr,mailwidget,
 	spr,pacwidget,
 	spr,cpuwidget,
 	spr,memwidget,
 	spr,volumewidget,
-	spr,netwidget,
+	spr,netupwidget,
+	spr,netdownwidget,
 	spr,datewidget,
 	spr,s.mylayoutbox,
 	wibox.widget.systray(),},}
@@ -489,7 +493,6 @@ root.buttons(gears.table.join(
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)))
 end
-
 clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
