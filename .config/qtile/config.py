@@ -1,10 +1,9 @@
 # Imports
-from libqtile.config import Click, Drag, Group, Key, Screen
-from libqtile.utils import guess_terminal
-from libqtile import bar, layout, widget
-from typing import List  # noqa: F401
 from libqtile.lazy import lazy
 from libqtile import hook
+from libqtile.config import Click, Drag, Group, Key, Screen
+from libqtile import bar, layout, widget
+from typing import List  # noqa: F401
 import subprocess
 import os
 
@@ -27,51 +26,85 @@ barc ="#080808"
 keys = [
 	
 	# Window manager controls
-	Key([mod, "control"], "r", lazy.restart()),
-	Key([mod, "control"], "q", lazy.restart()),
-	Key([mod, "shift"], "Return", lazy.spawn("st")),
-	Key([mod, "shift"], "space", lazy.next_layout()),
-	Key([mod, "shift"], "c", lazy.window.kill()),
-	Key([mod], "p", lazy.spawn("dmenu_run")),
-	Key([mod], "t", lazy.window.toggle_floating()),
-	Key([mod], "f", lazy.window.toggle_fullscreen()),
+	Key([mod, "control"], "r", 
+		lazy.restart()),
+	Key([mod, "control"], "q", 
+		lazy.restart()),
+	Key([mod, "shift"], "Return", 
+		lazy.spawn("st")),
+	Key([mod, "shift"], "space", 
+		lazy.next_layout()),
+	Key([mod, "shift"], "c", 
+		lazy.window.kill()),
+	Key([mod], "p", 
+		lazy.spawn("dmenu_run")),
+	Key([mod], "t", 
+		lazy.window.toggle_floating()),
+	Key([mod], "f", 
+		lazy.window.toggle_fullscreen()),
 	
 	# Move Focus
-	Key([mod], "h", lazy.layout.left()),
-	Key([mod], "l", lazy.layout.right()),
-	Key([mod], "j", lazy.layout.down()),
-	Key([mod], "k", lazy.layout.up()),
+	Key([mod], "h", 
+		lazy.layout.left()),
+	Key([mod], "l", 
+		lazy.layout.right()),
+	Key([mod], "j", 
+		lazy.layout.down()),
+	Key([mod], "k", 
+		lazy.layout.up()),
 	
 	# Move Window
-	Key([mod, "shift"], "h", lazy.layout.swap_left()),
-	Key([mod, "shift"], "l", lazy.layout.swap_right()),
-	Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
-	Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
-	Key([mod], "Return", lazy.layout.swap_main()),
+	Key([mod, "shift"], "h", 
+		lazy.layout.swap_left()),
+	Key([mod, "shift"], "l", 
+		lazy.layout.swap_right()),
+	Key([mod, "shift"], "j", 
+		lazy.layout.shuffle_down()),
+	Key([mod, "shift"], "k", 
+		lazy.layout.shuffle_up()),
+	Key([mod], "Return", 
+		lazy.layout.swap_main()),
 	
 	# Alter Window Size
-	Key([mod, "shift"], 'h', lazy.layout.shrink()),
-	Key([mod, "shift"],  'l', lazy.layout.grow()),
-	Key([mod, "shift"],  'n', lazy.layout.reset()),
-	Key([mod, "shift"], 'm', lazy.layout.maximize()),
+	Key([mod, "shift"], 'h', 
+		lazy.layout.shrink()),
+	Key([mod, "shift"],  'l', 
+		lazy.layout.grow()),
+	Key([mod, "shift"],  'n', 
+		lazy.layout.reset()),
+	Key([mod, "shift"], 'm', 
+		lazy.layout.maximize()),
 	  
 	# Treetab controls          
-	Key([mod, "control"], "k",lazy.layout.section_up()),          
-	Key([mod, "control"], "j", lazy.layout.section_down()),
+	Key([mod, "control"], "k",
+		lazy.layout.section_up()),          
+	Key([mod, "control"], "j", 
+		lazy.layout.section_down()),
 	    
 	# Extras
-	Key([mod, "shift"], "b", lazy.spawn("qutebrowser")),
-	Key([mod, "shift"], "f", lazy.spawn("pcmanfm")),
-	Key([mod, "shift"], "p", lazy.spawn(".local/bin/power.sh")),
-	Key([], "F12", lazy.spawn("amixer set Master Front 2+")),
-	Key([], "F11", lazy.spawn("amixer set Master Front 2-")),
-	Key([], "Print", lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
+	Key([mod, "shift"], "b", 
+		lazy.spawn("qutebrowser")),
+	Key([mod, "shift"], "f", 
+		lazy.spawn("pcmanfm")),
+	Key([mod, "shift"], "m", 
+		lazy.spawn("st -e mutt")),
+	Key([mod, "shift"], "p", 
+		lazy.spawn(".local/bin/power.sh")),
+	Key([], "F12", 
+		lazy.spawn("amixer set Master Front 2+")),
+	Key([], "F11", 
+		lazy.spawn("amixer set Master Front 2-")),
+	Key([], "Print", 
+		lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
 
 # Mouse bindings
 mouse = [
-	Drag([mod], "Button1", lazy.window.set_position_floating(),start=lazy.window.get_position()),
-	Drag([mod], "Button3", lazy.window.set_size_floating(),start=lazy.window.get_size()),
-	Click([mod],"Button2", lazy.window.bring_to_front())]
+	Drag([mod], "Button1", 
+		lazy.window.set_position_floating(),start=lazy.window.get_position()),
+	Drag([mod], "Button3", 
+		lazy.window.set_size_floating(),start=lazy.window.get_size()),
+	Click([mod],"Button2", 
+		lazy.window.bring_to_front())]
 
 # Groups
 group_names = [
@@ -84,8 +117,10 @@ group_names = [
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
-    keys.append(Key([mod], str(i), lazy.group[name].toscreen()))                # Switch to another group
-    keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
+    keys.append(Key([mod], str(i), 
+		lazy.group[name].toscreen()))                # Switch to another group
+    keys.append(Key([mod, "shift"], str(i), 
+		lazy.window.togroup(name))) 				# Send current window to another group
 
 # Layout variables
 def init_layout_theme():
@@ -93,7 +128,6 @@ def init_layout_theme():
 	"border_width":1,
 	"border_focus": "#b3afc2",
 	"border_normal": "#b3afc2"}
-	
 layout_theme = init_layout_theme()
 
 # Layouts
@@ -122,7 +156,6 @@ widget_defaults = dict(
 	font='Literation Mono Nerd Font',
 	fontsize=13,
 	padding=4.75,)
-
 extension_defaults = widget_defaults.copy()
 
 # Screen variables
@@ -153,25 +186,31 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Spacer(),
 	
-	widget.CheckUpdates(
-	distro='Arch_checkupdates',
-	display_format=' updates:   {updates}',
-	colour_have_updates="#FF0000",
-	execute = '~/.local/bin/check-all-updates.sh', 
-	no_update_string = '',
-	update_interval=60),
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/pacupdate")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
+
+	widget.TextBox(
+	fmt =' | ',
+	foreground = grey2,),
 	
-	# widget.TextBox(
-	# fmt ='|',
-	# foreground = grey2,),
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/gmailcount.sh")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
+	
+	widget.TextBox(
+	fmt ='|',
+	foreground = grey2,),
 
 	# widget.ThermalSensor(
 	# foreground =grey1,
 	# fmt ='tem:    {}',),
 	
-	widget.TextBox(
-	fmt =' | ',
-	foreground = grey2,),
+	# widget.TextBox(
+	# fmt =' | ',
+	# foreground = grey2,),
 
 	widget.CPU(
 	format = 'cpu:   {load_percent}%',
@@ -183,7 +222,7 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Memory(
 	foreground = grey1,
-	format = "mem:   {MemUsed}M",
+	format = "mem:   {MemPercent}%",
 	update_interval = 1,),
 	
 	widget.TextBox(
@@ -227,8 +266,7 @@ screens = [Screen(top=bar.Bar(
 	widget.Systray(
 	padding = 5,),
 	
-],20,background=barc,opacity=0.95),),
-]
+],20,background=barc,opacity=0.95),),]
 
 # Floating rules
 floating_layout = layout.Floating(float_rules=[
@@ -248,4 +286,5 @@ floating_layout = layout.Floating(float_rules=[
 	{'wname': 'Open File'},
 	{'wname': 'pinentry'},
 	{'wmclass': 'ssh-askpass'},],  **layout_theme) #fullscreen_border_width = 0, border_width = 0)
+
 

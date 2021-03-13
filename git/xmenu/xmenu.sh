@@ -6,7 +6,7 @@ File manager	pcmanfm
 Terminal 	st
 Web browser	/usr/bin/waterfox-g3	
 Accessories
-	feh	feh  ~/Pictures/Wallpapers/*
+	feh	feh  ~/pictures/Wallpapers/*
 	vim	st -e vim
 Development
 	geany	geany
