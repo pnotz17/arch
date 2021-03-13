@@ -127,3 +127,8 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 #typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme
+
+# set PATH so it includes user's private ~/.local/bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
