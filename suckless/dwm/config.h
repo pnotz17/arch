@@ -6,19 +6,19 @@ static const unsigned int gappx							= 1;        								/* gaps between window
 static const unsigned int snap								= 32;     								/* snap pixel */
 static const int showbar											= 1;        								/* 0 means no bar */
 static const int topbar												= 1;        								/* 0 means bottom bar */
-static const char col_bar[]										= "#080808";				/* bar color */
-static const char  col_uwb[]									= "#B3AFC2";				/* unfocused window border color*/
-static const char  col_barfg[]									= "#B5B5B5"; 				/* bar foreground color on right & left*/
-static const char  col_fttf[]										= "#3AFF00"; 				/* focused tag and tasklist foreground color*/
-static const char col_httfwb[]								= "#2B2B2B";  				/* highlighted tag  // tasklist   // focused window foreground color*/
+static const char normbgcolor[]							= "#080808";				/* bar color */
+static const char  unfocusedbdcolor[]				= "#B3AFC2";				/* unfocused window border color*/
+static const char  normfgcolor[]							= "#B5B5B5"; 				/* bar foreground color on right & left*/
+static const char  focusedfgcolor[]						= "#FFFF00"; 				/* focused tag and tasklist foreground color*/
+static const char selbgcolor[]								= "#005577";  				/* highlighted tag  // tasklist   // focused window background color*/
 static const unsigned int baralpha						= 235;								/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha				= 235;
 
 /* cololr scheme order*/
 static const char *colors[][3]									= {
 	/*               					  fg         		   bg		    border   */                    
-	[SchemeNorm]	= { col_barfg,col_bar, col_uwb },
-	[SchemeSel]		= { col_fttf,col_httfwb, col_httfwb},
+	[SchemeNorm]	= { normfgcolor,normbgcolor,unfocusedbdcolor },
+	[SchemeSel]		= {focusedfgcolor,selbgcolor,selbgcolor},
 };
 
 /* transparency order*/
@@ -67,7 +67,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2]										= "0"; 						/* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] 							= { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bar, "-nf", col_barfg, "-sb",col_httfwb, "-sf",col_fttf, NULL };
+static const char *dmenucmd[] 							= { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb",normbgcolor, "-nf", normfgcolor, "-sb",selbgcolor, "-sf",focusedfgcolor, NULL };
 static const char *termcmd[]									= { "st", NULL };
 static const char *print_screen_cmd[]				= { "scrot", "-d3", "~/pictures/Screenshots/%Y-%m-%d-%s_$wx$h.jpg", NULL };
 static const char *upvol[]										= { "amixer", "set", "Master", "1+",     NULL };
