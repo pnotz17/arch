@@ -27,7 +27,7 @@ System
 Kill	xkill
 
 Leave
-	Exit		pkill -KILL -u panos21
+	Exit		pkill -KILL -u pnotz17
 	Reboot			reboot
 	Shutdown		poweroff
 EOF
