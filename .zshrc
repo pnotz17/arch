@@ -112,10 +112,7 @@ zstyle ':completion:*' rehash true
 zstyle ':completion:*' list-dirs-first true
 
 # Compinstall filename
-zstyle :compinstall filename '/home/panos21/.zshrc'
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+zstyle :compinstall filename '~/.zshrc'
 
 # Plugins
 source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme 2>/dev/null
@@ -130,3 +127,5 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -1,20 +1,13 @@
-#!/bin/sh
-
 # Autostart
-xrandr --output VGA1 --scale 1.25x1.25 &
-/home/panos21/.local/bin/dwmbartextandicons.sh &
-feh --no-fehbg --bg-scale /home/panos21/Pictures/Wallpapers/017.jpg &
-xclickroot -r /home/panos21/xmenu/xmenu.sh &
-/home/panos21/.local/bin/xsessionautoremover.sh &
-#picom -b &
+xrandr --output VGA1 --mode 1408x792_60.00 --scale-from 1920x1080 &
+xclickroot -r ~/git/xmenu/xmenu.sh &
+~/.local/bin/dwmbaremojis.sh &
+~/.local/bin/xsessionautoremover.sh &
+~/.fehbg &
 xset dpms 600 900 1200
 xset r rate 350 60
-
-# Keymap
-#!/bin/sh
-setxkbmap "us,gr" -option "grp:alt_shift_toggle"
-
-# Custom Resolution
+picom -b &
+dunst &
 
 ##!/bin/sh
 xrandr --newmode "1408x792_60.00"   90.75  1408 1480 1624 1840  792 795 800 823 -hsync +vsync

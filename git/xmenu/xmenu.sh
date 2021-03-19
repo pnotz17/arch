@@ -4,17 +4,17 @@
 cat <<EOF | xmenu -r | sh &
 File manager	pcmanfm
 Terminal 	st
-Web browser	/usr/bin/waterfox-g3	
+Web browser	firefox	
 Accessories
-	feh	feh  ~/pictures/Wallpapers/*
+	feh	feh  ~/pictures/wallpapers/*
 	vim	st -e vim
 Development
 	geany	geany
 Graphics
 	gimp	gimp
 	xsane-scanning	xsane
-Network 
-	waterfox	/usr/bin/waterfox-g3
+Network
+	firefox  firefox
 	transmission	transmission-gtk
 Multimedia
 	alsa mixer	st -e alsamixer
