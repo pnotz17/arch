@@ -30,6 +30,7 @@ static const char *tags[]	= { "01", "02", "03", "04", "05", "06", "07", "08", "0
 
 static const Rule rules[] = {
 	{ "mpv",     NULL,       NULL,       0,            		1,           			-1 },
+	{ "gimp",     NULL,       NULL,       0,            		1,           			-1 },
 };
 
 #include "layouts.c"
@@ -83,8 +84,8 @@ static Key keys[] = {
 	{ MODKEY,                       				XK_m,      			setlayout,      							{.v = &layouts[2]} },
 	{ MODKEY,                       				XK_g,      			setlayout,      							{.v = &layouts[3]} },
 	{ MODKEY|ControlMask,			XK_comma,  	cyclelayout,    						{.i = -1 } },
-	{ MODKEY|ControlMask,           XK_period, 	cyclelayout,    						{.i = +1 } },
-	{ MODKEY,                       				XK_space,  		setlayout,      							{0} },
+	{ MODKEY|ControlMask,           XK_period, 	setlayout,      							{0} },
+	{ MODKEY,                       				XK_space,  		cyclelayout,    						{.i = +1 } },
 	{ MODKEY|ShiftMask,            	XK_space,		togglefloating, 						{0} },
 	{ MODKEY,                       				XK_0,      			view,           								{.ui = ~0 } },
 	{ MODKEY|ShiftMask,            	XK_0,      			tag,            								{.ui = ~0 } },
