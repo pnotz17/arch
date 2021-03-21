@@ -1,4 +1,4 @@
-dwm - dynamic window manager with alpha status2d fullgaps and movestack
+dwm - dynamic window manager patched with alpha attachside cyclelayouts fullgaps gridmode movestack status2d and emoji support
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.
 
