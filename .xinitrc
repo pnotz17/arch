@@ -1,17 +1,21 @@
-# Autostart
+#!/bin/sh
+
+# X settings
 xrandr --output VGA1 --mode 1408x792_60.00 --scale-from 1920x1080 &
-xclickroot -r ~/git/xmenu/xmenu.sh &
+xrdb -merge $HOME/.Xdefaults
+xset dpms 600 900 1200
+xset r rate 350 60
+
+# Autostart
 ~/.local/bin/dwmbaremojis.sh &
 ~/.local/bin/xsessionautoremover.sh &
 ~/.fehbg &
-xset dpms 600 900 1200
-xset r rate 350 60
+xclickroot -r ~/git/xmenu/xmenu.sh &
 picom -b &
 dunst &
 
-##!/bin/sh
-xrandr --newmode "1408x792_60.00"   90.75  1408 1480 1624 1840  792 795 800 823 -hsync +vsync
-xrandr --addmode VGA1 1408x792_60.00
+# Keymap
+setxkbmap "us,gr" -option "grp:alt_shift_toggle"
 
 #dwm restart loop
 while true; do

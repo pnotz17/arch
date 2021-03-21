@@ -1,12 +1,9 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Set the list of directories that Zsh searches for programs.
-#export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin 
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin 
 
 # Setting up Defaults
 export EDITOR='vim'
@@ -25,15 +22,15 @@ alias yss='yay -Ss'
 alias ys='yay -S'
 alias te='tar -xvf'
 alias build='doas make clean install'
-alias update='doas pacman -Syu'
-alias psy='doas pacman -Syu'
+alias update='doas pacman -Syu --noconfirm'
+alias psy='doas pacman -Syu --noconfirm'
 alias ls='ls --color=auto'
 alias rm='doas pacman -Rscnd'
 alias csc='du -sh  ~/.cache'
 alias cpc='du -sh /var/cache/pacman/pkg/'
 alias rmsc='doas rm -rf ~/.cache/*'
-alias rmpc='doas pacman -Scc'
-alias rmyc='yay -Scc'
+alias rmpc='doas pacman -Scc --noconfirm'
+alias rmyc='yay -Scc --noconfirm'
 alias rmjc='doas journalctl --rotate --vacuum-time=1s'
 alias pkglist='doas pacman -Qqe > pkglist.txt'
 alias pkgs='pacman -Q  |  wc -l'
@@ -41,8 +38,6 @@ alias rmo='doas pacman -Rns $(pacman -Qtdq)'
 alias import='gpg --keyserver ha.pool.sks-keyservers.net --recv-keys'
 alias srm=' doas reflector --verbose --country Greece --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist'
 alias xr='xmonad --recompile'
-alias gu='git config --global user.email "pnotz17@gmail.com"'
-alias gn='git config --global user.name "Panagiotis A Natsis"'
 alias gau='git add -u'
 alias gs='git status'
 alias ga='git add'
@@ -70,10 +65,8 @@ colors
 # Autocompletion
 autoload -Uz compinit
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
-
 autoload bashcompinit
 bashcompinit
-
 zmodload -i zsh/complist
 
 WORDCHARS=''
@@ -89,7 +82,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)
 ([0-9a-z-]#)*=01;34=0=01'
-
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 
 # Don't complete uninteresting users
@@ -102,7 +94,6 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
         operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
         rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp \
         usbmux uucp vcsa wwwrun xfs '_*'
-
 zstyle '*' single-ignored show
 
 # Automatically update PATH entries
