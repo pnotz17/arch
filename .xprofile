@@ -1,28 +1,26 @@
-# Autostart
+#!/bin/sh
+
+# X settings
 xrandr --output VGA1 --mode 1408x792_60.00 --scale-from 1920x1080 &
-#xrandr --output VGA1 --scale 1.25x1.25 &
-xclickroot -r ~/git/xmenu/xmenu.sh &
-~/.local/bin/dwmbartextuppercase.sh &
-~/.local/bin/xsessionautoremover.sh &
-~/.fehbg &
+xrdb -merge $HOME/.Xdefaults
 xset dpms 600 900 1200
 xset r rate 350 60
+
+# Autostart
+~/.local/bin/dwmbaremojis.sh &
+~/.local/bin/xsessionautoremover.sh &
+~/.fehbg &
+xclickroot -r ~/git/xmenu/xmenu.sh &
 picom -b &
+dunst &
 
 # Keymap
-#!/bin/sh
 setxkbmap "us,gr" -option "grp:alt_shift_toggle"
 
-# Custom Resolution
-##!/bin/sh
- xrandr --newmode "1408x792_60.00"   90.75  1408 1480 1624 1840  792 795 800 823 -hsync +vsync
- xrandr --addmode VGA1 1408x792_60.00
-
 #dwm restart loop
-while true; do
-    /usr/local/bin/dwm 2> /dev/null
-done
+#while true; do
+    #/usr/local/bin/dwm 2> /dev/null
+#done
 
-
-
+#exec dwm
 
