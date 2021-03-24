@@ -1,7 +1,7 @@
 #!/bin/sh
 
 mail() {
-	mail=`curl -su USERNAME:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo  "📬 $mail"
 }
@@ -32,7 +32,7 @@ cpufrequency() {
 }
 
 ram() {
-	mem=$(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')
+	mem=$(free | awk '/^Mem/ { printf("%.2f%\n", $3/$2 * 100.0) }')
 	echo "💻 $mem"
 }
 
