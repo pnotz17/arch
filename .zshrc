@@ -15,11 +15,11 @@ SAVEHIST=10000
 autoload -U colors && colors
 
 # Basic auto/tab complete:
-autoload -Uz compinit
+autoload -Uz compinit && compinit
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
-autoload bashcompinit
-bashcompinit
-zmodload -i zsh/complist
+autoload bashcompinit && bashcompinit
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:*:*:*' menu yes select
 
 # Aliases
 alias sudo='doas'
@@ -78,8 +78,10 @@ parse_git_branch() {
 }
 
 setopt PROMPT_SUBST
-PROMPT='%{%F{blue}%}%9c%{%F{none}%}$(parse_git_branch)$'
+PROMPT='%{%F{magenta}%}%9c%{%F{none}%}$(parse_git_branch)$'
 
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+
