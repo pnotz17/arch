@@ -61,6 +61,7 @@ bindkey -v
 # makes color constants available
 autoload -U colors zsh/terminfo
 colors
+#prompt='%F{013}%2~%f$(git_super_status)%(?.%F{004}.%F{001}✕%?)$ %f'
 
 # Autocompletion
 autoload -Uz compinit
