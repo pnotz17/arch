@@ -1,6 +1,6 @@
 #  Basic stuff 
-autoload -U compinit colors vcs_info
-colors
+autoload -U colors && colors
+autoload -U compinit  vcs_info 
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 
 # Path
@@ -19,13 +19,13 @@ zstyle ':vcs_info:*' unstagedstr '%F{yellow}🔴️%f '
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git*' formats "%F{blue}%b%f %u%c"
 
-#Prompt
+# Prompt
 _setup_ps1() {
-  vcs_info
-  GLYPH="▲"
-  [ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
-  PS1=" %(?.%F{blue}.%F{red})$GLYPH%f %(1j.%F{cyan}[%j]%f .)%F{blue}%~%f %(!.%F{red}#%f .)"
-  RPROMPT="$vcs_info_msg_0_"
+vcs_info
+GLYPH="▲"
+[ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
+PS1=" %(?.%F{blue}.%F{red})$GLYPH%f %(1j.%F{cyan}[%j]%f .)%F{blue}%~%f %(!.%F{red}#%f .)"
+RPROMPT="$vcs_info_msg_0_"
 }
 _setup_ps1
 
@@ -41,16 +41,12 @@ zle-line-init () {
 zle -N zle-line-init
 bindkey -v
 
-#  Autocompletion
+#  Autocompletion, ls-colors,
 zstyle ':completion:*' completer _complete _correct _approximate 
 
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-
-# ls-colors
-export CLICOLOR=1
-ls --color=auto &> /dev/null && alias ls='ls --color=auto'
 
 # Aliases
 alias sudo='doas'
@@ -82,5 +78,3 @@ alias gp='git push'
 alias gtc='git clone'
 alias ..='cd ..'
 alias ...='cd ../..'
-
-
