@@ -1,17 +1,16 @@
 #  Basic stuff 
-export EDITOR=vim
-export TERM=st
 autoload -U colors && colors
 autoload -U compinit  vcs_info 
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 
+# Environment variables
+export TERM=st-256color
+export EDITOR=vim
+export Browser=firefox
+
 # Path
 if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
-fi
-# fzf
-if [[ ! "$PATH" == *~/.zsh/.fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}/$HOME/.zsh/.fzf/bin"
 fi
 
 # History
@@ -21,7 +20,7 @@ SAVEHIST=10000
 
 # Prompt
 setopt PROMPT_SUBST
-PROMPT='%F{magenta}%9c$(git_branch_test_color)%F{none} %# '
+PROMPT='%F{blue}%9c$(git_branch_test_color)%F{none} %# '
 RPROMPT='%D{%k:%M:%S}'
 
 # Git settings
@@ -39,14 +38,19 @@ git_branch_test_color() {
   fi
 }
 
-#  Autocompletion, ls-colors,
-zstyle ':completion:*' completer _complete _correct _approximate 
-
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 source ~/.zsh/.fzf/shell/completion.zsh 2> /dev/null
 source ~/.zsh/.fzf/shell/key-bindings.zsh 2> /dev/null
+
+if [[ ! "$PATH" == *~/.zsh/.fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/$HOME/.zsh/.fzf/bin"
+fi
+
+# ls - colors
+export CLICOLOR=1
+ls --color=auto &> /dev/null && alias ls='ls --color=auto'
 
 # Aliases
 alias sudo='doas'
