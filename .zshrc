@@ -1,4 +1,6 @@
 #  Basic stuff 
+export EDITOR=vim
+export TERM=st
 autoload -U colors && colors
 autoload -U compinit  vcs_info 
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
@@ -6,6 +8,10 @@ compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 # Path
 if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
+fi
+# fzf
+if [[ ! "$PATH" == *~/.zsh/.fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/$HOME/.zsh/.fzf/bin"
 fi
 
 # History
@@ -39,6 +45,8 @@ zstyle ':completion:*' completer _complete _correct _approximate
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source ~/.zsh/.fzf/shell/completion.zsh 2> /dev/null
+source ~/.zsh/.fzf/shell/key-bindings.zsh 2> /dev/null
 
 # Aliases
 alias sudo='doas'
@@ -70,3 +78,5 @@ alias gp='git push'
 alias gtc='git clone'
 alias ..='cd ..'
 alias ...='cd ../..'
+
+
