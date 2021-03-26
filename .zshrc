@@ -19,8 +19,8 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 # Prompt
-setopt PROMPT_SUBST
-PROMPT='%F{blue}%9c$(git_branch_test_color)%F{none} %# '
+setopt prompt_subst
+PROMPT='%F{none}%n@%F{blue}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
 RPROMPT='%D{%k:%M:%S}'
 
 # Git settings
