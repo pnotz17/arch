@@ -13,33 +13,25 @@ HISTFILE=~/.zsh/zhistory
 HISTSIZE=10000
 SAVEHIST=10000
 
-# Git settings
-zstyle ':vcs_info:*' stagedstr '%F{none}🟢%f '
-zstyle ':vcs_info:*' unstagedstr '%F{none}🔴️%f '
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git*' formats "%F{blue}%b%f %u%c"
-
 # Prompt
-_setup_ps1() {
-vcs_info
-GLYPH="▲"
-[ "x$KEYMAP" = "xvicmd" ] && GLYPH="▼"
-PS1=" %(?.%F{blue}.%F{red})$GLYPH%f %(1j.%F{cyan}[%j]%f .)%F{blue}%~%f %(!.%F{red}#%f .)"
-RPROMPT="$vcs_info_msg_0_"
-}
-_setup_ps1
+setopt PROMPT_SUBST
+PROMPT='%F{magenta}%9c$(git_branch_test_color)%F{none} %# '
+RPROMPT='%D{%k:%M:%S}'
 
-# Vi mode
-zle-keymap-select () {
- _setup_ps1
-  zle reset-prompt
+# Git settings
+git_branch_test_color() {
+  local ref=$(git symbolic-ref --short HEAD 2> /dev/null)
+  if [ -n "${ref}" ]; then
+    if [ -n "$(git status --porcelain)" ]; then
+      local gitstatuscolor='%F{red}**M**'
+    else
+      local gitstatuscolor='%F{green}'
+    fi
+    echo "${gitstatuscolor} (${ref})"
+  else
+    echo ""
+  fi
 }
-zle -N zle-keymap-select
-zle-line-init () {
-  zle -K viins
-}
-zle -N zle-line-init
-bindkey -v
 
 #  Autocompletion, ls-colors,
 zstyle ':completion:*' completer _complete _correct _approximate 
