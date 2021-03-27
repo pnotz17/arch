@@ -1,5 +1,5 @@
 static struct Config config = {
-	.font = "Ubuntu:size=7",														/* font, separate different fonts with comma */
+	.font = "Ubuntu Nerd Font:style=Book:size=7",														/* font, separate different fonts with comma */
 
 	/* colors */
 	.background_color 								= "#080808",

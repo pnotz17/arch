@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 /* Default settings; can be overriden by command line. */
 
-static const char *fonts[]          							= { "UbuntuMono Nerd Font:pixelsize=21:antialias=true:autohint=true", "Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true" };
+static const char *fonts[]          							= { "UbuntuMono Nerd Font:pixelsize=11:antialias=true:autohint=true", "Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true" };
 static int topbar 														= 1;                      			/* -b  option; if 0, dmenu appears at bottom     */
 static int centered 													= 1;                    				/* -c option; centers dmenu on screen */
 static int min_width 												= 500;                 			/* minimum width when centered */ /* -fn option overrides fonts[0]; default X11 font or font set */

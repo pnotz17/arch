@@ -1,8 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
  // appearance
-static char *font = "UbuntuMono Nerd Font:pixelsize=21:antialias=true:autohint=true";
-static char *font2[] = {"Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true", };
+static char *font = "UbuntuMono Nerd Font:pixelsize=20:antialias=true:autohint=true";
+static char *font2[] = {"Noto Color Emoji:style=Regular:size=18:antialias=true:autohint=true", };
 static int borderpx = 1;
 
 // What program is execed by st depends of these precedence rules:
