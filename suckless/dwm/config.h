@@ -1,5 +1,5 @@
-static const char *fonts[] = {"Exo:style=Regular:size=10:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=9:antialias=true:autohint=true",};
-static const char dmenufont[]	 = {"Exo:style=Regular:size=10::antialias=true:autohint=true"};
+static const char *fonts[]	= {"Anonymice Nerd Font:style=Regular:size=10.5:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=8:antialias=true:autohint=true","Font Awesome:size:10:antialias=true:autohint=true",};
+static const char dmenufont[] = {"FiraCode Nerd Font:style=Regular:size=10:antialias=true:autohint=true"};
 static const unsigned int borderpx = 1;/* border pixel of windows */
 static const unsigned int gappx = 10;/* gaps between windows */
 static const unsigned int snap = 32;/* snap pixel */
