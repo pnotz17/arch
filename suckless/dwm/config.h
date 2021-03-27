@@ -1,5 +1,5 @@
-static const char *fonts[] = {"Monospace:size=11:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=7:antialias=true:autohint=true",};
-static const char dmenufont[]	 = {"Monospacestyle=Book:size=11:antialias=true:autohint=true"};
+static const char *fonts[] = {"Exo:style=Regular:size=10:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=9:antialias=true:autohint=true",};
+static const char dmenufont[]	 = {"Exo:style=Regular:size=10::antialias=true:autohint=true"};
 static const unsigned int borderpx = 1;/* border pixel of windows */
 static const unsigned int gappx = 10;/* gaps between windows */
 static const unsigned int snap = 32;/* snap pixel */
