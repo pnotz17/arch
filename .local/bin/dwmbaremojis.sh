@@ -8,17 +8,17 @@ mail() {
 
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo "🔔 $updates"
+	echo "❌ $updates"
 }
 
 pkgs() {
 	pkgs=$(pacman -Q  |  wc -l)
-	echo "🧊 $pkgs"
+	echo "📦 $pkgs"
 }
 
 weather() {
 	weather=$(curl 'https://wttr.in/YOURCITY,YOURCOUNTRY?format=%t')
-	echo "🌩️$weather"
+	echo "🌈 $weather"
 }
 
 cputemp() {
@@ -83,7 +83,7 @@ clock() {
 }
 
 while true; do
-	xsetroot -name "$(mail) | $(updates) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"
+	xsetroot -name "|  $(updates)  |  $(mail)  |  $(weather)  |  $(cpufrequency)  |  $(ram)  |  $(alsa)  |  $(upspeed)  |  $(downspeed)  |  $(clock)  |"
 	sleep 2
 done &
 
