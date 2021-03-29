@@ -20,7 +20,7 @@ SAVEHIST=10000
 
 # Prompt
 setopt prompt_subst
-PROMPT='%F{none}%n@%F{blue}%m:%15<..<%~%<<$(git_branch_test_color)%F{none} %# '
+PROMPT='%F{none}%n@%F{blue}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
 RPROMPT='%D{%k:%M:%S}'
 
 # Git settings
