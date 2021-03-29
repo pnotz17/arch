@@ -8,7 +8,7 @@ mail() {
 
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo "❌ $updates"
+	echo "⁉️️ $updates"
 }
 
 pkgs() {
@@ -28,7 +28,7 @@ cputemp() {
 
 cpufrequency() {
 	cpu=$(awk '{u=$2+$4; t=$2+$4+$5;if (NR==1){u1=u; t1=t;} else printf("%d%%", ($2+$4-u1) * 100 / (t-t1) "%");}' <(grep 'cpu ' /proc/stat) <(sleep 0.5; grep 'cpu ' /proc/stat))
-	echo "🖥 $cpu"%
+	echo "🖥️ $cpu"%
 }
 
 ram() {
@@ -83,7 +83,7 @@ clock() {
 }
 
 while true; do
-	xsetroot -name "|  $(updates)  |  $(mail)  |  $(weather)  |  $(cpufrequency)  |  $(ram)  |  $(alsa)  |  $(upspeed)  |  $(downspeed)  |  $(clock)  |"
+	xsetroot -name "|  $(updates)  |  $(mail)  |  $(cpufrequency)  |  $(ram)  |  $(alsa)  |  $(upspeed)  |  $(downspeed)  |  $(clock)  |"
 	sleep 2
 done &
 
