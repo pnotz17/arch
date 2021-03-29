@@ -20,7 +20,7 @@ SAVEHIST=10000
 
 # Prompt
 setopt prompt_subst
-PROMPT='%F{none}%n@%F{blue}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
+PROMPT='%F{none}%n@%F{blue}%m:%15<..<%~%<<$(git_branch_test_color)%F{none} %# '
 RPROMPT='%D{%k:%M:%S}'
 
 # Git settings
@@ -74,9 +74,7 @@ alias rmjc='doas journalctl --rotate --vacuum-time=1s'
 alias pkglist='doas pacman -Qqe > pkglist.txt'
 alias pkgs='pacman -Q  |  wc -l'
 alias rmo='doas pacman -Rns $(pacman -Qtdq)'
-alias import='gpg --keyserver ha.pool.sks-keyservers.net --recv-keys'
 alias srm=' doas reflector --verbose --country Greece --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist'
-alias xr='xmonad --recompile'
 alias gau='git add -u'
 alias gs='git status'
 alias ga='git add'
