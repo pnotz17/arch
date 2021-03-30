@@ -11,7 +11,7 @@ call plug#end()
 
 " Vim Appearance
 " put colorscheme files in ~/.vim/colors/
-colorscheme darth                               " good colorschemes:murphy,cabin,monochrome,darth,spacegray,evening,tigrana-256-dark,
+colorscheme molokai                               " good colorschemes:murphy,cabin,monochrome,darth,spacegray,evening,tigrana-256-dark,256_noir,Atelier_CaveDark,molokai
 
 " Personal settings
 set number              		                          " show line numbers
