@@ -1,7 +1,7 @@
 static const char *fonts[] 		= {"DaddyTimeMono Nerd Font:style=Book:size=9:antialias=true:autohint=true","EmojiOne:style=Regular:size=9:antialias=true:autohint=true",};
 static const char dmenufont[] 		= {"DaddyTimeMono Nerd Font:style=Book:size=9:antialias=true:autohint=true"};
 static const unsigned int borderpx 	= 1;		/* border pixel of windows */
-static const unsigned int gappx 	= 10;		/* gaps between windows */
+static const unsigned int gappx 	= 18;		/* gaps between windows */
 static const unsigned int snap 		= 32;		/* snap pixel */
 static const int showbar		= 1;		/* 0 means no bar */
 static const int topbar 		= 1;		/* 0 means bottom bar */
@@ -9,7 +9,7 @@ static const char normbgcolor[] 	= "#080808";	/* bar backround color */
 static const char normfgcolor[] 	= "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 		= "#222222";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 		= "#FFFFFF";	/* focused tag and tasklist foreground color*/
-static const char unselbordercolor[] 	= "#B3AFC2";	/* unfocused window border color*/
+static const char unselbordercolor[] 	= "#FF0058";	/* unfocused window border color*/
 static const char selbordercolor[] 	= "#B3AFC2";	/* focused window border color*/
 static const unsigned int baralpha 	= 235;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha	= 235;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
@@ -45,7 +45,7 @@ static const Layout layouts[]= {
 { NULL,		NULL },
 };
 
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
