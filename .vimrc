@@ -3,7 +3,6 @@ call plug#begin()
 Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'ap/vim-css-color'
-Plug 'dustractor/vimtkcolor'
 Plug 'ryanoasis/vim-devicons'
 Plug 'itchyny/lightline.vim'
 
