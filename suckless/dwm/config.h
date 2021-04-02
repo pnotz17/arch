@@ -1,5 +1,4 @@
 static const char *fonts[] 		= {"DaddyTimeMono Nerd Font:style=Book:size=9:antialias=true:autohint=true","EmojiOne:style=Regular:size=9:antialias=true:autohint=true",};
-static const char dmenufont[] 		= {"DaddyTimeMono Nerd Font:style=Book:size=9:antialias=true:autohint=true"};
 static const unsigned int borderpx 	= 1;		/* border pixel of windows */
 static const unsigned int gappx 	= 1;		/* gaps between windows */
 static const unsigned int snap 		= 32;		/* snap pixel */
@@ -54,8 +53,6 @@ static const Layout layouts[]= {
 
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-static char dmenumon[2] 	      = "0"; 						
-static const char *dmenucmd[] 	      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
 static const char *termcmd[]          = { "st", NULL };
 static const char *print_screen_cmd[] = { "scrot", "-d2", "pictures/screenshots/%Y-%m-%d-%s_$wx$h.jpg", NULL };
 static const char *upvol[]            = { "amixer", "set", "Master", "1+",     NULL };
@@ -66,7 +63,7 @@ static const char *mailcmd[]          = { "st","-e","mutt", NULL };
 #include "movestack.c"
 
 static Key keys[] = {
-{ MODKEY,                       	XK_p,				spawn,			{.v = dmenucmd } },
+{ MODKEY,				XK_p,				spawn,          	SHCMD("dmenu_run") },
 { MODKEY|ShiftMask,			XK_Return,			spawn,			{.v = termcmd } },
 { MODKEY,                       	XK_b,				togglebar,		{0} },
 { MODKEY,                       	XK_j,				focusstack,		{.i = +1 } },
