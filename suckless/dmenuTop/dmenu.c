@@ -30,7 +30,7 @@
 
 /* enums */
 enum { SchemeNorm, SchemeSel, SchemeNormHighlight, SchemeSelHighlight,
-       SchemeOut, SchemeLast }; /* color schemes */
+       SchemeOut, SchemeMid,  SchemeLast }; /* color schemes */
 
 
 struct item {
@@ -174,6 +174,8 @@ drawitem(struct item *item, int x, int y, int w)
 	int r;
 	if (item == sel)
 		drw_setscheme(drw, scheme[SchemeSel]);
+	else if (item->left == sel || item->right == sel)
+		drw_setscheme(drw, scheme[SchemeMid]);
 	else if (item->out)
 		drw_setscheme(drw, scheme[SchemeOut]);
 	else
@@ -221,7 +223,7 @@ drawmenu(void)
 	curpos = TEXTW(text) - TEXTW(&text[cursor]);
 	if ((curpos += lrpad / 2 - 1) < w) {
 		drw_setscheme(drw, scheme[SchemeNorm]);
-		drw_rect(drw, x + curpos, 2 + (bh-fh)/2, 2, fh - 4, 1, 0);
+		drw_rect(drw, x + curpos, 2 + (bh - fh) / 2, 2, fh - 4, 1, 0);
 	}
 
 	recalculatenumbers();
@@ -872,7 +874,7 @@ setup(void)
 static void
 usage(void)
 {
-		fputs("usage: dmenu [-bfiv] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
+	fputs("usage: dmenu [-bfiv] [-l lines] [-h height] [-p prompt] [-fn font] [-m monitor]\n"
 		  "             [-h height]\n"
 	      "             [-nb color] [-nf color] [-sb color] [-sf color]\n"
 	      "             [-nhb color] [-nhf color] [-shb color] [-shf color] [-w windowid]\n", stderr);
@@ -912,7 +914,10 @@ main(int argc, char *argv[])
 			if (columns == 0) columns = 1;
 		} else if (!strcmp(argv[i], "-m"))
 			mon = atoi(argv[++i]);
-				
+		else if (!strcmp(argv[i], "-h")) { /* minimum height of one menu line */
+			lineheight = atoi(argv[++i]);
+			lineheight = MAX(lineheight, min_lineheight);
+		}	
 		else if (!strcmp(argv[i], "-p"))   /* adds prompt to left of input field */
 			prompt = argv[++i];
 		else if (!strcmp(argv[i], "-fn"))  /* font or font set */
