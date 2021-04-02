@@ -63,8 +63,6 @@ static const char *mailcmd[]          = { "st","-e","mutt", NULL };
 #include "movestack.c"
 
 static Key keys[] = {
-{ MODKEY,				XK_p,				spawn,          	SHCMD("dmenu_run") },
-{ MODKEY|ShiftMask,			XK_Return,			spawn,			{.v = termcmd } },
 { MODKEY,                       	XK_b,				togglebar,		{0} },
 { MODKEY,                       	XK_j,				focusstack,		{.i = +1 } },
 { MODKEY,                       	XK_k,				focusstack,		{.i = -1 } },
@@ -95,17 +93,22 @@ static Key keys[] = {
 { MODKEY,                       	XK_equal,  			setgaps,        	{.i = +1 } },
 { MODKEY|ShiftMask,     		XK_equal,  			setgaps,        	{.i = 0  } },
 { MODKEY|ShiftMask,			XK_q, quit,           					{0} },
-{ MODKEY|ShiftMask,			XK_b,	    			spawn,	   		{.v = webcmd } },
-{ MODKEY|ShiftMask,			XK_f,		    		spawn,	   		{.v = filescmd } },
-{ MODKEY|ShiftMask,			XK_m,	    			spawn,	   		{.v = mailcmd } },
-{ MODKEY|ShiftMask,			XK_p,      			spawn, 	         	SHCMD("~/.local/bin/power.sh") },
+{ MODKEY|ShiftMask,             	XK_Return, 			spawn,          	{.v = termcmd } },
+{ MODKEY|ShiftMask,			XK_b,	   			spawn,	   		{.v = webcmd } },
+{ MODKEY|ShiftMask,			XK_f,	   			spawn,	   		{.v = filescmd } },
+{ MODKEY|ShiftMask,			XK_m,	   			spawn,	   		{.v = mailcmd } },
+{ 0,                            	XK_Print,  			spawn,          	{.v = print_screen_cmd } },
+{ 0,                            	XK_F12,	   			spawn,          	{.v = upvol   } },
+{ 0,                            	XK_F11,	   			spawn,         		{.v = downvol } },
+{ MODKEY,				XK_p,	   			spawn,          	SHCMD("dmenu_run") },
+{ MODKEY|ShiftMask,			XK_p,      			spawn, 	   		SHCMD("~/.local/bin/power.sh") },
 { MODKEY,				XK_v,      			spawn,          	SHCMD("~/.local/bin/youtube-watch.sh") },
 { MODKEY,				XK_a,      			spawn,          	SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
 { MODKEY,				XK_y,      			spawn,          	SHCMD("~/.local/bin/youtube-dl.sh") },
-{ MODKEY|ShiftMask,			XK_r,     			spawn,          	SHCMD("feh --no-fehbg --randomize --bg-scale ~/Pictures/Wallpapers/*") },
-{ 0,                            	XK_Print,			spawn,          	{.v = print_screen_cmd } },
-{ 0,                            	XK_F12,				spawn,          	{.v = upvol   } },
-{ 0,                            	XK_F11,				spawn,          	{.v = downvol } },
+{ MODKEY|ShiftMask,			XK_d,      			spawn, 	   		SHCMD("~/.local/bin/dfm.sh") },
+{ MODKEY,				XK_c,      			spawn,          	SHCMD("~/.local/bin/dmenucalc.sh") },
+{ MODKEY,				XK_d,      			spawn,          	SHCMD("passmenu") },
+{ MODKEY|ShiftMask,			XK_r,      			spawn,          	SHCMD("feh --no-fehbg --randomize --bg-scale ~/Pictures/Wallpapers/*") },
 TAGKEYS(                        	XK_1,                      				0)
 TAGKEYS(                        	XK_2,                      				1)
 TAGKEYS(                        	XK_3,                      				2)

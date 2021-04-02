@@ -4,14 +4,10 @@ autoload -U compinit  vcs_info
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 
 # Environment variables
-export TERM=st-256color
+export TERMINAL=st-256color
 export EDITOR=vim
-export Browser=firefox
-
-# Path
-if [ -d "$HOME/.local/bin" ] ;
-  then PATH="$HOME/.local/bin:$PATH"
-fi
+export BROWSER=firefox
+export PATH=$HOME/.local/bin:$PATH
 
 # History
 HISTFILE=~/.zsh/zhistory
@@ -21,7 +17,6 @@ SAVEHIST=10000
 # Prompt
 setopt prompt_subst
 PROMPT='%F{none}%n@%F{blue}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
-RPROMPT='%D{%k:%M:%S}'
 
 # Git settings
 git_branch_test_color() {
@@ -81,7 +76,6 @@ alias ga='git add'
 alias gc='git commit -m "changes in dotfiles"'
 alias gp='git push'
 alias gtc='git clone'
-alias ..='cd ..'
-alias ...='cd ../..'
+
 
 
