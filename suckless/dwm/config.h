@@ -8,7 +8,7 @@ static const char normbgcolor[] 	= "#080808";	/* bar backround color */
 static const char normfgcolor[] 	= "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 		= "#222222";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 		= "#FFFFFF";	/* focused tag and tasklist foreground color*/
-static const char unselbordercolor[] 	= "#FF0035";	/* unfocused window border color*/
+static const char unselbordercolor[] 	= "#770000";	/* unfocused window border color*/
 static const char selbordercolor[] 	= "#B3AFC2";	/* focused window border color*/
 static const unsigned int baralpha 	= 235;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha	= 235;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
@@ -104,7 +104,7 @@ static Key keys[] = {
 { MODKEY,				XK_s,      			spawn,          	SHCMD("passmenu") },
 { MODKEY|ShiftMask,			XK_r,      			spawn,          	SHCMD("feh --no-fehbg --randomize --bg-scale ~/Pictures/Wallpapers/*") },
 { MODKEY|ShiftMask,			XK_p,      			spawn, 	   		SHCMD("~/.local/bin/power.sh") },
-{ MODKEY|ShiftMask,			XK_d,      			spawn, 	   		SHCMD("~/.local/bin/dfm.sh") },
+{ MODKEY|ShiftMask,			XK_d,      			spawn, 	   		SHCMD("~/.local/bin/dmenufm.sh") },
 { MODKEY,				XK_v,      			spawn,          	SHCMD("~/.local/bin/youtube-watch.sh") },
 { MODKEY,				XK_l,      			spawn,          	SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
 { MODKEY,				XK_y,      			spawn,          	SHCMD("~/.local/bin/youtube-dl.sh") },
