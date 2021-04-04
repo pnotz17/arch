@@ -5,14 +5,14 @@ do
 fullpath="$(pwd)/$file"
  case "$1" in
  "s")
-	feh --bg-scale 
+	feh --bg-scale "$file"
 	notify-send "Wallpaper changed." ;;
  "y")
-	xclip -selection clipboard 
+	xclip -selection clipboard "$file"
 	notify-send "copied to clipboard"  ;;
  "D")
      	rm "$file"
-     	notify-send "$file File Deleted" & ;;
+     	notify-send "File Deleted" & ;;
  "r")
 	convert -rotate 90 "$file" "$file" ;;
  "R")
