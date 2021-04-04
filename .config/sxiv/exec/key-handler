@@ -1,0 +1,8 @@
+#!/bin/bash
+while read f; do
+    case "$1" in
+        s) feh --bg-scale "$f";;
+        C-c) echo -n "$f" | xclip -selection clipboard;;
+        D) rm "$f";;
+    esac
+done

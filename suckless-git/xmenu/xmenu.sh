@@ -6,7 +6,7 @@ File manager	pcmanfm
 Terminal 	st
 Web browser	firefox	
 Accessories
-	feh	feh  ~/pictures/wallpapers/*
+	sxiv	sxiv -t  ~/pictures/wallpapers/*
 	vim	st -e vim
 Development
 	geany	geany
