@@ -108,7 +108,7 @@ static Key keys[] = {
 { MODKEY,				XK_v,      			spawn,          	SHCMD("~/.local/bin/youtube-watch.sh") },
 { MODKEY,				XK_l,      			spawn,          	SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
 { MODKEY,				XK_y,      			spawn,          	SHCMD("~/.local/bin/youtube-dl.sh") },
-{ MODKEY,				XK_x,      			spawn,          	SHCMD("~/.local/bin/dmenucalc.sh") },
+{ MODKEY,				XK_c,      			spawn,          	SHCMD("~/.local/bin/dmenucalc.sh") },
 TAGKEYS(                        	XK_1,                      				0)
 TAGKEYS(                        	XK_2,                      				1)
 TAGKEYS(                        	XK_3,                      				2)
