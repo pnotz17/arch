@@ -4,7 +4,7 @@ while read file
 do
 fullpath="$(pwd)/$file"
  case "$1" in
- "b") feh --bg-scale "$file" 
+ "s") feh --bg-scale "$file" 
 	notify-send "Wallpaper changed." ;;
  "y") xclip -selection clipboard "$file" 
 	notify-send "copied to clipboard"  ;;
