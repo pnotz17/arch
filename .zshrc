@@ -4,7 +4,7 @@ autoload -U compinit  vcs_info
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 
 # Environment variables
-export TERMINAL=st-256color
+export TERM=st-256color
 export EDITOR=vim
 export BROWSER=firefox
 export PATH=$HOME/.local/bin:$PATH
@@ -58,7 +58,7 @@ alias ps='doas pacman -S'
 alias pss='doas pacman -Ss'
 alias yss='yay -Ss'
 alias ys='yay -S'
-alias e='tar -xvf'
+alias e='tar -xpvf'
 alias build='doas make clean install'
 alias psu='doas pacman -Syu --noconfirm'
 alias rm='doas pacman -Rscnd'
