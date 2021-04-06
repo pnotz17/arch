@@ -58,7 +58,7 @@ static const char *print_screen_cmd[] = { "scrot", "-d2", "pictures/screenshots/
 static const char *upvol[]            = { "amixer", "set", "Master", "1+",     NULL };
 static const char *downvol[]          = { "amixer", "set", "Master", "1-",     NULL };
 static const char *webcmd[]           = { "firefox", NULL };
-static const char *filescmd[]         = { "pcmanfm", NULL };
+static const char *filescmd[]         = { "spacefm", NULL };
 static const char *mailcmd[]          = { "st","-e","mutt", NULL };
 #include "movestack.c"
 
