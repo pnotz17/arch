@@ -2,7 +2,7 @@
 
 #cat <<EOF | xmenu -r | sh >$HOME/log 2>&1 &
 cat <<EOF | xmenu -r | sh &
-File manager	pcmanfm
+File manager	spacefm
 Terminal 	st
 Web browser	firefox	
 Accessories

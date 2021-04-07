@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 /* Default settings; can be overriden by command line. */
 /* -fn option overrides fonts[0]; default X11 font or font set */
-static const char *fonts[] 	   = {"DaddyTimeMono Nerd Font:style=Book:size=11:antialias=true:autohint=true","EmojiOne:style=Regular:size=11:antialias=true:autohint=true"};
+static const char *fonts[] 	   = {"Ubuntu Nerd Font:style=Book:size=11:antialias=true:autohint=true","EmojiOne:style=Regular:size=11:antialias=true:autohint=true"};
 static int topbar 		   = 1;         /* -b  option; if 0, dmenu appears at bottom     */
 static int centered 		   = 0;         /* -c option; centers dmenu on screen */
 static int min_width 		   = 500;       /*  minimum width when centered */

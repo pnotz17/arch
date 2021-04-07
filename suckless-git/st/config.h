@@ -2,7 +2,7 @@
 
  // appearance
 static char *font = "UbuntuMono Nerd Font:pixelsize=20:antialias=true:autohint=true";
-static char *font2[] = {"Noto Color Emoji:style=Regular:size=18:antialias=true:autohint=true", };
+static char *font2[] = {"Noto Color Emoji:style=Regular:size=20:antialias=true:autohint=true", };
 static int borderpx = 1;
 
 // What program is execed by st depends of these precedence rules:
