@@ -52,7 +52,7 @@ ls --color=auto &> /dev/null && alias ls='ls --color=auto'
 
 # Aliases
 alias sudo='doas'
-alias v='doas mvim'
+alias v='doas nvim'
 alias sp='doas pcmanfm'
 alias ps='doas pacman -S'
 alias pss='doas pacman -Ss'

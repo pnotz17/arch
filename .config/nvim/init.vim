@@ -32,7 +32,7 @@ map <C-l> <C-w>l
 map <C-n> :NERDTreeToggle<CR>
 
 " Recompile Suckless Programs Automatically
-autocmd BufWritePost *config.h !sudo make clean install %
+:au! BufWritePost *config.h !sudo make clean install %
 
 " Location of viminfo
 set viminfo+=n~/.config/nvim/viminfo
