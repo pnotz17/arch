@@ -1,0 +1,6 @@
+cd .config/nvim
+git clone https://github.com/neovim/neovim.git
+cd neovim
+sudo pacman -S  ninja tree-sitter autogen automake cmake autoconf
+make install CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/.config/nvim/neovim"
+export PATH="$HOME/.config/nvim/neovim/bin:$PATH"
