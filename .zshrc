@@ -8,6 +8,7 @@ export TERM=st-256color
 export EDITOR=vim
 export BROWSER=firefox
 export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.config/nvim/neovim/bin:$PATH"
 
 # History
 HISTFILE=~/.zsh/zhistory
