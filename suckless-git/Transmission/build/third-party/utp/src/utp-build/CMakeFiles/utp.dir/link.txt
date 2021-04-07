@@ -1,0 +1,2 @@
+/bin/ar qc libutp.a CMakeFiles/utp.dir/utp.cpp.o CMakeFiles/utp.dir/utp_utils.cpp.o
+/bin/ranlib libutp.a

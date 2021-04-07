@@ -1,0 +1,3 @@
+repository='external project URL'
+module='/home/pnotz17/Transmission/third-party/libutp'
+tag=''

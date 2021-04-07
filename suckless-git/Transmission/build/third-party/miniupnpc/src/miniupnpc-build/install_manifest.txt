@@ -1,0 +1,11 @@
+/home/pnotz17/Transmission/build/third-party/miniupnpc/lib/libminiupnpc.a
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/miniupnpc.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/miniwget.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/upnpcommands.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/igd_desc_parse.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/upnpreplyparse.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/upnperrors.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/upnpdev.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/miniupnpctypes.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/portlistingparse.h
+/home/pnotz17/Transmission/build/third-party/miniupnpc/include/miniupnpc/miniupnpc_declspec.h

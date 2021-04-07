@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/pnotz17/Transmission/build/CMakeFiles/dht"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/CMakeFiles/dht.rule"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/CMakeFiles/dht-complete.rule"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/third-party/dht/src/dht-stamp/dht-install.rule"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/third-party/dht/src/dht-stamp/dht-mkdir.rule"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/third-party/dht/src/dht-stamp/dht-download.rule"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/third-party/dht/src/dht-stamp/dht-update.rule"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/third-party/dht/src/dht-stamp/dht-patch.rule"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/third-party/dht/src/dht-stamp/dht-configure.rule"
+		},
+		{
+			"file" : "/home/pnotz17/Transmission/build/third-party/dht/src/dht-stamp/dht-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"dht"
+		],
+		"name" : "dht"
+	}
+}

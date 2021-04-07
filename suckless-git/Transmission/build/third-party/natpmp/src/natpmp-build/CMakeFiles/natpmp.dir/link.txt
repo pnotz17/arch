@@ -1,0 +1,2 @@
+/bin/ar qc libnatpmp.a CMakeFiles/natpmp.dir/getgateway.c.o CMakeFiles/natpmp.dir/natpmp.c.o
+/bin/ranlib libnatpmp.a

@@ -1,0 +1,13 @@
+# Target labels
+ natpmp
+# Source files and their labels
+/home/pnotz17/Transmission/build/CMakeFiles/natpmp
+/home/pnotz17/Transmission/build/CMakeFiles/natpmp.rule
+/home/pnotz17/Transmission/build/CMakeFiles/natpmp-complete.rule
+/home/pnotz17/Transmission/build/third-party/natpmp/src/natpmp-stamp/natpmp-install.rule
+/home/pnotz17/Transmission/build/third-party/natpmp/src/natpmp-stamp/natpmp-mkdir.rule
+/home/pnotz17/Transmission/build/third-party/natpmp/src/natpmp-stamp/natpmp-download.rule
+/home/pnotz17/Transmission/build/third-party/natpmp/src/natpmp-stamp/natpmp-update.rule
+/home/pnotz17/Transmission/build/third-party/natpmp/src/natpmp-stamp/natpmp-patch.rule
+/home/pnotz17/Transmission/build/third-party/natpmp/src/natpmp-stamp/natpmp-configure.rule
+/home/pnotz17/Transmission/build/third-party/natpmp/src/natpmp-stamp/natpmp-build.rule

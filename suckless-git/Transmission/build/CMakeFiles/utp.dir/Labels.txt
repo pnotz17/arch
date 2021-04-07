@@ -1,0 +1,13 @@
+# Target labels
+ utp
+# Source files and their labels
+/home/pnotz17/Transmission/build/CMakeFiles/utp
+/home/pnotz17/Transmission/build/CMakeFiles/utp.rule
+/home/pnotz17/Transmission/build/CMakeFiles/utp-complete.rule
+/home/pnotz17/Transmission/build/third-party/utp/src/utp-stamp/utp-install.rule
+/home/pnotz17/Transmission/build/third-party/utp/src/utp-stamp/utp-mkdir.rule
+/home/pnotz17/Transmission/build/third-party/utp/src/utp-stamp/utp-download.rule
+/home/pnotz17/Transmission/build/third-party/utp/src/utp-stamp/utp-update.rule
+/home/pnotz17/Transmission/build/third-party/utp/src/utp-stamp/utp-patch.rule
+/home/pnotz17/Transmission/build/third-party/utp/src/utp-stamp/utp-configure.rule
+/home/pnotz17/Transmission/build/third-party/utp/src/utp-stamp/utp-build.rule

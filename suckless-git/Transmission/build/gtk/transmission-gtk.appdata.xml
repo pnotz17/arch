@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2014 Richard Hughes <richard@hughsie.com>
+Copyright 2017 Endless Mobile, Inc.
+ -->
+<component type="desktop-application">
+  <id type="desktop">transmission-gtk.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0 OR GPL-3.0</project_license>
+  <name>Transmission</name>
+  <name xml:lang="zh_TW">Transmission</name>
+  <name xml:lang="zh_HK">Transmission</name>
+  <name xml:lang="zh_CN">Transmission</name>
+  <name xml:lang="vi">Transmission</name>
+  <name xml:lang="uz">Transmission</name>
+  <name xml:lang="uk">Transmission</name>
+  <name xml:lang="ug">Transmission</name>
+  <name xml:lang="tr">Transmission</name>
+  <name xml:lang="th">Transmission</name>
+  <name xml:lang="te">ట్రాన్స్‍మిషన్</name>
+  <name xml:lang="sv">Transmission</name>
+  <name xml:lang="sr">Трансмисија</name>
+  <name xml:lang="sq">Transmission</name>
+  <name xml:lang="sl">Transmission</name>
+  <name xml:lang="sk">Transmission</name>
+  <name xml:lang="si">ට්‍රාන්ස්මිෂන්</name>
+  <name xml:lang="ru">Transmission</name>
+  <name xml:lang="ro">Transmission</name>
+  <name xml:lang="pt_PT">Transmission</name>
+  <name xml:lang="pt_BR">Transmission</name>
+  <name xml:lang="pt">Transmission</name>
+  <name xml:lang="pl">Transmission</name>
+  <name xml:lang="oc">Transmission</name>
+  <name xml:lang="nn">Transmission</name>
+  <name xml:lang="nl">Transmission</name>
+  <name xml:lang="nb">Transmission</name>
+  <name xml:lang="ms">Transmission</name>
+  <name xml:lang="mk">Transmission</name>
+  <name xml:lang="lv">Transmission</name>
+  <name xml:lang="lt">Transmission</name>
+  <name xml:lang="li">Transmission</name>
+  <name xml:lang="ky">Transmission</name>
+  <name xml:lang="ku">Transmission</name>
+  <name xml:lang="ko">트랜스미션</name>
+  <name xml:lang="kk">Transmission</name>
+  <name xml:lang="ja">Transmission</name>
+  <name xml:lang="it">Transmission</name>
+  <name xml:lang="is">Transmission</name>
+  <name xml:lang="id">Transmission</name>
+  <name xml:lang="hu">Transmission</name>
+  <name xml:lang="hr">Transmission</name>
+  <name xml:lang="hi">ट्रांसमिशन</name>
+  <name xml:lang="he">Transmission</name>
+  <name xml:lang="gl">Transmission</name>
+  <name xml:lang="fr_CA">Transmission</name>
+  <name xml:lang="fr">Transmission</name>
+  <name xml:lang="fo">Transmission</name>
+  <name xml:lang="fil">Transmission</name>
+  <name xml:lang="fi">Transmission</name>
+  <name xml:lang="fa">ترنسمیشن</name>
+  <name xml:lang="eu">Transmission</name>
+  <name xml:lang="et">Transmission</name>
+  <name xml:lang="es">Transmission</name>
+  <name xml:lang="eo">Transmission</name>
+  <name xml:lang="en_GB">Transmission</name>
+  <name xml:lang="en_CA">Transmission</name>
+  <name xml:lang="en_AU">Transmission</name>
+  <name xml:lang="el">Transmission</name>
+  <name xml:lang="de">Transmission</name>
+  <name xml:lang="da">Transmission</name>
+  <name xml:lang="cs">Transmission</name>
+  <name xml:lang="ckb">Transmission</name>
+  <name xml:lang="ca@valencia">Transmission</name>
+  <name xml:lang="ca">Transmission</name>
+  <name xml:lang="bn">ট্রান্সমিশন</name>
+  <name xml:lang="bg">Transmission</name>
+  <name xml:lang="be">Transmission</name>
+  <name xml:lang="ast">Transmission</name>
+  <name xml:lang="ar">ترانزميشن</name>
+  <name xml:lang="an">Transmission</name>
+  <summary>Download and share files over BitTorrent</summary>
+  <summary xml:lang="zh_TW">透過 BitTorrent 協定來下載和分享檔案</summary>
+  <summary xml:lang="zh_HK">透過 BitTorrent 來下載和分享檔案</summary>
+  <summary xml:lang="zh_CN">通过 BitTorrent 下载和共享文件</summary>
+  <summary xml:lang="vi">Tải và chia sẻ tập tin qua BitTorrent</summary>
+  <summary xml:lang="uz">BitTorrent orqail fayllarni yuklab olish va bo‘lishish</summary>
+  <summary xml:lang="uk">Завантажуйте та розповсюджуйте файли через BitTorrent</summary>
+  <summary xml:lang="ug">بىتتوررېنت ئارقىلىق ھۆججەت چۈشۈرۈش ۋە ھەمبەھىرلەش</summary>
+  <summary xml:lang="tr">Dosyaları BitTorrent üzerinden indir ve paylaş</summary>
+  <summary xml:lang="th">ดาวน์โหลดและแลกเปลี่ยนแฟ้มผ่าน BitTorrent</summary>
+  <summary xml:lang="te">దిగుమతిచేయి మరియు దస్త్రాలను బిట్ టోరెంట్ మీదుగా పంచుకొను</summary>
+  <summary xml:lang="sv">Hämta och dela ut filer över BitTorrent</summary>
+  <summary xml:lang="sr">Преузимајте и размењујте датотеке преко БитТорент протокола</summary>
+  <summary xml:lang="sq">Shkarko dhe shpërnda skedarët me BitTorrent</summary>
+  <summary xml:lang="sl">Prejemajte in dajte datoteke v souporabo preko BitTorrenta</summary>
+  <summary xml:lang="sk">Sťahujte a zdieľajte súbory cez BitTorrent</summary>
+  <summary xml:lang="ru">Загружайте и обменивайтесь файлами в сети BitTorrent</summary>
+  <summary xml:lang="ro">Descarcă și partajează fișiere prin BitTorrent</summary>
+  <summary xml:lang="pt_PT">Descarregar e partilhar ficheiros pelo BitTorrent</summary>
+  <summary xml:lang="pt_BR">Baixar e compartilhar arquivos pelo BitTorrent</summary>
+  <summary xml:lang="pt">Receber e partilhar ficheiros via bittorrent</summary>
+  <summary xml:lang="pl">Pobieranie i udostępnianie plików przez sieć BitTorrent</summary>
+  <summary xml:lang="oc">Recep e parteja de fichièrs via BitTorrent</summary>
+  <summary xml:lang="nn">Last ned og del filer over BitTorrent</summary>
+  <summary xml:lang="nl">Bestanden downloaden en delen via BitTorrent</summary>
+  <summary xml:lang="nb">Last ned og del filer med BitTorrent</summary>
+  <summary xml:lang="ms">Muat turun dan kongsi fail melalui BitTorrent</summary>
+  <summary xml:lang="mk">Преземете и споделувајте датотеки преку BitTorrent</summary>
+  <summary xml:lang="lv">Lejupielādēt un dalīties ar datnēm caur BitTorrent</summary>
+  <summary xml:lang="lt">Atsiųskite ir dalinkitės failais per „BitTorrent“</summary>
+  <summary xml:lang="li">Bestanje binnehoalen en deilen via BitTorrent</summary>
+  <summary xml:lang="ky">BitTorrent'тен файлдарды жүктөңүз жана бөлүшүңүз</summary>
+  <summary xml:lang="ko">비트토렌트를 이용하여 파일을 다운로드 및 공유합니다</summary>
+  <summary xml:lang="kk">BitTorrent желісінде файлдарды жүктеңіз және бөлісіңіз</summary>
+  <summary xml:lang="ja">BitTorrent を通じてファイルのダウンロードと共有</summary>
+  <summary xml:lang="it">Scarica e condivide file via BitTorrent</summary>
+  <summary xml:lang="is">Sækja og deila skrám með BitTorrent</summary>
+  <summary xml:lang="id">Unduh dan berbagi berkas melalui BitTorrent</summary>
+  <summary xml:lang="hu">Fájlok letöltése és megosztása BitTorrenten keresztül</summary>
+  <summary xml:lang="hr">Preuzimajte i dijelite datoteke preko BitTorrenta</summary>
+  <summary xml:lang="hi">बिट टोरेंट पर फाइलें डाउनलोड कर सहभाजन करें</summary>
+  <summary xml:lang="he">הורדה ושיתוף קבצים ברשת ביטורנט</summary>
+  <summary xml:lang="gl">Descargue e comparta ficheiros a través da rede BitTorrent</summary>
+  <summary xml:lang="fr_CA">Télécharger et partager des fichiers avec BitTorrent</summary>
+  <summary xml:lang="fr">Télécharger et partager des fichiers avec BitTorrent</summary>
+  <summary xml:lang="fo">Tak niður og deil fílur yvir BitTorrent</summary>
+  <summary xml:lang="fi">Lataa ja jaa tiedostoja BitTorrentin avulla</summary>
+  <summary xml:lang="fa">بارگیری و هم‌رسانی پرونده‌ها با بیت‌تورنت</summary>
+  <summary xml:lang="eu">Deskargatu eta partekatu fitxategiak BitTorrent bidez</summary>
+  <summary xml:lang="et">Laadi alla ja levita faile BitTorrenti kaudu</summary>
+  <summary xml:lang="es">Descargue y comparta archivos mediante BitTorrent</summary>
+  <summary xml:lang="eo">Elŝuti kaj kunhavigi dosierojn per BitTorrent</summary>
+  <summary xml:lang="en_GB">Download and share files over BitTorrent</summary>
+  <summary xml:lang="en_CA">Download and share files over BitTorrent</summary>
+  <summary xml:lang="en_AU">Download and share files over BitTorrent</summary>
+  <summary xml:lang="el">Λήψη και διαμοιρασμός των αρχείων μέσω του BitTorrent</summary>
+  <summary xml:lang="de">Dateien über BitTorrent herunterladen und verteilen</summary>
+  <summary xml:lang="da">Download og del filer via BitTorrent</summary>
+  <summary xml:lang="cs">Stahovat a sdílet soubory přes BitTorrent</summary>
+  <summary xml:lang="ca@valencia">Baixeu i compartiu fitxers mitjançant el BitTorrent</summary>
+  <summary xml:lang="ca">Baixeu i compartiu fitxers mitjançant BitTorrent</summary>
+  <summary xml:lang="bn">সমস্ত BitTorrent এ ফাইল ডাউনলোড এবং অংশগ্রহন করুন</summary>
+  <summary xml:lang="bg">Изтегляне и споделяне на файлове чрез BitTorrent</summary>
+  <summary xml:lang="be">Спампоўванне і раздача файлаў праз BitTorrent</summary>
+  <summary xml:lang="ast">Baxar y compartir ficheros per aciu de BitTorrent</summary>
+  <summary xml:lang="ar">نزّل وشارك ملفات عبر «بت تورنت»</summary>
+  <description>
+    <!-- Translators: these are the application description paragraphs in the AppData file. -->
+    <p>
+      BitTorrent is a peer-to-peer file-sharing protocol that is commonly used to
+      distribute large amounts of data between multiple users.
+    </p>
+    <p xml:lang="zh_TW">BitTorrent 是一個共享端之間點對點的檔案分享協定，通常用於多個使用者之間的大量資料傳送。</p>
+    <p xml:lang="zh_CN">BitTorrent 是一个对等网络文件共享协议，多用于在多个用户间分发大量的数据。</p>
+    <p xml:lang="tr">BitTorrent, birden çok kullanıcı arasında büyük miktarda veriyi dağıtmak için yaygın olarak kullanılan, kişiden-kişiye bir dosya paylaşım protokolüdür.</p>
+    <p xml:lang="sv">BitTorrent är ett peer-to-peer-protokoll för fildelning som ofta används för att distribuera stora mängder data mellan flera användare.</p>
+    <p xml:lang="sr">БитТорен је парњачки протокол за дељење датотека који се обично користи за дистрибуцију великих количина података између више корисника.</p>
+    <p xml:lang="ru">BitTorrent - протокол обмена файлами пиринговой сети, который обычно используется для распространения больших объемов данных между несколькими пользователями.</p>
+    <p xml:lang="pt_PT">O BitTorrent é um protocolo de partilha de ficheiros ponto-a-ponto que é comum utilizar para distribuir grandes quantidades de dados entre vários utilizadores.</p>
+    <p xml:lang="pt_BR">BitTorrent é um protocolo de compartilhamento de arquivos peer-to-peer muito usado para distribuir grandes quantidades de dados entre diferentes usuários.</p>
+    <p xml:lang="pl">BitTorrent to protokół udostępniania plików P2P często używany do rozprowadzania dużych ilości danych między wieloma użytkownikami.</p>
+    <p xml:lang="oc">BitTorrent es un protocòl de partiment de fichièrs en mòde par a par e es sovent utilizat per distribuir de bravas quantitat de donadas entre mantun utilizaires.</p>
+    <p xml:lang="nl">BitTorrent is een peer-to-peer protocol om bestanden te delen, welke doorgaans gebruikt wordt om grote hoeveelheden data aan verschillende gebruikers te verzenden.</p>
+    <p xml:lang="nb">BitTorrent er en likemann-til-likemannsdelingsprotokoll som er i vanlig bruk til å distribuere store mengder data mellom forskjellige brukere.</p>
+    <p xml:lang="ja">BitTorrent は多数のユーザー間で大量のデータを配信するために一般的に使用されるピアツーピアのファイル共有プロトコルです。</p>
+    <p xml:lang="it">BitTorrent è un protocollo di condivisione nodo-a-nodo comunemente utilizzato per distribuire grandi quantità di dati tra molteplici utenti.</p>
+    <p xml:lang="id">BitTorrent adalah protokol berbagi berkas peer-to-peer yang biasanya digunakan untuk mendistribusikan sejumlah besar data antara banyak pengguna.</p>
+    <p xml:lang="hu">A BitTorrent egy peer-to-peer fájlmegosztó protokoll, amelyet jellemzően arra használnak, hogy nagy mennyiségű adatot osszanak szét több felhasználó közt.</p>
+    <p xml:lang="hr">BitTorrent je točka-u-točka protokol dijeljenja datoteka koji se uobičajeno koristi za prijenos velike količine podataka između više korisnika.</p>
+    <p xml:lang="hi">बिट टोरेंट - एकाधिक उपयोक्ताओं के लिए डेटा की विशाल मात्रा के वितरण हेतु पीयर-से-पीयर द्वारा फाइल-सहभाजन प्रोटोकॉल है।</p>
+    <p xml:lang="he">ביטטורנט הוא פרוטוקול שיתוף קבצים ישירות בין עמיתים והוא משמש בדרך כלל להפיץ כמות גדולה של נתונים בין מגוון משתמשים.</p>
+    <p xml:lang="fr">BitTorrent est un protocole de partage de fichiers pair à pair qui est couramment utilisé pour distribuer de grandes quantités de données entre plusieurs utilisateurs.</p>
+    <p xml:lang="fi">BitTorrent on vertaisverkkopohjainen tiedostonjakoprotokolla, jota käytetään yleisesti suurien tietomäärien välittämiseen useiden käyttäjien välillä.</p>
+    <p xml:lang="et">BitTorrent on partnerite vaheline failide jagamise protokoll, mida tavaliselt kasutatakse suure mahuliste andmete jaganiseks mitme kasutaja vahel.</p>
+    <p xml:lang="es">BitTorrent es un protocolo diseñado para el intercambio de archivos punto a punto (peer-to-peer) en Internet. Es uno de los protocolos más comunes para la transferencia de archivos grandes entre múltiples usuarios.</p>
+    <p xml:lang="el">Το BitTorrent είναι ένα πρωτόκολλο μεταφοράς αρχείων χρήστη-προς-χρήστη που συχνά χρησιμοποιείται για τη διανομή μεγάλων ποσοτήτων δεδομένων μεταξύ πολλών χρηστών.</p>
+    <p xml:lang="de">BitTorrent ist ein peer-to-peer Datenaustausch Protokoll welches oft für das verteilen großer Daten zwischen mehrere Nutzer gebraucht wird.</p>
+    <p xml:lang="da">BitTorrent er en modpart-til-modpart-fildelingsprotokol som almindeligvis bruges til at distribuere store mængder data mellem flere brugere.</p>
+    <p xml:lang="ca">BitTorrent és un protocol de compartició de fitxers d'igual a igual que s'utilitza habitualment per distribuir grans quantitats de dades entre diversos usuaris.</p>
+    <p xml:lang="bg">BitTorrent е протокол за споделяне на файлове от тип "участник до участник", който обикновено се използва за разпространение на големи количества данни между множество потребители.</p>
+    <p xml:lang="be">BitTorrent - пратакол абмену файламі peer-to-peer, які звычайна выкарыстоўваецца для распаўсюджавання вялікага аб’ему даных паміж некалькімі карыстальнікамі.</p>
+    <p>
+      Transmission is a BitTorrent client with an easy-to-use frontend on top a
+      cross-platform backend.
+      Native frontends are available for OS X and Windows, as well as command line and
+      web frontends.
+    </p>
+    <p xml:lang="zh_TW">Transmission 是一個 BitTorrent 的客戶端，在跨平台後端的基礎上提供了更易於使用的前端。本機前端提供 OS X 與 Windows 版本，亦提供命令列與網頁前端版本。</p>
+    <p xml:lang="zh_CN">Transmission 是个 BitTorrent 客户端，具有易用的前端和跨平台的后端。有适用于 OS X 和 Windows 的本地客户端，也包括命令行和 Web 前端。</p>
+    <p xml:lang="tr">Transmission, çapraz platformlu arkaucu temel alan, kullanımı kolay arayüzlü BitTorrent istemcisidir. OS X ve Windows için arayüzleri vardır. Ayrıca komut satırı ve web arayüzleri de vardır.</p>
+    <p xml:lang="sv">Transmission är en BitTorrent-klient med ett lättanvänt gränssnitt ovanpå en grund gjord för flera plattformar. Gränssnitt finns för OS X och Windows, samt som kommandorad och webbgränssnitt.</p>
+    <p xml:lang="sr">Трансмисија је БитТорент протокол са лако употребљивим предњим делом који радњи са позадинцима на више платформи. Домаћи предњи делови су доступни за Мек-ОС, Виндоус као и предњи делови за веб и командну линију.</p>
+    <p xml:lang="ru">Transmission - BitTorrent клиент с простым в использовании интерфейсом поверх кросс-платформенного бэкэнда. Родные интерфейсы доступны для OS X и Windows так же как командная строка и веб-интерфейс.</p>
+    <p xml:lang="pt_PT">O Transmission é um cliente BitTorrent com uma interface fácil de utilizar sobre um código multi-plataforma. Existem várias interfaces nativas para OS X e Windows, assim como em linha de comandos e baseado na web.</p>
+    <p xml:lang="pt_BR">Transmission é um cliente BitTorrent com um front-end fácil de usar em um back-end de plataforma cruzada. Frontends nativos estão disponíveis para OS X e Windows, bem como frontends de linha de comando e web.</p>
+    <p xml:lang="pl">Transmission to klient sieci BitTorrent z łatwym w użyciu interfejsem na podstawie wieloplatformowego mechanizmu. Natywne interfejsy są dostępne dla systemów macOS i Windows, a także dla wiersza poleceń i przez przeglądarki WWW.</p>
+    <p xml:lang="oc">Transmission es un client BiTorrent amb una interfàcia utilizaire facila amb un backend multifplataforma. Los interfàcias frontends son disponiblas per OS X e Windows, tanben coma las linhas de comandas e los web frontends.</p>
+    <p xml:lang="nl">Transmission is een BitTorrent programma met een eenvoudig te gebruiken frontend en een cross-platform backend. Standaard frontends zijn beschikbaar voor OS X en Windows, net als command line en web frontends.</p>
+    <p xml:lang="nb">Transmission er en BitTorrent-klient med en grenseflate som er lett å bruke, på toppen av en bakende, som fungerer på flere plattformer. Innebygde grenseflater er tilgjengelige på macOS og Windows, sågar også kommandolinje og nettbaserte grenseflater.</p>
+    <p xml:lang="ko">트랜스미션은 크로스 플랫폼 백엔드 위에서 동작하는 쉽게 사용가능한 프론트엔드인 비트토렌트 클라이언트입니다. 네이티브 프론트엔드는 OS X와 Windows, 커멘드라인 및 웹 프론트엔드가 존재합니다.</p>
+    <p xml:lang="ja">Transmission は、クロスプラットフォームのバックエンド層上にお手軽なフロントエンドを備えた BitTorrent クライアントです。用意されたフロントエンドは、OS X と Windows のほか、コマンドラインやウェブでも利用できます。</p>
+    <p xml:lang="it">Transmission è un programma BitTorrent con un'interfaccia utente di facile uso e un motore compatibile con più sistemi operativi. Sono disponibili interfacce native per OS X e Windows, strumenti a riga di comando e un'interfaccia web.</p>
+    <p xml:lang="id">Transmission adalah klien BitTorrent dengan frontend yang mudah digunakan di atas backend lintas platform. Frontend asli tersedia untuk OS X dan Windows, maupun frontend baris perintah dan web.</p>
+    <p xml:lang="hu">A Transmission egy könnyen használható kezelőfelülettel, és keresztplatformos háttérrendszerrel rendelkező BitTorrent kliens. A natív előtétprogramok elérhetőek macOS-ra és Windowsra, valamint parancssoros és webes előtétprogramok is léteznek.</p>
+    <p xml:lang="hr">Transmission je BitTorrent klijent s jednostavnim korisničkim sučeljem povrh višeplatformske pozadine. Izvorna korisnička sučelja su dostupna za OS X i Windowse, kao i naredbeni redak i web sučelja.</p>
+    <p xml:lang="hi">ट्रांसमिशन - एकाधिक मंच समर्थित बैक-एंड पर कार्यरत सरल फ्रंट-एंड युक्त बिट टोरेंट साधन है। मैक ओएस व विंडोज हेतु मूल फ्रंट-एंड के साथ ही कमांड लाइन एवं वेब फ्रंट-एंड भी उपलब्ध हैं।</p>
+    <p xml:lang="he">Transmission (בעברית: תמסורת) הוא לקוח ביטטורנט עם מנשק משתמש פשוט מבוסס  מנגנון חוצה פלטפורמות. יש מנשקי משתמש זמינים ל־ macOS ולחלונות לרבות שורת פקודה ומנשקי דפדפן מקוונים.</p>
+    <p xml:lang="fr">Transmission est un client BitTorrent muni d’une interface frontale conviviale sur une dorsale multiplate-forme. Des interfaces frontales natives sont proposées pour macOS et Windows, ainsi que des interfaces frontales en ligne de commande et Web.</p>
+    <p xml:lang="fi">Transmission on BitTorrent-asiakassovellus toteutetuna helppokäyttöisellä käyttöliittymällä ja järjestelmäriippumattomalla taustaosalla. Sovellus on natiivisti saatavilla macOS:lle, Windowsille ja Linuxille. Lisäksi saatavilla on komentorivi- ja selainkäyttöliittymä.</p>
+    <p xml:lang="es">Transmission es un cliente BitTorrent multiplataforma, con una interfaz facil de usar. Hay disponibles Interfaces nativas para OSX y Windows, también una web y de linea de comandos.</p>
+    <p xml:lang="de">Transmission ist ein BitTorrent Klient mit einfaches Frontend und Plattformübergreifendes Backend. Native Frontends sind für MacOS und Windows verfügbar, sovie Kommandozeile und Web Frontend.</p>
+    <p xml:lang="da">Transmission er en BitTorrent-klient med en brugervenlig brugerflade oven på en multiplatform backend. Native brugerflader er tilgængelige til OS X og Windows, såvel som en kommandolinje og web-brugerflader.</p>
+    <p xml:lang="ca">Transmission és un client de BitTorrent amb un frontal fàcil d'utilitzar, a la part superior d'un frontal multiplataforma. Hi ha disponibles interfícies d'usuari natives per a OS X i Windows, així com a frontals de línies d'ordres i interfícies web.</p>
+    <p xml:lang="bg">Transmission е BitTorrent клиент с лесен за ползване, мултиплатформен графичен интерфейс. Достъпни са графични интерфейси за OS X и Windows, а, също конзолни и уеб интерфейси.</p>
+    <p xml:lang="be">Transmission - кліент для пратаколу BitTorrent з простым і зручным інтэрфейсам паверх кросплатформагава рухавіка. Ёсць інтэрфейс для OS X і Windows, сеціўны інтэрфейс, інтэрфейс для загаднага радка.</p>
+    <p>
+      Notable features of Transmission include support for Local Peer Discovery, encryption,
+      DHT, µTP, PEX and Magnet Link.
+    </p>
+    <p xml:lang="zh_TW">Transmission 的顯著特點包含支援本機對等共享端的發現、加密、DHT、µTP、PEX 和磁力連結。</p>
+    <p xml:lang="zh_CN">Transmission 值得注意的功能包括支持本地节点发现（LPD）、加密、DHT、µTP、PEX 和磁力链接。</p>
+    <p xml:lang="tr">Transmission'ın dikkate değer özellikleri arasında Yerel Kişi Keşfi, şifreleme, DHT, µTP, PEX ve Magnet Bağlantısı desteği bulunur.</p>
+    <p xml:lang="sv">Viktiga funktioner i Transmission är bland annat stöd för att upptäcka lokala noder, kryptering, DHT, µTP, PEX och magnet-länkar.</p>
+    <p xml:lang="sr">У издвојене могућности Трансмисије спада подршка за откривање локалних парњака, шифровање, DHT,  µTP, PEX и магнетне везе.</p>
+    <p xml:lang="ru">Заслуживающие внимания функции Transmission включают в себя поддержку локального обнаружения пиров, шифрование, DHT, μTP, PEX и Магнитных ссылок.</p>
+    <p xml:lang="pt_PT">O Transmission tem funcionalidaes notáveis como , descoberta de pares locais (LPD), encriptação, tabelas de hash distribuídas (DHT), protocolo de transporte micro (µTP), troca de pares (PEX) e links magnéticos.</p>
+    <p xml:lang="pt_BR"> As notáveis características ​​de Transmission incluem suporte para Descoberta de Peer Local, criptografia, DHT, µTP, PEX e Magnet Link.</p>
+    <p xml:lang="pl">Transmission obsługuje między innymi wykrywanie partnerów lokalnych, szyfrowanie, DHT, µTP, PEX i odnośniki magnet.</p>
+    <p xml:lang="oc">Las foncionalitats notables de Transmission son la compatibilitat amb la descobèrta de pars locals, lo chiframent, DHT, EX e los ligams Magnet.</p>
+    <p xml:lang="nl">Opvallende eigenschappen van Transmission voegen ondersteuning toe voor Local Peer Discovery, encryptie, DHT, µTP, PEX en Magnet Link.</p>
+    <p xml:lang="nb">Merkverdige funksjoner i Transmission inkluderer støtte for lokal likemannsoppdaging, kryptering, µTP, PEX og magnetlenker.</p>
+    <p xml:lang="ko">트랜스미션의 주목할만한 기능에는 로컬 피어 검색, 암호화, DHT, μTP, PEX 및 마그넷 링크에 대한 지원이 포함되어 있습니다.</p>
+    <p xml:lang="ja">Transmission の特徴的な機能には、ローカルピア探索、暗号化、DHT、μTP、PEX、およびマグネットリンクへの対応が含まれます。</p>
+    <p xml:lang="it">Tra le varie funzionalità di Transmission, le più note sono: Local Peer Discovery, cifratura, DHT, µTP, PEX e collegamenti magnetici.</p>
+    <p xml:lang="id">Fitur-fitur penting Transmission termasuk dukungan untuk Local Peer Discovery, enkripsi, DHT, TP, PEX, dan Magnet Link.</p>
+    <p xml:lang="hu">A Transmission fontos funkciói közé tartozik a Helyi peer felderítés, titkosítás, DHT, µTP, PEX és a mágnes linkek kezelése.</p>
+    <p xml:lang="hr">Bitne značajke Transmissiona uključuju podršku za lokalno otkrivanje točaka, šifriranje, DHT, µTP, PEX i Magnetne poveznice.</p>
+    <p xml:lang="hi">स्थानीय पीयर खोज, एन्क्रिप्शन, डीएचटी, µTP ,पेक्स व मैग्नेट लिंक समर्थन ट्रांसमिशन की विशेषताएँ हैं।</p>
+    <p xml:lang="he">תכונות בולטות של Transmission כוללות תמיכה בגילוי מקומי של עמיתים, הצפנה, DHT,‏ µTP,‏ PEX וקישורי מגנט.</p>
+    <p xml:lang="fr">Les caractéristiques notables de Transmission comprennent la prise en charge de la découverte de pairs locaux, le chiffrement, une table de hachage distribuée, µTP, l’échange de pairs et les liens Magnet.</p>
+    <p xml:lang="fi">Transmissionin huomionarvoisia ominaisuuksia ovat muun muassa Local Peer Discovery, salaus, DHT, µTP, PEX ja Magnet-linkit.</p>
+    <p xml:lang="es">Las características mas notorias de transmission incluyen soporte para descubrimiento de pares locales, DHT, µTP, PEX y Magnet Links.</p>
+    <p xml:lang="el">Στα αξιοσημείωτα χαρακτηριστικά του Transmission εντάσσεται η υποστήριξη για Local Peer Discovery, κρυπτογράφηση, DHT, μTP, PEX και Σύνδεσμο Magnet.</p>
+    <p xml:lang="de">Bemerkenswerte Merkmale der Transmission App sind unter anderem Untestützung für Local Peer Discovery, Verschlüsselung, DHT, µTP, PEX und Magnet Link.</p>
+    <p xml:lang="da">Bemærkelsesværdige facilitet af Transmission inkluderer understøttelse af lokal modpartsopdagelse, kryptering, DHT, µTP, PEX og magnet-link.</p>
+    <p xml:lang="ca">Les característiques destacades de Transmission inclouen la compatibilitat amb el descobriment de clients locals, xifratge, DHT, µTP, PEX i enllaços magnet.</p>
+    <p xml:lang="bg">Забележителните характеристики на Transmission, включват поддръжка на локално откриване на участник, криптиране, DHT, μTP, PEX и магнитни връзки.</p>
+    <p xml:lang="be">Адметнымі магчымасцямі Transmission з’яўляюцца: лакальнае выяўленне вузлоў, шыфраванне, падтрымка DHT, µTP, PEX магнэт-спасылак.</p>
+  </description>
+  <url type="homepage">https://transmissionbt.com/</url>
+  <screenshots>
+    <screenshot type="default">
+      <image type="source">https://raw.githubusercontent.com/transmission/transmission/master/gtk/screenshots/a.png</image>
+    </screenshot>
+  </screenshots>
+  <update_contact>info_AT_transmissionbt.com</update_contact>
+</component>

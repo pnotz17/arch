@@ -1,0 +1,2 @@
+/home/pnotz17/Transmission/build/third-party/dht/lib/libdht.a
+/home/pnotz17/Transmission/build/third-party/dht/include/dht/dht.h

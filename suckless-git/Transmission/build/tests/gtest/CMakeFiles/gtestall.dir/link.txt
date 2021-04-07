@@ -1,0 +1,2 @@
+/bin/ar qc libgtestall.a CMakeFiles/gtestall.dir/__/__/third-party/googletest/googletest/src/gtest-all.cc.o CMakeFiles/gtestall.dir/__/__/third-party/googletest/googletest/src/gtest_main.cc.o
+/bin/ranlib libgtestall.a
