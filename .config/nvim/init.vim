@@ -1,10 +1,12 @@
 " Vim Settings
 set t_Co=256				" enable 256 colors, true colors
 syntax on				" enable syntax highlighting
-set ruler               		" show line and column number of the cursor on right side of statusline
+set ruler               		" enable line and column number of the cursor on right side of statusline
+set number relativenumber		" enable “Hybrid” line numbers
 set showmatch           		" highlight matching parentheses / brackets [{()}]
-set incsearch "  highlight the first string matched in a search
-set  number relativenumber
+set incsearch 				" highlight the first string matched in a search
+set cursorline				" highlight the current line
+set cursorcolumn			" highlight the current column
 
 " Theme
 " put colorscheme files in ~/.config//nvim/colors/
