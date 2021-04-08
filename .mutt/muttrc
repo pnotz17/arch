@@ -11,7 +11,7 @@ set reverse_alias = yes
 source $alias_file
 
 # Editor
-set editor='vim'
+set editor='nvim'
 
 # Basic Config 
 set ssl_starttls = yes
