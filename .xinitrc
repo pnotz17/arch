@@ -8,7 +8,7 @@ xrdb -merge $HOME/.Xdefaults
 ~/.local/bin/dwmbaremojis.sh &
 ~/.local/bin/xsessionautoremover.sh &
 ~/.fehbg &
-xclickroot -r ~/suckless-git/xmenu/xmenu.sh &
+xclickroot -r ~/.config/suckless-git/xmenu/xmenu.sh &
 picom -b &
 dunst &
 

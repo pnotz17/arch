@@ -1,7 +1,7 @@
 #!/bin/bash
 
 while true; do
-    open=$(ls -1a --group-directories-first --file-type | dmenu -l 6 "$@")
+    open=$(ls -1a --group-directories-first --file-type | dmenu -l 50 "$@")
     if [[ -d "$open" ]]; then
         cd "$open"
     else
