@@ -7,7 +7,7 @@ Terminal 	st
 Web browser	firefox	
 Accessories
 	sxiv	sxiv -t  ~/pictures/wallpapers/*
-	vim	st -e vim
+	vim	st -e nvim
 Development
 	geany	geany
 Graphics
