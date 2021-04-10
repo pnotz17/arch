@@ -12,9 +12,9 @@ Development
 	geany	geany
 Graphics
 	gimp	gimp
-	xsane-scanning	xsane
 Network
 	firefox	firefox
+	mutt	st -e mutt
 	transmission	transmission-gtk
 Multimedia
 	alsa mixer	st -e alsamixer
