@@ -83,19 +83,19 @@ keys = [
 	    
 	# Extras
 	Key([mod, "shift"], "b", 
-		lazy.spawn("qutebrowser")),
+		lazy.spawn("firefox")),
 	Key([mod, "shift"], "f", 
 		lazy.spawn("pcmanfm")),
 	Key([mod, "shift"], "m", 
 		lazy.spawn("st -e mutt")),
 	Key([mod, "shift"], "p", 
-		lazy.spawn(".local/bin/power.sh")),
+		lazy.spawn(".local/bin/dmenuexit.sh")),
 	Key([], "F12", 
 		lazy.spawn("amixer set Master Front 2+")),
 	Key([], "F11", 
 		lazy.spawn("amixer set Master Front 2-")),
 	Key([], "Print", 
-		lazy.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
+		lazy.spawn("scrot -e 'mv $f ~/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
 
 # Mouse bindings
 mouse = [

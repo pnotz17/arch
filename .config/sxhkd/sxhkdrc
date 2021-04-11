@@ -130,11 +130,11 @@ super + {_,shift + }f
 
 # Launch a web browser
 super + {_,shift + }b
-	qutebrowser
+	firefox
 
 # Logout Menu		
 super + {_,shift + }p
-		/home/panos21/.local/bin/power.sh	
+		/home/panos21/.local/bin/dmenuexit.sh	
 
 # Volume up
 super + F12
@@ -150,4 +150,4 @@ amixer -q set Master toggle
 
 # Screenshot
 Print
-	scrot ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png
+	scrot ~/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png

@@ -352,10 +352,10 @@ globalkeys = gears.table.join(
 
 -- My keybindings
     awful.key({ modkey, "Shift" }, "b", 
-		function () awful.util.spawn("qutebrowser") 
+		function () awful.util.spawn("firefox") 
     end),
     awful.key({ modkey, "Shift" }, "p", 
-		function () awful.util.spawn(".local/bin/power.sh") 
+		function () awful.util.spawn(".local/bin/dmenuexit.sh") 
     end),
     awful.key({ modkey, "Shift" }, "f", 
 		function () awful.util.spawn("pcmanfm") 
@@ -373,7 +373,7 @@ globalkeys = gears.table.join(
 		function ()awful.util.spawn("amixer set Master 2%+", 
 	false) end),
 	awful.key({ }, "Print", 
-		function () awful.util.spawn("scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'", 
+		function () awful.util.spawn("scrot -e 'mv $f ~/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'", 
     false) end),    
     awful.key({ modkey }, "b", function ()
 		for s in screen do
