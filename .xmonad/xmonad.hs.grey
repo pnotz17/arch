@@ -60,7 +60,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	[ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)-- launch a terminal
 	, ((modm,               xK_p		), spawn "dmenu_run")  					-- launch dmenu
 	, ((modm .|. shiftMask, xK_f		), spawn "pcmanfm")    					-- launch pcmanfm
-	, ((modm .|. shiftMask, xK_b		), spawn "qutebrowser")    				-- launch qutebrowser
+	, ((modm .|. shiftMask, xK_b		), spawn "firefox")    				-- launch a web browser
 	, ((modm .|. shiftMask, xK_c		), kill)    						-- close focused window
 	, ((modm,               xK_space 	), sendMessage NextLayout) 				-- Rotate through the available layout algorithms
 	, ((modm .|. shiftMask, xK_space 	), setLayout $ XMonad.layoutHook conf)  		-- Reset the layouts on the current workspace to default
@@ -85,7 +85,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	, ((0			,xK_F10), 	   spawn "amixer -q set Master toggle")			-- Toggle/Untoggle Volume
 	, ((0			,xK_F11), 	   spawn "amixer set Master 1-")			-- Decrease volume
 	, ((0			,xK_F12), 	   spawn "amixer set Master 1+")			-- Increase volume
-	, ((0			,xK_Print), 	   spawn  "scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'")	-- Screenshot
+	, ((0			,xK_Print), 	   spawn  "scrot -e 'mv $f ~/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'")	-- Screenshot
 	]
 	
 	++

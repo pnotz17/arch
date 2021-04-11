@@ -67,9 +67,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	-- launch pcmanfm
 	, ((modm .|. shiftMask, xK_f		), 
 	spawn "pcmanfm")    					
-	-- launch qutebrowser
+	-- launch a web browser
 	, ((modm .|. shiftMask, xK_b		), 
-	spawn "qutebrowser")    				
+	spawn "firefox")    				
 	-- close focused window
 	, ((modm .|. shiftMask, xK_c		), 
 	kill)    						
@@ -144,7 +144,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	spawn "amixer set Master 1+")				
 	-- Screenshot
 	, ((0			,xK_Print), 	   
-	spawn  "scrot -e 'mv $f ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'")		
+	spawn  "scrot -e 'mv $f ~/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null'")		
 	]
 	
 	++
