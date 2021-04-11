@@ -1,11 +1,3 @@
-" Theme
-" put colorscheme files in ~/.config//nvim/colors/
-colorscheme molokai
-
-" Set Leader Key
-let mapleader=","
-set timeout timeoutlen=1500
-
 " Vim Settings
 filetype off                            " required 
 set nocompatible                        " be iMproved, required 
@@ -35,21 +27,29 @@ Plug 'itchyny/lightline.vim'            " statusline/tabline plugin for Vim
 Plug 'vim-python/python-syntax'         " Python highlighting
 call plug#end()
 
+" Theme
+" put colorscheme files in ~/.config//nvim/colors/
+colorscheme molokai
+
 " NerdTree
-map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+map <C-n> :NERDTreeToggle<CR>
 
 " Enable/Disable Python Syntax Highlighting
 let g:python_highlight_all = 1
+
+" Recompile Suckless Programs Automatically
+:au! BufWritePost *config.h ! make clean install %
+
+" Set Leader Key
+let mapleader=","
+set timeout timeoutlen=1500
 
 " Navigate around splits with a single key combo.
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
-" Recompile Suckless Programs Automatically
-:au! BufWritePost *config.h ! make clean install %
 
 " Location of viminfo
 set viminfo+=n~/.conofig/nvim/viminfo
