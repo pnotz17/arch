@@ -2,7 +2,7 @@
 source ~/.mutt/a1
 
 # Theme
-source ~/.mutt/themes/mytheme
+source ~/.mutt/themes/solarized
 
 # Aliases
 set alias_file = "~/.mutt/aliases"
@@ -31,10 +31,13 @@ ignore "DomainKey-Signature:"
 ignore "DKIM-Signature:"
 hdr_order Date From To Cc
 alternative_order text/plain text/html *
-auto_view text/html
-bind editor <Tab> complete-query
 bind editor ^T complete
 bind editor <space> noop
+set mailcap_path  = ~/.mutt/mailcap
+bind  attach  <return>  view-mailcap
+alternative_order text/plain text/html
+unauto_view *
+auto_view text/html
 
 # Folder hooks
 folder-hook 'USER@gmail.com' 'source ~/.mutt/a1'
@@ -43,3 +46,4 @@ folder-hook 'USER@yahoo.com' 'source ~/.mutt/a2'
 # Macros for switching accounts
 macro index <F2> '<sync-mailbox><enter-command>source ~/.mutt/a1<enter><change-folder>!<enter>'
 macro index <F3> '<sync-mailbox><enter-command>source ~/.mutt/a2<enter><change-folder>!<enter>'
+
