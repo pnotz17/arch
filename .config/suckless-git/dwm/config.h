@@ -98,7 +98,7 @@ static Key keys[] = {
 { ControlMask,			        XK_p,                           spawn,                  SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
 { ControlMask,			        XK_d,                           spawn,                  SHCMD("~/.local/bin/youtube-dl.sh") },
 { ControlMask,			        XK_c,                           spawn,                  SHCMD("~/.local/bin/dmenucalc.sh") },
-{ ControlMask,                          XK_b,	                        spawn,                  SHCMD("~/.local/bin/dmenuscratchpad.sh") },
+{ MODKEY,                               XK_s,	                        spawn,                  SHCMD("~/.local/bin/dmenuscratchpad.sh") },
 { 0,                                    XK_Print,                       spawn,                  SHCMD("~/.local/bin/screenshot.sh") },
 { 0,                                    XK_F11,	                        spawn,                  SHCMD("amixer set Master Front 1-") },
 { 0,                                    XK_F12,	                        spawn,                  SHCMD("amixer set Master Front 1+") },
