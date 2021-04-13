@@ -54,10 +54,10 @@ struct dirjump dirjumps[] = {
 /* file opening application matching */
 struct filerule filerules[] = {
 	/* regex to match against file name         command + flags */
-	{ "\\.(avi|mp4|mkv|mp3|ogg|flac|mov|wav)$", "ffplay"    },
+	{ "\\.(avi|mp4|mkv|mp3|ogg|flac|mov|wav)$", "mpv"    },
 	{ "\\.(png|jpg|jpeg|gif)$",                 "feh -a &" },
 	{ "\\.(html|svg)$",                         "firefox"   },
-	{ "\\.pdf$",                                "mupdf"     },
+	{ "\\.pdf$",                                "mupd-x11f"     },
 	{ ".",                                      "less"      },
 };
 
@@ -132,12 +132,12 @@ struct keybind keybinds[] = {
 	/* force a redraw */
 	{ CONTROL('L'),    SEL_REDRAW },
 	/* rename marked entries */
-	{ 'r',             SEL_RENAME, "vi", "EDITOR" }, /* more than one, open in EDITOR or vi if empty */
+	{ 'r',             SEL_RENAME, "nvim", "EDITOR" }, /* more than one, open in EDITOR or vi if empty */
 	/* run a command */
 	{ '!',             SEL_RUN,    "sh",  "SHELL" }, /* run SHELL or sh if empty */
 	{ 'z',             SEL_RUN,    "top", "NOICETOP" }, /* run NOICETOP or top if empty */
 	{ '?',             SEL_RUN,    "man noice", "NOICEMAN" }, /* run NOICEMAN or man noice if empty */
 	/* run a command with the current entry as an argument */
-	{ 'e',             SEL_RUNARG, "vi",            "EDITOR" }, /* open the current file with EDITOR or vi if empty */
+	{ 'e',             SEL_RUNARG, "nvim",            "EDITOR" }, /* open the current file with EDITOR or vi if empty */
 	{ 'M',             SEL_RUNARG, "mpv --shuffle", "NOICEMP" }, /* open the current file with NOICEMP or mpv if empty */
 };

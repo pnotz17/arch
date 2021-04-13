@@ -52,4 +52,4 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " Location of viminfo
-set viminfo+=n~/.conofig/nvim/viminfo
+set viminfo+=n~/.config/nvim/viminfo
