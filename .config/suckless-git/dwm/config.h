@@ -52,14 +52,6 @@ static const Layout layouts[]= {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
-static const char *termcmd[]          = { "st", NULL };
-static const char *print_screen_cmd[] = { "scrot", "-d2", "pictures/screenshots/%Y-%m-%d-%s_$wx$h.jpg", NULL };
-static const char *upvol[]            = { "amixer", "set", "Master", "1+",     NULL };
-static const char *downvol[]          = { "amixer", "set", "Master", "1-",     NULL };
-static const char *webcmd[]           = { "firefox", NULL };
-static const char *filescmd[]         = { "spacefm", NULL };
-static const char *mailcmd[]          = { "st","-e","mutt", NULL };
 #include "movestack.c"
 
 static Key keys[] = {
@@ -92,24 +84,24 @@ static Key keys[] = {
 { MODKEY,                        	XK_minus,  			setgaps,        	{.i = -1 } },
 { MODKEY,                       	XK_equal,  			setgaps,        	{.i = +1 } },
 { MODKEY|ShiftMask,     		XK_equal,  			setgaps,        	{.i = 0  } },
-{ MODKEY|ShiftMask,			XK_q, 				quit,           	{0} },
-{ MODKEY|ShiftMask,			XK_r,      			spawn,          	SHCMD("feh --no-fehbg --randomize --bg-scale ~/Pictures/Wallpapers/*") },
-{ MODKEY|ShiftMask,			XK_p,      			spawn, 	   		SHCMD("~/.local/bin/dmenuexit.sh") },
-{ MODKEY|ShiftMask,			XK_d,      			spawn, 	   		SHCMD("~/.local/bin/dmenufm.sh") },
-{ MODKEY,				XK_v,      			spawn,          	SHCMD("~/.local/bin/youtube-watch.sh") },
-{ MODKEY,				XK_l,      			spawn,          	SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
-{ MODKEY,				XK_y,      			spawn,          	SHCMD("~/.local/bin/youtube-dl.sh") },
-{ MODKEY,				XK_c,      			spawn,          	SHCMD("~/.local/bin/dmenucalc.sh") },
-{ ControlMask,   	                XK_s,	                        spawn,                  SHCMD("~/.local/bin/dmenuscratchpad.sh") },
-{ MODKEY,				XK_p,	   			spawn,          	SHCMD("dmenu_run") },
-{ MODKEY,				XK_s,      			spawn,          	SHCMD("passmenu") },
-{ MODKEY|ShiftMask,             	XK_Return, 			spawn,          	{.v = termcmd } },
-{ MODKEY|ShiftMask,			XK_b,	   			spawn,	   		{.v = webcmd } },
-{ MODKEY|ShiftMask,			XK_f,	   			spawn,	   		{.v = filescmd } },
-{ MODKEY|ShiftMask,			XK_m,	   			spawn,	   		{.v = mailcmd } },
-{ 0, 	                                XK_Print,                       spawn,                  {.v = print_screen_cmd } },
-{ 0,                                    XK_F12,	                        spawn,                  {.v = upvol   } },
-{ 0,                                    XK_F11,	                        spawn,                  {.v = downvol } },
+{ MODKEY|ControlMask,                   XK_r,                           quit,                   {0} },
+{ MODKEY|ShiftMask,                     XK_Return,                      spawn,                  SHCMD("st") },
+{ MODKEY|ShiftMask,		        XK_b,	                        spawn,	                SHCMD("firefox") },
+{ MODKEY|ShiftMask,		        XK_f,	                        spawn,	                SHCMD("spacefm") },
+{ MODKEY|ShiftMask,		        XK_m,	                        spawn,	                SHCMD("st -e mutt") },
+{ MODKEY,			        XK_p,	                        spawn,                  SHCMD("dmenu_run") },
+{ MODKEY|ShiftMask,		        XK_p,                           spawn,                  SHCMD("passmenu") },
+{ ControlMask,	                        XK_w,                           spawn,                  SHCMD("~/.local/bin/changewall.sh") },
+{ ControlMask,		                XK_e,                           spawn, 	                SHCMD("~/.local/bin/dmenuexit.sh") },
+{ MODKEY|ShiftMask,		        XK_d,                           spawn, 	                SHCMD("~/.local/bin/dmenufm.sh") },
+{ ControlMask,			        XK_m,                           spawn,                  SHCMD("~/.local/bin/youtube-watch.sh") },
+{ ControlMask,			        XK_p,                           spawn,                  SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
+{ ControlMask,			        XK_d,                           spawn,                  SHCMD("~/.local/bin/youtube-dl.sh") },
+{ ControlMask,			        XK_c,                           spawn,                  SHCMD("~/.local/bin/dmenucalc.sh") },
+{ ControlMask,                          XK_b,	                        spawn,                  SHCMD("~/.local/bin/dmenuscratchpad.sh") },
+{ 0,                                    XK_Print,                       spawn,                  SHCMD("~/.local/bin/screenshot.sh") },
+{ 0,                                    XK_F11,	                        spawn,                  SHCMD("amixer set Master Front 1-") },
+{ 0,                                    XK_F12,	                        spawn,                  SHCMD("amixer set Master Front 1+") },
 TAGKEYS(                        	XK_1,                      				0)
 TAGKEYS(                        	XK_2,                      				1)
 TAGKEYS(                        	XK_3,                      				2)
@@ -125,7 +117,7 @@ static Button buttons[] = {
 { ClkLtSymbol,				0,              Button1,        	setlayout,      	{0} },
 { ClkLtSymbol,				0,              Button3,        	setlayout,      	{.v = &layouts[2]} },
 { ClkWinTitle,				0,              Button2,        	zoom,           	{0} },
-{ ClkStatusText,			0,             	Button2,        	spawn,          	{.v = termcmd } },
+{ ClkStatusText,			0,             	Button2,        	spawn,          	SHCMD("st") },
 { ClkTagBar,            		0,             	Button1,        	view,           	{0} },
 { ClkTagBar,            		0,             	Button3,       		toggleview,    		{0} },
 { ClkTagBar,            		MODKEY,		Button1,        	tag,           		{0} },

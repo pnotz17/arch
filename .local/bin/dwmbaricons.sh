@@ -1,14 +1,14 @@
 #!/bin/sh
 
 mail() {
-	mail=`curl -su USERNAME:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo  "  $mail"
 }
 
 updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo "  $updates"
+	echo "ﲐ  $updates"
 }
 
 pkgs() {
@@ -83,7 +83,7 @@ clock() {
 }
 
 while true; do
-	xsetroot -name "^c#FFA500^$(mail)  |  ^c#25E80D^$(updates)  |  ^c#00FFF9^$(cpufrequency)  |  ^c#D400CF^$(ram)  |  ^c#ADD8E6^$(upspeed)  |  ^c#FFC0CB^$(downspeed)  |  ^c#FFFFFF^$(alsa)  |  ^c#FFFF00^$(clock)  |"	 #xsetroot -name "$(updates) | $(mail) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |" 
+	xsetroot -name "$(updates) | $(mail) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |"  #xsetroot -name "^c#FFA500^$(mail)  |  ^c#25E80D^$(updates)  |  ^c#00FFF9^$(cpufrequency)  |  ^c#D400CF^$(ram)  |  ^c#ADD8E6^$(upspeed)  |  ^c#FFC0CB^$(downspeed)  |  ^c#FFFFFF^$(alsa)  |  ^c#FFFF00^$(clock)  |"	 
 	sleep 2
 done &
 

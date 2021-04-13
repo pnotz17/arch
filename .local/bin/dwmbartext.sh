@@ -1,7 +1,7 @@
 #!/bin/sh
 
 mail() {
-	mail=`curl -su USERNAME:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo "inb: $mail"
 }
@@ -60,7 +60,7 @@ clock() {
 }
 
 while true; do
-	xsetroot -name "$(updates) | $(mail) | $(weather) | $(cputemp) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |" #xsetroot -name "^c#3AFF00^$(updates) | ^c#B5B5B5^$(mail) | ^c#3AFF00^$(cpufrequency) | ^c#B5B5B5^$(ram) | ^c#3AFF00^$(upspeed) | ^c#B5B5B5^$(downspeed) | ^c#3AFF00^$(alsa) | ^c#B5B5B5^$(clock) |"
+	xsetroot -name "$(updates) | $(mail) | $(cpufrequency) | $(ram) | $(alsa) | $(upspeed) | $(downspeed) | $(clock) |" #xsetroot -name "^c#3AFF00^$(updates) | ^c#B5B5B5^$(mail) | ^c#3AFF00^$(cpufrequency) | ^c#B5B5B5^$(ram) | ^c#3AFF00^$(upspeed) | ^c#B5B5B5^$(downspeed) | ^c#3AFF00^$(alsa) | ^c#B5B5B5^$(clock) |"
 	sleep 2
 done &
 
