@@ -39,7 +39,7 @@ map <C-n> :NERDTreeToggle<CR>
 let g:python_highlight_all = 1
 
 " Recompile Suckless Programs Automatically
-:au! BufWritePost *config.h ! make clean install %
+:au! BufWritePost *config.h ! doas make clean install %
 
 " Set Leader Key
 let mapleader=","
