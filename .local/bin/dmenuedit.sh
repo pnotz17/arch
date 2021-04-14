@@ -3,7 +3,17 @@
 : "${DMEDITOR:=st -e nvim}"
 
 declare -A options
-
+options[dunst]="$HOME/.config/dunst/dunstrc"
+options[fontconfig]="$HOME/.config/fontconfig/fonts.conf"
+options[mpv]="$HOME/.config/mpv/mpv.conf"
+options[sxiv]="$HOME/.config/sxiv/exec/key-handler"
+options[picom]="$HOME/.config/picom.conf"
+options[nvim]="$HOME/.config/nvim/init.vim"
+options[dwm]="$HOME/suckless-git/dwm/config.h'"
+options[dwmMin]="$HOME/suckless-git/dwmMin/config.h'"
+options[dmenu]="$HOME/suckless-git/dmenu/config.h'"
+options[st]="$HOME/suckless-git/st/config.h'"
+options[st]="$HOME/suckless-git/xmenu/xmenu.sh'"
 options[xinitrc]="$HOME/.xinitrc"
 options[zsh]="$HOME/.zshrc"
 

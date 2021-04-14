@@ -1,6 +1,6 @@
 static const char *fonts[] 		= {"DaddyTimeMono Nerd Font:style=Book:size=9:antialias=true:autohint=true","EmojiOne:style=Regular:size=9:antialias=true:autohint=true",};
 static const unsigned int borderpx 	= 1;		/* border pixel of windows */
-static const unsigned int gappx 	= 2;		/* gaps between windows */
+static const unsigned int gappx 	= 1;		/* gaps between windows */
 static const unsigned int snap 		= 32;		/* snap pixel */
 static const int showbar		= 1;		/* 0 means no bar */
 static const int topbar 		= 1;		/* 0 means bottom bar */
@@ -92,6 +92,7 @@ static Key keys[] = {
 { MODKEY|ControlMask,		        XK_p,                           spawn,                  SHCMD("passmenu") },
 { MODKEY|ControlMask,                   XK_s,	                        spawn,                  SHCMD("~/.local/bin/dmscriptcreate.sh") },
 { MODKEY|ControlMask,		        XK_d,                           spawn, 	                SHCMD("~/.local/bin/dmenufm.sh") },
+{ MODKEY|ControlMask,		        XK_e,                           spawn, 	                SHCMD("~/.local/bin/dmenuedit.sh") },
 { ControlMask,			        XK_m,                           spawn,                  SHCMD("~/.local/bin/youtube-watch.sh") },
 { ControlMask,			        XK_p,                           spawn,                  SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
 { ControlMask,			        XK_d,                           spawn,                  SHCMD("~/.local/bin/youtube-dl.sh") },
@@ -100,9 +101,9 @@ static Key keys[] = {
 { MODKEY,		                XK_e,                           spawn, 	                SHCMD("~/.local/bin/dmenuexit.sh") },
 { MODKEY,			        XK_c,                           spawn,                  SHCMD("~/.local/bin/dmenucalc.sh") },
 { MODKEY,                               XK_s,	                        spawn,                  SHCMD("~/.local/bin/dmenuscratch.sh") },
-{ 0,                                    XK_Print,                       spawn,                  SHCMD("~/.local/bin/screenshot.sh") },
-{ 0,                                    XK_F11,	                        spawn,                  SHCMD("amixer set Master Front 1-") },
-{ 0,                                    XK_F12,	                        spawn,                  SHCMD("amixer set Master Front 1+") },
+	{ 0,                            XK_Print,                       spawn,                  SHCMD("~/.local/bin/screenshot.sh") },
+	{ 0,                            XK_F11,	                        spawn,                  SHCMD("amixer set Master Front 1-") },
+	{ 0,                            XK_F12,	                        spawn,                  SHCMD("amixer set Master Front 1+") },
 TAGKEYS(                        	XK_1,                      				0)
 TAGKEYS(                        	XK_2,                      				1)
 TAGKEYS(                        	XK_3,                      				2)
