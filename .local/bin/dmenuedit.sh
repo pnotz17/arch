@@ -12,7 +12,7 @@ options[nvim]="$HOME/.config/nvim/init.vim"
 options[dmenu]="$HOME/suckless/dmenu/config.h"
 options[dwm]="$HOME/suckless/dwm/config.h"
 options[dwmMin]="$HOME/suckless/dwmMin/config.h"
-options[dwm]="$HOME/suckless/st/config.h"
+options[st]="$HOME/suckless/st/config.h"
 options[xinitrc]="$HOME/.xinitrc"
 options[zsh]="$HOME/.zshrc"
 declare -A options_clean
