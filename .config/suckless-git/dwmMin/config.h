@@ -1,18 +1,22 @@
-/* See LICENSE file for copyright and license details. */
-static const char *fonts[]          ={"ShureTechMono Nerd Font:style=Regular:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
-static const unsigned int gappx     = 21;        /* gaps between windows */
-static const unsigned int borderpx  = 3;        	/* border pixel of windows */
-static const unsigned int snap      = 32;       	/* snap pixel */
-static const int showbar            = 1;        	/* 0 means no bar */
-static const int topbar             = 1;        	/* 0 means bottom bar */
-static const char normbgcolor[] 	= "#111111";	/* bar backround color */
-static const char normfgcolor[] 	= "#C0C0C0";	/* bar foreground color on right & left*/
-static const char selbgcolor[] 		= "#222222";	/* highlighted tag // tasklist // focused window background color*/
-static const char selfgcolor[] 		= "#FFFFFF";	/* focused tag and tasklist foreground color*/
-static const char unselbordercolor[] 	= "#FF0035";	/* unfocused window border color*/
-static const char selbordercolor[] 	= "#B3AFC2";	/* focused window border color*/
-static const unsigned int baralpha = 222;
-static const unsigned int borderalpha = 222;
+static const char *fonts[]               ={"ShureTechMono Nerd Font:style=Regular:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
+static const int showbar                 = 1;           /* 0 means no bar */
+static const int topbar                  = 1;           /* 0 means bottom bar */
+static const unsigned int borderpx       = 2;           /* border pixel of windows */
+static const unsigned int snap           = 32;          /* snap pixel */
+static const unsigned int gappx          = 21;          /* gaps between windows */
+static const unsigned int systraypinning = 0;           /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft  = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 2;           /* systray spacing */
+static const int systraypinningfailfirst = 1;           /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray             = 1;           /* 0 means no systray */
+static const char normbgcolor[] 	 = "#111111";	/* bar backround color */
+static const char normfgcolor[] 	 = "#C0C0C0";	/* bar foreground color on right & left*/
+static const char selbgcolor[] 		 = "#222222";	/* highlighted tag // tasklist // focused window background color*/
+static const char selfgcolor[] 		 = "#FFFFFF";	/* focused tag and tasklist foreground color*/
+static const char unselbordercolor[] 	 = "#FF0035";	/* unfocused window border color*/
+static const char selbordercolor[] 	 = "#B3AFC2";	/* focused window border color*/
+static const unsigned int baralpha 	 = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
+static const unsigned int borderalpha	 = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 
 static const char *colors[][3] = {
 [SchemeNorm]= { normfgcolor, normbgcolor, unselbordercolor},
@@ -105,6 +109,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 };
 
+
 static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
@@ -118,4 +123,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-

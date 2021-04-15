@@ -136,7 +136,6 @@ xfont_create(Drw *drw, const char *fontname, FcPattern *fontpattern)
 		die("no font specified.");
 	}
 
-
 	font = ecalloc(1, sizeof(Fnt));
 	font->xfont = xfont;
 	font->pattern = pattern;
@@ -196,7 +195,6 @@ drw_clr_create(Drw *drw, Clr *dest, const char *clrname, unsigned int alpha)
 
 	dest->pixel = (dest->pixel & 0x00ffffffU) | (alpha << 24);
 }
-
 
 /* Wrapper to create color schemes. The caller has to call free(3) on the
  * returned color scheme when done using it. */
@@ -267,8 +265,7 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 	} else {
 		XSetForeground(drw->dpy, drw->gc, drw->scheme[invert ? ColFg : ColBg].pixel);
 		XFillRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w, h);
-			d = XftDrawCreate(drw->dpy, drw->drawable, drw->visual, drw->cmap);
-
+		d = XftDrawCreate(drw->dpy, drw->drawable, drw->visual, drw->cmap);
 		x += lpad;
 		w -= lpad;
 	}
