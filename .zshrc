@@ -58,7 +58,9 @@ alias ps='doas pacman -S'
 alias pss='doas pacman -Ss'
 alias yss='yay -Ss'
 alias ys='yay -S'
-alias e='tar -xpvf'
+alias un='unzip'
+alias ex='tar -xpvf'
+alias co='tar -zcvf'
 alias build='doas make clean install'
 alias up='doas pacman -Syu --noconfirm'
 alias rm='doas pacman -Rscnd'
@@ -76,6 +78,5 @@ alias a='git add'
 alias c='git commit -m "changes in dotfiles"'
 alias p='git push'
 alias gc='git clone'
-
 
 
