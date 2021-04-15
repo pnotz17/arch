@@ -21,4 +21,4 @@ prev_img BackSpace
 
 # File deletion
 remove     d   Delete
-delete   C-d C-Delete
+delete   C-x C-Delete
