@@ -11,11 +11,19 @@ static const char selbgcolor[] 		= "#222222";	/* highlighted tag // tasklist // 
 static const char selfgcolor[] 		= "#FFFFFF";	/* focused tag and tasklist foreground color*/
 static const char unselbordercolor[] 	= "#FF0035";	/* unfocused window border color*/
 static const char selbordercolor[] 	= "#B3AFC2";	/* focused window border color*/
+static const unsigned int baralpha = 222;
+static const unsigned int borderalpha = 222;
+
 static const char *colors[][3] = {
 [SchemeNorm]= { normfgcolor, normbgcolor, unselbordercolor},
 [SchemeSel] = { selfgcolor,  selbgcolor,  selbordercolor},
 };
 
+static const unsigned int alphas[][3]      = {
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+};
+ 
 static const char *tags[]   = { "01", "02", "03", "04", "05",};
 //static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
 //static const char *tags[] = { "dev", "www", "code", "sys", "doc"};
@@ -71,14 +79,14 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_b,	   spawn,	   SHCMD("firefox") },
 	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   SHCMD("spacefm") },
 	{ MODKEY|ShiftMask,		XK_m,	   spawn,	   SHCMD("st -e mutt") },
+	{ MODKEY,			XK_p,	   spawn,          SHCMD("dmenu_run") },
 	{ MODKEY|ControlMask,		XK_p,      spawn,          SHCMD("passmenu") },
-	{ MODKEY|ControlMask,             XK_s,	   spawn,          SHCMD("~/.local/bin/dmscriptcreate.sh") },
+	{ MODKEY|ControlMask,           XK_s,	   spawn,          SHCMD("~/.local/bin/dmscriptcreate.sh") },
 	{ MODKEY|ControlMask,		XK_d,      spawn, 	   SHCMD("~/.local/bin/dmenufm.sh") },
 	{ MODKEY|ControlMask,		XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenuedit.sh") },
 	{ ControlMask,			XK_m,      spawn,          SHCMD("~/.local/bin/youtube-watch.sh") },
 	{ ControlMask,			XK_p,      spawn,          SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
 	{ ControlMask,			XK_d,      spawn,          SHCMD("~/.local/bin/youtube-dl.sh") },
-	{ MODKEY,			XK_p,	   spawn,          SHCMD("dmenu_run") },
 	{ MODKEY,	                XK_w,      spawn,          SHCMD("~/.local/bin/changewall.sh") },
 	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenuexit.sh") },
 	{ MODKEY,			XK_c,      spawn,          SHCMD("~/.local/bin/dmenucalc.sh") },
