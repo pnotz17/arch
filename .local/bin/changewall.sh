@@ -1,2 +1,2 @@
 #!/bin/bash
-feh --no-fehbg --randomize --bg-scale ~/pictures/wallpapers/*
+feh --no-fehbg --randomize --bg-fill ~/pictures/wallpapers/*

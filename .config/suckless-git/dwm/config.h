@@ -95,6 +95,7 @@ static Key keys[] = {
 	{ ControlMask,			XK_m,      spawn,          SHCMD("~/.local/bin/youtube-watch.sh") },
 	{ ControlMask,			XK_p,      spawn,          SHCMD("~/.local/bin/youtube-dl-playlist.sh") },
 	{ ControlMask,			XK_d,      spawn,          SHCMD("~/.local/bin/youtube-dl.sh") },
+	{ ControlMask,		        XK_e,	   spawn,	   SHCMD("~/.local/bin/emojiselector.sh") },
 	{ MODKEY,	                XK_w,      spawn,          SHCMD("~/.local/bin/changewall.sh") },
 	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenuexit.sh") },
 	{ MODKEY,			XK_c,      spawn,          SHCMD("~/.local/bin/dmenucalc.sh") },
