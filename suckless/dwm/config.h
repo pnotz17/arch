@@ -31,6 +31,8 @@ static const Rule rules[] = {
 };
 
 #include "layouts.c"
+#include "movestack.c"
+#include "tcl.c"
 static const float mfact      = 0.50; 
 static const int nmaster      = 1;    
 static const int resizehints  = 0;    
@@ -38,6 +40,7 @@ static const Layout layouts[] = {
 	{"[]=",      tile },   
 	{"><>",      NULL },    
 	{"[M]",      monocle },
+	{ "|||",                tcl },
 	{"HHH",	     grid },
 	{ NULL,	     NULL },
 };
@@ -50,7 +53,6 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-#include "movestack.c"
 
 static Key keys[] = {
 	{ MODKEY,                       XK_b,	   togglebar,	   {0} },
