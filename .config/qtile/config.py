@@ -89,7 +89,7 @@ keys = [
 	Key([mod, "shift"], "m", 
 		lazy.spawn("st -e mutt")),
 	Key([mod, "shift"], "p", 
-		lazy.spawn(".local/bin/dmenuexit.sh")),
+		lazy.spawn(".local/bin/dmenu_exit")),
 	Key([], "F12", 
 		lazy.spawn("amixer set Master Front 2+")),
 	Key([], "F11", 
@@ -187,7 +187,7 @@ screens = [Screen(top=bar.Bar(
 	widget.Spacer(),
 	
 	widget.GenPollText(
-	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/pacupdate")).decode("utf-8").replace('\n', ''),
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/pac_up_text")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
 	foreground=grey2,),
 
@@ -196,7 +196,7 @@ screens = [Screen(top=bar.Bar(
 	foreground = grey2,),
 	
 	widget.GenPollText(
-	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/gmailcount.sh")).decode("utf-8").replace('\n', ''),
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/gmail_count")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
 	foreground=grey2,),
 	

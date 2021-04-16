@@ -179,7 +179,7 @@ bindsym $mod+plus exec "amixer set Master Front 2+"
 bindsym $mod+minus exec "amixer set Master Front 2-"	
 
 # Screenshot 
-bindsym Print exec scrot ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png
+bindsym Print exec scrot ~/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png
 
 # Logout Menu
 bindsym $mod+shift+p mode "exit: [l]ogout, [r]eboot, [s]hutdown"

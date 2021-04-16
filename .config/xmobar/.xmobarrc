@@ -11,14 +11,14 @@ Config {
        , iconRoot = ".xmonad/xpm/"  -- default: "."
        , commands = [ 
 									  Run UnsafeStdinReader
-									, Run Com ".local/bin/gmailcount.sh" [] "count" 36000
-									, Run Com ".local/bin/pacupdate" [] "pacupdate" 36000
-									, Run Com ".local/bin/temp.sh" [] "temp" 2
+									, Run Com ".local/bin/gmail_count" [] "count" 36000
+									, Run Com ".local/bin/pac_up_icon" [] "pacupdate" 36000
+									, Run Com ".local/bin/get_temp" [] "temp" 2
 									, Run Cpu ["-t", "  <total>%","-H","70","--high","red"] 20
 									, Run Memory ["-t", "  <usedratio>%"] 20
-									, Run Com ".local/bin/getvolumeicon.sh" [] "vol" 2
-									, Run Com ".local/bin/upicon.sh" [] "up" 20																
-									, Run Com ".local/bin/downicon.sh" [] "down" 20
+									, Run Com ".local/bin/get_volume_icon.sh" [] "vol" 2
+									, Run Com ".local/bin/up_icon" [] "up" 20																
+									, Run Com ".local/bin/down_icon" [] "down" 20
 									, Run Date "  %m-%d-%y %H:%M" "date" 50
 									]
        , sepChar = "%"

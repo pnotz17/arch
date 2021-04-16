@@ -11,14 +11,14 @@ Config {
        , iconRoot = ".xmonad/xpm/"  -- default: "."
        , commands = [ 
 									  Run UnsafeStdinReader
-									, Run Com ".local/bin/gmailtext.sh" [] "count" 1800
-									, Run Com ".local/bin/pcmupdates" [] "pacupdate" 1800
-									, Run Com ".local/bin/temp.sh" [] "temp" 2
+									, Run Com ".local/bin/gmail_text_count" [] "count" 1800
+									, Run Com ".local/bin/pac_up_text" [] "pacupdate" 1800
+									, Run Com ".local/bin/get_temp" [] "temp" 2
 									, Run Cpu ["-t", "cpu: <total>%","-H","70","--high","red"] 20
 									, Run Memory ["-t", "mem: <usedratio>%"] 20
-									, Run Com ".local/bin/getvolume.sh" [] "vol" 2
-									, Run Com ".local/bin/upspeed.sh" [] "up" 20																
-									, Run Com ".local/bin/downspeed.sh" [] "down" 20
+									, Run Com ".local/bin/get_volume" [] "vol" 2
+									, Run Com ".local/bin/up_speed_text" [] "up" 20																
+									, Run Com ".local/bin/down_speed_text" [] "down" 20
 									, Run Date "%b %d %Y %H:%M" "date" 50
 									]
        , sepChar = "%"

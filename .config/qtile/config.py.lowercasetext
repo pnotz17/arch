@@ -128,100 +128,106 @@ extension_defaults = widget_defaults.copy()
 # Screen variables
 screens = [Screen(top=bar.Bar(
 [	widget.Image(
-	filename = "~/.config/qtile/images/3",),
+	filename = "~/.config/qtile/images/1",),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt ='|',
 	foreground = grey2,),
 	
 	widget.GroupBox(
 	this_current_screen_border=tcsb,
 	highlight_method = "block",
 	active = "#ffffff",
-	inactive = grey,),
+	inactive = grey1,),
 	              
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.CurrentLayout(
-	foreground =grey,),
+	foreground =grey1,),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Spacer(),
 	
-	widget.CheckUpdates(
-	distro='Arch_checkupdates',
-	display_format=' Updates: {updates}',
-	colour_have_updates="#FF0000",
-	execute = '/home/panos21/.local/bin/pacupdate', 
-	no_update_string = '',
-	update_interval=60),
-	           
-	# widget.TextBox(
-	# fmt ='',
-	# foreground = grey2,),
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/pac_up_text")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
 
-	# widget.ThermalSensor(
-	# foreground =grey,
-	# fmt ='temp {}',),
+	widget.TextBox(
+	fmt =' | ',
+	foreground = grey2,),
+	
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/gmail_count")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt ='|',
 	foreground = grey2,),
 
+	# widget.ThermalSensor(
+	# foreground =grey1,
+	# fmt ='tem:    {}',),
+	
+	# widget.TextBox(
+	# fmt =' | ',
+	# foreground = grey2,),
+
 	widget.CPU(
-	format = 'cpu: {load_percent}%',
-	foreground = grey,),
+	format = 'cpu:   {load_percent}%',
+	foreground = grey1,),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Memory(
-	foreground = grey,
-	format = "mem: " '{MemUsed}M',
+	foreground = grey1,
+	format = "mem:   {MemPercent}%",
 	update_interval = 1,),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Volume(
-	foreground =grey,
-	fmt ='vol: {}',),
+	foreground =grey1,
+	fmt ='vol:   {}',),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Net(
 	interface = "enp2s0",
-	foreground =grey,
-	format = 'up: {up}  ', ),
+	foreground =grey1,
+	format = 'up:   {up}', ),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
-
+	
 	widget.Net(
 	interface = "enp2s0",
-	foreground =grey,
-	format = 'do:{down} ', ),
+	foreground =grey1,
+	format = 'do:   {down}', ),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Clock(
-	foreground = grey,
-	format = "%a, %b %d  %H:%M",),
+	foreground = grey1,
+	format ="   %a, %b %d  %H:%M",),
 	
 	widget.TextBox(
-	fmt ='',
+	fmt =' | ',
 	foreground = grey2,),
 
 	widget.Systray(
