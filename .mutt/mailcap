@@ -1,1 +1,1 @@
-text/html; ~/.local/bin/firefox-norace %s
+text/html; ~/.local/bin/mutt_html %s
