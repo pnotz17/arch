@@ -1,10 +1,22 @@
-#!/bin/bash
+#!/bin/sh
 
-RET=$(echo -e "shutdown\nreboot\nlogout\ncancel" | dmenu -c -l 5 -p "Logout")
+cmd=$(printf "poweroff\nreboot\nsuspend\nlock\nkillX\n" | dmenu -c -l 5 -p "⏻ ")
 
-case $RET in
-	shutdown)  poweroff ;;
-	reboot)  reboot ;;
-	logout)  pkill -KILL -u $USER ;;
-	*) ;;
+if [ -z "$cmd" ]; then
+	exit 0
+fi
+
+case "$cmd" in
+poweroff)
+	systemctl poweroff ;;
+reboot)
+	systemctl reboot ;;
+suspend)
+	systemctl suspend ;;
+lock)
+	slock ;;
+killX)
+	pkill -KILL -u $USER ;;
+*)
+		printf "Option not recognized: %s\n" "$cmd" >&2
 esac
