@@ -5,17 +5,21 @@
 # dependency xclip
 
 declare -A colors
-colors[black]="#080808"
-colors[grey]="#222222"
-colors[red]="#FF0000"
-colors[green]="#5AF78E"
-colors[yellow]="#FFA500"
-colors[blue]="#005577"
-colors[magenta]="#FF6AC1"
-colors[cyan]="#8BE9FD"
-colors[white]="#F1F1F0"
-colors[orange]="#FF4900"
-colors[purple]="#BD9CF9"
+colors[Pure Black]="#000000"
+colors[My Black]="#080808"
+colors[Mine Shaft Grey]="#222222"
+colors[Dark Grey]="#121213"
+colors[Red]="#FF0000"
+colors[Green]="#5AF78E"
+colors[Yellow]="#FFA500"
+colors[Blue]="#005577"
+colors[Magenta]="#FF6AC1"
+colors[Cyan]="#8BE9FD"
+colors[White]="#F1F1F0"
+colors[Chatelle White]="#B3AFC2"
+colors[Cadet Blue]="#ACB7C2"
+colors[Orange]="#FF4900"
+colors[Purple]="#BD9CF9"
 
 selected="$(printf '%s\n' "${!colors[@]}" | dmenu -p "color:")"
 [ -z "${selected}" ] && exit
