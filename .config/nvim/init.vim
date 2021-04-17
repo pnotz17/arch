@@ -29,7 +29,7 @@ call plug#end()
 
 " Theme
 " put colorscheme files in ~/.config//nvim/colors/
-colorscheme gruvbox
+colorscheme 256-jungle
 
 " NerdTree
 let NERDTreeShowHidden=1
@@ -39,7 +39,9 @@ map <C-n> :NERDTreeToggle<CR>
 let g:python_highlight_all = 1
 
 " Recompile Suckless Programs Automatically
+autocmd BufWritePost ~/suckless/dmenu/config.h !cd ~/suckless/dmenu/; doas make clean install 
 autocmd BufWritePost ~/suckless/dwm/config.h !cd ~/suckless/dwm/; doas make clean install 
+autocmd BufWritePost ~/suckless/st/config.h !cd ~/suckless/st/; doas make clean install 
 ":au! BufWritePost *config.h ! doas make clean install %
 
 " Set Leader Key
