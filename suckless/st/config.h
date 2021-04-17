@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
  // appearance
-static char *font = "UbuntuMono Nerd Font:pixelsize=20:antialias=true:autohint=true";
+static char *font = "ShureTechMono Nerd Font:style=Regular:pixelsize=20:antialias=true:autohint=true";
 static char *font2[] = {"Noto Color Emoji:style=Regular:size=20:antialias=true:autohint=true", };
 static int borderpx = 1;
 
