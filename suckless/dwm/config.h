@@ -40,10 +40,10 @@ static const Layout layouts[] = {
 	{"[]=",      tile },   
 	{"><>",      NULL },    
 	{"[M]",      monocle },
-	{ "|||",                tcl },
+	{"|||",      tcl },
 	{"HHH",	     grid },
 	{ NULL,	     NULL },
-};
+}
 
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
