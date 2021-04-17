@@ -5,7 +5,7 @@
 # Quickly start creating a new script.
 
 Directory=$(find "$HOME/.local/bin" -maxdepth 2 -type d \
-    | dmenu -l 30 -p 'New script?')
+    | dmenu -c -g 1 -l 50 -p 'New script?')
 [ -z "$Directory" ] && exit 1
 
 Name=$(printf '' | dmenu -p 'Name the script:')
