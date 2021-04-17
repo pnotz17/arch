@@ -9,7 +9,7 @@ static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on ri
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
 static const char unselbordercolor[]  = "#FF0035";	/* unfocused window border color*/
-static const char selbordercolor[]    = "#B3AFC2";	/* focused window border color*/
+static const char selbordercolor[]    = "#ACB7C2";	/* focused window border color*/
 static const unsigned int baralpha    = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const char *colors[][3] = {
@@ -90,7 +90,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   SHCMD("spacefm") },
 	{ MODKEY|ShiftMask,		XK_m,	   spawn,	   SHCMD("st -e mutt") },
 	{ MODKEY,			XK_p,	   spawn,          SHCMD("dmenu_run") },
-	{ MODKEY|ControlMask,		XK_p,      spawn,          SHCMD("passmenu") },
+	{ MODKEY|ControlMask,		XK_p,      spawn,          SHCMD("passmenu -c -l 50") },
 	{ MODKEY|ControlMask,           XK_s,	   spawn,          SHCMD("~/.local/bin/dmenu_create") },
 	{ MODKEY|ControlMask,		XK_d,      spawn, 	   SHCMD("~/.local/bin/dmenu_fm") },
 	{ MODKEY|ControlMask,		XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_edit") },
