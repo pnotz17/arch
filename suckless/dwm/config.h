@@ -95,6 +95,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,		XK_d,      spawn, 	   SHCMD("~/.local/bin/dmenu_fm") },
 	{ MODKEY|ControlMask,		XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_edit") },
 	{ MODKEY|ControlMask,		XK_c,      spawn, 	   SHCMD("~/.local/bin/dmenu_hex") },
+	{ MODKEY|ControlMask,	        XK_m,	   spawn,	   SHCMD("~/.local/bin/dmenu_mount") },
 	{ ControlMask,			XK_d,      spawn,          SHCMD("~/.local/bin/youtube_dl") },
 	{ ControlMask,			XK_p,      spawn,          SHCMD("~/.local/bin/youtube_dl_playlist") },
 	{ ControlMask,			XK_m,      spawn,          SHCMD("~/.local/bin/youtube_mpv") },
