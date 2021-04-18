@@ -30,9 +30,8 @@ static const Rule rules[] = {
 	{ "mpv",     NULL,       NULL,       0,            1,           -1 },
 };
 
-#include "layouts.c"
-#include "movestack.c"
 #include "tcl.c"
+#include "layouts.c"
 static const float mfact      = 0.50; 
 static const int nmaster      = 1;    
 static const int resizehints  = 0;    
@@ -43,7 +42,7 @@ static const Layout layouts[] = {
 	{"|||",      tcl },
 	{"HHH",	     grid },
 	{ NULL,	     NULL },
-}
+};
 
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
@@ -53,6 +52,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#include "movestack.c"
 
 static Key keys[] = {
 	{ MODKEY,                       XK_b,	   togglebar,	   {0} },
@@ -98,6 +98,7 @@ static Key keys[] = {
 	{ ControlMask,			XK_d,      spawn,          SHCMD("~/.local/bin/youtube_dl") },
 	{ ControlMask,			XK_p,      spawn,          SHCMD("~/.local/bin/youtube_dl_playlist") },
 	{ ControlMask,			XK_m,      spawn,          SHCMD("~/.local/bin/youtube_mpv") },
+	{ ControlMask,		        XK_x,	   spawn,	   SHCMD("~/.local/bin/dmenu_kill") },
 	{ ControlMask,		        XK_e,	   spawn,	   SHCMD("~/.local/bin/dmenu_emoji_2clip") },
 	{ MODKEY,	                XK_w,      spawn,          SHCMD("~/.local/bin/change_wall") },
 	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_exit") },
