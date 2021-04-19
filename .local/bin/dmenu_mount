@@ -6,7 +6,7 @@
 
     mountable=$(lsblk -lp | grep "part $" | awk '{print $1, "(" $4 ")"}')
     [[ "$mountable" = "" ]] && exit 1
-    chosen=$(echo "$mountable" | dmenu -c -g 1 -l 50 -p "Mount which drive?" | awk '{print $1}')
+    chosen=$(echo "$mountable" | dmenu -c -g 2 -l 50 -p "Mount which drive?" | awk '{print $1}')
     [[ "$chosen" = "" ]] && exit 1
 
     mountpoint="/mnt/${chosen#/*/}"

@@ -8,8 +8,8 @@ static const char normbgcolor[]       = "#080808";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
-static const char unselbordercolor[]  = "#FF0035";	/* unfocused window border color*/
-static const char selbordercolor[]    = "#ACB7C2";	/* focused window border color*/
+static const char unselbordercolor[]  = "#4682b4";	/* unfocused window border color*/
+static const char selbordercolor[]    = "#000000";	/* focused window border color*/
 static const unsigned int baralpha    = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const char *colors[][3] = {
@@ -27,12 +27,12 @@ static const char *tags[]   = { "01", "02", "03", "04", "05",};
 //static const char *tags[] = { "dev", "www", "code", "sys", "doc"};
 
 static const Rule rules[] = {
-	{ "mpv",     NULL,       NULL,       0,            1,           -1 },
+	{ "gimp",     NULL,       NULL,       0,            1,           -1 },
 };
 
 #include "tcl.c"
 #include "layouts.c"
-static const float mfact      = 0.50; 
+static const float mfact      = 0.55; 
 static const int nmaster      = 1;    
 static const int resizehints  = 0;    
 static const Layout layouts[] = {
@@ -100,7 +100,7 @@ static Key keys[] = {
 	{ ControlMask,			XK_p,      spawn,          SHCMD("~/.local/bin/youtube_dl_playlist") },
 	{ ControlMask,			XK_m,      spawn,          SHCMD("~/.local/bin/youtube_mpv") },
 	{ ControlMask,		        XK_x,	   spawn,	   SHCMD("~/.local/bin/dmenu_kill") },
-	{ ControlMask,		        XK_e,	   spawn,	   SHCMD("~/.local/bin/dmenu_emoji_2clip") },
+	{ ControlMask,		        XK_e,	   spawn,	   SHCMD("~/.local/bin/dmenu_emoji_selector") },
 	{ MODKEY,	                XK_w,      spawn,          SHCMD("~/.local/bin/change_wall") },
 	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_exit") },
 	{ MODKEY,			XK_c,      spawn,          SHCMD("~/.local/bin/dmenu_calculator") },
