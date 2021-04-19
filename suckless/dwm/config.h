@@ -105,7 +105,7 @@ static Key keys[] = {
 	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_exit") },
 	{ MODKEY,			XK_c,      spawn,          SHCMD("~/.local/bin/dmenu_calculator") },
 	{ MODKEY,                       XK_s,	   spawn,          SHCMD("~/.local/bin/dmenu_scratch") },
-	{ 0,                            XK_Print,  spawn,          SHCMD("~/.local/bin/scrot_screenshot") },
+	{ 0,                            XK_Print,  spawn,          SHCMD("~/.local/bin/dmenu_screenshot") },
 	{ 0,                            XK_F11,	   spawn,          SHCMD("amixer set Master Front 1-") },
 	{ 0,                            XK_F12,	   spawn,          SHCMD("amixer set Master Front 1+") },
 	TAGKEYS(                        XK_1,                      0)
