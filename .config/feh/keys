@@ -23,5 +23,4 @@ next_img n
 prev_img p
 
 # File deletion
-remove     d   Delete
-delete   C-x C-Delete
+delete   d
