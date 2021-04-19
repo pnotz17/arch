@@ -101,6 +101,7 @@ static Key keys[] = {
 	{ ControlMask,			XK_m,      spawn,          SHCMD("~/.local/bin/youtube_mpv") },
 	{ ControlMask,		        XK_x,	   spawn,	   SHCMD("~/.local/bin/dmenu_kill") },
 	{ ControlMask,		        XK_e,	   spawn,	   SHCMD("~/.local/bin/dmenu_emoji_selector") },
+	{ ControlMask,		        XK_u,	   spawn,	   SHCMD("~/.local/bin/dmenu_unicode_selector") },
 	{ MODKEY,	                XK_w,      spawn,          SHCMD("~/.local/bin/change_wall") },
 	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_exit") },
 	{ MODKEY,			XK_c,      spawn,          SHCMD("~/.local/bin/dmenu_calculator") },
