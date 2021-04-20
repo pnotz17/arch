@@ -1,7 +1,4 @@
    #!/usr/bin/env bash
-   #
-   # ~/bin/keyboard—In case of new keyboard, break gla...er...I mean...run this.
-   #
 
    (
      sleep 1

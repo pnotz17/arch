@@ -4,7 +4,7 @@
 pdf_dir="$HOME/documents/important/pdf"
 
 # get choice of pdf
-choice=$(ls $pdf_dir | dmenu -c -g 1 -l 50) || exit
+choice=$(ls $pdf_dir | dmenu -c -g 1 -l 50 -p "pdf to view") || exit
 
 # open pdf using zathura
 xdg-open "$pdf_dir/$choice"

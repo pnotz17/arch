@@ -1,5 +1,5 @@
     #!/bin/bash
-
+    # If no drives or media are inserted script wont execute so make sure you have inserted a device before running.
     # Gives a dmenu prompt to mount unmounted drives.
     # If they're in /etc/fstab, they'll be mounted automatically.
     # Otherwise, mount to /mnt/*, creating the directory if it doesn't exist.
