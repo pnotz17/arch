@@ -1,6 +1,6 @@
 static const char *fonts[]            ={"ShureTechMono Nerd Font:style=Regular:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
 static const unsigned int borderpx    = 2;		/* border pixel of windows */
-static const unsigned int gappx       = 21;		/* gaps between windows */
+static const unsigned int gappx       = 28;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
 static const int showbar	      = 1;		/* 0 means no bar */
 static const int topbar 	      = 1;		/* 0 means bottom bar */
@@ -90,8 +90,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   SHCMD("spacefm") },
 	{ MODKEY|ShiftMask,		XK_m,	   spawn,	   SHCMD("st -e mutt") },
 	{ MODKEY,			XK_p,	   spawn,          SHCMD("dmenu_run") },
-	{ MODKEY|ControlMask,		XK_p,      spawn,          SHCMD("passmenu -c -g 1 -l 50") },
-	{ MODKEY|ControlMask,           XK_s,	   spawn,          SHCMD("~/.local/bin/dmenu_create") },
+	{ MODKEY|ControlMask,		XK_p,      spawn,          SHCMD("~/.local/bin/dmenu_pass") },
+	{ MODKEY|ControlMask,           XK_s,	   spawn,          SHCMD("~/.local/bin/dmenu_touch") },
 	{ MODKEY|ControlMask,		XK_d,      spawn, 	   SHCMD("~/.local/bin/dmenu_fm") },
 	{ MODKEY|ControlMask,		XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_edit") },
 	{ MODKEY|ControlMask,		XK_c,      spawn, 	   SHCMD("~/.local/bin/dmenu_hex") },
@@ -108,6 +108,10 @@ static Key keys[] = {
 	{ MODKEY,			XK_c,      spawn,          SHCMD("~/.local/bin/dmenu_calculator") },
 	{ MODKEY,                       XK_s,	   spawn,          SHCMD("~/.local/bin/dmenu_scripts") },
 	{ 0,                            XK_Print,  spawn,          SHCMD("~/.local/bin/dmenu_screenshot") },
+	{ 0,                            XK_F7,	   spawn,          SHCMD("~/.local/bin/dmenu_cmd") },
+	{ 0,                            XK_F8,	   spawn,          SHCMD("~/.local/bin/st_cmd") },
+	{ 0,                            XK_F9,	   spawn,          SHCMD("~/.local/bin/dwm_cmd") },
+	{ 0,                            XK_F10,	   spawn,          SHCMD("amixer -q set Master toggle") },
 	{ 0,                            XK_F11,	   spawn,          SHCMD("amixer set Master Front 1-") },
 	{ 0,                            XK_F12,	   spawn,          SHCMD("amixer set Master Front 1+") },
 	TAGKEYS(                        XK_1,                      0)

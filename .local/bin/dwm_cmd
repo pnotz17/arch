@@ -1,5 +1,5 @@
 #!/bin/bash
 
 cd ~/suckless/dwm && doas make clean install | xclip -selection clipboard
-notify-send "Running sudo make clean install"
+notify-send "Executing sudo make clean install"
 
