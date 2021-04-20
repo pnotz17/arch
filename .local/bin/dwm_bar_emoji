@@ -59,6 +59,18 @@ alsa() {
 	fi
 }
 
+network() {
+	conntype=$(ip route | awk '/default/ { print substr($5,1,1) }')
+	if [ -z "$conntype" ]; then
+	echo "‼️"
+	elif [ "$conntype" = "e" ]; then
+	echo "✅"
+	elif [ "$conntype" = "w" ]; then
+	echo "📶"  
+	fi
+	printf "%s%s\n" "$icon"
+}
+
 upspeed() {
 	T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
 	sleep 1
