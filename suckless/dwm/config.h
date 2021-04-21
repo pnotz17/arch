@@ -103,6 +103,7 @@ static Key keys[] = {
 	{ ControlMask,		        XK_e,	   spawn,	   SHCMD("~/.local/bin/dmenu_emoji_selector") },
 	{ ControlMask,		        XK_u,	   spawn,	   SHCMD("~/.local/bin/dmenu_unicode_selector") },
 	{ ControlMask,		        XK_f,	   spawn,	   SHCMD("~/.local/bin/dmenu_pdf") },
+	{ ControlMask,		        XK_w,	   spawn,	   SHCMD("~/.local/bin/dmenu_feh") },
 	{ MODKEY,	                XK_w,      spawn,          SHCMD("~/.local/bin/change_wall") },
 	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_exit") },
 	{ MODKEY,			XK_c,      spawn,          SHCMD("~/.local/bin/dmenu_calculator") },
