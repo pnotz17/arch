@@ -107,7 +107,7 @@ static Key keys[] = {
 	{ ControlMask,		        XK_k,	   spawn,	   SHCMD("~/.local/bin/dmenu_klay") },
 	{ ControlMask,		        XK_t,	   spawn,	   SHCMD("~/.local/bin/picom_deploy") },
 	{ MODKEY,	                XK_w,      spawn,          SHCMD("~/.local/bin/change_wall") },
-	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_exit") },
+	{ MODKEY,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dmenu_emoji_exit") },
 	{ MODKEY,			XK_c,      spawn,          SHCMD("~/.local/bin/dmenu_calculator") },
 	{ MODKEY,                       XK_s,	   spawn,          SHCMD("~/.local/bin/dmenu_scripts") },
 	{ 0,                            XK_Print,  spawn,          SHCMD("~/.local/bin/dmenu_screenshot") },
