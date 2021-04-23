@@ -9,7 +9,6 @@ xrdb -merge $HOME/.Xdefaults
 ~/.local/bin/xsession_autoremover &
 ~/.fehbg &
 xclickroot -r ~/git/xmenu/xmenu.sh &
-picom -b &
 dunst &
 
 #dwm start loop

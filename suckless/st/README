@@ -1,4 +1,4 @@
-st - simple terminal patched with alpha font2 scrollback scrollback-mouse and scrollback-mouse-altscreen
+st - simple terminal patched with alpha  clipboard font2 scrollback scrollback-mouse and scrollback-mouse-altscreen
 --------------------
 st is a simple terminal emulator for X which sucks less.
 
