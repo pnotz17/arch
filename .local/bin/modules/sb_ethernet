@@ -1,6 +1,0 @@
-#!/bin/env sh
-device="enp*"
-ip="$(ip -4 addr show|grep "$device"|grep -oP '(?<=inet )\d*(\.\d*){3}')"
-if [ "$ip" != "" ]; then
-  echo " $ip"
-fi
