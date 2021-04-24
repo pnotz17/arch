@@ -38,7 +38,7 @@ vol() {
 
 ## Updates
 updates() {
-updates="$(~/.local/bin/pacupdate)"
+updates="$(~/.local/bin/modules/check_all_updates)"
 echo -e "pcm: $updates"
 }
 	
