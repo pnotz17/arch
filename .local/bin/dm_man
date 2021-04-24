@@ -1,0 +1,3 @@
+#!/bin/sh
+# Installk man-db
+man $(apropos --long "$1" | dmenu -c -l 10 -p "Search Manual" | awk '{print $2, $1}' | tr -d '()')

@@ -1,0 +1,14 @@
+    #!/bin/bash
+    # If no drives or media are inserted script wont execute so make sure you have inserted a device before running.
+    # Gives a dmenu prompt to mount unmounted drives.
+    # If they're in /etc/fstab, they'll be mounted automatically.
+    # Otherwise, mount to /mnt/*, creating the directory if it doesn't exist.
+
+    mountable=$(lsblk -lp | grep "part $" | awk '{print $1, "(" $4 ")"}')
+    [[ "$mountable" = "" ]] && exit 1
+    chosen=$(echo "$mountable" | dmenu -c -g 2 -l 50 -p "Mount which drive?" | awk '{print $1}')
+    [[ "$chosen" = "" ]] && exit 1
+
+    mountpoint="/mnt/${chosen#/*/}"
+    mkdir -p "$mountpoint"
+    sudo mount "$chosen" "$mountpoint"
