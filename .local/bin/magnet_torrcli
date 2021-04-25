@@ -1,0 +1,15 @@
+#!/bin/sh
+# requirements :
+#	- transmission-cli
+
+magnet=$(xclip -o -selection clipboard)
+[ -z "$magnet" ] && notify-send "transmission" "no link found, no torrent added" && exit 1
+transmission-remote -l > /dev/null 2>&1
+if [ "$?" != "0" ]; then 
+	transmission-daemon && notify-send "transmission" "daemon started" || ( notify-send "transmission" "can't start daemon"; exit 1)
+	sleep .1
+fi
+output=$(transmission-remote -a "$magnet") 
+exit_status="$?"
+notify-send "transmission" "$output"
+exit $exit_status
