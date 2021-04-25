@@ -1,4 +1,5 @@
 #!/bin/env sh
+
 device=wlp3s0
 ssid="$(iw dev $device info|grep -oP '(?<=ssid ).*')"
 if [ "$ssid" != "" ]; then
