@@ -2,6 +2,6 @@
 # copy command to xclip by pressing Return
 HISTFILE=~/.zsh/zhistory
 set -o history
-history | sort -nr | dmenu -c  -g 1 -p History: -l 15 -fn "System UI:size=11" | sed 's/^\s*[0-9]\+\s*//' | xclip -selection clipboard || exit 0
+history | sort -nr | dmenu -c  -g 1 -p History: -l 15 -fn "Ubuntu:size=13" | sed 's/^\s*[0-9]\+\s*//' | xclip -selection clipboard || exit 0
 
 
