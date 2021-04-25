@@ -1,5 +1,6 @@
 #!/bin/bash
-
 HISTFILE=~/.zsh/zhistory
 set -o history
-`history | sort -nr | dmenu "$@" | sed 's/^\s*[0-9]\+\s*//'`
+history | sort -nr | dmenu -c -g 1 -l 50 -p "Press Enter to Copy to Clipboard" "$@" | sed 's/^\s*[0-9]\+\s*//' | xclip -selection clipboard || exit 0
+
+
