@@ -1,4 +1,4 @@
-#  Basic stuff 
+#  Basics 
 autoload -U colors && colors
 autoload -U compinit  vcs_info 
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
@@ -53,7 +53,7 @@ ls --color=auto &> /dev/null && alias ls='ls --color=auto'
 # Aliases
 alias sudo='doas'
 alias v='doas nvim'
-alias sp='doas pcmanfm'
+alias ss='doas spacefm'
 alias ps='doas pacman -S'
 alias pss='doas pacman -Ss'
 alias yss='yay -Ss'
@@ -78,5 +78,7 @@ alias a='git add'
 alias c='git commit -m "changes in dotfiles"'
 alias p='git push'
 alias gc='git clone'
+alias x='sudo chmod +x *'
+
 
 
