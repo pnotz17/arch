@@ -18,14 +18,14 @@ check_fs_compactibility() {
 
 normal_mount() {
     [ -z $(lsblk -rpo "name,fstype,type,mountpoint" | grep 'part\|rom') ] && notify-send --urgency=normal "💽 Error No Drive found !" "check if the Drive is avariable" && exit
-    choice=$(lsblk -rpo "name,fstype,type,mountpoint" | grep 'part\|rom' | awk '$4==""{printf "%s (%s)\n",$1,$2}' | dmenu  -c -g 1 -l 50 -p 'Which Drive: ')
+    choice=$(lsblk -rpo "name,fstype,type,mountpoint" | grep 'part\|rom' | awk '$4==""{printf "%s (%s)\n",$1,$2}' | dmenu  -c -g 1 -p 'Which Drive: ')
     disk=$(echo $choice | sed "s/ .*$//")
     fs=$(echo $choice | awk '{ print $2 }' | sed "s/(//;s/)//")
     [ -z $disk ] && exit
     # Check for filesystem support
     check_fs_compactibility $fs
     [ $? == 1 ] && exit
-    point=$(echo -e "/media/usb/\n/mnt/disk\n$HOME/usb\n$HOME/disk" | dmenu -c -g 1 -l 50 -p 'Where to mount the Drive: ')
+    point=$(echo -e "/media/usb/\n/mnt/disk\n$HOME/usb\n$HOME/disk" | dmenu -c -g 1 -p 'Where to mount the Drive: ')
     [ -z $point ] && exit
     stat $point > /dev/null
     [ $? == 1 ] && sudo mkdir -p $point
@@ -39,10 +39,10 @@ encrypted_mount() {
     # Check for cryptsetup
     [ -z "$(sudo pacman -Qq cryptsetup 2>/dev/null)" ] && notify-send --urgency=normal "📦 Error, Missing a package !" "Missing cryptsetup package" && exit
     [ -z $(lsblk -rpo "fstype" | grep "crypto_LUKS") ] && notify-send --urgency=normal "🔒 Error No Encrypted Drive found !" "check if the Encrypted Drive is avariable" && exit
-    choice=$(lsblk -rpo "name,fstype,type,mountpoint" | grep 'crypto_LUKS' | awk '$4==""{printf "%s (%s)\n",$1,$2}' | dmenu -c -g 1 -l 50 -p 'Which Drive: ')
+    choice=$(lsblk -rpo "name,fstype,type,mountpoint" | grep 'crypto_LUKS' | awk '$4==""{printf "%s (%s)\n",$1,$2}' | dmenu -c -g 1 -p 'Which Drive: ')
     disk=$(echo $choice | sed "s/ .*$//")
     [ -z $disk ] && exit
-    point=$(echo -e "/media/cryptusb/\n/mnt/cryptdisk\n/media/usb/\n/mnt/disk\n$HOME/usb\n$HOME/disk\n$HOME/cryptusb\n$HOME/cryptdisk" | dmenu -i -p 'Where to mount the Drive: ')
+    point=$(echo -e "/media/cryptusb/\n/mnt/cryptdisk\n/media/usb/\n/mnt/disk\n$HOME/usb\n$HOME/disk\n$HOME/cryptusb\n$HOME/cryptdisk" | dmenu -p 'Where to mount the Drive: ')
     [ -z $point ] && exit
     label=$(echo $point | awk -F"/" '{ if ( $4 )  { print $4 }  else { print $3 } }')
     # Ask pass in a new terminal
@@ -69,7 +69,7 @@ phone_mount() {
     [ -z "$(simple-mtpfs -l 2>/dev/null)" ] && notify-send --urgency=normal "📱 Error No phone found !" "Check if your phone is connected correctly and allow access to it" && exit
     phone=$(echo -e "$(simple-mtpfs -l 2>/dev/null)" | dmenu -i -p 'Which Phone: ')
     [ -z "$phone" ] && exit
-    point=$(echo -e "$HOME/phone\n$HOME/cell" | dmenu -c -g 1 -l 50 -p 'Where to mount the Drive: ')
+    point=$(echo -e "$HOME/phone\n$HOME/cell" | dmenu -c -g 1 -p 'Where to mount the Drive: ')
     [ -z "$point" ] && exit
     stat $point > /dev/null
     [ $? == 1 ] && mkdir $point
@@ -80,7 +80,7 @@ phone_mount() {
     exit
 }
 
-kind=$(echo -e "💽 Normal\n🔒 Encrypted\n📱 Phone" | dmenu -c -g 1 -l 50 -p "Type of device to mount: ")
+kind=$(echo -e "💽 Normal\n🔒 Encrypted\n📱 Phone" | dmenu -c -g 1 -p "Type of device to mount: ")
 case "$kind" in
     "💽 Normal") normal_mount;;
     "🔒 Encrypted") encrypted_mount;;

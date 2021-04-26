@@ -3,10 +3,10 @@
 # Quickly start creating a new script.
 
 Directory=$(find "$HOME/.local/bin" -maxdepth 2 -type d \
-    | dmenu -c -g 1 -l 50 -p 'Save:')
+    | dmenu -c -g 1 -p 'Save:')
 [ -z "$Directory" ] && exit 1
 
-Name=$(printf '' | dmenu -c -g 1 -l 50 -p 'Name:')
+Name=$(printf '' | dmenu -c -g 1 -p 'Name:')
 [ -z "$Name" ] && exit 1
 
 Script="$Directory/$Name"

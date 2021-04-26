@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cmd=$(printf "Poweroff\nReboot\nSuspend\nLock\nKillX\n" | dmenu -c -l 5 -p "⏻ ")
+cmd=$(printf "Poweroff\nReboot\nSuspend\nLock\nKillX\n" | dmenu -c -g 1 -p "⏻ ")
 
 if [ -z "$cmd" ]; then
 	exit 0

@@ -1,3 +1,2 @@
-
 #!/bin/sh
-ps -ef | sed 1d | dmenu -c -g 1 -l 25 -p "Task Man" "$@" | awk '{print $2}' | xargs kill -${1:-9} ;
+ps -ef | sed 1d | dmenu -c -g 1 -p "Task Man" "$@" | awk '{print $2}' | xargs kill -${1:-9} ;

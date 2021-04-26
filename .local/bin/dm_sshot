@@ -1,6 +1,6 @@
     #!/bin/sh
 
-    method=$(printf "File\nClipboard\nBoth" | dmenu -c -g 1  -l 3 -p "Destination")
+    method=$(printf "File\nClipboard\nBoth" | dmenu -c -g 1 -p "Destination")
 
     if test $method = "File"; then
     	scrot -d2 ~/pictures/screenshots/%Y-%m-%d-%s_$wx$h.jpg

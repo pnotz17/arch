@@ -97,7 +97,7 @@ function gen_entries()
 }
 
 # Call menu
-SEL=$( gen_entries | dmenu -c -g 1 -l 50 -p Monitor "$@" | awk '{print $1}' )
+SEL=$( gen_entries | dmenu -c -g 1 -p Monitor "$@" | awk '{print $1}' )
 
 # Call xrandr
 $( ${COMMANDS[$SEL]} )

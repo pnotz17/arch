@@ -1,0 +1,36 @@
+#!/usr/bin/sh
+
+BROWSER="firefox"
+
+declare -a options=(
+"1-https://duckduckgo.com/"
+"2-https://www.qwant.com"
+"3-https://swisscows.com"
+"4-https://searx.prvcy.eu"
+"5-https://www.google.com"
+"6-https://mail.yahoo.com"
+"7-https://youtube.com"
+"8-https://facebook.com"
+"9-https://reddit.com"
+"10-https://www.magnetdl.com"
+"11-https://thepiratebay.zone"
+"12-https://katcr.to"
+"13-https://bitbucket.org/pnotz17/dotfiles/src/main/"
+"14-https://github.com/pnotz17/dotfiles pnotz17/dotfiles"
+"15-https://drive.google.com/drive/my-drive "
+"16-https://coveryourtracks.eff.org/learn"
+"quit"
+)
+
+choice=$(printf '%s\n' "${options[@]}" | dmenu -c -g 1 -p 'Bookmarks')
+
+
+if [[ "$choice" == quit ]]; then
+	echo "Program Terminated." && exit 1
+elif [ "$choice" ]; then
+	cfg=$(printf '%s\n' "${choice}" | awk '{print $NF}')
+	$BROWSER "$cfg"
+else
+	echo "Program Terminated." && exit 1
+fi
+

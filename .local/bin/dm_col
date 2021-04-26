@@ -22,6 +22,6 @@ colors[Cadet Blue]="#ACB7C2"
 colors[Orange]="#FF4900"
 colors[Purple]="#BD9CF9"
 
-selected="$(printf '%s\n' "${!colors[@]}" | dmenu -c -g 1 -l 50 -p "color:")"
+selected="$(printf '%s\n' "${!colors[@]}" | dmenu -c -g 1 -p "color:")"
 [ -z "${selected}" ] && exit
 echo "${colors["${selected}"]}" | xclip -r -selection clipboard
