@@ -8,6 +8,8 @@ check_fs_compactibility() {
         "ntfs") pkg="mtools";;
         "btrfs") pkg="btrfs-progs";;
         "xfs") pkg="xfsprogs";;
+                "ext4") pkg="linux";;
+
         *) return 0;;
     esac
     [ -z "$(sudo pacman -Qq $pkg 2>/dev/null)"] && notify-send --urgency=normal "📦 Error, Missing a package !" "Missing $pkg package to use $1" && return 1

@@ -1,5 +1,5 @@
 #!/bin/sh
-d=$(lsblk -lnp | grep -v "sda\|disk" | awk '{print $1, "("$4")", "mounted at "$7}')
+d=$(lsblk -lnp | grep -v "sda\|part" | awk '{print $1, "("$4")", "mounted at "$7}')
 c=$(echo "$d" | dmenu -c  -g 1 -p " Unmount"  | awk '{print $1}')
 [ -z "$c" ] && exit
 [ ! -e "$c" ] && notify-send -i usbred -t 5000 "Filesystem not found" "Where the fork is "$c"" && exit
