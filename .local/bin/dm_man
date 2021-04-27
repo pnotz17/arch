@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+readonly option="$( ( printf "RANDOM MANPAGE\n"; (man -k . | awk '{print $1}' ) | sort) | dmenu -l 10 -g 5 -p 'manpage:')"
+case $option in "RANDOM MANPAGE")
+	find /usr/share/man/man1 -type f | shuf | head -1 | sed -E 's#.*/(.*).gz#\1#' | xargs st -e /usr/bin/man -P "nvim -c 'set ft=man ts=8 nomod nolist noma'" "man";;*)
+st -e /usr/bin/man -P "nvim -c 'set ft=man ts=8 nomod nolist noma'" "$option";;
+esac

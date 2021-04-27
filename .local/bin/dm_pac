@@ -45,12 +45,12 @@ cleanUp(){
 }
 
 menu(){
-    operation=$(printf "install\nremove\nupdate\nremove orphan packages" | dmenu -c -g 1 -p "operation:") || exit
+    operation=$(printf "Install\nRemove\nUpdate\nRemove orphans" | dmenu -c -g 1 -p "operation:") || exit
     case $operation in
-        "install") install ;;
-        "remove") remove ;;
-        "update") update ;;
-        "remove orphan packages") cleanUp ;;
+        "Install") install ;;
+        "Remove") remove ;;
+        "Update") update ;;
+        "Remove orphans") cleanUp ;;
         *) echo "invalid operation" && exit ;;
     esac
 }
