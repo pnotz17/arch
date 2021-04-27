@@ -6,6 +6,7 @@
 # Contributors: Murtaza Udaipurwala
 #               HostGrady
 
+TERMINAL="st"
 packageList="$HOME/.cache/packageList"
 
 refresh(){
@@ -16,35 +17,35 @@ refresh(){
 }
 
 confirm(){
-    answer=$(printf "No\nYes" | dmenu -i -p "$1") || exit
+    answer=$(printf "No\nYes" | dmenu -c -g 1 -p "$1") || exit
     [ "$answer" = "No" ] && exit
 }
 
 install(){
     refresh
-    package=$(dmenu -i -l 30 -p "Package to install" < "$packageList") || exit
+    package=$(dmenu -c -g 1 -p "Package to install" < "$packageList") || exit
     confirm "Install this package?"
-    $TERMINAL -e sudo pacman -S --noconfirm $(echo "$package" | cut -d'=' -f1)
+    $TERMINAL -e doas pacman -S --noconfirm $(echo "$package" | cut -d'=' -f1)
 }
 
 remove(){
-    package=$(pacman -Qeq | dmenu -i -l 30 -p "Package to remove") || exit
+    package=$(pacman -Qeq | dmenu -c -g 1 -p "Package to remove") || exit
     confirm "Remove this package?"
-    $TERMINAL sudo pacman -Rns --noconfirm "$package"
+    $TERMINAL doas pacman -Rns --noconfirm "$package"
 }
 
 update(){
     confirm "Update the system?"
-    $TERMINAL -e sudo pacman -Syu --noconfirm
+    $TERMINAL -e doas pacman -Syu --noconfirm
 }
 
 cleanUp(){
     [ "$(pacman -Qdtq)" = "" ] && exit
-    $TERMINAL -e sudo pacman -Rns --noconfirm $(pacman -Qdtq)
+    $TERMINAL -e doas pacman -Rns --noconfirm $(pacman -Qdtq)
 }
 
 menu(){
-    operation=$(printf "install\nremove\nupdate\nremove orphan packages" | dmenu -c -g 1 -p "Select operation") || exit
+    operation=$(printf "install\nremove\nupdate\nremove orphan packages" | dmenu -c -g 1 -p "operation:") || exit
     case $operation in
         "install") install ;;
         "remove") remove ;;
