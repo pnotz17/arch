@@ -1,0 +1,23 @@
+#!/bin/sh
+
+list="\
+background:bgselect
+displayselect:displayselect
+installpkg:dmenupkg install -b
+man:manpage -b
+mpvclip:dmenuclip mpv -b
+quteclip:dmenuclip qutebrowser -b
+removepkg:dmenupkg remove -b
+scratch:st -e scratch
+surfclip:dmenuclip surf -b
+updatepkg:dmenupkg update -b
+weather:weath-st
+ytdlclip:dmenuclip ytdl -b"
+
+selection="$(echo "$list" |
+	grep -Eo '^[A-Za-z-]+' |
+	dmenu -p ":" -b $@)" || exit 1
+tosubstr="$(echo "$list" |
+	grep -F "$(echo "$selection" | grep -Eo "^\\S*"):")"
+
+sh -c "${tosubstr#*:}"

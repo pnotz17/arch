@@ -81,6 +81,8 @@ alias gc='git clone'
 alias x='sudo chmod +x *'
 alias gi=' grep -iE 'installed' /var/log/pacman.log'
 alias gu=' grep -iE 'upgraded' /var/log/pacman.log'
+alias laf='fc-list | grep "fonts"'
+alias lmf='fc-list | grep ".local"'
 
 
 
