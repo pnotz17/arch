@@ -79,6 +79,8 @@ alias c='git commit -m "changes in dotfiles"'
 alias p='git push'
 alias gc='git clone'
 alias x='sudo chmod +x *'
+alias gi=' grep -iE 'installed' /var/log/pacman.log'
+alias gu=' grep -iE 'upgraded' /var/log/pacman.log'
 
 
 
