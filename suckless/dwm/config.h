@@ -1,4 +1,4 @@
-static const char *fonts[]            ={"Monospace:size=12","EmojiOne:style=Regular:size=12:antialias=true:autohint=true",};
+static const char *fonts[]            ={"Monospace:size=11","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
 static const unsigned int borderpx    = 2;		/* border pixel of windows */
 static const unsigned int gappx       = 28;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
@@ -91,7 +91,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   SHCMD("spacefm") },
 	{ MODKEY|ShiftMask,		XK_m,	   spawn,	   SHCMD("st -e mutt") },
 	{ MODKEY|ShiftMask,		XK_d,	   spawn,	   SHCMD("~/.local/bin/dm_duck") },
-	{ MODKEY|ShiftMask,		XK_p,	   spawn,	   SHCMD("~/.local/bin/dm_pac") },
 	{ MODKEY|ControlMask,		XK_p,      spawn,          SHCMD("~/.local/bin/dm_pass") },
 	{ MODKEY|ControlMask,           XK_x,	   spawn,          SHCMD("~/.local/bin/dm_x") },
 	{ MODKEY|ControlMask,		XK_d,      spawn, 	   SHCMD("~/.local/bin/dm_fb") },
