@@ -115,6 +115,13 @@ static MouseShortcut mshortcuts[] = {
 	{ ShiftMask,		Button5, ttysend,		{.s = "\033[6;2~"} },
 	{ XK_ANY_MOD,		Button5, ttysend,		{.s = "\005"} },
 };
+static char *openurlcmd[] = { 
+  "/bin/sh",
+  "-c",
+  "~/.local/bin/link_grab",
+  "externalpipe",
+  NULL
+};
 
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod4Mask
@@ -132,13 +139,13 @@ static Shortcut shortcuts[] = {
 	{ ShiftMask,            XK_C,           clipcopy,       {.i =  0} },
 	{ ShiftMask,            XK_V,           clippaste,      {.i =  0} },
 	{ ShiftMask,            XK_Y,           selpaste,       {.i =  0} },
+	{ ShiftMask,            XK_E,           externalpipe,   {.v = openurlcmd } },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ TERMMOD,              XK_Up,          zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Down,        zoom,           {.f = -1} },
 	{ MODKEY,       	XK_Up,          kscrollup,      {.i =  1} },
 	{ MODKEY,       	XK_Down,        kscrolldown,    {.i =  1} },
-
 };
 /*
  * Special keys (change & recompile st.info accordingly)
