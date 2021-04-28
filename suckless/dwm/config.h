@@ -1,4 +1,4 @@
-static const char *fonts[]            ={"ShureTechMono Nerd Font:style=Regular:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
+static const char *fonts[]            ={"Monospace:size=12","EmojiOne:style=Regular:size=12:antialias=true:autohint=true",};
 static const unsigned int borderpx    = 2;		/* border pixel of windows */
 static const unsigned int gappx       = 28;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
@@ -103,6 +103,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,	        XK_t,	   spawn,	   SHCMD("~/.local/bin/dm_man") },
 	{ MODKEY|ControlMask,	        XK_s,	   spawn,	   SHCMD("~/.local/bin/dm_yt") },
 	{ MODKEY|ControlMask,	        XK_g,	   spawn,	   SHCMD("~/.local/bin/dm_gs") },
+	{ ControlMask,			XK_a,      spawn,          SHCMD("~/.local/bin/dm_app") },
 	{ ControlMask,			XK_d,      spawn,          SHCMD("~/.local/bin/yt_dl") },
 	{ ControlMask,			XK_l,      spawn,          SHCMD("~/.local/bin/yt_dl_pl") },
 	{ ControlMask,			XK_m,      spawn,          SHCMD("~/.local/bin/yt_mpv") },
