@@ -13,11 +13,11 @@ transmission:transmission-gtk
 alsa mixer:st -e alsamixer
 mpv:mpv
 customize Look & Feel:lxappearance
-htop:st -e htop
+htop:st -e htop"
 
 selection="$(echo "$list" |
 	grep -Eo '^[A-Za-z-]+' |
-	dmenu -p ":" -b $@)" || exit 1
+	dmenu -c -g 1 -p ":" -b $@)" || exit 1
 tosubstr="$(echo "$list" |
 	grep -F "$(echo "$selection" | grep -Eo "^\\S*"):")"
 
