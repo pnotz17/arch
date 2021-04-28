@@ -3,7 +3,7 @@ NF="#7D9734"
 NB="#000000" 
 SF="#000000" 
 SB="#DE5833" 
-prompt=" search"
+prompt="duck search"
 
 action=firefox
 index=`echo | dmenu -c -g 1 -nb ${NB} -nf ${NF} -sb ${SB} -sf ${SF} -p "${prompt}:" | sed s/\ /+/g`

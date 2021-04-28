@@ -1,6 +1,6 @@
 #!/bin/sh
 
-q=$(echo | dmenu -c -g 1 -p " Search:" -sb "#FFA500" -sf  "#000000")
+q=$(echo | dmenu -c -g 1 -p "google search:" -sb "#FFA500" -sf  "#000000")
 if [ ! -z "$q" ]
 then
 	firefox www.google.com/search?q="$q"

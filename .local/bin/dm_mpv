@@ -1,6 +1,6 @@
 #!/bin/bash
 link=$(xclip -selection clipboard -o)
-DMENU='dmenu -c  -g 1'
+DMENU='dmenu -c -g 1'
 
 chosen=$(echo -e "stream\nplaylist-stream\nplaylist-download\nvideo\naudio\nbdl\ngallery" | $DMENU -p "What action?")
 

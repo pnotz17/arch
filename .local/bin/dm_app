@@ -2,7 +2,7 @@
 
 list="\
 firefox:st
-Web browse:firefox
+browser:firefox
 feh:feh ~/pictures/wallpapers/*
 sxiv:sxiv -t  ~/pictures/wallpapers/*
 vim:st -e nvim
@@ -10,9 +10,9 @@ geany:geany
 gimp:gimp
 mutt:st -e mutt
 transmission:transmission-gtk
-alsa mixer:st -e alsamixer
+alsamixer:st -e alsamixer
 mpv:mpv
-customize Look & Feel:lxappearance
+lxappearance:lxappearance
 htop:st -e htop"
 
 selection="$(echo "$list" |

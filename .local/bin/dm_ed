@@ -20,7 +20,7 @@ declare -A options_clean
     [[ -f ${options["${i}"]} ]] && options_clean["${i}"]=${options["${i}"]}
   done
 
-choice=$(printf '%s\n' "${!options_clean[@]}" | sort | dmenu -c -g 1 -p 'Edit config:' "$@")
+choice=$(printf '%s\n' "${!options_clean[@]}" | sort | dmenu -c -g 1 -p 'Edit:' "$@")
 
 if [ "$choice" ]; then
   cfg=$(printf '%s\n' "${options_clean["${choice}"]}")
