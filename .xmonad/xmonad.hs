@@ -66,7 +66,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	spawn "dmenu_run")  					
 	-- launch pcmanfm
 	, ((modm .|. shiftMask, xK_f		), 
-	spawn "pcmanfm")    					
+	spawn "spacefm")    					
 	-- launch a web browser
 	, ((modm .|. shiftMask, xK_b		), 
 	spawn "firefox")    				
