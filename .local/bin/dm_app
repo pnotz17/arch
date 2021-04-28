@@ -1,18 +1,19 @@
 #!/bin/sh
 
 list="\
-background:bgselect
-displayselect:displayselect
-installpkg:dmenupkg install -b
-man:manpage -b
-mpvclip:dmenuclip mpv -b
-quteclip:dmenuclip qutebrowser -b
-removepkg:dmenupkg remove -b
-scratch:st -e scratch
-surfclip:dmenuclip surf -b
-updatepkg:dmenupkg update -b
-weather:weath-st
-ytdlclip:dmenuclip ytdl -b"
+firefox:st
+Web browse:firefox
+feh:feh ~/pictures/wallpapers/*
+sxiv:sxiv -t  ~/pictures/wallpapers/*
+vim:st -e nvim
+geany:geany
+gimp:gimp
+mutt:st -e mutt
+transmission:transmission-gtk
+alsa mixer:st -e alsamixer
+mpv:mpv
+customize Look & Feel:lxappearance
+htop:st -e htop
 
 selection="$(echo "$list" |
 	grep -Eo '^[A-Za-z-]+' |
