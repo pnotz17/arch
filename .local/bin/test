@@ -1,30 +1,32 @@
 #!/bin/sh
-# package manager wrapper
+# a dmenu script for different power options
 
-usage() {
-echo "usage: ${0##*/} [-a|-u|-d|-s|-i|-l] [arguments ...]" >&2
-exit 1
-}
+action=$(printf "Open in mpv\nShutdown\nReboot\nHibernate\nSuspend\nLock screen\nChange Theme" | dmenu)
 
-hascmd() {
-command -v "$1" >/dev/null 2>&1
-}
-
-[ -n "$1" ] && {
-flag=${1#-}
-shift
-}
- 
-if hascmd pacman; then 
-case "$flag" in
-i) doas pacman -S  "$@" ;;
-u) doas pacman -Syu  "$@" ;;
-r) doas pacman -Rns $(pacman -Qtdq) "$@" ;;
-s) doas pacman -Ss"$@" ;;
-l) doas pacman -Qqe ;;
-*) usage
+case $action in
+    "Open in mpv")
+        mpv "$(xclip -o -sel clip)"
+        ;;
+    "Change Theme")
+        sxiv -to "$HOME/pics/wallpaper"
+        ;;
+    "Shutdown")
+        systemctl poweroff
+        ;;
+    "Reboot")
+        systemctl reboot
+        ;;
+    "Suspend")
+        systemctl suspend
+        ;;
+    "Hibernate")
+        systemctl hibernate
+        ;;
+    "Lock screen")
+        betterlockscreen -l
+        ;;
+    *)
+        exit 1
+        ;;
 esac
- else
-echo "no supported package manager found" >&2
-exit 1
-fi
+

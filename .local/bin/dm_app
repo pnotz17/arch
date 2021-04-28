@@ -11,7 +11,7 @@ gimp:gimp
 mutt:st -e mutt
 transmission:transmission-gtk
 alsamixer:st -e alsamixer
-mpv:mpv
+mpv:mpv "$(xclip -o -sel clip)"
 lxappearance:lxappearance
 htop:st -e htop"
 
