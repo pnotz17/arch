@@ -115,6 +115,11 @@ static MouseShortcut mshortcuts[] = {
 	{ ShiftMask,		Button5, ttysend,		{.s = "\033[6;2~"} },
 	{ XK_ANY_MOD,		Button5, ttysend,		{.s = "\005"} },
 };
+
+/* Internal keyboard shortcuts. */
+#define MODKEY Mod4Mask
+#define TERMMOD (Mod4Mask|ShiftMask)
+
 static char *openurlcmd[] = { 
   "/bin/sh",
   "-c",
@@ -122,10 +127,6 @@ static char *openurlcmd[] = {
   "externalpipe",
   NULL
 };
-
-/* Internal keyboard shortcuts. */
-#define MODKEY Mod4Mask
-#define TERMMOD (Mod4Mask|ShiftMask)
 
 static Shortcut shortcuts[] = {
 	/* mask         keysym          function         argument */

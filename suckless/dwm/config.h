@@ -102,7 +102,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,	        XK_t,	   spawn,	   SHCMD("~/.local/bin/dm_man") },
 	{ MODKEY|ControlMask,	        XK_s,	   spawn,	   SHCMD("~/.local/bin/dm_yt") },
 	{ MODKEY|ControlMask,	        XK_g,	   spawn,	   SHCMD("~/.local/bin/dm_gs") },
-	{ MODKEY|ControlMask,	        XK_a,	   spawn,	   SHCMD("~/.local/bin/dm_allias") },
+	{ MODKEY|ControlMask,	        XK_a,	   spawn,	   SHCMD("~/.local/bin/dm_alias") },
 	{ ControlMask,			XK_a,      spawn,          SHCMD("~/.local/bin/dm_app") },
 	{ ControlMask,			XK_d,      spawn,          SHCMD("~/.local/bin/yt_dl") },
 	{ ControlMask,			XK_l,      spawn,          SHCMD("~/.local/bin/yt_dl_pl") },

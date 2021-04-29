@@ -6,8 +6,8 @@ File manager	spacefm
 Terminal 	st
 Web browser	firefox	
 Accessories
-	feh	feh ~/pictures/wallpapers/*
-	sxiv	sxiv -t  ~/pictures/wallpapers/*
+	feh	feh ~/media/wallpapers/*
+	sxiv	sxiv -t  ~/media/wallpapers/*
 	vim	st -e nvim
 Development
 	geany	geany

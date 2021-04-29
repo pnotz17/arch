@@ -1,7 +1,7 @@
 #!/bin/sh
 
 DMENU="dmenu -c -g 1"
-WALLPAPER_DIR="$HOME/pictures/wallpapers"
+WALLPAPER_DIR="$HOME/media/wallpapers"
 WALLPAPER=`ls $WALLPAPER_DIR \
 	| $DMENU -p "Pick a wallpaper:"`
 

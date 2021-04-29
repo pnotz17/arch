@@ -3,5 +3,5 @@
     method=$(printf "file\nclipboard\nboth" | dmenu -c -g 1 -p "capture:")
 
     if test $method = "File"; then
-    	scrot -d2 ~/pictures/screenshots/%Y-%m-%d-%s_$wx$h.jpg
+    	scrot -d2 ~/media/screenshots/%Y-%m-%d-%s_$wx$h.jpg
     fi
