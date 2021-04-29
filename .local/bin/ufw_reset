@@ -2,7 +2,7 @@
 
 sudo ufw --force disable \
 && sudo ufw --force reset \
-&& sudo ufw default deny incoming \
-&& sudo ufw default allow outgoing \
-&& sudo ufw allow transmission \
+&& sudo ufw default deny  \
+&& sudo ufw enable  \
+&& sudo systemctl enable ufw.service\
 && sudo ufw --force enable

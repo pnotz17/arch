@@ -1,4 +1,4 @@
-pacman -S autoconf autogen cmake automake intltool meson 
+sudo pacman -S autoconf autogen cmake automake intltool meson ninja tree-sitter
 git clone https://github.com/dreamer/scrot.git
 cd scrot 
 meson setup build
