@@ -1,0 +1,7 @@
+pacman -S autoconf autogen cmake automake intltool meson 
+git clone https://github.com/geany/geany.git
+cd geany 
+./autogen.sh
+ ./configure --disable-html-docs
+make
+sudo make install

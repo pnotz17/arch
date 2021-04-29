@@ -1,7 +1,0 @@
-/home/pnotz17/Transmission/build/third-party/miniupnpc/src/miniupnpc-build/CMakeFiles/install/strip.dir
-/home/pnotz17/Transmission/build/third-party/miniupnpc/src/miniupnpc-build/CMakeFiles/install.dir
-/home/pnotz17/Transmission/build/third-party/miniupnpc/src/miniupnpc-build/CMakeFiles/list_install_components.dir
-/home/pnotz17/Transmission/build/third-party/miniupnpc/src/miniupnpc-build/CMakeFiles/rebuild_cache.dir
-/home/pnotz17/Transmission/build/third-party/miniupnpc/src/miniupnpc-build/CMakeFiles/edit_cache.dir
-/home/pnotz17/Transmission/build/third-party/miniupnpc/src/miniupnpc-build/CMakeFiles/install/local.dir
-/home/pnotz17/Transmission/build/third-party/miniupnpc/src/miniupnpc-build/CMakeFiles/libminiupnpc-static.dir

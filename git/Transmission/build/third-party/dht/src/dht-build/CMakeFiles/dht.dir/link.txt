@@ -1,2 +1,0 @@
-/bin/ar qc libdht.a CMakeFiles/dht.dir/dht.c.o
-/bin/ranlib libdht.a

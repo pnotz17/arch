@@ -1,3 +1,0 @@
-/home/pnotz17/Transmission/build/third-party/natpmp/lib/libnatpmp.a
-/home/pnotz17/Transmission/build/third-party/natpmp/include/natpmp_declspec.h
-/home/pnotz17/Transmission/build/third-party/natpmp/include/natpmp.h

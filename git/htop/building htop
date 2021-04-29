@@ -1,0 +1,4 @@
+git clone https://github.com/htop-dev/htop.git
+./autogen.sh 
+./configure && make
+sudo make install

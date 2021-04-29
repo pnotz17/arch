@@ -1,0 +1,19 @@
+pacman -S autoconf autogen cmake automake intltool
+
+git clone https://github.com/transmission/transmission Transmission
+cd Transmission
+git submodule update --init
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+
+(updating)
+
+cd Transmission/build
+make clean
+git pull --rebase --prune
+git submodule update
+cmake ..
+sudo make install

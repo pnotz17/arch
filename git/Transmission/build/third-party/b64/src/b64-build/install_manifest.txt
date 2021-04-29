@@ -1,5 +1,0 @@
-/home/pnotz17/Transmission/build/third-party/b64/lib/libb64.a
-/home/pnotz17/Transmission/build/third-party/b64/include/b64/cencode.h
-/home/pnotz17/Transmission/build/third-party/b64/include/b64/encode.h
-/home/pnotz17/Transmission/build/third-party/b64/include/b64/decode.h
-/home/pnotz17/Transmission/build/third-party/b64/include/b64/cdecode.h

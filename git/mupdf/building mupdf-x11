@@ -1,0 +1,13 @@
+**NEEDS cmake and glu to build
+
+The latest development source is available directly from the git repository:
+
+git clone --recursive git://git.ghostscript.com/mupdf.git
+
+In the mupdf directory, update the third party libraries:
+
+git submodule update --init
+
+To install the viewer, command line tools, libraries, and header files on your system:
+
+sudo make prefix=/usr/local install

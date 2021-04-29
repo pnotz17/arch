@@ -1,0 +1,7 @@
+pacman -S autoconf autogen cmake automake intltool meson 
+git clone https://github.com/dreamer/scrot.git
+cd scrot 
+meson setup build
+ninja -C build
+sudo ninja -C build install
+ 

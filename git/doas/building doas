@@ -1,0 +1,4 @@
+git clone https://aur.archlinux.org/doas.git
+cd doas
+make 
+sudo make install
