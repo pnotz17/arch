@@ -1,7 +1,11 @@
-    #!/bin/sh
+#!/bin/bash
 
-    method=$(printf "file\nclipboard\nboth" | dmenu -c -g 1 -p "capture:")
+chosen=$(echo -e "Fullscreen\nSelect\nDelay\nCancel" | dmenu -c -g 1 -p "Scrot:" )
 
-    if test $method = "File"; then
-    	scrot -d2 ~/media/screenshots/%Y-%m-%d-%s_$wx$h.jpg
-    fi
+if [[ $chosen = "Fullscreen" ]]; then
+		scrot ~/media/screenshots/%b%d::%H%M%S.png
+elif [[ $chosen = "Select" ]]; then
+		scrot -s ~/media/screenshots/%b%d::%H%M%S.png
+elif [[ $chosen = "Delay" ]]; then
+		scrot -d 5 ~/media/screenshots/%b%d::%H%M%S.png
+fi
