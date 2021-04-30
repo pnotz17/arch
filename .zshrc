@@ -78,12 +78,15 @@ alias a='git add'
 alias c='git commit -m "changes in dotfiles"'
 alias p='git push'
 alias gc='git clone'
-alias x='sudo chmod +x *'
+alias x='doas chmod +x *'
 alias gi=' grep -iE 'installed' /var/log/pacman.log'
 alias gu=' grep -iE 'upgraded' /var/log/pacman.log'
 alias af='fc-list | grep "fonts"'
 alias mf='fc-list | grep ".local"'
-alias l='ln -s'
+alias l='doas ln -s'
+alias lu='ls -l /dev/disk/by-uuid'
 
 
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
