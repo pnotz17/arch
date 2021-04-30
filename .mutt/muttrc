@@ -40,13 +40,12 @@ unauto_view *
 auto_view text/html
 
 # Folder hooks
-# Name Users
 folder-hook 'USER@gmail.com' 'source ~/.mutt/a1'
 folder-hook 'USER@yahoo.com' 'source ~/.mutt/a2'
 folder-hook 'USER@yahoo.com' 'source ~/.mutt/a3'
 
 # Macros for switching accounts,index bound to space
-macro index,pager 'a1' '<sync-mailbox><enter-command>source ~/.mutt/a1<enter><change-folder>!<enter>'
-macro index,pager 'a2' '<sync-mailbox><enter-command>source ~/.mutt/a2<enter><change-folder>!<enter>'
-macro index,pager 'a3'  '<sync-mailbox><enter-command>source ~/.mutt/a3<enter><change-folder>!<enter>'
+macro index,pager '1' '<sync-mailbox><enter-command>source ~/.mutt/a1<enter><change-folder>!<enter>'
+macro index,pager '2' '<sync-mailbox><enter-command>source ~/.mutt/a2<enter><change-folder>!<enter>'
+macro index,pager '3'  '<sync-mailbox><enter-command>source ~/.mutt/a3<enter><change-folder>!<enter>'
 
