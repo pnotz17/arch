@@ -1,10 +1,10 @@
 unmailboxes *
 set imap_user = "USER@yahoo.com"
-set imap_pass = "PASS"
+set imap_pass = "PASSWD"
 set smtp_url = "smtps://USER@smtp.mail.yahoo.com:587"
-set smtp_pass = "PASS"
+set smtp_pass = "PASSWD"
 set from = "USER@yahoo.com"
-set realname = "YOURNAME"
+set realname = "NAME"
 set folder = "imaps://imap.mail.yahoo.com:993"
 set spoolfile = "+INBOX"
 set postponed = "+[Yahoo]/Drafts"
