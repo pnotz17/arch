@@ -54,7 +54,7 @@ while [ -z "$query" ]; do
     if [[ "$engine" == "quit" ]]; then
         echo "Program terminated." && exit 0
     else
-        query=$(echo "$engine" | dmenu -c -g 1 -p 'Enter search query:') || exit
+        query=$(echo "$engine" | dmenu -c -g 1 -p 'search query:') || exit
     fi
 done
 

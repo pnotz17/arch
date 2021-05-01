@@ -2,19 +2,19 @@
 link=$(xclip -selection clipboard -o)
 DMENU='dmenu -c -g 1'
 
-chosen=$(echo -e "play\naudio-dl\nvideo-dl" | $DMENU -p "mpv:")
+chosen=$(echo -e "Play\nPlaylist-audio-dl\nVideo-dl" | $DMENU -p "mpv:")
 
 case "$chosen" in
-	play)
+	Play)
 	mpv "$(xclip -o -sel clip)"
 	exit 1
 ;;
-	audio-dl)
-	youtube-dl --yes-playlist -x -o "~/downloads/%(title)s.%(ext)s"
+	Playlist-audio-dl)
+	xclip -o -sel clip | xargs youtube-dl --yes-playlist -x -o "~/downloads/%(title)s.%(ext)s"
 	exit 1
 ;;
-	video-dl)
-	youtube-dl --yes-playlist -i -o "~/downloads/%(title)s.%(ext)s"
+	Video-dl)
+	xclip -o -sel clip | xargs youtube-dl -o "~/downloads/%(title)s.%(ext)s"
 	exit 1
 ;;
 esac

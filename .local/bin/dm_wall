@@ -3,7 +3,7 @@
 DMENU="dmenu -c -g 1"
 WALLPAPER_DIR="$HOME/media/wallpapers"
 WALLPAPER=`ls $WALLPAPER_DIR \
-	| $DMENU -p "Pick a wallpaper:"`
+	| $DMENU -p "choose:"`
 
 FEH="feh --bg-fill"
 
