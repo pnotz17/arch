@@ -16,7 +16,7 @@ htop:st -e htop"
 
 selection="$(echo "$list" |
 	grep -Eo '^[A-Za-z-]+' |
-	dmenu -c -g 1 -p "open:"  $@)" || exit 1
+	dmenu -c -g 1 -p "Open:"  $@)" || exit 1
 tosubstr="$(echo "$list" |
 	grep -F "$(echo "$selection" | grep -Eo "^\\S*"):")"
 

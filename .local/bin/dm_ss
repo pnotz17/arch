@@ -1,6 +1,6 @@
 #!/bin/bash
 
-chosen=$(echo -e "Fullscreen\nSelected\nDelayed\nCancel" | dmenu -c -g 1 -p "scrot:" )
+chosen=$(echo -e "Fullscreen\nSelected\nDelayed\nCancel" | dmenu -c -g 1 -p "Scrot:" )
 
 if [[ $chosen = "Fullscreen" ]]; then
 		scrot ~/media/screenshots/%b%d::%H%M%S.png

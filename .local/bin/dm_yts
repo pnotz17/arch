@@ -1,5 +1,5 @@
 #!/bin/sh
-query=$(echo "" | dmenu -c -g 1 -p "youtube" | tr ' ' '+')
+query=$(echo "" | dmenu -c -g 1 -p "Youtube:" | tr ' ' '+')
 if [ "$query" ]; then
 	query=$(curl -s "https://www.youtube.com/results?search_query=""$query""&sp=EgIQAQ%253D%253D")
 	vid=$( echo "$query" | grep -Po '(/watch\?v=.{11})|(?<=title":{"runs":\[{"text":").+?(?="}\])' \

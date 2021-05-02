@@ -44,7 +44,7 @@ declare -a options=(
 
 # Picking a search engine.
 while [ -z "$engine" ]; do
-enginelist=$(printf '%s\n' "${options[@]}" | dmenu -nb blue -nf white -sb "dark blue" -sf yellow -c -g 1 -p '🌐 search:') || exit
+enginelist=$(printf '%s\n' "${options[@]}" | dmenu -nb black -nf white -sb "dark blue" -sf yellow -c -g 1 -p '🌐 Search:') || exit
 engineurl=$(echo "$enginelist" | awk '{print $NF}')
 engine=$(echo "$enginelist" | awk '{print $1}')
 done
@@ -54,7 +54,7 @@ while [ -z "$query" ]; do
     if [[ "$engine" == "quit" ]]; then
         echo "Program terminated." && exit 0
     else
-        query=$(echo "$engine" | dmenu -c -g 1 -p 'search query:') || exit
+        query=$(echo "$engine" | dmenu -c -g 1 -p 'Search query:') || exit
     fi
 done
 

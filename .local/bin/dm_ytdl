@@ -2,7 +2,7 @@
 link=$(xclip -selection clipboard -o)
 DMENU='dmenu -c -g 1'
 
-chosen=$(echo -e "Play\nPlaylist-audio-dl\nVideo-dl" | $DMENU -p "mpv:")
+chosen=$(echo -e "Play\nPlaylist-audio-dl\nVideo-dl" | $DMENU -p "Mpv:")
 
 case "$chosen" in
 	Play)
