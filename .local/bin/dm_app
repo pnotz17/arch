@@ -1,6 +1,9 @@
 #!/bin/sh
 
 list="\
+update:dm_pkg update -b
+install:dm_pkg  install -b
+remove:dm_pkg remove -b
 firefox:st
 browser:firefox
 feh:feh ~/pictures/wallpapers/*
