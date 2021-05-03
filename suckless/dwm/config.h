@@ -1,9 +1,9 @@
-static const char *fonts[]            ={"DaddyTimeMono Nerd Font:style=Book:size=11","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
+static const char *fonts[]            ={"FiraCode Nerd Font:style=Light,Regular:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
 static const unsigned int borderpx    = 2;		/* border pixel of windows */
-static const unsigned int gappx       = 21;		/* gaps between windows */
+static const unsigned int gappx       = 2;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
 static const int showbar	      = 1;		/* 0 means no bar */
-static const int topbar 	      = 1;		/* 0 means bottom bar */
+static const int topbar 	      = 0;		/* 0 means bottom bar */
 static const char normbgcolor[]       = "#080808";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/

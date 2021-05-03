@@ -1,8 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
  // appearance
-static char *font = " Hack Nerd Font:style=Regular:size=13:antialias=true:autohint=true";
-static char *font2[] = {"Noto Color Emoji:style=Regular:size=13:antialias=true:autohint=true", };
+static char *font = " FiraCode Nerd Font:style=Light,Regular:size=12:antialias=true:autohint=true";
+static char *font2[] = {"Noto Color Emoji:style=Regular:size=12:antialias=true:autohint=true", };
 static int borderpx = 1;
 
 // What program is execed by st depends of these precedence rules:
