@@ -1,15 +1,15 @@
-static const char *fonts[]            ={"FiraCode Nerd Font:style=Light,Regular:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
-static const unsigned int borderpx    = 2;		/* border pixel of windows */
+static const char *fonts[]            ={"FiraCode Nerd Font:style=Light:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
+static const unsigned int borderpx    = 1;		/* border pixel of windows */
 static const unsigned int gappx       = 2;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
 static const int showbar	      = 1;		/* 0 means no bar */
-static const int topbar 	      = 0;		/* 0 means bottom bar */
+static const int topbar 	      = 1;		/* 0 means bottom bar */
 static const char normbgcolor[]       = "#080808";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
-static const char unselbordercolor[]  = "#B3AFC2";	/* unfocused window border color*/
-static const char selbordercolor[]    = "#000000";	/* focused window border color*/
+static const char unselbordercolor[]  = "#FF0000";	/* unfocused window border color*/
+static const char selbordercolor[]    = "#4682b4";	/* focused window border color*/
 static const unsigned int baralpha    = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const char *colors[][3] = {
@@ -27,7 +27,7 @@ static const char *tags[]   = { "01", "02", "03", "04", "05",};
 //static const char *tags[] = { "dev", "www", "code", "sys", "doc"};
 
 static const Rule rules[] = {
-	{ "gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "mpv",     NULL,       NULL,       0,            1,           -1 },
 };
 
 #include "tcl.c"
