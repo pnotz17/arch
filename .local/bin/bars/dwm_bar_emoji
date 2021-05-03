@@ -17,7 +17,7 @@ pkgs() {
 }
 
 weather() {
-	weather=$(curl 'https://wttr.in/YOURCITY,YOURCOUNTRY?format=%t')
+	weather=$(curl 'https://wttr.in/YOIURCITY,YOURCOUNTRTY?format=%t')
 	echo "🌈 $weather"
 }
 
