@@ -4,7 +4,7 @@ autoload -U compinit  vcs_info
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 
 # Environment variables
-export TERM=st
+export TERM=st-256color
 export EDITOR=nvim
 export BROWSER=firefox
 export PATH=$HOME/.local/bin:$PATH
