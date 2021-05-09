@@ -105,7 +105,7 @@ downspeed() {
 }
 
 while true; do
-	xsetroot -name "|  $(updates)  |  $(mail)  |  $(disk1)  |  $(cpufrequency)  |  $(ram)  |  $(alsa)  |  $(upspeed)  |  $(downspeed)  |  $(clock)  |"
+	xsetroot -name "|  $(mail)  |  $(updates)  |  $(disk1)  |  $(cpufrequency)  |  $(ram)  |  $(alsa)  |  $(upspeed)  |  $(downspeed)  |  $(clock)  |"
 	sleep 2
 done &
 
