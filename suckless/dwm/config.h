@@ -1,6 +1,6 @@
 static const char *fonts[]            ={"FiraCode Nerd Font:style=Light:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
 static const unsigned int borderpx    = 1;		/* border pixel of windows */
-static const unsigned int gappx       = 2;		/* gaps between windows */
+static const unsigned int gappx       = 1;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
 static const int showbar	      = 1;		/* 0 means no bar */
 static const int topbar 	      = 1;		/* 0 means bottom bar */
@@ -8,8 +8,8 @@ static const char normbgcolor[]       = "#080808";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
-static const char unselbordercolor[]  = "#FF0000";	/* unfocused window border color*/
-static const char selbordercolor[]    = "#ACB7C2";	/* focused window border color*/
+static const char unselbordercolor[]  = "#B3AFC2";	/* unfocused window border color*/
+static const char selbordercolor[]    = "#FF0000";	/* focused window border color*/
 static const unsigned int baralpha    = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const unsigned int borderalpha = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const char *colors[][3] = {
@@ -88,28 +88,23 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_b,	   spawn,	   SHCMD("firefox") },
 	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   SHCMD("spacefm") },
 	{ MODKEY|ShiftMask,		XK_m,	   spawn,	   SHCMD("st -e mutt") },
-	{ MODKEY|ControlMask,		XK_a,      spawn,          SHCMD("~/.local/bin/dm_app") },
 	{ MODKEY|ControlMask,		XK_c,      spawn,          SHCMD("~/.local/bin/dm_calc") },
-	{ MODKEY|ControlMask,		XK_d,      spawn, 	   SHCMD("~/.local/bin/dm_fb") },
+	{ MODKEY|ControlMask,		XK_d,      spawn, 	   SHCMD("~/.local/bin/dm_fm") },
 	{ MODKEY|ControlMask,		XK_e,      spawn, 	   SHCMD("~/.local/bin/dm_ed")},
 	{ MODKEY|ControlMask,	        XK_m,	   spawn,	   SHCMD("~/.local/bin/dm_mnt") },
 	{ MODKEY|ControlMask,		XK_p,      spawn,          SHCMD("~/.local/bin/dm_pass") },
 	{ MODKEY|ControlMask,	        XK_u,	   spawn,	   SHCMD("~/.local/bin/dm_umnt") },
 	{ ControlMask,			XK_d,      spawn,          SHCMD("~/.local/bin/dm_ytdl") },
-	{ ControlMask,		        XK_e,	   spawn,	   SHCMD("~/.local/bin/dm_emoji") },
+	{ ControlMask,			XK_e,      spawn,          SHCMD("~/.local/bin/dm_uni") },
+	{ ControlMask,		        XK_w,      spawn,          SHCMD("~/.local/bin/ran_wall") },
+	{ ControlMask,		        XK_b,	   spawn,	   SHCMD("~/.local/bin/dm_book") },
+	{ ControlMask,		        XK_c,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
+	{ ControlMask,		        XK_x,      spawn, 	   SHCMD("~/.local/bin/dm_exit") },
+	{ ControlMask,	                XK_h,	   spawn,	   SHCMD("~/.local/bin/dm_hist") },
+	{ ControlMask,		        XK_t,	   spawn,	   SHCMD("~/.local/bin/picom_deploy") },
+	{ ControlMask,		        XK_y,	   spawn,	   SHCMD("~/.local/bin/dm_yts") },
 	{ ControlMask,		        XK_n,	   spawn,	   SHCMD("~/.local/bin/dm_nerd") },
-	{ MODKEY,		        XK_w,      spawn,          SHCMD("~/.local/bin/ran_wall") },
 	{ MODKEY,			XK_p,	   spawn,          SHCMD("~/.local/bin/dm_path") },
-	{ Mod1Mask,		        XK_b,	   spawn,	   SHCMD("~/.local/bin/dm_book") },
-	{ Mod1Mask,		        XK_c,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
-	{ Mod1Mask,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dm_power") },
-	{ Mod1Mask,	                XK_h,	   spawn,	   SHCMD("~/.local/bin/dm_hist") },
-	{ Mod1Mask,		        XK_m,	   spawn,	   SHCMD("~/.local/bin/dm_man") },
-	{ Mod1Mask,		        XK_p,	   spawn,	   SHCMD("~/.local/bin/dm_pdf") },
-	{ Mod1Mask,		        XK_t,	   spawn,	   SHCMD("~/.local/bin/picom_deploy") },
-	{ Mod1Mask,                     XK_s,	   spawn,          SHCMD("~/.local/bin/dm_bin") },
-	{ Mod1Mask,		        XK_w,	   spawn,	   SHCMD("~/.local/bin/dm_wall") },
-	{ Mod1Mask,		        XK_y,	   spawn,	   SHCMD("~/.local/bin/dm_yts") },
 	{ 0,                            XK_F7,	   spawn,          SHCMD("~/.local/bin/dm_cmd") },
 	{ 0,                            XK_F8,	   spawn,          SHCMD("~/.local/bin/st_cmd") },
 	{ 0,                            XK_F9,	   spawn,          SHCMD("~/.local/bin/dwm_cmd") },

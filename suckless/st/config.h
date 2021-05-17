@@ -1,12 +1,26 @@
 /* See LICENSE file for copyright and license details. */
 
- // appearance
-static char *font = " FiraCode Nerd Font:style=Light:size=12:antialias=true:autohint=true";
-static char *font2[] = {"Noto Color Emoji:style=Regular:size=12:antialias=true:autohint=true", };
-static int borderpx = 1;
+/*
+ * appearance
+ *
+ * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+ */
+static char *font = "monospace:pixelsize=20";
+static char *font2[] = {
+	"EmojiOne:pixelsize=16:antialias=true:autohint=true",
+};
 
-// What program is execed by st depends of these precedence rules:
-static char *shell = "/usr/bin/zsh";
+static int borderpx = 2;
+
+/*
+ * What program is execed by st depends of these precedence rules:
+ * 1: program passed with -e
+ * 2: scroll and/or utmp
+ * 3: SHELL environment variable
+ * 4: value of shell in /etc/passwd
+ * 5: value of shell in config.h
+ */
+static char *shell = "/bin/sh";
 char *utmp = NULL;
 /* scroll program: to enable use a string like "scroll" */
 char *scroll = NULL;
@@ -19,7 +33,11 @@ char *vtiden = "\033[?6c";
 static float cwscale = 1.0;
 static float chscale = 1.0;
 
- // word delimiter string
+/*
+ * word delimiter string
+ *
+ * More advanced example: L" `'\"()[]{}"
+ */
 wchar_t *worddelimiters = L" ";
 
 /* selection timeouts (in milliseconds) */
@@ -29,96 +47,154 @@ static unsigned int tripleclicktimeout = 600;
 /* alt screens */
 int allowaltscreen = 1;
 
-/* allow certain non-interactive (insecure) window operations such as setting the clipboard text */
+/* allow certain non-interactive (insecure) window operations such as:
+   setting the clipboard text */
 int allowwindowops = 0;
 
- // draw latency range in ms 
+/*
+ * draw latency range in ms - from new content/keypress/etc until drawing.
+ * within this range, st draws when content stops arriving (idle). mostly it's
+ * near minlatency, but it waits longer for slow updates to avoid partial draw.
+ * low minlatency will tear/flicker more, as it can "detect" idle too early.
+ */
 static double minlatency = 8;
 static double maxlatency = 33;
 
- // blinking timeout (set to 0 to disable blinking) for the terminal blinking
+/*
+ * blinking timeout (set to 0 to disable blinking) for the terminal blinking
+ * attribute.
+ */
 static unsigned int blinktimeout = 800;
 
- // thickness of underline and bar cursors
+/*
+ * thickness of underline and bar cursors
+ */
 static unsigned int cursorthickness = 2;
 
- // bell volume. It must be a value between -100 and 100. Use 0 for disabling it
+/*
+ * bell volume. It must be a value between -100 and 100. Use 0 for disabling
+ * it
+ */
 static int bellvolume = 0;
 
 /* default TERM value */
 char *termname = "st-256color";
 
- // spaces per tab
+/*
+ * spaces per tab
+ *
+ * When you are changing this value, don't forget to adapt the »it« value in
+ * the st.info and appropriately install the st.info in the environment where
+ * you use this st version.
+ *
+ *	it#$tabspaces,
+ *
+ * Secondly make sure your kernel is not expanding tabs. When running `stty
+ * -a` »tab0« should appear. You can tell the terminal to not expand tabs by
+ *  running following command:
+ *
+ *	stty tabs
+ */
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.96;
+float alpha = 0.90;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	"#282828", 	/* hard contrast: #1d2021 / soft contrast: #32302f */
-	"#cc241d",
-	"#98971a",
-	"#d79921",
-	"#458588",
-	"#b16286",
-	"#689d6a",
-	"#a89984",
-	"#928374",
-	"#fb4934",
-	"#b8bb26",
-	"#fabd2f",
-	"#83a598",
-	"#d3869b",
-	"#8ec07c",
-	"#ebdbb2",
+	/* 8 normal colors */
+	"black",
+	"red3",
+	"green3",
+	"yellow3",
+	"blue2",
+	"magenta3",
+	"cyan3",
+	"gray90",
+
+	/* 8 bright colors */
+	"gray50",
+	"red",
+	"green",
+	"yellow",
+	"#5c5cff",
+	"magenta",
+	"cyan",
+	"white",
+
 	[255] = 0,
+
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#add8e6", 	/* 256 -> cursor */
-	"#555555", 	/* 257 -> rev cursor*/
-	"#080808", 	/* 258 -> bg */
-	"#BBBBBB", 	/* 259 -> fg */
+	"#cccccc",
+	"#555555",
+	"black",
 };
 
- // Default colors (colorname index)foreground, background, cursor, reverse cursor
-unsigned int defaultfg = 259;
-unsigned int defaultbg = 258;
-unsigned int defaultcs = 256;
-unsigned int defaultrcs = 257;
 
- // Default shape of cursor
+/*
+ * Default colors (colorname index)
+ * foreground, background, cursor, reverse cursor
+ */
+unsigned int defaultfg = 7;
+unsigned int defaultbg = 258;
+static unsigned int defaultcs = 256;
+static unsigned int defaultrcs = 257;
+
+/*
+ * Default shape of cursor
+ * 2: Block ("█")
+ * 4: Underline ("_")
+ * 6: Bar ("|")
+ * 7: Snowman ("☃")
+ */
 static unsigned int cursorshape = 2;
 
- // Default columns and rows numbers
+/*
+ * Default columns and rows numbers
+ */
+
 static unsigned int cols = 80;
 static unsigned int rows = 24;
 
- // Default colour and shape of the mouse cursor
+/*
+ * Default colour and shape of the mouse cursor
+ */
 static unsigned int mouseshape = XC_xterm;
 static unsigned int mousefg = 7;
 static unsigned int mousebg = 0;
 
- // Color used to display font attributes when fontconfig selected a font which doesn't match the ones requested.
+/*
+ * Color used to display font attributes when fontconfig selected a font which
+ * doesn't match the ones requested.
+ */
 static unsigned int defaultattr = 11;
 
- // Force mouse select/shortcuts while mask is active (when MODE_MOUSE is set).
+/*
+ * Force mouse select/shortcuts while mask is active (when MODE_MOUSE is set).
+ * Note that if you want to use ShiftMask with selmasks, set this to an other
+ * modifier, set to 0 to not use it.
+ */
 static uint forcemousemod = ShiftMask;
 
- // Internal mouse shortcuts.
+/*
+ * Internal mouse shortcuts.
+ * Beware that overloading Button1 will disable the selection.
+ */
 static MouseShortcut mshortcuts[] = {
-	/* mask                 button   function        	argument       release */
-	{ XK_ANY_MOD,		Button4, kscrollup,		{.i = 1},      0, /* !alt */ -1 },
-	{ XK_ANY_MOD,		Button5, kscrolldown,		{.i = 1},      0, /* !alt */ -1 },
-	{ XK_ANY_MOD,		Button2, selpaste,		{.i = 0},      1 },
-	{ ShiftMask,		Button4, ttysend,		{.s = "\033[5;2~"} },
-	{ XK_ANY_MOD,		Button4, ttysend,		{.s = "\031"} },
-	{ ShiftMask,		Button5, ttysend,		{.s = "\033[6;2~"} },
-	{ XK_ANY_MOD,		Button5, ttysend,		{.s = "\005"} },
+	/* mask                 button   function        argument       release */
+	{ XK_ANY_MOD,           Button4, kscrollup,      {.i = 1},      0, /* !alt */ -1 },
+	{ XK_ANY_MOD,           Button5, kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
+	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
+	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
+	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
+	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
+	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
 };
 
+
 /* Internal keyboard shortcuts. */
-#define MODKEY Mod4Mask
-#define TERMMOD (Mod4Mask|ShiftMask)
+#define MODKEY Mod1Mask
+#define TERMMOD (Mod1Mask|ShiftMask)
 
 static char *openurlcmd[] = { 
   "/bin/sh",
@@ -129,7 +205,7 @@ static char *openurlcmd[] = {
 };
 
 static Shortcut shortcuts[] = {
-	/* mask         keysym          function         argument */
+	/* mask                 keysym          function        argument */
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
@@ -137,10 +213,9 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ ShiftMask,            XK_C,           clipcopy,       {.i =  0} },
-	{ ShiftMask,            XK_V,           clippaste,      {.i =  0} },
-	{ ShiftMask,            XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_E,           externalpipe,   {.v = openurlcmd } },
+	{ MODKEY,               XK_c,           clipcopy,       {.i =  0} },
+	{ MODKEY,               XK_v,           clippaste,      {.i =  0} },
+	{ MODKEY,               XK_p,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ TERMMOD,              XK_Up,          zoom,           {.f = +1} },
@@ -151,7 +226,11 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,               XK_Page_Down,   kscrolldown,    {.i = -1} },
 	{ MODKEY,               XK_Up,          kscrollup,      {.i =  1} },
 	{ MODKEY,               XK_Down,        kscrolldown,    {.i =  1} },
+	{ MODKEY,               XK_o,           externalpipe,   {.v = openurlcmd } },
 };
+
+
+
 /*
  * Special keys (change & recompile st.info accordingly)
  *

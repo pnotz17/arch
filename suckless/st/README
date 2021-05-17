@@ -1,6 +1,6 @@
-st - simple terminal patched with alpha clipboard externalpipipe externalpipe-eternal font2 scrollback scrollback-mouse scrollback-mouse-altscreen and emoji support
+st - simple terminal
 --------------------
-st is a simple terminal emulator for X which sucks less.
+st is a simple terminal emulator for X which sucks less patched with alpha clipboard external-pipe externalpipe-enternal font2 scrollback scrollback-mouse scrollback-mouse-altscreen
 
 
 Requirements
