@@ -1,6 +1,6 @@
 static const char *fonts[]            ={"FiraCode Nerd Font:style=Light:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
 static const unsigned int borderpx    = 1;		/* border pixel of windows */
-static const unsigned int gappx       = 1;		/* gaps between windows */
+static const unsigned int gappx       = 31;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
 static const int showbar	      = 1;		/* 0 means no bar */
 static const int topbar 	      = 1;		/* 0 means bottom bar */
@@ -76,7 +76,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,	   setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,	   setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-    	{ MODKEY,                       XK_comma,  focusmon, 	   {.i = -1 } },
+    { MODKEY,                       XK_comma,  focusmon, 	   {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
@@ -98,12 +98,12 @@ static Key keys[] = {
 	{ ControlMask,			XK_e,      spawn,          SHCMD("~/.local/bin/dm_uni") },
 	{ ControlMask,		        XK_w,      spawn,          SHCMD("~/.local/bin/ran_wall") },
 	{ ControlMask,		        XK_b,	   spawn,	   SHCMD("~/.local/bin/dm_book") },
-	{ ControlMask,		        XK_c,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
 	{ ControlMask,		        XK_x,      spawn, 	   SHCMD("~/.local/bin/dm_exit") },
 	{ ControlMask,	                XK_h,	   spawn,	   SHCMD("~/.local/bin/dm_hist") },
 	{ ControlMask,		        XK_t,	   spawn,	   SHCMD("~/.local/bin/picom_deploy") },
 	{ ControlMask,		        XK_y,	   spawn,	   SHCMD("~/.local/bin/dm_yts") },
 	{ ControlMask,		        XK_n,	   spawn,	   SHCMD("~/.local/bin/dm_nerd") },
+	{ Mod1Mask|ControlMask,		        XK_c,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
 	{ MODKEY,			XK_p,	   spawn,          SHCMD("~/.local/bin/dm_path") },
 	{ 0,                            XK_F7,	   spawn,          SHCMD("~/.local/bin/dm_cmd") },
 	{ 0,                            XK_F8,	   spawn,          SHCMD("~/.local/bin/st_cmd") },
