@@ -4,7 +4,7 @@ static const unsigned int gappx       = 31;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
 static const int showbar	      = 1;		/* 0 means no bar */
 static const int topbar 	      = 1;		/* 0 means bottom bar */
-static const char normbgcolor[]       = "#080808";	/* bar backround color */
+static const char normbgcolor[]       = "#000000";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
@@ -98,12 +98,12 @@ static Key keys[] = {
 	{ ControlMask,			XK_e,      spawn,          SHCMD("~/.local/bin/dm_uni") },
 	{ ControlMask,		        XK_w,      spawn,          SHCMD("~/.local/bin/ran_wall") },
 	{ ControlMask,		        XK_b,	   spawn,	   SHCMD("~/.local/bin/dm_book") },
-	{ ControlMask,		        XK_x,      spawn, 	   SHCMD("~/.local/bin/dm_exit") },
+	{ ControlMask,		        XK_e,      spawn, 	   SHCMD("~/.local/bin/dm_exit") },
 	{ ControlMask,	                XK_h,	   spawn,	   SHCMD("~/.local/bin/dm_hist") },
 	{ ControlMask,		        XK_t,	   spawn,	   SHCMD("~/.local/bin/picom_deploy") },
 	{ ControlMask,		        XK_y,	   spawn,	   SHCMD("~/.local/bin/dm_yts") },
 	{ ControlMask,		        XK_n,	   spawn,	   SHCMD("~/.local/bin/dm_nerd") },
-	{ MODKEY,			XK_c,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
+	{ ControlMask,			XK_k,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
 	{ MODKEY,			XK_p,	   spawn,          SHCMD("~/.local/bin/dm_path") },
 	{ 0,                            XK_F7,	   spawn,          SHCMD("~/.local/bin/dm_cmd") },
 	{ 0,                            XK_F8,	   spawn,          SHCMD("~/.local/bin/st_cmd") },
