@@ -16,7 +16,7 @@ SAVEHIST=10000
 
 # Prompt
 setopt prompt_subst
-PROMPT='%F{none}%n@%F{blue}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
+PROMPT='%F{none}%n@%F{red}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
 
 # Git settings
 git_branch_test_color() {
@@ -48,45 +48,51 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # ls - colors
 export CLICOLOR=1
-ls --color=auto &> /dev/null && alias ls='ls --color=auto'
+ls --color=auto &> /dev/null 
 
 # Aliases
-alias sudo='doas'
-alias v='doas nvim'
-alias ss='doas spacefm'
-alias ps='doas pacman -S'
-alias pss='doas pacman -Ss'
-alias yss='yay -Ss'
-alias ys='yay -S'
-alias un='unzip'
-alias ex='tar -xpvf'
-alias co='tar -zcvf'
-alias build='doas make clean install'
-alias up='doas pacman -Syu --noconfirm'
-alias rm='doas pacman -Rscnd'
-alias sc='doas rm -rf ~/.cache/*'
-alias pc='doas pacman -Scc --noconfirm'
-alias yc='yay -Scc --noconfirm'
-alias jc='doas journalctl --rotate --vacuum-time=1s'
-alias list='doas pacman -Qqe > pkglist.txt'
-alias pkg='pacman -Q  |  wc -l'
-alias ro='doas pacman -Rns $(pacman -Qtdq)'
+alias pw='bash -c '"'"'echo `tr -dc $([ $# -gt 1 ] && echo $2 || echo "A-Za-z0-9") < /dev/urandom | head -c $([ $# -gt 0 ] && echo $1 || echo 30)`'"'"' --'
 alias sm=' doas reflector --verbose --country Greece --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist'
-alias u='git add -u'
-alias s='git status'
-alias a='git add'
-alias c='git commit -m "changes in dotfiles"'
-alias p='git push'
-alias gc='git clone'
-alias x='doas chmod +x *'
+alias jc='doas journalctl --rotate --vacuum-time=1s'
 alias gi=' grep -iE 'installed' /var/log/pacman.log'
 alias gu=' grep -iE 'upgraded' /var/log/pacman.log'
-alias af='fc-list | grep "fonts"'
+alias c='git commit -m "changes in dotfiles"'
+alias ro='doas pacman -Rns $(pacman -Qtdq)'
+alias list='doas pacman -Qqe > pkglist.txt'
+alias up='doas pacman -Syu --noconfirm'
+alias pc='doas pacman -Scc --noconfirm'
+alias build='doas make clean install'
 alias mf='fc-list | grep ".local"'
-alias l='doas ln -s'
 alias lu='ls -l /dev/disk/by-uuid'
+alias sc='doas rm -rf ~/.cache/*'
+alias af='fc-list | grep "fonts"'
+alias pkg='pacman -Q  |  wc -l'
+alias yc='yay -Scc --noconfirm'
+alias rm='doas pacman -Rscnd'
+alias r='doas chmod -R 777'
+alias pss='doas pacman -Ss'
+alias ls='ls --color=auto'
+alias x='doas chmod +x *'
+alias ps='doas pacman -S'
+alias ss='doas spacefm'
+alias sg='doas geany'
+alias t='doas touch'
+alias l='doas ln -s'
+alias ex='tar -xpvf'
+alias co='tar -zcvf'
+alias u='git add -u'
+alias s='git status'
+alias gc='git clone'
+alias v='doas nvim'
+alias yss='yay -Ss'
+alias p='git push'
+alias a='git add'
+alias sudo='doas'
+alias ys='yay -S'
+alias un='unzip'
 
 
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
