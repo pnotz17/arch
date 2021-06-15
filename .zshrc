@@ -69,9 +69,11 @@ alias af='fc-list | grep "fonts"'
 alias pkg='pacman -Q  |  wc -l'
 alias yc='yay -Scc --noconfirm'
 alias rm='doas pacman -Rscnd'
+alias poweroff='doas poweroff'
 alias r='doas chmod -R 777'
 alias pss='doas pacman -Ss'
 alias ls='ls --color=auto'
+alias reboot='doas reboot'
 alias x='doas chmod +x *'
 alias ps='doas pacman -S'
 alias ss='doas spacefm'
@@ -87,10 +89,9 @@ alias v='doas nvim'
 alias yss='yay -Ss'
 alias p='git push'
 alias a='git add'
-alias sudo='doas'
 alias ys='yay -S'
 alias un='unzip'
-
+alias d='doas'
 
 
 

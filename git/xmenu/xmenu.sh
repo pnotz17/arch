@@ -29,8 +29,8 @@ Kill	xkill
 
 Leave
 	Exit		pkill -KILL -u pnotz17
-	Reboot			reboot
-	Shutdown		poweroff
+	Reboot			doas reboot
+	Shutdown		doas poweroff
 EOF
 
 
