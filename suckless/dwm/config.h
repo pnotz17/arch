@@ -1,9 +1,9 @@
-static const char *fonts[]            ={"FiraCode Nerd Font:style=Light:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
 static const unsigned int borderpx    = 1;		/* border pixel of windows */
 static const unsigned int gappx       = 31;		/* gaps between windows */
 static const unsigned int snap 	      = 32;		/* snap pixel */
 static const int showbar	      = 1;		/* 0 means no bar */
 static const int topbar 	      = 1;		/* 0 means bottom bar */
+static const char *fonts[]            ={"FiraCode Nerd Font:style=Light:size=11","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
 static const char normbgcolor[]       = "#000000";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/
@@ -32,16 +32,25 @@ static const Rule rules[] = {
 
 #include "tcl.c"
 #include "layouts.c"
-static const float mfact      = 0.55; 
+#include "fibonacci.c"
+#include "horizgrid.c"
+static const float mfact      = 0.50; 
 static const int nmaster      = 1;    
 static const int resizehints  = 0;    
 static const Layout layouts[] = {
 	{"[]=",      tile },   
 	{"><>",      NULL },    
 	{"[M]",      monocle },
-	{"|||",      tcl },
 	{"HHH",	     grid },
-	{ NULL,	     NULL },
+	{"###",      horizgrid },
+	{"TTT",      bstack },
+	{"===",      bstackhoriz },
+ 	{"[@]",      spiral },
+ 	{"[\\]",     dwindle },
+ 	{"|||",      col },
+ 	{"|||",      tcl },
+ 	{ "|M|",      centeredmaster },
+	{ ">M>",      centeredfloatingmaster },
 };
 
 #define MODKEY Mod4Mask
@@ -65,6 +74,15 @@ static Key keys[] = {
 	{ Mod1Mask|ControlMask,	        XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ Mod1Mask|ControlMask,	        XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ Mod1Mask|ControlMask,	        XK_g,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY|ShiftMask,	        XK_g,      setlayout,      {.v = &layouts[4]} },
+	{ Mod1Mask|ControlMask,         XK_u,      setlayout,      {.v = &layouts[5]} },
+	{ Mod1Mask|ControlMask,         XK_o,      setlayout,      {.v = &layouts[6]} },
+	{ Mod1Mask|ControlMask,         XK_r,      setlayout,      {.v = &layouts[7]} },
+	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[8]} },
+	{ Mod1Mask|ControlMask,         XK_c,      setlayout,      {.v = &layouts[9]} },
+	{ Mod1Mask|ControlMask,         XK_t,      setlayout,      {.v = &layouts[9]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[10]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY|ShiftMask,		XK_c,	   killclient,     {0} },
 	{ MODKEY|ShiftMask,      	XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,      	XK_0,      tag,            {.ui = ~0 } },
@@ -76,7 +94,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,	   setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,	   setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-    { MODKEY,                       XK_comma,  focusmon, 	   {.i = -1 } },
+    	{ MODKEY,                       XK_comma,  focusmon, 	   {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
