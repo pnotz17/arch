@@ -1,5 +1,6 @@
 alsa-utils
 archlinux-keyring
+artix-archlinux-support
 autoconf
 automake
 base
@@ -52,6 +53,7 @@ pass
 patch
 picom
 pkgconf
+reflector
 rsync
 scrot
 sed
