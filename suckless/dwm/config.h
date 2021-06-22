@@ -1,4 +1,4 @@
-static const char *fonts[]            ={"FiraCode Nerd Font:style=Light:size=11","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
+static const char *fonts[]            ={"Monospace:size=11","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
 static const char normbgcolor[]       = "#000000";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/
