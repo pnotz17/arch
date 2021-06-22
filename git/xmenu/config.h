@@ -1,4 +1,4 @@
-static struct Config config = {.font = "Ubuntu Nerd Font:style=Book:size=7",
+static struct Config config = {.font = "System UI:size=9",
 
 #
 /* colors */
