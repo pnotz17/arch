@@ -66,6 +66,7 @@ unzip
 wget
 which
 xclip
+xdotool
 xf86-video-intel
 xorg-server
 xorg-xinit
