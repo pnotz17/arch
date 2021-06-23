@@ -1,5 +1,5 @@
 Config { 
-font   = "xft: mononoki Nerd Font:style=Regular:pixelsize=13:antialias=true:hinting=true", additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
+font = "xft: mononoki Nerd Font:style=Regular:pixelsize=13:antialias=true:hinting=true", additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
 bgColor = "#080808"
 , fgColor = "#b3afc2"     
 , alpha = 200
@@ -10,20 +10,19 @@ bgColor = "#080808"
 , persistent = True
 , iconRoot = ".xmonad/xpm/"  -- default: "."
 , commands = [ 
-Run UnsafeStdinReader
-, Run Com ".local/bin//modules/sb_gmail" [] "count" 36000
-, Run Com ".local/bin/modules/sb_updates" [] "pacupdate" 36000
-, Run Com ".local/bin/modules/sb_temp" [] "temp" 2
-, Run Cpu ["-t", "<total>%","-H","70","--high","red"] 20
-, Run Memory ["-t", "<usedratio>%"] 20
-, Run Com ".local/bin//modules/sb_vol" [] "vol" 2
-, Run Com ".local/bin//modules/sb_up" [] "up" 20																
-, Run Com ".local/bin/modules/sb_do" [] "down" 20
-, Run Date "%m-%d-%y %H:%M" "date" 50
-]
+		Run UnsafeStdinReader
+		, Run Com ".local/bin//modules/sb_gmail" [] "count" 36000
+		, Run Com ".local/bin/modules/sb_updates" [] "pacupdate" 36000
+		, Run Com ".local/bin/modules/sb_temp" [] "temp" 2
+		, Run Cpu ["-t", "<total>%","-H","70","--high","red"] 20
+		, Run Memory ["-t", "<usedratio>%"] 20
+		, Run Com ".local/bin//modules/sb_vol" [] "vol" 2
+		, Run Com ".local/bin/modules/sb_do" [] "down" 20
+		, Run Date "%m-%d-%y %H:%M" "date" 50
+		]
 , sepChar = "%"
 , alignSep = "}{"
-, template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{<fc=#b3afc2> | </fc><fc=#b3afc2> PACMAN: %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> MAIL: %count% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> CPU: %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> RAM: %memory% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> VOL: %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> UP: %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> DOWN: %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %date% </fc><fc=#b3afc2> | </fc>"
+, template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{<fc=#b3afc2> | </fc><fc=#b3afc2> PAC: %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> MAIL: %count% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> CPU: %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> RAM: %memory% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> VOL: %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> UP: %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> DOWN: %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %date% </fc><fc=#b3afc2> | </fc>"
 }
 
 
