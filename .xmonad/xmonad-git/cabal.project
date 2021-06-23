@@ -1,7 +1,0 @@
--- cabal.project
-
-packages:
-  xmonad.cabal
-
-package xmonad
-  flags: +generatemanpage

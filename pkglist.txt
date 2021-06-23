@@ -65,6 +65,7 @@ ufw
 unzip
 wget
 which
+xclip
 xf86-video-intel
 xorg-server
 xorg-xinit
@@ -74,4 +75,5 @@ xorg-xset
 xorg-xsetroot
 xsane-gimp
 yay
+youtube-dl
 zsh
