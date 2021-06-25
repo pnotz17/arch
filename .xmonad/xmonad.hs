@@ -47,9 +47,9 @@ myLayout = avoidStruts $ smartBorders (  sGrid ||| sSpiral ||| sCircle ||| sTall
   sSpiral = renamed [Replace "Spiral"] $ spacing 10 $ spiral (toRational (2/(1+sqrt(5)::Double)))
 
 myStartupHook = do
-    setDefaultCursor xC_left_ptr
-    spawnOnce "picom -b &"
-    setWMName "LG3D"
+  setDefaultCursor xC_left_ptr
+  spawnOnce "picom -b &"
+  setWMName "LG3D"
 
 myManageHook = composeAll
   [ className =? "mpv" --> doFloat]
@@ -210,27 +210,27 @@ main = do
   xmproc <- spawnPipe ("$HOME/.local/bin/xmobar ")
   xmonad $ defaults {
   logHook = fadeInactiveLogHook 0.8 <+> dynamicLogWithPP xmobarPP 
-    { ppOutput = hPutStrLn xmproc
-    , ppCurrent = xmobarColor "#b3afc2" "" . wrap "[" "]"
-    , ppVisible = xmobarColor "#b3afc2" ""
-    , ppHidden = xmobarColor "#b3afc2" "" . wrap "*" ""
-    , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  
-    , ppTitle = xmobarColor "#b3afc2" "" . shorten 60        
-    , ppSep = " | "}
+  { ppOutput = hPutStrLn xmproc
+  , ppCurrent = xmobarColor "#b3afc2" "" . wrap "[" "]"
+  , ppVisible = xmobarColor "#b3afc2" ""
+  , ppHidden = xmobarColor "#b3afc2" "" . wrap "*" ""
+  , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  
+  , ppTitle = xmobarColor "#b3afc2" "" . shorten 60        
+  , ppSep = " | "}
 }
 
 defaults = defaultConfig {
-    terminal           = myTerminal,
-    focusFollowsMouse  = myFocusFollowsMouse,
-    borderWidth        = myBorderWidth,
-    modMask            = myModMask,
-    workspaces         = myWorkspaces,
-    normalBorderColor  = myNormalBorderColor,
-    focusedBorderColor = myFocusedBorderColor,
-    keys               = myKeys,
-    mouseBindings      = myMouseBindings,
-    layoutHook         = myLayout,
-    manageHook         = manageDocks <+> myManageHook,
-    handleEventHook    = docksEventHook,
-    startupHook        = myStartupHook
+  terminal           = myTerminal,
+  focusFollowsMouse  = myFocusFollowsMouse,
+  borderWidth        = myBorderWidth,
+  modMask            = myModMask,
+  workspaces         = myWorkspaces,
+  normalBorderColor  = myNormalBorderColor,
+  focusedBorderColor = myFocusedBorderColor,
+  keys               = myKeys,
+  mouseBindings      = myMouseBindings,
+  layoutHook         = myLayout,
+  manageHook         = manageDocks <+> myManageHook,
+  handleEventHook    = docksEventHook,
+  startupHook        = myStartupHook
 }
