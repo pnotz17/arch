@@ -1,19 +1,23 @@
 import XMonad
 import System.IO
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.SpawnOnce
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
-import XMonad.Util.Run(spawnPipe)
+import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Util.Cursor
 import XMonad.Hooks.FadeInactive
-import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
 import XMonad.Layout.Spacing
-import XMonad.Util.SpawnOnce
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Grid
 import XMonad.Layout.Spiral
 import XMonad.Layout.Circle
-import XMonad.Layout.Grid
+import XMonad.Layout.Tabbed (simpleTabbed)
+import XMonad.Layout.MultiColumns (multiCol)
+import XMonad.Layout.ThreeColumns (ThreeCol (ThreeCol, ThreeColMid))
+import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -35,24 +39,28 @@ myNormalBorderColor  = "#b3afc2"
 myFocusedBorderColor = "#b3afc2"
 
 myWorkspaces = clickable $ [" 01 ", " 02 ", " 03 ", " 04 ", " 05 ", " 06 ", " 07 ", " 08 ", " 09 "]
-  where
-  clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l,let n = i ]
+ where
+ clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |(i,ws) <- zip [1..9] l,let n = i ]
 	
-myLayout = avoidStruts $ smartBorders (  sTall ||| Mirror sTall ||| sSpiral ||| sGrid ||| sCircle ||| Full )
-  where 
-  sTall = renamed [Replace "Tall"] $ spacing 10 $ Tall 1 (1/2) (1/2)
-  sGrid = renamed [Replace "Grid"] $ spacing 10 $ Grid
-  sCircle = renamed [Replace "Circle"] $ spacing 10 $ Circle
-  sSpiral = renamed [Replace "Spiral"] $ spacing 10 $ spiral (toRational (2/(1+sqrt(5)::Double)))
+myLayout = renamed [CutWordsLeft 1] $ spacing 11 $ avoidStruts $ smartBorders(
+  Tall 1 (3/100) (1/2) |||
+  Mirror (Tall 1 (3/100) (1/2)) |||
+  ThreeColMid 1 (3/100) (1/2) |||
+  Grid |||
+  spiral (6/7)) |||
+  multiCol [1] 1 0.01 (-0.5) |||
+  simpleTabbed |||
+  Circle |||
+  noBorders (fullscreenFull Full)
 
+myManageHook = composeAll
+  [ className =? "mpv" --> doFloat] 
+  
 myStartupHook = do
   setDefaultCursor xC_left_ptr
   spawnOnce "picom -b &"
   setWMName "LG3D"
-
-myManageHook = composeAll
-  [ className =? "mpv" --> doFloat]
-         
+    
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Start a terminal.  Terminal to start is specified by myTerminal variable.
   [ ((modMask .|. shiftMask, xK_Return),
@@ -195,7 +203,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-  [   ((modMask, button1),
+  [   
+      ((modMask, button1),
        (\w -> focus w >> mouseMoveWindow w))
 
     , ((modMask, button2),
@@ -204,7 +213,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, button3),
        (\w -> focus w >> mouseResizeWindow w))
   ]
-
+      
 main = do
   xmproc <- spawnPipe ("$HOME/.local/bin/xmobar ")
   xmonad $ defaults {
