@@ -7,7 +7,7 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Layout.NoBorders
 import XMonad.Util.Cursor
 import XMonad.Hooks.FadeInactive
-import XMonad.Layout.Renamed (renamed, Rename(Replace))
+import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
 import XMonad.Layout.Spacing
 import XMonad.Util.SpawnOnce
 import XMonad.Layout.ResizableTile
@@ -38,8 +38,7 @@ myWorkspaces = clickable $ [" 01 ", " 02 ", " 03 ", " 04 ", " 05 ", " 06 ", " 07
   where
   clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l,let n = i ]
 	
-myLayout = avoidStruts $ smartBorders (  sGrid ||| sSpiral ||| sCircle ||| sTall ||| Mirror sTall ||| Full )
-  
+myLayout = avoidStruts $ smartBorders (  sTall ||| Mirror sTall ||| sSpiral ||| sGrid ||| sCircle ||| Full )
   where 
   sTall = renamed [Replace "Tall"] $ spacing 10 $ Tall 1 (1/2) (1/2)
   sGrid = renamed [Replace "Grid"] $ spacing 10 $ Grid
