@@ -54,7 +54,7 @@ myLayout = renamed [CutWordsLeft 1] $ spacing 11 $ avoidStruts $ smartBorders(
   noBorders (fullscreenFull Full)
 
 myManageHook = composeAll
-  [ className =? "mpv" --> doFloat] 
+  [className =? "mpv" --> doFloat] 
   
 myStartupHook = do
   setDefaultCursor xC_left_ptr
