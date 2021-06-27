@@ -21,22 +21,15 @@ import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
--- Specify which modkey you want to use.
-myModMask = mod4Mask
--- The preferred Terminal 
-myTerminal = "st"
--- Width of the window border in pixels.
-myBorderWidth   = 3
--- Whether focus follows the mouse pointer.
-myFocusFollowsMouse = True
--- Whether clicking on a window to focus also passes the click to the window
-myClickJustFocuses = False
--- Xmobar Colors.
+myModMask                   = mod4Mask
+myTerminal                  = "st"
+myBorderWidth               = 3
+myFocusFollowsMouse         = True
+myClickJustFocuses          = False
 xmobarCurrentWorkspaceColor = "#FFFFFF"
-xmobarTitleColor = "#FFFFFF"
--- Border colors for unfocused and focused windows, respectively.
-myNormalBorderColor  = "#b3afc2"
-myFocusedBorderColor = "#b3afc2"
+xmobarTitleColor            = "#FFFFFF"
+myNormalBorderColor         = "#b3afc2"
+myFocusedBorderColor        = "#b3afc2"
 
 myWorkspaces = clickable $ [" 01 ", " 02 ", " 03 ", " 04 ", " 05 ", " 06 ", " 07 ", " 08 ", " 09 "]
  where
@@ -203,8 +196,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-  [   
-      ((modMask, button1),
+  [   ((modMask, button1),
        (\w -> focus w >> mouseMoveWindow w))
 
     , ((modMask, button2),
@@ -215,16 +207,15 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   ]
       
 main = do
-  xmproc <- spawnPipe ("$HOME/.local/bin/xmobar ")
-  xmonad $ defaults {
-  logHook = fadeInactiveLogHook 0.8 <+> dynamicLogWithPP xmobarPP 
-  { ppOutput = hPutStrLn xmproc
-  , ppCurrent = xmobarColor "#b3afc2" "" . wrap "[" "]"
-  , ppVisible = xmobarColor "#b3afc2" ""
-  , ppHidden = xmobarColor "#b3afc2" "" . wrap "*" ""
+  xmproc <- spawnPipe "$HOME/.local/bin/xmobar"
+  xmonad $ defaults {logHook = fadeInactiveLogHook 0.8 <+> dynamicLogWithPP xmobarPP 
+  { ppOutput          = hPutStrLn xmproc
+  , ppCurrent         = xmobarColor "#b3afc2" "" . wrap "[" "]"
+  , ppVisible         = xmobarColor "#b3afc2" ""
+  , ppHidden          = xmobarColor "#b3afc2" "" . wrap "*" ""
   , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  
-  , ppTitle = xmobarColor "#b3afc2" "" . shorten 60        
-  , ppSep = " | "}
+  , ppTitle           = xmobarColor "#b3afc2" "" . shorten 60        
+  , ppSep             = " | "}
 }
 
 defaults = defaultConfig {
