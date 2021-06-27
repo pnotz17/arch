@@ -1,9 +1,9 @@
 # Imports
-from libqtile.lazy import lazy
-from libqtile import hook
 from libqtile.config import Click, Drag, Group, Key, Screen
 from libqtile import bar, layout, widget
 from typing import List  # noqa: F401
+from libqtile.lazy import lazy
+from libqtile import hook
 import subprocess
 import os
 
@@ -27,8 +27,6 @@ keys = [
 	
 	# Window manager controls
 	Key([mod, "control"], "r", 
-		lazy.restart()),
-	Key([mod, "control"], "q", 
 		lazy.restart()),
 	Key([mod, "shift"], "Return", 
 		lazy.spawn("st")),
@@ -85,7 +83,7 @@ keys = [
 	Key([mod, "shift"], "b", 
 		lazy.spawn("firefox")),
 	Key([mod, "shift"], "f", 
-		lazy.spawn("pcmanfm")),
+		lazy.spawn("spacefm")),
 	Key([mod, "shift"], "m", 
 		lazy.spawn("st -e mutt")),
 	Key([mod, "shift"], "p", 
@@ -110,7 +108,7 @@ mouse = [
 group_names = [
 	("dev", {'layout': 'Tile'}),
 	("www", {'layout': 'Tile'}),
-	("code", {'layout': 'Tile'}),
+	("code",{'layout': 'Tile'}),
 	("sys", {'layout': 'Tile'}),
 	("doc", {'layout': 'Tile'}),]
 
@@ -118,9 +116,9 @@ groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
     keys.append(Key([mod], str(i), 
-		lazy.group[name].toscreen()))               # Switch to another group
+		lazy.group[name].toscreen()))               
     keys.append(Key([mod, "shift"], str(i), 
-		lazy.window.togroup(name))) 				# Send current window to another group
+		lazy.window.togroup(name))) 				
 
 # Layout variables
 def init_layout_theme():
@@ -137,9 +135,9 @@ layouts = [
 	layout.MonadWide(**layout_theme),
 	layout.TreeTab(          
     font = "Ubuntu",          
-    fontsize = 14,          
+    fontsize = 13,          
     sections = ["FIRST", "SECOND"],          
-    section_fontsize = 15,          
+    section_fontsize = 13,          
     bg_color = "141414",          
     active_bg = "90C435",          
     active_fg = "000000",          
@@ -186,31 +184,23 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Spacer(),
 	
-	widget.GenPollText(
-	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/pac_up_text")).decode("utf-8").replace('\n', ''),
-	update_interval=1, 
-	foreground=grey2,),
+	# widget.GenPollText(
+	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_updates")).decode("utf-8").replace('\n', ''),
+	# update_interval=1, 
+	# foreground=grey2,),
 
-	widget.TextBox(
-	fmt =' | ',
-	foreground = grey2,),
+	# widget.TextBox(
+	# fmt =' | ',
+	# foreground = grey2,),
 	
-	widget.GenPollText(
-	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/gmail_count")).decode("utf-8").replace('\n', ''),
-	update_interval=1, 
-	foreground=grey2,),
+	# widget.GenPollText(
+	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_gmail")).decode("utf-8").replace('\n', ''),
+	# update_interval=1, 
+	# foreground=grey2,),
 	
 	widget.TextBox(
 	fmt ='|',
 	foreground = grey2,),
-
-	# widget.ThermalSensor(
-	# foreground =grey1,
-	# fmt ='tem:    {}',),
-	
-	# widget.TextBox(
-	# fmt =' | ',
-	# foreground = grey2,),
 
 	widget.CPU(
 	format = 'cpu:   {load_percent}%',
@@ -285,6 +275,6 @@ floating_layout = layout.Floating(float_rules=[
 	{'wname': 'branchdialog'},
 	{'wname': 'Open File'},
 	{'wname': 'pinentry'},
-	{'wmclass': 'ssh-askpass'},],  **layout_theme) #fullscreen_border_width = 0, border_width = 0)
+	{'wmclass': 'ssh-askpass'},],**layout_theme) #fullscreen_border_width = 0, border_width = 0)
 
 
