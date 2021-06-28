@@ -260,7 +260,7 @@ screens = [Screen(top=bar.Bar(
 
 # Floating rules
 floating_layout = layout.Floating(float_rules=[
-	{'wmclass': 'Confirm"'},
+	{'wmclass': 'Confirm Delete"'},
 	{'wmclass': 'dialog'},
 	{'wmclass': 'download'},
 	{'wmclass': 'error'},
@@ -277,4 +277,7 @@ floating_layout = layout.Floating(float_rules=[
 	{'wname': 'pinentry'},
 	{'wmclass': 'ssh-askpass'},],**layout_theme) #fullscreen_border_width = 0, border_width = 0)
 
-
+@hook.subscribe.client_new
+def floating_size_hints(window):
+    hints = window.window.get_wm_normal_hints()
+    if hints and 0 < hints['max_width'] < 1000:window.floating = True

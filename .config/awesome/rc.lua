@@ -111,7 +111,7 @@ function(widget,args)
 end
 	pacwidget_t:set_text(str)
 	s:close()	
-    return "pcm: "   .. i .. ""
+    return "updates: "   .. i .. ""
 end , 1800, "Arch")
 
 -- hdd widget
@@ -130,13 +130,13 @@ vicious.register(thermalwidget, script_output, "tem: $1")
 
 --Gmail Widget
 function run_script()
-    local filedescriptor = io.popen("~/.local/bin/gmail_text_count")
+    local filedescriptor = io.popen("~/.local/bin/modules/sb_gmail")
     local value = filedescriptor:read()
    filedescriptor:close()
     return {value}
 end
 mailwidget = wibox.widget.textbox()
-vicious.register(mailwidget, run_script, '$1', 20)
+vicious.register(mailwidget, run_script, 'mail: $1', 20)
  
 -- CPU widget
 cpuwidget = wibox.widget.textbox()
