@@ -54,32 +54,33 @@ local items = {}
 local makeMenu = function()
 
 -- Applications menu list.
-menu["apps"] = {
-{ "vim", "st -e vim" },
-{ "qutebrowser", "/usr/bin/qutebrowser" },
-{ "waterfox", "waterfox-g3" },
-{ "gimp", "gimp" },
-{ "transmission", "transmission-gtk" },
-{ "alsa mixer", "st -e alsamixer" },
-{ "lxappearance", "lxappearance" },
-{ "htop", "st -e htop" },}
+menu["Programs"] = {
+{ "Neovim", "st -e nvim" },
+{ "Qutebrowser", "/usr/bin/qutebrowser" },
+{ "Firefox", "firefox" },
+{ "Gimp", "gimp" },
+{ "Transmission", "transmission-gtk" },
+{ "Alsa mixer", "st -e alsamixer" },
+{ "Lxappearance", "lxappearance" },
+{ "Htop", "st -e htop" },}
 
 -- Exit menu
-menu["exit menu"] = {
-{ "log out", function() awesome.quit() end },
-{ "reboot", "systemctl reboot" },
-{ "shutdown", "systemctl poweroff" }}
+menu["Exit Menu"] = {
+{ "Log out", function() awesome.quit() end },
+{ "Reboot", "systemctl reboot" },
+{ "Shutdown", "systemctl poweroff" }}
 
 -- Additional items.
-items[#items + 1] =  {"my folder", "pcmanfm" }
-items[#items + 1] =  {"terminal", "st" }
-items[#items + 1] =  {"browser", "/usr/bin/waterfox-g3	" }
-items[#items + 1] =  {"editor", "geany" }
-items[#items + 1] =  {"kill", "xkill" }
+items[#items + 1] =  {"File Manager", "spacefm" }
+items[#items + 1] =  {"Terminal", "st" }
+items[#items + 1] =  {"Browser", "firefox" }
+items[#items + 1] =  {"Mail Client", "st -e mutt" }
+items[#items + 1] =  {"Editor", "geany" }
+items[#items + 1] =  {"Kill", "xkill" }
 
 -- Add all menus in order to the items table.
-items[#items + 1] = { "apps", menu["apps"] }
-items[#items + 1] = { "exit ", menu["exit menu"] }
+items[#items + 1] = { "Programs", menu["Programs"] }
+items[#items + 1] = { "Exit Menu ", menu["Exit Menu"] }
   
 -- Return the built menu.
 return awful.menu({
@@ -186,7 +187,6 @@ vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 ----- {{{ Wibar}}} -----
 -- Tags
 awful.tag({ "01", "02", "03", "04", "05", "06", "07", "08", "09" }, s, awful.layout.layouts[1])
---awful.tag({ "dev", "www", "code", "sys", "doc" }, s, awful.layout.layouts[1])
 
 -- Create a wibox 
 local taglist_buttons = gears.table.join(
