@@ -113,28 +113,28 @@ super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 #
-# My keys
+# My Keys
 #
 
-# terminal emulator
+# Terminal emulator
 super + {_,shift + }Return
 	st
 
-# program launcher
+# Program Launcher
 super + @p
 	dmenu_run
 
-# Launch a file manager
+# Launch a File Manager
 super + {_,shift + }f
-	pcmanfm
+	spacefm
 
-# Launch a web browser
+# Launch a Web Browser
 super + {_,shift + }b
 	firefox
 
 # Logout Menu		
 super + {_,shift + }p
-		/home/panos21/.local/bin/dmenuexit.sh	
+		~/.local/bin/dm_exit
 
 # Volume up
 super + F12
@@ -148,6 +148,6 @@ super + F11
 super + F10
 amixer -q set Master toggle
 
-# Screenshot
+# Screenshot Menu
 Print
-	scrot ~/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png
+		~/.local/bin/dm_ss
