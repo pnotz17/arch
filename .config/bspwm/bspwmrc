@@ -1,5 +1,5 @@
 #! /bin/sh
-~/.local/bin/bars/lemon_bar | lemonbar -gx22 -f "FiraCode Nerd Font:style=Regular:pixelsize=13" -B "#D9000000" -F "#ffffc8"  &
+~/.local/bin/bars/lemon_bar | lemonbar -gx22 -f "FiraCode Nerd Font:style=Light:pixelsize=13" -B "#D9000000" -F "#ffffc8"  &
 pgrep -x sxhkd > /dev/null || sxhkd &
 xsetroot -cursor_name left_ptr &
 picom -b &
