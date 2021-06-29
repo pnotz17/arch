@@ -133,8 +133,12 @@ super + {_,shift + }b
 	firefox
 
 # Logout Menu		
-super + {_,shift + }p
-		~/.local/bin/dm_exit
+super + q
+	~/.local/bin/dm_exit
+	
+# Screenshot Menu
+Print
+	~/.local/bin/dm_ss
 
 # Volume up
 super + F12
@@ -148,6 +152,3 @@ super + F11
 super + F10
 amixer -q set Master toggle
 
-# Screenshot Menu
-Print
-		~/.local/bin/dm_ss
