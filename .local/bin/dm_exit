@@ -8,11 +8,11 @@ fi
 
 case "$cmd" in
 	Poweroff)
-		systemctl poweroff ;;
+		doas poweroff ;;
 	Reboot)
-		systemctl reboot ;;
+		doas reboot ;;
 	Suspend)
-		systemctl suspend ;;
+		doas suspend ;;
 	Lock)
 		slock ;;
 	KillX)

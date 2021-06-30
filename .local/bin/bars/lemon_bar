@@ -1,6 +1,6 @@
 #!/bin/sh
 whiteColor="#E6E6FA"
-blueColor="#ACAC23"
+yellow2Color="#ACAC23"
 peachColor="#FFC0CB"
 greenColor="#00FF00"
 yellowColor="#FFA500"
@@ -22,7 +22,7 @@ totalws (){
 
  updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo "%{F$blueColor}PACMAN: $updates %{F-}"
+	echo "%{F$yellow2Color}PACMAN: $updates %{F-}"
 }
 
 mail() {
@@ -48,7 +48,7 @@ cpufrequency() {
 
 ram() {
 	mem=$(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')
-	echo "%{F$yellowColor}MEM: $mem %{F-}"
+	echo "%{F$yellowColor}RAM: $mem %{F-}"
 }
 
 alsa() {

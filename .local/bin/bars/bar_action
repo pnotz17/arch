@@ -9,7 +9,7 @@ hdd() {
 ## TEMP
 temp() {
 	cputemp=`sensors|awk 'BEGIN{i=0;t=0;b=0}/id [0-9]/{b=$4};/Core/{++i;t+=$3}END{if(i>0){printf("%0.1f\n",t/i)}else{sub(/[^0-9.]/,"",b);print b}}'`"C"
-	echo "Temp: $cputemp"
+	echo "Core: $cputemp"
 }
 
 ## CPU
@@ -26,7 +26,7 @@ cpu() {
 ## RAM
 mem() {
 	mem=$(free | awk '/^Mem/ { printf("%.2f%\n", $3/$2 * 100.0) }')
-	echo "Mem $mem"
+	echo "Ram $mem"
 }
 
 ## VOLUME
@@ -57,7 +57,7 @@ echo -e "Pacman: $updates"
 }
 	
 while :; do
-    echo "$(updates)  |  $(temp)  |  $(cpu)  |  $(mem)  |  $(vol)  |"
+    echo "$(updates)  | $(hdd)  |  $(temp)  |  $(cpu)  |  $(mem)  |  $(vol)  |"
 	sleep 3
 done
 

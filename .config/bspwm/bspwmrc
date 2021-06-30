@@ -1,5 +1,5 @@
 #! /bin/sh
-~/.local/bin/bars/lemon_bar | lemonbar -gx22 -f "Monospace:pixelsize=14" -B "#D9000000" -F "#ffffc8"  &
+~/.local/bin/bars/lemon_bar | shapebar -gx22 -f "Literation Mono Powerline:style=Regular:size=10" -B "#D9000000" -F "#ffffc8"  &
 pgrep -x sxhkd > /dev/null || sxhkd &
 xsetroot -cursor_name left_ptr &
 picom -b &
