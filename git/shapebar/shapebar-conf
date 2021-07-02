@@ -1,0 +1,43 @@
+#!/bin/bash
+# cpu calc: https://stackoverflow.com/questions/26791240/how-to-get-percentage-of-processor-use-with-bash
+i=0
+updv=''
+diskv=''
+while :; do
+    read cpu user nice system idle iowait irq softirq steal guest < /proc/stat
+    cpu_active_prev=$((user+system+nice+softirq+steal))
+    cpu_total_prev=$((user+system+nice+softirq+steal+idle+iowait))
+    sleep 1
+    read cpu user nice system idle iowait irq softirq steal guest < /proc/stat
+    cpu_active_cur=$((user+system+nice+softirq+steal))
+    cpu_total_cur=$((user+system+nice+softirq+steal+idle+iowait))
+    cpu_util=$((100*(cpu_active_cur-cpu_active_prev)/(cpu_total_cur-cpu_total_prev)))
+    cpu_outp=`printf %3s $cpu_util`
+    mod=$(expr $i % 120)
+    if [ $mod -eq 0 ]
+    then
+        updv=$(~/scripts/modules/updates-mod)
+        diskv=$(~/scripts/modules/disk-mod)
+    fi
+
+    outp="%{W36}%{l}%{B-}%{F-}%{Zt<}%{B#80000000}%{F#fff}"
+    outp+=" $updv $(~/scripts/modules/caps-mod)"
+    outp+="%{B-}%{F-}%{Zt>}%{B#00000000}%{F#fff}"
+    outp+="%{c}%{B-}%{F#80d53924}%{Zt<}%{B#80d53924}%{F#fff} "
+    outp+="$(~/scripts/modules/wifi-mod) "
+    outp+="%{F#8078d127}%{Zs<}%{F#fff}"
+    outp+="%{B#8078d127} $(~/scripts/modules/sensor-mod) "
+    outp+="%{F#80f57900}%{Zs<}%{F#fff}"
+    outp+="%{B#80f57900} $diskv "
+    outp+="%{F#802a42ca}%{Zs<}%{F#fff}"
+    outp+="%{B#802a42ca}$cpu_outp% "
+    outp+="%{F#80cc2cb3}%{Zs<}%{F#fff}"
+    outp+="%{B#80cc2cb3} $(~/scripts/modules/mem-mod) "
+    outp+="%{B-}%{F#80cc2cb3}%{Zt>}%{B#00000000}%{F#fff}"
+    outp+="%{r}%{B-}%{F-}%{Zt<}%{B#80000000}%{F#fff}"
+    outp+=" $(~/scripts/modules/dt-mod) "
+    outp+="%{B-}%{F-}%{Zt>}"
+    echo "$outp"
+
+    ((i++))
+done
