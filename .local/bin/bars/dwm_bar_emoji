@@ -16,7 +16,7 @@ DISK() {
 }
 
 MAIL() {
-	COUNT=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	COUNT=`curl -su USER:PASS https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	COUNT=`echo "$COUNT" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo  "📨 $COUNT"
 }
@@ -110,7 +110,7 @@ DOWNSPEED() {
 }
 
 while true; do
-	xsetroot -name "|  $(LINUX)  |  $(UPTIME)  |  $(UPDATES)  |  $(MAIL)  |  $(DISK)  |  $(CPUTEMP)  |  $(CPUFREQUENCY)  |  $(RAM)  |  $(ALSA)  |  $(UPSPEED)  |  $(DOWNSPEED)  |  $(CLOCK)  |"
+	xsetroot -name "|  $(UPDATES)  |  $(MAIL)  |  $(DISK)  |  $(CPUTEMP)  |  $(CPUFREQUENCY)  |  $(RAM)  |  $(ALSA)  |  $(UPSPEED)  |  $(DOWNSPEED)  |  $(CLOCK)  |"
 	sleep 2
 done &
 
