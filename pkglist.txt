@@ -49,6 +49,7 @@ patch
 picom
 pkgconf
 reflector
+scrot
 sed
 spacefm
 sudo
@@ -56,6 +57,7 @@ texinfo
 transmission-gtk
 ufw
 unzip
+wget
 which
 xclip
 xf86-video-intel
