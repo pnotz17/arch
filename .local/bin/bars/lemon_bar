@@ -1,6 +1,6 @@
 #!/bin/sh
 whiteColor="#E6E6FA"
-yellow2Color="#ACAC23"
+blueColor="#ACAC23"
 peachColor="#FFC0CB"
 greenColor="#00FF00"
 yellowColor="#FFA500"
@@ -22,11 +22,11 @@ totalws (){
 
  updates() {
 	updates=$(checkupdates 2> /dev/null | wc -l )  
-	echo "%{F$yellow2Color}PACMAN: $updates %{F-}"
+	echo "%{F$blueColor}PACMAN: $updates %{F-}"
 }
 
 mail() {
-	mail=`curl -su USER:PASSWD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+	mail=`curl -su USER:PASS https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 	mail=`echo "$mail" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 	echo "%{F$whiteColor}MAIL: $mail %{F-}"
 }
@@ -48,7 +48,7 @@ cpufrequency() {
 
 ram() {
 	mem=$(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')
-	echo "%{F$yellowColor}RAM: $mem %{F-}"
+	echo "%{F$yellowColor}MEM: $mem %{F-}"
 }
 
 alsa() {

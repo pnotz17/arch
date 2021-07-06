@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# update portage and world if needed
+
+source /etc/profile;
+
+stamp="/usr/portage/metadata/timestamp.x"
+if [ -f "$stamp" ]
+then
+rm /usr/portage/metadata/timestamp.x
+fi
+
+emerge --sync &&
+emerge --update --deep --with-bdeps=y @world -av &&
+perl-cleaner --all -av &&
+emerge @changed-deps -av &&
+emerge --depclean -av &&
+revdep-rebuild -av &&
+eclean-dist -d && eclean-pkg -d
+
+exit 0 
