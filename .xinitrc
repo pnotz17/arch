@@ -12,7 +12,7 @@ if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
 fi
 
 # autostart
-/usr/local/bin/xclickroot -r ~/git/xmenu/xmenu.sh &
+/usr/local/bin/xclickroot -r ~/src/xmenu/xmenu.sh &
 ~/.local/bin/bars/dwm_bar_emoji &
 ~/.local/bin/xsession_destroyah &
 /usr/bin/feh --bg-fill ~/wallpaper.jpg &
