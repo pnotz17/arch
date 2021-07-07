@@ -1,4 +1,4 @@
-static const char *fonts[]            ={"Monospace:size=10:style=Regular:size=10:antialias=true:autohint=true","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
+static const char *fonts[]            ={"Monospace:style=Regular:size=10:antialias=true:autohint=true","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
 static const char normbgcolor[]       = "#000000";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#121213";	/* highlighted tag // tasklist // focused window background color*/
@@ -104,7 +104,7 @@ static Key keys[] = {
 	{ Mod1Mask,		        XK_y,	   spawn,	   SHCMD("~/.local/bin/dm_yts") },
 	{ Mod1Mask,		        XK_n,	   spawn,	   SHCMD("~/.local/bin/dm_nerd") },
 	{ Mod1Mask,			XK_k,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
-	{ MODKEY,			XK_p,	   spawn,          SHCMD("~/.local/bin/dm_run") },
+	{ MODKEY,			XK_p,	   spawn,          SHCMD("~/.local/bin/dm_path") },
 	{ 0,                            XK_F7,	   spawn,          SHCMD("~/.local/bin/dm_cmd") },
 	{ 0,                            XK_F8,	   spawn,          SHCMD("~/.local/bin/st_cmd") },
 	{ 0,                            XK_F9,	   spawn,          SHCMD("~/.local/bin/dwm_cmd") },
