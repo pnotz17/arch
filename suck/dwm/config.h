@@ -30,7 +30,6 @@ static const Rule rules[] = {
 	{ "mpv",     NULL,       NULL,       0,            1,           -1 },
 };
 
-/* layout(s) */
 static const float mfact     = 0.50; 
 static const int nmaster     = 1;    
 static const int resizehints = 0;   
@@ -60,7 +59,6 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 static Key keys[] = {
@@ -103,23 +101,15 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   SHCMD("spacefm") },
 	{ MODKEY|ShiftMask,		XK_m,	   spawn,	   SHCMD("st -e mutt") },
 	{ MODKEY|ControlMask,           XK_r,      quit,           {0} },
-	{ MODKEY|ControlMask,		XK_c,      spawn,          SHCMD("~/.local/bin/dm_calc") },
 	{ MODKEY|ControlMask,		XK_d,      spawn, 	   SHCMD("~/.local/bin/dm_fm") },
 	{ MODKEY|ControlMask,		XK_e,      spawn, 	   SHCMD("~/.local/bin/dm_ed")},
 	{ MODKEY|ControlMask,		XK_p,      spawn,          SHCMD("~/.local/bin/dm_pass") },
 	{ Mod1Mask,			XK_d,      spawn,          SHCMD("~/.local/bin/dm_ytdl") },
 	{ Mod1Mask,			XK_e,      spawn,          SHCMD("~/.local/bin/dm_uni") },
-	{ Mod1Mask,		        XK_b,	   spawn,	   SHCMD("~/.local/bin/dm_book") },
 	{ Mod1Mask,		        XK_q,      spawn, 	   SHCMD("~/.local/bin/dm_power") },
-	{ Mod1Mask,	                XK_h,	   spawn,	   SHCMD("~/.local/bin/dm_hist") },
-	{ Mod1Mask,		        XK_t,	   spawn,	   SHCMD("~/.local/bin/compton_deploy") },
-	{ Mod1Mask,		        XK_y,	   spawn,	   SHCMD("~/.local/bin/dm_yts") },
 	{ Mod1Mask,		        XK_n,	   spawn,	   SHCMD("~/.local/bin/dm_nerd") },
 	{ Mod1Mask, 	                XK_k,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
 	{ MODKEY,			XK_p,	   spawn,          SHCMD("~/.local/bin/dm_path") },
-	{ 0,                            XK_F7,	   spawn,          SHCMD("~/.local/bin/dm_cmd") },
-	{ 0,                            XK_F8,	   spawn,          SHCMD("~/.local/bin/st_cmd") },
-	{ 0,                            XK_F9,	   spawn,          SHCMD("~/.local/bin/dwm_cmd") },
 	{ 0,                            XK_Print,  spawn,          SHCMD("~/.local/bin/dm_ss") },
 	{ 0,                            XK_F10,	   spawn,          SHCMD("amixer -q set Master toggle") },
 	{ 0,                            XK_F11,	   spawn,          SHCMD("amixer set Master Front 1-") },
