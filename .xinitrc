@@ -13,10 +13,10 @@ fi
 
 # autostart
 /usr/local/bin/xclickroot -r ~/src/xmenu/xmenu.sh &
-~/.local/bin/bars/dwm_bar_emoji &
-~/.local/bin/xsession_destroyah &
 /usr/bin/feh --bg-fill ~/wallpaper.jpg &
 /usr/bin/dunst ~/.config/dunst/dunstrc &
+~/.local/bin/bars/dwm_bar_emoji &
+~/.local/bin/xs_destroyah &
 
 # dwm start loop
 while true; do
