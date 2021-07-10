@@ -14,25 +14,6 @@ HISTFILE=~/.zsh/zhistory
 HISTSIZE=10000
 SAVEHIST=10000
 
-# Prompt
-setopt prompt_subst
-PROMPT='%F{none}%n@%F{red}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
-
-# Git settings
-git_branch_test_color() {
-  local ref=$(git symbolic-ref --short HEAD 2> /dev/null)
-  if [ -n "${ref}" ]; then
-    if [ -n "$(git status --porcelain)" ]; then
-      local gitstatuscolor='%F{red}**M**'
-    else
-      local gitstatuscolor='%F{green}'
-    fi
-    echo "${gitstatuscolor} (${ref})"
-  else
-    echo ""
-  fi
-}
-
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
@@ -85,15 +66,30 @@ alias co='tar -zcvf'
 alias u='git add -u'
 alias s='git status'
 alias gc='git clone'
-alias v='doas nvim'
+alias dv='doas nvim'
 alias yss='yay -Ss'
 alias p='git push'
 alias a='git add'
 alias ys='yay -S'
 alias un='unzip'
 alias d='doas'
+alias v='nvim'
 
+# Git settings
+git_branch_test_color() {
+  local ref=$(git symbolic-ref --short HEAD 2> /dev/null)
+  if [ -n "${ref}" ]; then
+    if [ -n "$(git status --porcelain)" ]; then
+      local gitstatuscolor='%F{red}**M**'
+    else
+      local gitstatuscolor='%F{green}'
+    fi
+    echo "${gitstatuscolor} (${ref})"
+  else
+    echo ""
+  fi
+}
 
-
-
-
+# Prompt
+setopt prompt_subst
+PROMPT='%F{none}%n@%F{red}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '

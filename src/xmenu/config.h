@@ -1,6 +1,6 @@
 static struct Config config = {
 	/* font, separate different fonts with comma */
-	.font = "System UI:size=9",
+	.font = "URW Gothic:size=10",
 
 	/* colors */
 	.background_color = "#000000",
