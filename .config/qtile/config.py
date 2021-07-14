@@ -183,23 +183,32 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Spacer(),
 	
-	widget.TextBox(
-	fmt =' | ',
-	foreground = grey2,),
+	# widget.TextBox(
+	# fmt =' | ',
+	# foreground = grey2,),
 	
-	widget.GenPollText(
-	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_updates")).decode("utf-8").replace('\n', ''),
-	update_interval=1, 
-	foreground=grey2,),
+	# widget.GenPollText(
+	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_updates")).decode("utf-8").replace('\n', ''),
+	# update_interval=1, 
+	# foreground=grey2,),
 
-	widget.TextBox(
-	fmt =' | ',
-	foreground = grey2,),
+	# widget.TextBox(
+	# fmt =' | ',
+	# foreground = grey2,),
 	
-	widget.GenPollText(
-	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_gmail")).decode("utf-8").replace('\n', ''),
-	update_interval=1, 
-	foreground=grey2,),
+	# widget.GenPollText(
+	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_gmail")).decode("utf-8").replace('\n', ''),
+	# update_interval=1, 
+	# foreground=grey2,),
+	
+	# widget.TextBox(
+	# fmt =' | ',
+	# foreground = grey2,),
+	
+	# widget.GenPollText(
+	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_unitemp")).decode("utf-8").replace('\n', ''),
+	# update_interval=1, 
+	# foreground=grey2,),
 	
 	widget.TextBox(
 	fmt ='|',
