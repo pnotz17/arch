@@ -19,7 +19,7 @@ focus_on_window_activation = "smart"
 grey1 ="#808080"
 grey2 ="#808080"
 tcsb ="#262626"
-barc ="#080808"
+barc ="#000000"
 
 # Key bindings
 keys = [
@@ -125,6 +125,7 @@ def init_layout_theme():
 	"border_width":1,
 	"border_focus": "#b3afc2",
 	"border_normal": "#b3afc2"}
+
 layout_theme = init_layout_theme()
 
 # Layouts
@@ -153,6 +154,7 @@ widget_defaults = dict(
 	font='Literation Mono Nerd Font',
 	fontsize=13,
 	padding=4.75,)
+
 extension_defaults = widget_defaults.copy()
 
 # Screen variables
@@ -213,53 +215,56 @@ screens = [Screen(top=bar.Bar(
 	widget.TextBox(
 	fmt ='|',
 	foreground = grey2,),
-
-	widget.CPU(
-	format = 'cpu:   {load_percent}%',
-	foreground = grey1,),
+	
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_cpu")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
 	
 	widget.TextBox(
 	fmt =' | ',
 	foreground = grey2,),
 
-	widget.Memory(
-	foreground = grey1,
-	format = "mem:   {MemPercent}%",
-	update_interval = 1,),
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_ram")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
+	
+	widget.TextBox(
+	fmt =' | ',
+	foreground = grey2,),
+	
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_vol")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
 	
 	widget.TextBox(
 	fmt =' | ',
 	foreground = grey2,),
 
-	widget.Volume(
-	foreground =grey1,
-	fmt ='vol:   {}',),
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_up")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
+	
+	widget.TextBox(
+	fmt =' | ',
+	foreground = grey2,),
+	
+    widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_do")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
 	
 	widget.TextBox(
 	fmt =' | ',
 	foreground = grey2,),
 
-	widget.Net(
-	interface = "enp2s0",
-	foreground =grey1,
-	format = 'up:   {up}', ),
-	
-	widget.TextBox(
-	fmt =' | ',
-	foreground = grey2,),
-	
-	widget.Net(
-	interface = "enp2s0",
-	foreground =grey1,
-	format = 'do:   {down}', ),
-	
-	widget.TextBox(
-	fmt =' | ',
-	foreground = grey2,),
-
-	widget.Clock(
-	foreground = grey1,
-	format ="   %a, %b %d  %H:%M",),
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_time")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
 	
 	widget.TextBox(
 	fmt =' | ',
@@ -267,8 +272,8 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Systray(
 	padding = 5,),
-	
-],20,background=barc,opacity=0.95),),]
+
+],20,background=barc,opacity=0.90),),]
 
 # Floating rules
 floating_layout = layout.Floating(float_rules=[
@@ -286,7 +291,8 @@ floating_layout = layout.Floating(float_rules=[
 	{'wname': 'branchdialog'},
 	{'wname': 'Open File'},
 	{'wname': 'pinentry'},
-	{'wmclass': 'ssh-askpass'},],**layout_theme) #fullscreen_border_width = 0, border_width = 0)
+	{'wmclass': 'ssh-askpass'},],**layout_theme)
+	#fullscreen_border_width = 0, border_width = 0)
 
 @hook.subscribe.client_new
 def floating_size_hints(window):
