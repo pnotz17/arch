@@ -1,7 +1,6 @@
 # Imports
 from libqtile.config import Click, Drag, Group, Key, Screen
 from libqtile import bar, layout, widget
-from typing import List  # noqa: F401
 from libqtile.lazy import lazy
 from libqtile import hook
 import subprocess
@@ -86,14 +85,14 @@ keys = [
 		lazy.spawn("spacefm")),
 	Key([mod, "shift"], "m", 
 		lazy.spawn("st -e mutt")),
-	Key([mod, "shift"], "p", 
-		lazy.spawn(".local/bin/dmenu_exit")),
-	Key([], "F12", 
-		lazy.spawn("amixer set Master Front 2+")),
+	Key([mod], "q", 
+		lazy.spawn(".local/bin/dm_exit")),
 	Key([], "F11", 
 		lazy.spawn("amixer set Master Front 2-")),
+	Key([], "F12", 
+		lazy.spawn("amixer set Master Front 2+")),
 	Key([], "Print", 
-		lazy.spawn("scrot -e 'mv $f ~/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png 2>/dev/null")),]
+		lazy.spawn("scrot media/screenshots/%b%d::%H%M%S.png")),]
 
 # Mouse bindings
 mouse = [
@@ -184,19 +183,23 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Spacer(),
 	
-	# widget.GenPollText(
-	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_updates")).decode("utf-8").replace('\n', ''),
-	# update_interval=1, 
-	# foreground=grey2,),
-
-	# widget.TextBox(
-	# fmt =' | ',
-	# foreground = grey2,),
+	widget.TextBox(
+	fmt =' | ',
+	foreground = grey2,),
 	
-	# widget.GenPollText(
-	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_gmail")).decode("utf-8").replace('\n', ''),
-	# update_interval=1, 
-	# foreground=grey2,),
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_updates")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
+
+	widget.TextBox(
+	fmt =' | ',
+	foreground = grey2,),
+	
+	widget.GenPollText(
+	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_gmail")).decode("utf-8").replace('\n', ''),
+	update_interval=1, 
+	foreground=grey2,),
 	
 	widget.TextBox(
 	fmt ='|',
@@ -271,7 +274,6 @@ floating_layout = layout.Floating(float_rules=[
 	{'wmclass': 'confirmreset'},
 	{'wmclass': 'makebranch'},
 	{'wmclass': 'maketag'},
-	{'wmclass': 'mpv'},
 	{'wname': 'branchdialog'},
 	{'wname': 'Open File'},
 	{'wname': 'pinentry'},

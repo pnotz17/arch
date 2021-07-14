@@ -34,7 +34,7 @@ ls --color=auto &> /dev/null
 # Aliases
 alias pw='bash -c '"'"'echo `tr -dc $([ $# -gt 1 ] && echo $2 || echo "A-Za-z0-9") < /dev/urandom | head -c $([ $# -gt 0 ] && echo $1 || echo 30)`'"'"' --'
 alias sm=' doas reflector --verbose --country Greece --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist-arch'
-alias sc='doas rm -rf ~/.cache/* ~/.local/share/xorg ~/.local/share/recently-used.xbel'
+alias sc='doas rm -r ~/.cache/ ~/.local/share/xorg/ ~/.local/share/recently-used.xbel'
 alias jc='doas journalctl --rotate --vacuum-time=1s'
 alias gi=' grep -iE 'installed' /var/log/pacman.log'
 alias gu=' grep -iE 'upgraded' /var/log/pacman.log'
