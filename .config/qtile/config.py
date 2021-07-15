@@ -280,6 +280,19 @@ screens = [Screen(top=bar.Bar(
 
 # Floating windows
 floating_layout = layout.Floating(float_rules=[
-	{'wmclass': 'xprop'},
-	*layout.Floating.default_float_rules
-	],  **layout_theme)
+	{'wmclass': 'confirm'},
+    {'wmclass': 'dialog'},
+    {'wmclass': 'download'},
+    {'wmclass': 'error'},
+    {'wmclass': 'file_progress'},
+    {'wmclass': 'notification'},
+    {'wmclass': 'splash'},
+    {'wmclass': 'toolbar'},
+    {'wmclass': 'confirmreset'},
+    {'wmclass': 'makebranch'},
+    {'wmclass': 'maketag'},
+    {'wmclass': 'ssh-askpass'},
+    {'wname'  : 'branchdialog'},
+    {'wname'  : 'Open File'},
+    {'wname'  : 'pinentry'},
+*layout.Floating.default_float_rules],**layout_theme)
