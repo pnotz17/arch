@@ -16,15 +16,15 @@ cursor_warp         = False
 focus_on_window_activation = "smart"
 
 # Colors 
-grey1 ="#808080"
-grey2 ="#808080"
-tcsb ="#262626"
-barc ="#000000"
+BARCOLOR ="#000000"
+GREY1 ="#808080"
+GREY2 ="#808080"
+TCSB ="#262626"
 
-# Key bindings
+# Key Bindings
 keys = [
 	
-	# Window manager controls
+	# Window Manager Controls
 	Key([mod, "control"], "r", 
 		lazy.restart()),
 	Key([mod, "shift"], "Return", 
@@ -72,7 +72,7 @@ keys = [
 	Key([mod, "shift"], 'm', 
 		lazy.layout.maximize()),
 	  
-	# Treetab controls          
+	# Treetab Controls          
 	Key([mod, "control"], "k",
 		lazy.layout.section_up()),          
 	Key([mod, "control"], "j", 
@@ -94,7 +94,7 @@ keys = [
 	Key([], "Print", 
 		lazy.spawn("scrot media/screenshots/%b%d::%H%M%S.png")),]
 
-# Mouse bindings
+# Mouse Bindings
 mouse = [
 	Drag([mod], "Button1", 
 		lazy.window.set_position_floating(),start=lazy.window.get_position()),
@@ -110,7 +110,6 @@ group_names = [
 	("code",{'layout': 'Tile'}),
 	("sys", {'layout': 'Tile'}),
 	("doc", {'layout': 'Tile'}),]
-
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
@@ -119,13 +118,12 @@ for i, (name, kwargs) in enumerate(group_names, 1):
     keys.append(Key([mod, "shift"], str(i), 
 		lazy.window.togroup(name))) 				
 
-# Layout variables
+# Layout Variables
 def init_layout_theme():
 	return {"margin":1,
 	"border_width":1,
 	"border_focus": "#b3afc2",
 	"border_normal": "#b3afc2"}
-
 layout_theme = init_layout_theme()
 
 # Layouts
@@ -134,167 +132,154 @@ layouts = [
 	layout.MonadTall(**layout_theme),
 	layout.MonadWide(**layout_theme),
 	layout.TreeTab(          
-    font = "Ubuntu",          
-    fontsize = 13,          
-    sections = ["FIRST", "SECOND"],          
-    section_fontsize = 13,          
-    bg_color = "141414",          
-    active_bg = "90C435",          
-    active_fg = "000000",          
-    inactive_bg = "384323",          
-    inactive_fg = "a0a0a0",          
-    padding_y = 5,          
-    section_top = 10,   
-    panel_width = 250),
-    layout.Max(**layout_theme),
+	font = "Ubuntu",          
+	fontsize = 13,          
+	sections = ["FIRST", "SECOND"],          
+	section_fontsize = 13,          
+	bg_color = "141414",          
+	active_bg = "90C435",          
+	active_fg = "000000",          
+	inactive_bg = "384323",          
+	inactive_fg = "a0a0a0",          
+	padding_y = 5,          
+	section_top = 10,   
+	panel_width = 250),
+	layout.Max(**layout_theme),
 	layout.Floating(**layout_theme,)]
 	
-# Widget variables
+# Widget Variables
 widget_defaults = dict(
 	font='Literation Mono Nerd Font',
 	fontsize=13,
 	padding=4.75,)
-
 extension_defaults = widget_defaults.copy()
 
-# Screen variables
+# Bar Variables
 screens = [Screen(top=bar.Bar(
 [	widget.Image(
 	filename = "~/.config/qtile/images/1",),
 	
 	widget.TextBox(
 	fmt ='|',
-	foreground = grey2,),
+	foreground = GREY2,),
 	
 	widget.GroupBox(
-	this_current_screen_border=tcsb,
+	this_current_screen_border=TCSB,
 	highlight_method = "block",
 	active = "#ffffff",
-	inactive = grey1,),
+	inactive = GREY1,),
 	              
 	widget.TextBox(
 	fmt =' | ',
-	foreground = grey2,),
+	foreground = GREY2,),
 
 	widget.CurrentLayout(
-	foreground =grey1,),
+	foreground =GREY1,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = grey2,),
+	foreground = GREY2,),
 
 	widget.Spacer(),
 	
 	# widget.TextBox(
 	# fmt =' | ',
-	# foreground = grey2,),
+	# foreground = GREY2,),
 	
 	# widget.GenPollText(
 	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_updates")).decode("utf-8").replace('\n', ''),
 	# update_interval=1, 
-	# foreground=grey2,),
+	# foreground=GREY2,),
 
 	# widget.TextBox(
 	# fmt =' | ',
-	# foreground = grey2,),
+	# foreground = GREY2,),
 	
 	# widget.GenPollText(
 	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_gmail")).decode("utf-8").replace('\n', ''),
 	# update_interval=1, 
-	# foreground=grey2,),
+	# foreground=GREY2,),
 	
 	# widget.TextBox(
 	# fmt =' | ',
-	# foreground = grey2,),
+	# foreground = GREY2,),
 	
 	# widget.GenPollText(
 	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_unitemp")).decode("utf-8").replace('\n', ''),
 	# update_interval=1, 
-	# foreground=grey2,),
+	# foreground=GREY2,),
 	
 	widget.TextBox(
 	fmt ='|',
-	foreground = grey2,),
+	foreground = GREY2,),
 	
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_cpu")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=grey2,),
+	foreground=GREY2,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = grey2,),
+	foreground = GREY2,),
 
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_ram")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=grey2,),
+	foreground=GREY2,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = grey2,),
+	foreground = GREY2,),
 	
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_vol")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=grey2,),
+	foreground=GREY2,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = grey2,),
+	foreground = GREY2,),
 
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_up")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=grey2,),
+	foreground=GREY2,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = grey2,),
+	foreground = GREY2,),
 	
     widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_do")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=grey2,),
+	foreground=GREY2,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = grey2,),
+	foreground = GREY2,),
 
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_time")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=grey2,),
+	foreground=GREY2,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = grey2,),
+	foreground = GREY2,),
 
 	widget.Systray(
 	padding = 5,),
 
-],20,background=barc,opacity=0.90),),]
+]
+,20,background=BARCOLOR,opacity=0.90),),]
 
-# Floating rules
-floating_layout = layout.Floating(float_rules=[
-	{'wmclass': 'Confirm Delete"'},
-	{'wmclass': 'dialog'},
-	{'wmclass': 'download'},
-	{'wmclass': 'error'},
-	{'wmclass': 'file_progress'},
-	{'wmclass': 'notification'},
-	{'wmclass': 'splash'},
-	{'wmclass': 'toolbar'},
-	{'wmclass': 'confirmreset'},
-	{'wmclass': 'makebranch'},
-	{'wmclass': 'maketag'},
-	{'wname': 'branchdialog'},
-	{'wname': 'Open File'},
-	{'wname': 'pinentry'},
-	{'wmclass': 'ssh-askpass'},],**layout_theme)
-	#fullscreen_border_width = 0, border_width = 0)
+# Rules
+float_props = {
+	'wmtype': ['toolbar', 'splash'],
+	'role': ['About'],
+	'wmclass': ['file_progress, classB'],
+	'wmname': ['name1', 'name2'],
+	'wmhint': ['max_width'],}
 
-@hook.subscribe.client_new
-def floating_size_hints(window):
-    hints = window.window.get_wm_normal_hints()
-    if hints and 0 < hints['max_width'] < 1000:window.floating = True
+floating_layout = layout.Floating(border_focus='#b3afc2', float_props=float_props)
+floating_layout = layout.Floating(border_focus='#b3afc2', float_props=float_props, override_default_float_props=True)
