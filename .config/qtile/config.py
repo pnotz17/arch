@@ -1,10 +1,10 @@
 # Imports
-from libqtile.config import Click, Drag, Group, Key, Screen
-from libqtile import bar, layout, widget
-from libqtile.lazy import lazy
-from libqtile import hook
-import subprocess
 import os
+import subprocess
+from libqtile import hook
+from libqtile.lazy import lazy
+from libqtile import bar, layout, widget
+from libqtile.config import Click, Drag, Group, Key, Screen
 
 # Colors 
 BARCOLOR ="#000000"
@@ -188,33 +188,6 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Spacer(),
 	
-	# widget.TextBox(
-	# fmt =' | ',
-	# foreground = GREY2,),
-	
-	# widget.GenPollText(
-	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_updates")).decode("utf-8").replace('\n', ''),
-	# update_interval=1, 
-	# foreground=GREY2,),
-
-	# widget.TextBox(
-	# fmt =' | ',
-	# foreground = GREY2,),
-	
-	# widget.GenPollText(
-	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_gmail")).decode("utf-8").replace('\n', ''),
-	# update_interval=1, 
-	# foreground=GREY2,),
-	
-	# widget.TextBox(
-	# fmt =' | ',
-	# foreground = GREY2,),
-	
-	# widget.GenPollText(
-	# func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_unitemp")).decode("utf-8").replace('\n', ''),
-	# update_interval=1, 
-	# foreground=GREY2,),
-	
 	widget.TextBox(
 	fmt ='|',
 	foreground = GREY2,),
@@ -275,8 +248,8 @@ screens = [Screen(top=bar.Bar(
 
 	widget.Systray(
 	padding = 5,),
-
-],20,background=BARCOLOR,opacity=0.90),),]
+]
+,20,background=BARCOLOR,opacity=0.90),),]
 
 # Floating windows
 floating_layout = layout.Floating(float_rules=[
@@ -295,4 +268,5 @@ floating_layout = layout.Floating(float_rules=[
     {'wname'  : 'branchdialog'},
     {'wname'  : 'Open File'},
     {'wname'  : 'pinentry'},
-*layout.Floating.default_float_rules],**layout_theme)
+*layout.Floating.default_float_rules]
+,**layout_theme)
