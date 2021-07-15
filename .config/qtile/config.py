@@ -14,7 +14,7 @@ TCSB     ="#262626"
 
 # Misc settings
 mod                        = "mod4"                        
-follow_mouse_focus         = False
+follow_mouse_focus         = True
 bring_front_click          = False
 cursor_warp                = False
 auto_fullscreen            = True
@@ -90,7 +90,7 @@ keys = [
 	Key([mod, "control"], "d", 
 		lazy.spawn(".local/bin/dm_fm")),
 	Key([mod, "control"], "e", 
-		lazy.spawn(".local/bin/dm_edit")),
+		lazy.spawn(".local/bin/dm_ed")),
 	Key([mod, "control"], "q", 
 		lazy.spawn(".local/bin/dm_power")),
 	Key([], "F11", 
