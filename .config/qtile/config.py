@@ -127,9 +127,9 @@ for i, (name, kwargs) in enumerate(group_names, 1):
 # Layout defaults
 def init_layout_theme():
 	return {"margin":1,
-	"border_width":1,
-	"border_focus": "#b3afc2",
-	"border_normal": "#b3afc2"}
+	"border_width"  :1,
+	"border_focus"  : "#b3afc2",
+	"border_normal" : "#b3afc2"}
 layout_theme = init_layout_theme()
 
 # Layouts
@@ -138,26 +138,26 @@ layouts = [
 	layout.MonadTall(**layout_theme),
 	layout.MonadWide(**layout_theme),
 	layout.TreeTab(          
-	font = "Ubuntu",          
-	fontsize = 13,          
-	sections = ["FIRST", "SECOND"],          
+	font             = "FreeMono Normal",          
+	fontsize         = 13,          
+	sections         = ["FIRST", "SECOND"],          
 	section_fontsize = 13,          
-	bg_color = "141414",          
-	active_bg = "90C435",          
-	active_fg = "000000",          
-	inactive_bg = "384323",          
-	inactive_fg = "a0a0a0",          
-	padding_y = 5,          
-	section_top = 10,   
-	panel_width = 250),
-	layout.Max(**layout_theme),
+	bg_color         = "141414",          
+	active_bg        = "90C435",          
+	active_fg        = "000000",          
+	inactive_bg      = "384323",          
+	inactive_fg      = "a0a0a0",          
+	padding_y        = 5,          
+	section_top      = 10,   
+	panel_width      = 250),
+	layout.Max     (),
 	layout.Floating(),]
 
 # Widget defaults
 widget_defaults = dict(
-	font='FreeMono medium  ',
-	fontsize=13,
-	padding=4.75,)
+	font     ='FreeMono Normal',
+	fontsize =13,
+	padding  =4.75,)
 extension_defaults = widget_defaults.copy()
 
 # Bar setup
@@ -191,7 +191,7 @@ screens = [Screen(top=bar.Bar(
 	widget.CheckUpdates(
 	update_interval = 1800,
 	distro = "Arch_checkupdates",
-	display_format = "{updates} Updates",
+    display_format='  {updates}',
 	colour_have_updates="#FF0000",),
 
 	widget.TextBox(
