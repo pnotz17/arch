@@ -6,25 +6,25 @@ from libqtile import hook
 import subprocess
 import os
 
-#  Variables 
-wmname = "LG3D"
-mod    = "mod4"                        
-auto_fullscreen     = True
-follow_mouse_focus  = True
-bring_front_click   = False
-cursor_warp         = False
-focus_on_window_activation = "smart"
-
 # Colors 
 BARCOLOR ="#000000"
-GREY1 ="#808080"
-GREY2 ="#808080"
-TCSB ="#262626"
+GREY1    ="#808080"
+GREY2    ="#808080"
+TCSB     ="#262626"
+
+# Misc settings
+mod                        = "mod4"                        
+follow_mouse_focus         = False
+bring_front_click          = False
+cursor_warp                = False
+auto_fullscreen            = True
+focus_on_window_activation = "smart"
+wmname                     = "LG3D" 
 
 # Key Bindings
 keys = [
 	
-	# Window Manager Controls
+	# Window manager controls
 	Key([mod, "control"], "r", 
 		lazy.restart()),
 	Key([mod, "shift"], "Return", 
@@ -40,7 +40,7 @@ keys = [
 	Key([mod], "f", 
 		lazy.window.toggle_fullscreen()),
 	
-	# Move Focus
+	# Move focus
 	Key([mod], "h", 
 		lazy.layout.left()),
 	Key([mod], "l", 
@@ -50,7 +50,7 @@ keys = [
 	Key([mod], "k", 
 		lazy.layout.up()),
 	
-	# Move Window
+	# Move window
 	Key([mod, "shift"], "h", 
 		lazy.layout.swap_left()),
 	Key([mod, "shift"], "l", 
@@ -62,7 +62,7 @@ keys = [
 	Key([mod], "Return", 
 		lazy.layout.swap_main()),
 	
-	# Alter Window Size
+	# Alter window size
 	Key([mod, "shift"], 'h', 
 		lazy.layout.shrink()),
 	Key([mod, "shift"],  'l', 
@@ -72,21 +72,27 @@ keys = [
 	Key([mod, "shift"], 'm', 
 		lazy.layout.maximize()),
 	  
-	# Treetab Controls          
+	# TreeTab controls          
 	Key([mod, "control"], "k",
 		lazy.layout.section_up()),          
 	Key([mod, "control"], "j", 
 		lazy.layout.section_down()),
-	    
-	# Extras
+	
+	# Extras 
 	Key([mod, "shift"], "b", 
 		lazy.spawn("firefox")),
 	Key([mod, "shift"], "f", 
 		lazy.spawn("spacefm")),
+	Key([mod, "shift"], "g", 
+		lazy.spawn("geany")),
 	Key([mod, "shift"], "m", 
 		lazy.spawn("st -e mutt")),
-	Key([mod], "q", 
-		lazy.spawn(".local/bin/dm_exit")),
+	Key([mod, "control"], "d", 
+		lazy.spawn(".local/bin/dm_fm")),
+	Key([mod, "control"], "e", 
+		lazy.spawn(".local/bin/dm_edit")),
+	Key([mod, "control"], "q", 
+		lazy.spawn(".local/bin/dm_power")),
 	Key([], "F11", 
 		lazy.spawn("amixer set Master Front 2-")),
 	Key([], "F12", 
@@ -94,7 +100,7 @@ keys = [
 	Key([], "Print", 
 		lazy.spawn("scrot media/screenshots/%b%d::%H%M%S.png")),]
 
-# Mouse Bindings
+# Mouse bindings
 mouse = [
 	Drag([mod], "Button1", 
 		lazy.window.set_position_floating(),start=lazy.window.get_position()),
@@ -103,7 +109,7 @@ mouse = [
 	Click([mod],"Button2", 
 		lazy.window.bring_to_front())]
 
-# Groups
+# Workspaces
 group_names = [
 	("dev", {'layout': 'Tile'}),
 	("www", {'layout': 'Tile'}),
@@ -118,7 +124,7 @@ for i, (name, kwargs) in enumerate(group_names, 1):
     keys.append(Key([mod, "shift"], str(i), 
 		lazy.window.togroup(name))) 				
 
-# Layout Variables
+# Layout defaults
 def init_layout_theme():
 	return {"margin":1,
 	"border_width":1,
@@ -145,16 +151,16 @@ layouts = [
 	section_top = 10,   
 	panel_width = 250),
 	layout.Max(**layout_theme),
-	layout.Floating(**layout_theme,)]
-	
-# Widget Variables
+	layout.Floating(),]
+
+# Widget defaults
 widget_defaults = dict(
 	font='Literation Mono Nerd Font',
 	fontsize=13,
 	padding=4.75,)
 extension_defaults = widget_defaults.copy()
 
-# Bar Variables
+# Bar setup
 screens = [Screen(top=bar.Bar(
 [	widget.Image(
 	filename = "~/.config/qtile/images/1",),
@@ -270,16 +276,10 @@ screens = [Screen(top=bar.Bar(
 	widget.Systray(
 	padding = 5,),
 
-]
-,20,background=BARCOLOR,opacity=0.90),),]
+],20,background=BARCOLOR,opacity=0.90),),]
 
-# Rules
-float_props = {
-	'wmtype': ['toolbar', 'splash'],
-	'role': ['About'],
-	'wmclass': ['file_progress, classB'],
-	'wmname': ['name1', 'name2'],
-	'wmhint': ['max_width'],}
-
-floating_layout = layout.Floating(border_focus='#b3afc2', float_props=float_props)
-floating_layout = layout.Floating(border_focus='#b3afc2', float_props=float_props, override_default_float_props=True)
+# Floating windows
+floating_layout = layout.Floating(float_rules=[
+	{'wmclass': 'xprop'},
+	*layout.Floating.default_float_rules
+	],  **layout_theme)
