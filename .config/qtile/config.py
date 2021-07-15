@@ -7,10 +7,10 @@ from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen
 
 # Colors 
-BARCOLOR ="#000000"
-GREY1    ="#808080"
-GREY2    ="#808080"
+GREY     ="#808080"
 TCSB     ="#262626"
+WHITE    ="#FFFFFF"
+BARCOLOR ="#000000"
 
 # Misc settings
 mod                        = "mod4"                        
@@ -155,7 +155,7 @@ layouts = [
 
 # Widget defaults
 widget_defaults = dict(
-	font='Literation Mono Nerd Font',
+	font='FreeMono medium  ',
 	fontsize=13,
 	padding=4.75,)
 extension_defaults = widget_defaults.copy()
@@ -167,84 +167,90 @@ screens = [Screen(top=bar.Bar(
 	
 	widget.TextBox(
 	fmt ='|',
-	foreground = GREY2,),
+	foreground = WHITE,),
 	
 	widget.GroupBox(
 	this_current_screen_border=TCSB,
 	highlight_method = "block",
 	active = "#ffffff",
-	inactive = GREY1,),
+	inactive = GREY,),
 	              
 	widget.TextBox(
 	fmt =' | ',
-	foreground = GREY2,),
+	foreground = WHITE,),
 
 	widget.CurrentLayout(
-	foreground =GREY1,),
+	foreground =GREY,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = GREY2,),
+	foreground = WHITE,),
 
 	widget.Spacer(),
 	
+	widget.CheckUpdates(
+	update_interval = 1800,
+	distro = "Arch_checkupdates",
+	display_format = "{updates} Updates",
+	colour_have_updates="#FF0000",),
+
 	widget.TextBox(
 	fmt ='|',
-	foreground = GREY2,),
+	foreground = WHITE,),
 	
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_cpu")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=GREY2,),
+	foreground=WHITE,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = GREY2,),
+	foreground = WHITE,),
 
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_ram")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=GREY2,),
+	foreground=WHITE,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = GREY2,),
+	foreground = WHITE,),
 	
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_vol")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=GREY2,),
+	foreground=WHITE,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = GREY2,),
+	foreground = WHITE,),
 
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_up")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=GREY2,),
+	foreground=WHITE,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = GREY2,),
+	foreground = WHITE,),
 	
     widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_do")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=GREY2,),
+	foreground=WHITE,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = GREY2,),
+	foreground = WHITE,),
 
 	widget.GenPollText(
 	func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_time")).decode("utf-8").replace('\n', ''),
 	update_interval=1, 
-	foreground=GREY2,),
+	foreground=WHITE,),
 	
 	widget.TextBox(
 	fmt =' | ',
-	foreground = GREY2,),
+	foreground = WHITE,),
 
 	widget.Systray(
 	padding = 5,),
