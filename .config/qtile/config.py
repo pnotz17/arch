@@ -6,8 +6,8 @@ from libqtile.config import Click, Drag, Group, Key, Screen
 
 # Colors 
 RED      ="#FF0000"
-GREY     ="#808080"
-TCSB     ="#262626"
+GREY     ="#B5B5B5"
+TCSB     ="#333333"
 WHITE    ="#FFFFFF"
 BLACK    ="#000000"
 NBORDER  ="#B3AFC2"
@@ -174,7 +174,7 @@ layouts = [
 
 # Widget defaults
 widget_defaults = dict(
-	font     ='Ubuntu Mono Nerd Font',
+	font     ='Agave Nerd Font',
 	fontsize =13,
 	padding  =4.75,)
 extension_defaults = widget_defaults.copy()
