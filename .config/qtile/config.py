@@ -154,23 +154,23 @@ layout_theme = init_layout_theme()
 
 # Layouts
 layouts = [
-layout.MonadTall (**layout_theme),
-layout.MonadWide (**layout_theme),
-layout.Tile		 (**layout_theme),
-layout.RatioTile (**layout_theme),
-layout.Matrix    (**layout_theme),
-layout.TreeTab   (font="Mono", 
-                  fontsize=13, 
-                  panel_width=175, 
-                  bg_color="#1c1b1c", 
-                  active_bg="#606060", 
-                  inactive_bg="#404040", 
-                  border_width=2, 
-                  padding_left=6, padding_x=6, 
-                  padding_y=2, 
-                  vspace=2),
-layout.Max     	 (**layout_theme),
-layout.Floating	 (**layout_theme),]
+	layout.MonadTall (**layout_theme),
+	layout.MonadWide (**layout_theme),
+	layout.Tile		 (**layout_theme),
+	layout.RatioTile (**layout_theme),
+	layout.Matrix    (**layout_theme),
+	layout.TreeTab   (font="Mono", 
+				  fontsize=13, 
+				  panel_width=175, 
+				  bg_color="#1c1b1c", 
+				  active_bg="#606060", 
+				  inactive_bg="#404040", 
+				  border_width=2, 
+				  padding_left=6, padding_x=6, 
+				  padding_y=2, 
+				  vspace=2),
+	layout.Max     	 (**layout_theme),
+	layout.Floating	 (**layout_theme),]
 
 # Widget defaults
 widget_defaults = dict(
