@@ -160,21 +160,21 @@ layouts = [
 	layout.RatioTile (**layout_theme),
 	layout.Matrix    (**layout_theme),
 	layout.TreeTab   (font="Mono", 
-				  fontsize=13, 
-				  panel_width=175, 
-				  bg_color="#1c1b1c", 
-				  active_bg="#606060", 
-				  inactive_bg="#404040", 
-				  border_width=2, 
-				  padding_left=6, padding_x=6, 
-				  padding_y=2, 
-				  vspace=2),
+					  fontsize=13, 
+					  panel_width=175, 
+					  bg_color="#1c1b1c", 
+					  active_bg="#606060", 
+					  inactive_bg="#404040", 
+					  border_width=2, 
+					  padding_left=6, padding_x=6, 
+					  padding_y=2, 
+					  vspace=2),
 	layout.Max     	 (**layout_theme),
 	layout.Floating	 (**layout_theme),]
 
 # Widget defaults
 widget_defaults = dict(
-	font     ='Agave Nerd Font',
+	font     ='Hurmit Nerd Font',
 	fontsize =13,
 	padding  =4.75,)
 extension_defaults = widget_defaults.copy()
@@ -202,7 +202,7 @@ screens = [
 				foreground=GREY,),
 				
 				widget.CurrentLayout(
-                font = "DaddyTimeMono Nerd Font",				
+                font = "Mono Bold",				
                 foreground=WHITE,),
 	
 				widget.TextBox(
