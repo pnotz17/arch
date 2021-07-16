@@ -5,19 +5,23 @@ from libqtile import hook, bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen
 
 # Colors 
+RED      ="#FF0000"
 GREY     ="#808080"
 TCSB     ="#262626"
 WHITE    ="#FFFFFF"
+BLACK    ="#000000"
+NBORDER  ="#B3AFC2"
+FBORDER  ="#B3AFC2"
 BARCOLOR ="#000000"
 
 # Misc settings
-mod                        = "mod4"                        
-follow_mouse_focus         = True
-auto_fullscreen            = True
-bring_front_click          = False
-cursor_warp                = False
-focus_on_window_activation = "smart"
-wmname                     = "LG3D" 
+mod                        ="mod4"                        
+follow_mouse_focus         =True
+auto_fullscreen            =True
+bring_front_click          =False
+cursor_warp                =False
+focus_on_window_activation ="smart"
+wmname                     ="LG3D" 
 
 # Key Bindings
 keys = [
@@ -121,21 +125,21 @@ for i, (name, kwargs) in enumerate(group_names, 1):
 def init_layout_theme():
 	return {"margin":1,
 	"border_width"  :1,
-	"border_focus"  : "#b3afc2",
-	"border_normal" : "#b3afc2"}
+	"border_focus"  : FBORDER,
+	"border_normal" : NBORDER}
 layout_theme = init_layout_theme()
 
 # Layouts
 layouts = [
 	layout.MonadTall (**layout_theme),
 	layout.MonadWide (**layout_theme),
+	layout.Tile		 (**layout_theme),
 	layout.Max     	 (**layout_theme),
-	layout.Floating	 (**layout_theme),
-	layout.Tile		 (shift_windows=True,**layout_theme)]
+	layout.Floating	 (**layout_theme),]
 
 # Widget defaults
 widget_defaults = dict(
-	font     ='FreeMono Normal',
+	font     ='FreeMono medium',
 	fontsize =13,
 	padding  =4.75,)
 extension_defaults = widget_defaults.copy()
@@ -146,41 +150,42 @@ screens = [
         top=bar.Bar( 
 				[	
 				widget.Image(
-				filename = "~/.config/qtile/images/1",),
+				filename="~/.config/qtile/images/1",),
 				
 				widget.TextBox(
-				fmt ='|',
-				foreground = WHITE,),
+				fmt='|',
+				foreground=WHITE,),
 				
 				widget.GroupBox(
 				this_current_screen_border=TCSB,
-				highlight_method = "block",
-				active = "#ffffff",
-				inactive = GREY,),
+				highlight_method="block",
+				active=WHITE,
+				inactive=GREY,),
 				
 				widget.TextBox(
-				fmt =' | ',
-				foreground = WHITE,),
+				fmt='|',
+				foreground=WHITE,),
 				
 				widget.CurrentLayout(
-				foreground =GREY,),
-				
+				font='UbuntuMono',
+				foreground=WHITE,),
+	
 				widget.TextBox(
-				fmt =' | ',
-				foreground = WHITE,),
+				fmt='|',
+				foreground=WHITE,),
 				
 				widget.Spacer(),
 			    
 			  	widget.CheckUpdates(
 				distro='Arch_checkupdates',
 				display_format=' {updates}',
-				colour_have_updates="#FF0000",
-				execute = '~/.local/bin/modules/pacupdate', 
+				colour_have_updates=RED,
+				execute='~/.local/bin/modules/pacupdate', 
 				update_interval=60),
 				
 				widget.TextBox(
-				fmt ='|',
-				foreground = WHITE,),
+				fmt=' | ',
+				foreground=WHITE,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_cpu")).decode("utf-8").replace('\n', ''),
@@ -188,8 +193,8 @@ screens = [
 				foreground=WHITE,),
 				
 				widget.TextBox(
-				fmt =' | ',
-				foreground = WHITE,),
+				fmt=' | ',
+				foreground=WHITE,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_ram")).decode("utf-8").replace('\n', ''),
@@ -197,8 +202,8 @@ screens = [
 				foreground=WHITE,),
 				
 				widget.TextBox(
-				fmt =' | ',
-				foreground = WHITE,),
+				fmt=' | ',
+				foreground=WHITE,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_vol")).decode("utf-8").replace('\n', ''),
@@ -206,8 +211,8 @@ screens = [
 				foreground=WHITE,),
 				
 				widget.TextBox(
-				fmt =' | ',
-				foreground = WHITE,),
+				fmt=' | ',
+				foreground=WHITE,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_up")).decode("utf-8").replace('\n', ''),
@@ -215,8 +220,8 @@ screens = [
 				foreground=WHITE,),
 				
 				widget.TextBox(
-				fmt =' | ',
-				foreground = WHITE,),
+				fmt=' | ',
+				foreground=WHITE,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_do")).decode("utf-8").replace('\n', ''),
@@ -224,8 +229,8 @@ screens = [
 				foreground=WHITE,),
 				
 				widget.TextBox(
-				fmt =' | ',
-				foreground = WHITE,),
+				fmt=' | ',
+				foreground=WHITE,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_time")).decode("utf-8").replace('\n', ''),
@@ -233,11 +238,11 @@ screens = [
 				foreground=WHITE,),
 				
 				widget.TextBox(
-				fmt =' | ',
-				foreground = WHITE,),
+				fmt=' | ',
+				foreground=WHITE,),
 				
 				widget.Systray(
-				padding = 5,),
+				padding=5,),
 				],
 	        20,
         background=BARCOLOR,
