@@ -140,9 +140,9 @@ group_names = [
 	("doc", {'layout': 'MonadTall'}),]
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
-for i, (name, kwargs) in enumerate(group_names, 1):
-    keys.append(Key([mod], str(i),lazy.group[name].toscreen()))               
-    keys.append(Key([mod, "shift"], str(i),lazy.window.togroup(name))) 
+for i,(name, kwargs)in enumerate(group_names,1):
+    keys.append(Key([mod],str(i),lazy.group[name].toscreen()))               
+    keys.append(Key([mod,"shift"],str(i),lazy.window.togroup(name))) 
 		
 # Layout defaults
 def init_layout_theme():
@@ -174,7 +174,7 @@ layouts = [
 
 # Widget defaults
 widget_defaults = dict(
-	font     ='Hurmit Nerd Font',
+	font     ='DaddyTimeMono Nerd Font',
 	fontsize =13,
 	padding  =4.75,)
 extension_defaults = widget_defaults.copy()
@@ -202,7 +202,7 @@ screens = [
 				foreground=GREY,),
 				
 				widget.CurrentLayout(
-                font = "Mono Bold",				
+                font="UbuntuMono Nerd Font",				
                 foreground=WHITE,),
 	
 				widget.TextBox(
