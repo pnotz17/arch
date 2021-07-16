@@ -25,87 +25,112 @@ wmname                     ="LG3D"
 
 # Key Bindings
 keys = [
-	
 	# Window manager controls
-	Key([mod, "control"], "r", 
+	Key(
+		[mod, "control"], "r", 
 		lazy.restart()),
-	Key([mod, "shift"], "Return", 
+	Key(
+		[mod, "shift"], "Return", 
 		lazy.spawn("st")),
-	Key([mod, "shift"], "c", 
+	Key(
+		[mod, "shift"], "c", 
 		lazy.window.kill()),
-	Key([mod], "space", 
+	Key(
+		[mod], "space", 
 		lazy.next_layout()),	
-	Key([mod], "p", 
+	Key(
+		[mod], "p", 
 		lazy.spawn("dmenu_run")),
-	Key([mod], "t", 
+	Key(
+		[mod], "t", 
 		lazy.window.toggle_floating()),
-	Key([mod], "f", 
+	Key(
+		[mod], "f", 
 		lazy.window.toggle_fullscreen()),
-	
 	# Move focus
-	Key([mod], "h", 
+	Key(
+		[mod], "h", 
 		lazy.layout.left()),
-	Key([mod], "l", 
+	Key(
+		[mod], "l", 
 		lazy.layout.right()),
-	Key([mod], "j", 
+	Key(
+		[mod], "j", 
 		lazy.layout.down()),
-	Key([mod], "k", 
+	Key(
+		[mod], "k", 
 		lazy.layout.up()),
-	
 	# Move window
-	Key([mod, "shift"], "h", 
+	Key(
+		[mod, "shift"], "h", 
 		lazy.layout.swap_left()),
-	Key([mod, "shift"], "l", 
+	Key(
+		[mod, "shift"], "l", 
 		lazy.layout.swap_right()),
-	Key([mod, "shift"], "j", 
+	Key(
+		[mod, "shift"], "j", 
 		lazy.layout.shuffle_down()),
-	Key([mod, "shift"], "k", 
+	Key(
+		[mod, "shift"], "k", 
 		lazy.layout.shuffle_up()),
-	Key([mod], "Return", 
+	Key(
+		[mod], "Return", 
 		lazy.layout.swap_main()),
-	
 	# Alter window size
-	Key([mod, "control"], 'h', 
+	Key(
+		[mod, "control"], 'h', 
 		lazy.layout.shrink()),
-	Key([mod, "control"],  'l', 
+	Key(
+		[mod, "control"],  'l', 
 		lazy.layout.grow()),
-	Key([mod, "control"],  'n', 
+	Key(
+		[mod, "control"],  'n', 
 		lazy.layout.reset()),
-	Key([mod, "control"], 'm', 
+	Key(
+		[mod, "control"], 'm', 
 		lazy.layout.maximize()),
-	
 	# Extras 
-	Key([mod, "shift"], "b", 
+	Key(
+		[mod, "shift"], "b", 
 		lazy.spawn("firefox")),
-	Key([mod, "shift"], "f", 
+	Key(
+		[mod, "shift"], "f", 
 		lazy.spawn("spacefm")),
-	Key([mod, "shift"], "g", 
+	Key(
+		[mod, "shift"], "g", 
 		lazy.spawn("geany")),
-	Key([mod, "shift"], "m", 
+	Key(
+		[mod, "shift"], "m", 
 		lazy.spawn("st -e mutt")),
-	Key([mod], "d", 
+	Key(
+		[mod], "d", 
 		lazy.spawn(".local/bin/dm_ytdl")),
-	Key([mod, "control"], "d", 
+	Key(
+		[mod, "control"], "d", 
 		lazy.spawn(".local/bin/dm_fm")),	
-	Key([mod, "control"], "e", 
+	Key(
+		[mod, "control"], "e", 
 		lazy.spawn(".local/bin/dm_ed")),
-	Key([mod, "control"], "q", 
+	Key(
+		[mod, "control"], "q", 
 		lazy.spawn(".local/bin/dm_power")),
-	Key([], "F11", 
+	Key(
+		[], "F11", 
 		lazy.spawn("amixer set Master Front 2-")),
-	Key([], "F12", 
+	Key(
+		[], "F12", 
 		lazy.spawn("amixer set Master Front 2+")),
-	Key([], "Print", 
+	Key(
+		[], "Print", 
 		lazy.spawn("scrot media/screenshots/%b%d::%H%M%S.png")),]
 
 # Mouse bindings
 mouse = [
-	Drag([mod], "Button1", 
-		lazy.window.set_position_floating(),start=lazy.window.get_position()),
-	Drag([mod], "Button3", 
-		lazy.window.set_size_floating(),start=lazy.window.get_size()),
-	Click([mod],"Button2", 
-		lazy.window.bring_to_front())]
+	Drag([mod],"Button1",lazy.window.set_position_floating(),
+		start=lazy.window.get_position()),
+	Drag([mod],"Button3",lazy.window.set_size_floating(),
+		start=lazy.window.get_size()),
+	Click([mod],"Button2",lazy.window.bring_to_front())]
 
 group_names = [
 	("dev", {'layout': 'MonadTall'}),
@@ -116,10 +141,8 @@ group_names = [
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
-    keys.append(Key([mod], str(i), 
-		lazy.group[name].toscreen()))               
-    keys.append(Key([mod, "shift"], str(i), 
-		lazy.window.togroup(name))) 
+    keys.append(Key([mod], str(i),lazy.group[name].toscreen()))               
+    keys.append(Key([mod, "shift"], str(i),lazy.window.togroup(name))) 
 		
 # Layout defaults
 def init_layout_theme():
@@ -134,12 +157,24 @@ layouts = [
 	layout.MonadTall (**layout_theme),
 	layout.MonadWide (**layout_theme),
 	layout.Tile		 (**layout_theme),
+    layout.Matrix    (**layout_theme),
+	layout.RatioTile (**layout_theme),
 	layout.Max     	 (**layout_theme),
-	layout.Floating	 (**layout_theme),]
-
+	layout.Floating	 (**layout_theme),
+	layout.TreeTab   (font="Mono", 
+	                  fontsize=13, 
+	                  panel_width=175, 
+	                  bg_color="#1c1b1c", 
+	                  active_bg="#606060", 
+	                  inactive_bg="#404040", 
+	                  border_width=2, 
+	                  padding_left=6, padding_x=6, 
+	                  padding_y=2, 
+	                  vspace=2)]
+	
 # Widget defaults
 widget_defaults = dict(
-	font     ='FreeMono medium',
+	font     ='Ubuntu Mono Nerd Font',
 	fontsize =13,
 	padding  =4.75,)
 extension_defaults = widget_defaults.copy()
@@ -154,7 +189,7 @@ screens = [
 				
 				widget.TextBox(
 				fmt='|',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.GroupBox(
 				this_current_screen_border=TCSB,
@@ -164,15 +199,15 @@ screens = [
 				
 				widget.TextBox(
 				fmt='|',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.CurrentLayout(
-				font='UbuntuMono',
-				foreground=WHITE,),
+                font = "DaddyTimeMono Nerd Font",				
+                foreground=WHITE,),
 	
 				widget.TextBox(
 				fmt='|',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.Spacer(),
 			    
@@ -185,68 +220,68 @@ screens = [
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_cpu")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_ram")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_vol")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_up")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_do")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_time")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=WHITE,),
+				foreground=GREY,),
 				
 				widget.Systray(
 				padding=5,),
 				],
-	        20,
-        background=BARCOLOR,
-    opacity=0.90),),
+			20,
+		background=BARCOLOR,
+	opacity=0.90),),
 ]
 
 # Run the utility of `xprop` to see the wm class and name of an X client floating window.
