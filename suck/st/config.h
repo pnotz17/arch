@@ -5,9 +5,9 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Monospace:pixelsize=20";
+static char *font = "Monospace:pixelsize=18";
 static char *font2[] = {
-	"EmojiOne:pixelsize=20:antialias=true:autohint=true",
+	"EmojiOne:pixelsize=18:antialias=true:autohint=true",
 };
 
 static int borderpx = 2;
@@ -127,7 +127,7 @@ static const char *colorname[] = {
 	/* more colors can be added after 255 to use with DefaultXX */
 	"#cccccc",
 	"#555555",
-	"#000000",
+	"black",
 };
 
 
@@ -218,8 +218,8 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,               XK_p,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ TERMMOD,              XK_Up,          zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Down,        zoom,           {.f = -1} },
+	{ ControlMask,          XK_Up,          zoom,           {.f = +1} },
+	{ ControlMask,          XK_Down,        zoom,           {.f = -1} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 	{ MODKEY,               XK_Page_Up,     kscrollup,      {.i = -1} },
