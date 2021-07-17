@@ -3,14 +3,7 @@ from libqtile.lazy import lazy
 from libqtile import hook, bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen
 
-mod                        ="mod4"  
-follow_mouse_focus         =True
-auto_fullscreen            =True
-bring_front_click          =False
-cursor_warp                =False
-focus_on_window_activation ="smart"
-wmname                     ="LG3D"                       
-
+mod  = 'mod4'
 keys = [
 	Key(
 		[mod, "control"], "r", 
@@ -175,7 +168,8 @@ layouts = [
 widget_defaults = dict(
 	font     ='DaddyTimeMono Nerd Font',
 	fontsize =13,
-	padding  =4.75,)
+	padding  =4.75,
+	)
 extension_defaults = widget_defaults.copy()
 
 screens = [
@@ -303,15 +297,29 @@ screens = [
 	opacity=0.90),),
 ]
 
+dgroups_key_binder = None
+dgroups_app_rules = []  # type: List
+
+main = None
+follow_mouse_focus = True
+bring_front_click = False
+cursor_warp = False
 floating_layout = layout.Floating(float_rules=[
 	{'wmclass': 'confirm'},
-    {'wmclass': 'dialog'},
-    {'wmclass': 'download'},
-    {'wmclass': 'error'},
-    {'wmclass': 'file_progress'},
-    {'wmclass': 'notification'},
-    {'wmclass': 'confirmreset'},
-    {'wmclass': 'Pinentry-gtk-2'},
-*layout.Floating.default_float_rules],**layout_theme)
+	{'wmclass': 'dialog'},
+	{'wmclass': 'download'},
+	{'wmclass': 'error'},
+	{'wmclass': 'file_progress'},
+	{'wmclass': 'notification'},
+	{'wmclass': 'splash'},
+	{'wmclass': 'toolbar'},
+	{'wmclass': 'confirmreset'}, 
+	{'wmclass': 'makebranch'},  
+	{'wmclass': 'maketag'},  
+	{'wmclass': 'Pinentry-gtk-2'},
+	{'wmclass': 'ssh-askpass'},
+	*layout.Floating.default_float_rules],**layout_theme)
+auto_fullscreen = True
+focus_on_window_activation = 'smart'
 
-
+wmname = 'qtile'
