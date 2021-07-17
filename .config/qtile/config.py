@@ -1,10 +1,8 @@
-# Imports
 import os, subprocess
 from libqtile.lazy import lazy
 from libqtile import hook, bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen
 
-# Colors 
 RED      ="#FF0000"
 GREY     ="#B5B5B5"
 TCSB     ="#333333"
@@ -14,7 +12,6 @@ NBORDER  ="#B3AFC2"
 FBORDER  ="#B3AFC2"
 BARCOLOR ="#000000"
 
-# Misc settings
 mod                        ="mod4"                        
 follow_mouse_focus         =True
 auto_fullscreen            =True
@@ -23,9 +20,7 @@ cursor_warp                =False
 focus_on_window_activation ="smart"
 wmname                     ="LG3D" 
 
-# Key Bindings
 keys = [
-	# Window manager controls
 	Key(
 		[mod, "control"], "r", 
 		lazy.restart()),
@@ -47,7 +42,6 @@ keys = [
 	Key(
 		[mod], "f", 
 		lazy.window.toggle_fullscreen()),
-	# Move focus
 	Key(
 		[mod], "h", 
 		lazy.layout.left()),
@@ -60,7 +54,6 @@ keys = [
 	Key(
 		[mod], "k", 
 		lazy.layout.up()),
-	# Move window
 	Key(
 		[mod, "shift"], "h", 
 		lazy.layout.swap_left()),
@@ -76,7 +69,6 @@ keys = [
 	Key(
 		[mod], "Return", 
 		lazy.layout.swap_main()),
-	# Alter window size
 	Key(
 		[mod, "control"], 'h', 
 		lazy.layout.shrink()),
@@ -89,7 +81,6 @@ keys = [
 	Key(
 		[mod, "control"], 'm', 
 		lazy.layout.maximize()),
-	# Extras 
 	Key(
 		[mod, "shift"], "b", 
 		lazy.spawn("firefox")),
@@ -124,7 +115,6 @@ keys = [
 		[], "Print", 
 		lazy.spawn("scrot media/screenshots/%b%d::%H%M%S.png")),]
 
-# Mouse bindings
 mouse = [
 	Drag([mod],"Button1",lazy.window.set_position_floating(),
 		start=lazy.window.get_position()),
@@ -144,7 +134,6 @@ for i,(name, kwargs)in enumerate(group_names,1):
     keys.append(Key([mod],str(i),lazy.group[name].toscreen()))               
     keys.append(Key([mod,"shift"],str(i),lazy.window.togroup(name))) 
 		
-# Layout defaults
 def init_layout_theme():
 	return {"margin":1,
 	"border_width"  :1,
@@ -152,7 +141,6 @@ def init_layout_theme():
 	"border_normal" : NBORDER}
 layout_theme = init_layout_theme()
 
-# Layouts
 layouts = [
 	layout.MonadTall (**layout_theme),
 	layout.MonadWide (**layout_theme),
@@ -172,17 +160,15 @@ layouts = [
 	layout.Max     	 (**layout_theme),
 	layout.Floating	 (**layout_theme),]
 
-# Widget defaults
 widget_defaults = dict(
 	font     ='DaddyTimeMono Nerd Font',
 	fontsize =13,
 	padding  =4.75,)
 extension_defaults = widget_defaults.copy()
 
-# Bar setup
 screens = [
-    Screen(
-        top=bar.Bar( 
+	Screen(
+		top=bar.Bar( 
 				[	
 				widget.Image(
 				filename="~/.config/qtile/images/1",),
@@ -284,7 +270,6 @@ screens = [
 	opacity=0.90),),
 ]
 
-# Run the utility of `xprop` to see the wm class and name of an X client floating window.
 floating_layout = layout.Floating(float_rules=[
 	{'wmclass': 'confirm'},
     {'wmclass': 'dialog'},
