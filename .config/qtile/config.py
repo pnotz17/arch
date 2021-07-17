@@ -137,19 +137,20 @@ for i in range(len(groups)):
    keys.append(Key([mod], str((i)), lazy.group[str(i)].toscreen()))
    keys.append(Key([mod, "shift"], str((i)), lazy.window.togroup(str(i), switch_group=True)))
 
-COL0  ="#000000"
-COL1  ="#FFFFFF"
-COL2  ="#B5B5B5"
-COL3  ="#FF0000"
-COL4  ="#B3AFC2"
-COL5  ="#B3AFC2"
-COL6  ="#121212"
+colors = {
+    '0': '000000',
+    '1': 'FFFFFF',
+    '2': 'B5B5B5',
+    '3': 'FF0000',
+    '4': '121212',
+    '5': 'B3AFC2',
+    '6': 'B3AFC2'}
 
 def init_layout_theme():
 	return {"margin":1,
 	"border_width"  :1,
-	"border_focus"  : COL4,
-	"border_normal" : COL5}
+	"border_focus"  : colors['5'],
+	"border_normal" : colors['6']}
 layout_theme = init_layout_theme()
 
 layouts = [
@@ -187,28 +188,29 @@ screens = [
 				
 				widget.TextBox(
 				fmt='|',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.GroupBox(
-				this_current_screen_border=COL6,
 				highlight_method="block",
-				active=COL3,
-				inactive=COL2,
+				this_current_screen_border=colors['4'],
+				active=colors['3'],
+				inactive=colors['2'],
 				),
 				
 				widget.TextBox(
 				fmt='|',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.CurrentLayout(
-                foreground=COL1,
+				font='UbuntuMono Nerd Font',
+                foreground=colors['1'],
                 ),
 	
 				widget.TextBox(
 				fmt='|',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.Spacer(),
@@ -216,80 +218,80 @@ screens = [
 			  	widget.CheckUpdates(
 				distro='Arch_checkupdates',
 				display_format=' {updates}',
-				colour_have_updates=COL3,
+				colour_have_updates=colors['3'],
 				execute='~/.local/bin/modules/pacupdate', 
 				update_interval=60,
 				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_cpu")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_ram")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_vol")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_up")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_do")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_time")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=COL2,
+				foreground=colors['2'],
 				),
 				
 				widget.Systray(
@@ -297,7 +299,7 @@ screens = [
 				),
 				],
 			20,
-		background=COL0,
+		background=colors['0'],
 	opacity=0.90),),
 ]
 
