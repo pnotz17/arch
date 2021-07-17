@@ -3,22 +3,13 @@ from libqtile.lazy import lazy
 from libqtile import hook, bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen
 
-RED      ="#FF0000"
-GREY     ="#B5B5B5"
-TCSB     ="#333333"
-WHITE    ="#FFFFFF"
-BLACK    ="#000000"
-NBORDER  ="#B3AFC2"
-FBORDER  ="#B3AFC2"
-BARCOLOR ="#000000"
-
-mod                        ="mod4"                        
+mod                        ="mod4"  
 follow_mouse_focus         =True
 auto_fullscreen            =True
 bring_front_click          =False
 cursor_warp                =False
 focus_on_window_activation ="smart"
-wmname                     ="LG3D" 
+wmname                     ="LG3D"                       
 
 keys = [
 	Key(
@@ -122,23 +113,43 @@ mouse = [
 		start=lazy.window.get_size()),
 	Click([mod],"Button2",lazy.window.bring_to_front())]
 
-group_names = [
-	("dev", {'layout': 'MonadTall'}),
-	("www", {'layout': 'MonadTall'}),
-	("code",{'layout': 'MonadTall'}),
-	("sys", {'layout': 'MonadTall'}),
-	("doc", {'layout': 'MonadTall'}),]
-groups = [Group(name, **kwargs) for name, kwargs in group_names]
+groups= [
+	Group("1",
+		  label="dev",
+		  ),
+	
+	Group("2",
+		  label="www",
+		  ),
+	
+	Group("3",
+		  label="code",
+		  ),
+	
+	Group("4",
+		  label="sys",
+		  ),
+	
+	Group("5",
+		  label="doc"),]
 
-for i,(name, kwargs)in enumerate(group_names,1):
-    keys.append(Key([mod],str(i),lazy.group[name].toscreen()))               
-    keys.append(Key([mod,"shift"],str(i),lazy.window.togroup(name))) 
-		
+for i in range(len(groups)):
+   keys.append(Key([mod], str((i)), lazy.group[str(i)].toscreen()))
+   keys.append(Key([mod, "shift"], str((i)), lazy.window.togroup(str(i), switch_group=True)))
+
+COL0  ="#000000"
+COL1  ="#FFFFFF"
+COL2  ="#B5B5B5"
+COL3  ="#FF0000"
+COL4  ="#B3AFC2"
+COL5  ="#B3AFC2"
+COL6  ="#121212"
+
 def init_layout_theme():
 	return {"margin":1,
 	"border_width"  :1,
-	"border_focus"  : FBORDER,
-	"border_normal" : NBORDER}
+	"border_focus"  : COL4,
+	"border_normal" : COL5}
 layout_theme = init_layout_theme()
 
 layouts = [
@@ -171,102 +182,122 @@ screens = [
 		top=bar.Bar( 
 				[	
 				widget.Image(
-				filename="~/.config/qtile/images/1",),
+				filename="~/.config/qtile/images/1",
+				),
 				
 				widget.TextBox(
 				fmt='|',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.GroupBox(
-				this_current_screen_border=TCSB,
+				this_current_screen_border=COL6,
 				highlight_method="block",
-				active=WHITE,
-				inactive=GREY,),
+				active=COL3,
+				inactive=COL2,
+				),
 				
 				widget.TextBox(
 				fmt='|',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.CurrentLayout(
-                font="UbuntuMono Nerd Font",				
-                foreground=WHITE,),
+                foreground=COL1,
+                ),
 	
 				widget.TextBox(
 				fmt='|',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.Spacer(),
 			    
 			  	widget.CheckUpdates(
 				distro='Arch_checkupdates',
 				display_format=' {updates}',
-				colour_have_updates=RED,
+				colour_have_updates=COL3,
 				execute='~/.local/bin/modules/pacupdate', 
-				update_interval=60),
+				update_interval=60,
+				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_cpu")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_ram")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_vol")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_up")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_do")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.GenPollText(
 				func=lambda: subprocess.check_output(os.path.expanduser("~/.local/bin/modules/sb_time")).decode("utf-8").replace('\n', ''),
 				update_interval=1, 
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.TextBox(
 				fmt=' | ',
-				foreground=GREY,),
+				foreground=COL2,
+				),
 				
 				widget.Systray(
-				padding=5,),
+				padding=5,
+				),
 				],
 			20,
-		background=BARCOLOR,
+		background=COL0,
 	opacity=0.90),),
 ]
 
@@ -277,10 +308,8 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'error'},
     {'wmclass': 'file_progress'},
     {'wmclass': 'notification'},
-    {'wmclass': 'splash'},
-    {'wmclass': 'toolbar'},
     {'wmclass': 'confirmreset'},
     {'wmclass': 'Pinentry-gtk-2'},
-    {'wname'  : 'Open File'},
 *layout.Floating.default_float_rules],**layout_theme)
+
 
