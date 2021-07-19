@@ -211,7 +211,7 @@ screens = [
 			    
 			  	widget.CheckUpdates(
 				distro='Arch_checkupdates',
-				display_format=' {updates}',
+				display_format='  {updates}',
 				colour_have_updates=colors['3'],
 				execute='~/.local/bin/modules/pacupdate', 
 				update_interval=60,
