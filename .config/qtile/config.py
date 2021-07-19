@@ -97,14 +97,16 @@ keys = [
 		lazy.spawn("amixer set Master Front 2+")),
 	Key(
 		[], "Print", 
-		lazy.spawn("scrot media/screenshots/%b%d::%H%M%S.png")),]
+		lazy.spawn("scrot media/screenshots/%b%d::%H%M%S.png")),
+]
 
 mouse = [
 	Drag([mod],"Button1",lazy.window.set_position_floating(),
 		start=lazy.window.get_position()),
 	Drag([mod],"Button3",lazy.window.set_size_floating(),
 		start=lazy.window.get_size()),
-	Click([mod],"Button2",lazy.window.bring_to_front())]
+	Click([mod],"Button2",lazy.window.bring_to_front())
+]
 
 groups= [
 	Group("1",
@@ -124,7 +126,8 @@ groups= [
 		  ),
 	
 	Group("5",
-		  label="doc"),]
+		  label="doc"),
+]
 
 for i in range(len(groups)):
    keys.append(Key([mod], str((i)), lazy.group[str(i)].toscreen()))
@@ -143,7 +146,8 @@ def init_layout_theme():
 	return {"margin":1,
 	"border_width"  :1,
 	"border_focus"  : colors['5'],
-	"border_normal" : colors['6']}
+	"border_normal" : colors['6']
+	}
 layout_theme = init_layout_theme()
 
 layouts = [
@@ -159,11 +163,12 @@ layouts = [
 					  active_bg="#606060", 
 					  inactive_bg="#404040", 
 					  border_width=2, 
-					  padding_left=6, padding_x=6, 
+					  padding_left=6,padding_x=6, 
 					  padding_y=2, 
 					  vspace=2),
 	layout.Max     	 (**layout_theme),
-	layout.Floating	 (**layout_theme),]
+	layout.Floating	 (**layout_theme),
+]
 
 widget_defaults = dict(
 	font     ='DaddyTimeMono Nerd Font',
@@ -297,13 +302,13 @@ screens = [
 	opacity=0.90),),
 ]
 
-dgroups_key_binder = None
-dgroups_app_rules = []  # type: List
+dgroups_key_binder=None
+dgroups_app_rules=[]  
 
-main = None
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
+main=None
+follow_mouse_focus=True
+bring_front_click=False
+cursor_warp=False
 floating_layout = layout.Floating(float_rules=[
 	{'wmclass': 'confirm'},
 	{'wmclass': 'dialog'},
@@ -316,10 +321,10 @@ floating_layout = layout.Floating(float_rules=[
 	{'wmclass': 'confirmreset'}, 
 	{'wmclass': 'makebranch'},  
 	{'wmclass': 'maketag'},  
-	{'wmclass': 'Pinentry-gtk-2'},
 	{'wmclass': 'ssh-askpass'},
-	*layout.Floating.default_float_rules],**layout_theme)
-auto_fullscreen = True
-focus_on_window_activation = 'smart'
+	{'wmclass': 'Pinentry-gtk-2'},
+*layout.Floating.default_float_rules],**layout_theme)
+auto_fullscreen=True
+focus_on_window_activation='smart'
 
-wmname = 'qtile'
+wmname='qtile'
