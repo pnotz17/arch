@@ -16,10 +16,10 @@ fi
 /usr/bin/feh --bg-fill ~/wallpaper.jpg &
 /usr/bin/dunst ~/.config/dunst/dunstrc &
 ~/.local/bin/bars/dwm_bar_emoji &
-~/.local/bin/xs_destroyah &
+#~/.local/bin/xs_destroyah &
 
 # dwm start loop
-while true; do
-    /usr/local/bin/dwm 2> /dev/null
-done
-
+#while true; do
+    #/usr/local/bin/dwm 2> /dev/null
+#done
+exec /usr/bin/qtile start > /tmp/.start_qtile ; xinit /tmp/.start_qtile -- :2
