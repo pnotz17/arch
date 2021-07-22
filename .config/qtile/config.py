@@ -304,27 +304,17 @@ screens = [
 
 dgroups_key_binder=None
 dgroups_app_rules=[]  
-
 main=None
 follow_mouse_focus=True
 bring_front_click=False
 cursor_warp=False
-floating_layout = layout.Floating(float_rules=[
-	{'wmclass': 'confirm'},
-	{'wmclass': 'dialog'},
-	{'wmclass': 'download'},
-	{'wmclass': 'error'},
-	{'wmclass': 'file_progress'},
-	{'wmclass': 'notification'},
-	{'wmclass': 'splash'},
-	{'wmclass': 'toolbar'},
-	{'wmclass': 'confirmreset'}, 
-	{'wmclass': 'makebranch'},  
-	{'wmclass': 'maketag'},  
-	{'wmclass': 'ssh-askpass'},
-	{'wmclass': 'Pinentry-gtk-2'},
-*layout.Floating.default_float_rules],**layout_theme)
+floating_layout=layout.Floating(float_rules=[
+   	{'wname'  : 'Confirm Delete'},  
+   	{'wname'  : 'Open File'},
+   	{'wname'  : 'Move Folder'},  
+   	{'wmclass': 'Pinentry-gtk-2'},
+],**layout_theme)
 auto_fullscreen=True
-focus_on_window_activation='smart'
+focus_on_window_activation="smart"
 
-wmname='qtile'
+wmname="LG3D"
