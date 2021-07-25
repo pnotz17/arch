@@ -302,52 +302,14 @@ screens = [
 	opacity=0.90),),
 ]
 
-dgroups_key_binder = None
-dgroups_app_rules = []
+dgroups_key_binder=None
+dgroups_app_rules=[]
 
-main = None
-@hook.subscribe.startup_once
-def start_once():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/autostart.sh'])
-
-@hook.subscribe.startup
-def start_always():
-    subprocess.Popen(['xsetroot','-cursor_name','left_ptr'])
-
-@hook.subscribe.client_new
-def set_floating(window):
-    if (window.window.get_wm_transient_for()
-     or window.window.get_wm_type() in floating_types):
-     window.floating=True
-
-floating_types=["notification","toolbar","splash","dialog"]
+main=None
 follow_mouse_focus=True
-bring_front_click=False
+bring_front_click=True
 cursor_warp=False
-floating_layout=layout.Floating(float_rules=[
-    {'wmclass': 'confirm'},
-    {'wmclass': 'dialog'},
-    {'wmclass': 'download'},
-    {'wmclass': 'error'},
-    {'wmclass': 'file_progress'},
-    {'wmclass': 'notification'},
-    {'wmclass': 'splash'},
-    {'wmclass': 'toolbar'},
-    {'wmclass': 'confirmreset'},
-    {'wmclass': 'makebranch'},
-    {'wmclass': 'maketag'},
-    {'wmclass': 'Create New File'},
-    {'wmclass': 'Pinentry-gtk-2'},
-    {'wmclass': 'transmission-gtk'},
-    {'wname'  : 'branchdialog'}, 
-    {'wname'  : 'Confirm Delete'},  
-   	{'wname'  : 'Open File'},
-   	{'wname'  : 'Move Folder'},
-   	{'wname'  : 'Rename Required'},  
-],**layout_theme)
+floating_layout=layout.Floating(border_focus=colors['5'])
 auto_fullscreen=True
-focus_on_window_activation="smart"
 
 wmname="LG3D"
-
