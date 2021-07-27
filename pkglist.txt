@@ -54,7 +54,6 @@ scrot
 sed
 spacefm
 sudo
-terminus-font
 texinfo
 transmission-gtk
 ufw
