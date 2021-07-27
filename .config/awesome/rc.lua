@@ -11,7 +11,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
------- {{{  Error handling }}} ------
+------ {{{ Error handling }}} ------
 if awesome.startup_errors then
 	naughty.notify({ preset = naughty.config.presets.critical,
 	title = "Oops, there were errors during startup!",
@@ -30,12 +30,12 @@ end)
 end
 
 ------ {{{ Variable definitions }}} ------
-beautiful.init("~/.config/awesome/default/theme.lua") 
+beautiful.init("~/.config/awesome/gtk/theme.lua") 
 beautiful.gap_single_client = true
-beautiful.useless_gap = 1
+beautiful.useless_gap = 3
 modkey = "Mod4"
 terminal = "st"
-editor = "vim"
+editor = "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 ------ {{{ Layouts }}} ------
@@ -263,7 +263,7 @@ s.mytasklist,
 
 -- Right widgets
 { layout = wibox.layout.fixed.horizontal,
-	spr,mailwidget,
+	--spr,mailwidget,
 	spr,pacwidget,
 	spr,cpuwidget,
 	spr,memwidget,
