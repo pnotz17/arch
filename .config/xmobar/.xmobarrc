@@ -11,14 +11,14 @@ bgColor = "#080808"
 , iconRoot = ".xmonad/xpm/"  -- default: "."
 , commands = [ 
 		Run UnsafeStdinReader
-		, Run Com ".local/bin//modules/sb_gmail" [] "count" 36000
-		, Run Com ".local/bin/modules/sb_updates" [] "pacupdate" 36000
-		, Run Com ".local/bin/modules/sb_temp" [] "temp" 2
+		, Run Com ".config/xmobar/scripts/sb_gmail" [] "count" 36000
+		, Run Com ".config/xmobar/scripts/sb_updates" [] "pacupdate" 36000
+		, Run Com ".config/xmobar/scripts/sb_unitemp" [] "temp" 2
 		, Run Cpu ["-t", "<total>%","-H","70","--high","red"] 20
 		, Run Memory ["-t", "<usedratio>%"] 20
-		, Run Com ".local/bin//modules/sb_vol" [] "vol" 2
-		, Run Com ".local/bin/modules/sb_up" [] "up" 20
-		, Run Com ".local/bin/modules/sb_do" [] "down" 20
+		, Run Com ".config/xmobar/scripts/sb_vol" [] "vol" 2
+		, Run Com ".config/xmobar/scripts/sb_up" [] "up" 20
+		, Run Com ".config/xmobar/scripts/sb_do" [] "down" 20
 		, Run Date "%m-%d-%y %H:%M" "date" 50
 		]
 , sepChar = "%"
