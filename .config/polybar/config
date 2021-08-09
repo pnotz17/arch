@@ -4,7 +4,7 @@ foreground = #999999
 alert = #FF0000
 sep = #999999
 
-[bar/mybar]
+[bar/bspwm]
 ;monitor = ${env:MONITOR:VGA1}
 width = 100%
 height = 20
@@ -32,7 +32,7 @@ font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=11:antialias=true:hinting=true"
 
 modules-left = bspwm
 modules-center =
-modules-right = sep cpu sep memory sep alsa sep speedup sep speeddown sep time sep
+modules-right = sep cpu sep memory sep alsa sep up sep down sep time sep
 
 ;tray-position = right
 ;tray-background = ${colors.background}
@@ -64,7 +64,7 @@ font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=11:antialias=true:hinting=true"
 
 modules-left = ewmh
 modules-center =
-modules-right = sep cpu sep memory sep alsa sep speedup sep speeddown sep time sep
+modules-right = sep cpu sep memory sep alsa sep up sep down sep time sep
 
 ;tray-position = right
 ;tray-background = ${colors.background}
@@ -73,6 +73,7 @@ scroll-up = herbstclient use_index -1
 scroll-down = herbstclient use_index +1
 
 ; MODULES A-Z  
+
 [module/bspwm]
 type = internal/bspwm
 enable-click = true
@@ -80,56 +81,61 @@ enable-scroll = true
 reverse-scroll = true
 pin-workspaces = true
 
-ws-icon-0 = 1;dev
-ws-icon-1 = 2;www
-ws-icon-2 = 3;code
-ws-icon-3 = 4;sys
-ws-icon-4 = 5;doc
-;ws-icon-5 = VI;
-;ws-icon-6 = VII;
-;ws-icon-7 = VIII;
-;ws-icon-8 = IX;
-;ws-icon-9 = X;
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
 ws-icon-default = " "
 
 format = <label-state> <label-mode>
+
 label-focused = %icon%
 label-focused-background = ${colors.background}
-label-focused-underline = ${colors.sep}
+label-focused-underline= ${colors.sep}
 label-focused-padding = 2
 label-focused-foreground = ${colors.foreground}
+
 label-occupied = %icon%
 label-occupied-padding = 2
 label-occupied-background = ${colors.background}
+
 label-urgent = %icon%
 label-urgent-padding = 2
+
 label-empty = %icon%
 label-empty-foreground = ${colors.foreground}
 label-empty-padding = 2
 label-empty-background = ${colors.background}
-label-monocle = "   "
+label-monocle = "  "
 label-monocle-foreground = ${colors.foreground}
-label-tiled = "   "
+label-tiled = "  "
 label-tiled-foreground = ${colors.foreground}
 label-fullscreen = "  "
 label-fullscreen-foreground = ${colors.foreground}
-label-floating = "   "
+label-floating = "  "
 label-floating-foreground = ${colors.foreground}
-label-pseudotiled = "   "
+label-pseudotiled = "  "
 label-pseudotiled-foreground = ${colors.foreground}
-label-locked = "   "
+label-locked = "  "
 label-locked-foreground = ${colors.foreground}
-label-sticky = "   "
+label-sticky = "  "
 label-sticky-foreground = ${colors.foreground}
-label-private =  "    "
+label-private =  "     "
 label-private-foreground = ${colors.foreground}
+
+; Separator in between workspaces
+;label-separator = |
+;label-separator-padding = 10
+;label-separator-foreground = #ffb52a
 
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-
-label-separator = |
-label-separator-padding = 0
-label-separator-foreground = ${colors.sep}
 
 [module/ewmh]
 type = internal/xworkspaces
@@ -237,13 +243,13 @@ format-volume =<label-volume>
 label-muted = " muted "
 label-muted-foreground = ${colors.alert}
 
-[module/speedup]
+[module/down]
 type = internal/network
 interface = "enp2s0"
 interval = 1.0
 label-connected = "  %upspeed%"
 
-[module/speeddown]
+[module/up]
 type = internal/network
 interface = "enp2s0"
 interval = 1.0
