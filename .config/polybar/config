@@ -32,10 +32,45 @@ font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=11:antialias=true:hinting=true"
 
 modules-left = bspwm
 modules-center =
-modules-right =  pacman-updates sep  imap sep cpu sep memory sep alsa sep speedup sep speeddown sep time sep
+modules-right = sep cpu sep memory sep alsa sep speedup sep speeddown sep time sep
 
 ;tray-position = right
 ;tray-background = ${colors.background}
+
+[bar/herbst]
+;monitor = ${env:MONITOR:VGA1}
+width = 100%
+height = 20
+offset-x = 0%
+offset-y = 0%
+radius = 0.0
+fixed-center = true
+bottom = false
+;border-size = 0
+;border-color = ;00000000
+line-size = 2
+;line-color = "#f00"
+background = ${colors.background}
+foreground = ${colors.foreground}
+;override-redirect = true
+;enable-ipc = true
+padding-left = 0
+padding-right = 0
+module-margin-left = 1
+module-margin-right = 1
+cursor-click = pointer
+
+font-0 =" Ubuntu Nerd Font:style=Book:pixelsize=11:antialias=true:hinting=true"
+
+modules-left = ewmh
+modules-center =
+modules-right = sep cpu sep memory sep alsa sep speedup sep speeddown sep time sep
+
+;tray-position = right
+;tray-background = ${colors.background}
+
+scroll-up = herbstclient use_index -1
+scroll-down = herbstclient use_index +1
 
 ; MODULES A-Z  
 [module/bspwm]
@@ -94,7 +129,52 @@ format-background = ${colors.background}
 
 label-separator = |
 label-separator-padding = 0
-label-separator-foreground 				= ${colors.sep}
+label-separator-foreground = ${colors.sep}
+
+[module/ewmh]
+type = internal/xworkspaces
+enable-click = true
+enable-scroll = true
+reverse-scroll = true
+pin-workspaces = true
+
+;       v   
+
+icon-1 = 1;
+icon-2 = 2;
+icon-3 = 3;
+icon-4 = 4;
+icon-5 = 5;
+icon-6 = 6;
+icon-7 = 7;
+icon-8 = 8;
+icon-9 = 9;
+icon-0 = 0;
+icon-default = " "
+
+format = <label-state> 
+label-monitor = %icon% 
+
+label-active =  %icon%
+label-active-foreground = ${colors.alert}
+label-active-background = #000
+label-active-padding = 2
+
+;label-occupied = %icon%
+label-occupied-foreground = ${colors.alert}
+label-occupied-background = #000
+label-occupied-padding = 2
+
+label-urgent = %icon%
+label-urgent-foreground = ${colors.alert}
+label-urgent-background = #000
+;label-urgent-underline = ${colors.foreground}
+label-urgent-padding = 2
+
+label-empty = %icon%
+label-empty-foreground = ${colors.foreground}
+label-enpty-background = #00000000
+label-empty-padding = 2
 
 [module/sep]
 type = custom/text
@@ -103,7 +183,7 @@ content-foreground = ${colors.sep}
 
 [module/pacman-updates]
 type = custom/script
-exec =~/.local/bin/check-all-updates.sh
+exec =~/.local/bin/modules/sb_updates
 interval = 100
 label =%output%
 format-foreground =${colors.alert}
