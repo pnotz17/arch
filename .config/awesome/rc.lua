@@ -30,7 +30,7 @@ end)
 end
 
 ------ {{{ Variable definitions }}} ------
-beautiful.init("~/.config/awesome/gtk/theme.lua") 
+beautiful.init("~/.config/awesome/custom/theme.lua") 
 beautiful.gap_single_client = true
 beautiful.useless_gap = 3
 modkey = "Mod4"
