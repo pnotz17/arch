@@ -1,16 +1,17 @@
 Config { 
-font = "xft:FiraMono Nerd Font:style=Regular:pixelsize=11:antialias=true:hinting=true", additionalFonts = [ "xft:FontAwesome:pixelsize=11" ]
-bgColor = "#080808"
-, fgColor = "#b3afc2"     
-, alpha = 200
-, position = TopW L 100
-, lowerOnStart = True
-, hideOnStart = False
-, allDesktops = True
-, persistent = True
-, iconRoot = ".xmonad/xpm/"  -- default: "."
-, commands = [ 
-		Run UnsafeStdinReader
+	font = "xft:FiraMono Nerd Font:style=Regular:pixelsize=11:antialias=true:hinting=true", additionalFonts = [ "xft:FontAwesome:pixelsize=11" ]
+	bgColor = "#000000"
+		, fgColor = "#b3afc2"     
+		, alpha = 250
+		, position = TopW L 100
+		, lowerOnStart = True
+		, hideOnStart = False
+		, allDesktops = True
+		, persistent = True
+		, iconRoot = ".xmonad/xpm/"  -- default: "."
+		
+		, commands = [ 
+		  Run UnsafeStdinReader
 		, Run Com ".config/xmobar/scripts/sb_gmail" [] "count" 16000
 		, Run Com ".config/xmobar/scripts/sb_updates" [] "pacupdate" 16000
 		, Run Com ".config/xmobar/scripts/sb_unitemp" [] "temp" 2
@@ -21,6 +22,7 @@ bgColor = "#080808"
 		, Run Com ".config/xmobar/scripts/sb_do" [] "down" 20
 		, Run Com ".config/xmobar/scripts/sb_time" [] "date" 50
 		]
+		
 , sepChar = "%"
 , alignSep = "}{"
 , template = "<action=`xdotool key control+alt+g`><icon=haskell_20.xpm/></action><fc=#b3afc2>|</fc>%UnsafeStdinReader%}{<fc=#b3afc2> | </fc><fc=#b3afc2> PACMAN: %pacupdate% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> MAIL: %count% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> CPU: %cpu% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> RAM: %ram% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> VOL: %vol% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> UP: %up% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> DOWN: %down% </fc><fc=#b3afc2> | </fc><fc=#b3afc2> %date% </fc><fc=#b3afc2> | </fc>"
