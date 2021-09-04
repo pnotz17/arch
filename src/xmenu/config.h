@@ -1,6 +1,6 @@
 static struct Config config = {
 	/* font, separate different fonts with comma */
-	.font ="URW Gothic:style=Book:size=9:antialias=true:autohint=true",
+	.font ="Liberation Sans:style=Regular:size=8:antialias=true:autohint=true",
 
 	/* colors */
 	.background_color = "#000000",
