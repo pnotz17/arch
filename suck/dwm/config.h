@@ -1,5 +1,5 @@
 static const char *fonts[]            ={"Monospace:style=Regular:size=10:antialias=true:autohint=true","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
-static const char normbgcolor[]       = "#111111";	/* bar backround color */
+static const char normbgcolor[]       = "#121213";	/* bar backround color */
 static const char normfgcolor[]       = "#FFFFFF";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#000000";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
