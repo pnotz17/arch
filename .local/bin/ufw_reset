@@ -2,7 +2,8 @@
 
 doas ufw --force disable \
 && doas ufw --force reset \
+&& doas ufw default allow outgoing \
 && doas ufw default deny  \
 && doas ufw enable  \
-&& doas systemctl enable ufw.service\
+&& doas rc-update add ufw default\
 && doas ufw --force enable
