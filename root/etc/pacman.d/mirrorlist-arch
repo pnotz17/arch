@@ -3,9 +3,9 @@
 ################################################################################
 
 # With:       reflector --verbose --country Greece --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist-arch
-# When:       2021-06-22 23:01:35 UTC
-# From:       https://www.archlinux.org/mirrors/status/json/
-# Retrieved:  2021-06-22 23:01:31 UTC
-# Last Check: 2021-06-22 22:40:43 UTC
+# When:       2021-09-07 16:24:33 UTC
+# From:       https://archlinux.org/mirrors/status/json/
+# Retrieved:  2021-09-07 16:24:32 UTC
+# Last Check: 2021-09-07 16:05:10 UTC
 
 Server = https://repo.greeklug.gr/data/pub/linux/archlinux/$repo/os/$arch
