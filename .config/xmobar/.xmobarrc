@@ -1,5 +1,5 @@
 Config { 
-	font = "xft:FiraMono Nerd Font:style=Regular:pixelsize=11:antialias=true:hinting=true", additionalFonts = [ "xft:FontAwesome:pixelsize=11" ]
+	font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinting=true", additionalFonts = [ "xft:FontAwesome:pixelsize=11" ]
 	bgColor = "#000000"
 		, fgColor = "#b3afc2"     
 		, alpha = 250
