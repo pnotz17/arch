@@ -1,8 +1,9 @@
-{-# LANGUAGE ExistentialQuantification, Rank2Types, FunctionalDependencies, FlexibleInstances, FlexibleContexts, PatternGuards #-}
+{-# LANGUAGE ExistentialQuantification, Rank2Types, FunctionalDependencies, FlexibleInstances, FlexibleContexts, PatternGuards, ScopedTypeVariables #-}
 
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Layout.MultiToggle
+-- Description :  Dynamically apply and unapply transformers to your window layout.
 -- Copyright   :  (c) Lukas Mai
 -- License     :  BSD-style (see LICENSE)
 --
@@ -25,6 +26,7 @@ module XMonad.Layout.MultiToggle (
     single,
     mkToggle,
     mkToggle1,
+    isToggleActive,
 
     HList,
     HCons,
@@ -37,6 +39,7 @@ import XMonad.Prelude hiding (find)
 import XMonad.StackSet (Workspace(..))
 
 import Control.Arrow
+import Data.IORef
 import Data.Typeable
 
 -- $usage
@@ -206,7 +209,26 @@ instance (Typeable a, Show ts, Typeable ts, HList ts a, LayoutClass l a) => Layo
                             currIndex = if cur then Nothing else i
                         }
                     where cur = i == currIndex mt
+        | Just (MultiToggleActiveQueryMessage t ref :: MultiToggleActiveQueryMessage a) <- fromMessage m
+        , i@(Just _) <- find (transformers mt) t
+            = Nothing <$ io (writeIORef ref (Just (i == currIndex mt)))
         | otherwise
             = case currLayout mt of
                 EL l det -> fmap (\x -> mt { currLayout = EL x det }) <$>
                     handleMessage l m
+
+data MultiToggleActiveQueryMessage a = forall t. (Transformer t a) =>
+    MultiToggleActiveQueryMessage t (IORef (Maybe Bool))
+
+instance (Typeable a) => Message (MultiToggleActiveQueryMessage a)
+
+-- | Query the state of a 'Transformer' on a given workspace.
+--
+-- To query the current workspace, use something like this:
+--
+-- > withWindowSet (isToggleActive t . W.workspace . W.current)
+isToggleActive :: Transformer t Window => t -> WindowSpace -> X (Maybe Bool)
+isToggleActive t w = do
+    ref <- io $ newIORef Nothing
+    sendMessageWithNoRefresh (MultiToggleActiveQueryMessage t ref) w
+    io $ readIORef ref

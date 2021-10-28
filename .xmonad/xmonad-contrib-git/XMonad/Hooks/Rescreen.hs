@@ -3,6 +3,7 @@
 {-# LANGUAGE RecordWildCards #-}
 -- |
 -- Module      :  XMonad.Hooks.Rescreen
+-- Description :  Custom hooks for screen (xrandr) configuration changes.
 -- Copyright   :  (c) 2021 Tomáš Janoušek <tomi@nomi.cz>
 -- License     :  BSD3
 -- Maintainer  :  Tomáš Janoušek <tomi@nomi.cz>
@@ -18,11 +19,9 @@ module XMonad.Hooks.Rescreen (
     rescreenHook,
     ) where
 
-import Control.Monad (void)
-import Data.Monoid (All(..))
-
 import Graphics.X11.Xrandr
 import XMonad
+import XMonad.Prelude
 import qualified XMonad.Util.ExtensibleConf as XC
 
 -- $usage
@@ -53,7 +52,7 @@ import qualified XMonad.Util.ExtensibleConf as XC
 --
 -- > main = xmonad $ … . rescreenHook rescreenCfg . … $ def{…}
 
--- | Hook configuration for 'rescreenEventHook'.
+-- | Hook configuration for 'rescreenHook'.
 data RescreenConfig = RescreenConfig
     { afterRescreenHook :: X () -- ^ hook to invoke after 'rescreen'
     , randrChangeHook :: X () -- ^ hook for other randr changes, e.g. (dis)connects
@@ -89,17 +88,17 @@ instance Monoid RescreenConfig where
 --
 -- Note that 'rescreenHook' is safe to use several times, 'rescreen' is still
 -- done just once and hooks are invoked in sequence, also just once.
-rescreenHook :: RescreenConfig -> XConfig a -> XConfig a
+rescreenHook :: RescreenConfig -> XConfig l -> XConfig l
 rescreenHook = XC.once $ \c -> c
     { startupHook = startupHook c <> rescreenStartupHook
     , handleEventHook = handleEventHook c <> rescreenEventHook }
 
 -- | Shortcut for 'rescreenHook'.
-addAfterRescreenHook :: X () -> XConfig a -> XConfig a
+addAfterRescreenHook :: X () -> XConfig l -> XConfig l
 addAfterRescreenHook h = rescreenHook def{ afterRescreenHook = h }
 
 -- | Shortcut for 'rescreenHook'.
-addRandrChangeHook :: X () -> XConfig a -> XConfig a
+addRandrChangeHook :: X () -> XConfig l -> XConfig l
 addRandrChangeHook h = rescreenHook def{ randrChangeHook = h }
 
 -- | Startup hook to listen for @RRScreenChangeNotify@ events.

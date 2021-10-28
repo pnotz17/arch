@@ -1,12 +1,27 @@
-## Version 0.39 (unreleased)
+## Version 0.40 (unreleased)
 
 _New features_
 
+  - New plugin: `QueueReader` (Guy Gastineau).
+  - Greatly improved FreeBSD support: Mem, Network and Swap monitors
+    fixes, and CI build for FreeBSD (Michal Zielonka).
+
+## Version 0.39 (Aug, 2021)
+
+_New features_
+
+  - New constructors for only controlling bar height:
+    TopH and BottomH for Top and Bottom respectively
   - New monitor: k10temp (Sam Kirby)
+  - Better handling of command line arguments for Haskell-based
+    configuration keys (see #553 and #554)
+  - New monitor: Kraken (Amid Saeid)
 
 _Bug fixes_
 
   - NotmuchMail usable in text configurations (#547)
+  - Fix for off-by-one in padding (#560)
+  - Fixes for Kbd (#561)
 
 ## Version 0.38 (May, 2021)
 

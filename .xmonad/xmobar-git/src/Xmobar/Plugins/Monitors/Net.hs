@@ -11,9 +11,10 @@
 --
 -- A net device monitor for Xmobar
 --
+
 -----------------------------------------------------------------------------
 
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE CPP #-}
 
 module Xmobar.Plugins.Monitors.Net (
                         startNet
@@ -21,18 +22,18 @@ module Xmobar.Plugins.Monitors.Net (
                       ) where
 
 import Xmobar.Plugins.Monitors.Common
-
-import Data.IORef (IORef, newIORef, readIORef, writeIORef)
-import Data.Time.Clock (UTCTime, getCurrentTime, diffUTCTime)
-import Data.Word (Word64)
-import Control.Monad (forM, filterM)
-import System.Directory (getDirectoryContents, doesFileExist)
-import System.FilePath ((</>))
+import Xmobar.Plugins.Monitors.Net.Common (NetDev(..), NetDevInfo(..), NetDevRate, NetDevRef)
+import Data.IORef (newIORef, readIORef, writeIORef)
+import Data.Time.Clock (getCurrentTime, diffUTCTime)
 import System.Console.GetOpt
-import System.IO.Error (catchIOError)
-import System.IO.Unsafe (unsafeInterleaveIO)
 
-import qualified Data.ByteString.Char8 as B
+#if defined(freebsd_HOST_OS)
+import qualified Xmobar.Plugins.Monitors.Net.FreeBSD as MN
+#else
+import qualified Xmobar.Plugins.Monitors.Net.Linux as MN
+#endif
+
+import Control.Monad (forM)
 
 type DevList = [String]
 
@@ -79,69 +80,10 @@ instance Show UnitPerSec where
     show MBs = "MB/s"
     show GBs = "GB/s"
 
-data NetDev num = N String (NetDevInfo num) | NA deriving (Eq,Show,Read)
-data NetDevInfo num = NI | ND num num deriving (Eq,Show,Read)
-
-type NetDevRawTotal = NetDev Word64
-type NetDevRate = NetDev Float
-
-type NetDevRef = IORef (NetDevRawTotal, UTCTime)
-
--- The more information available, the better.
--- Note that names don't matter. Therefore, if only the names differ,
--- a compare evaluates to EQ while (==) evaluates to False.
-instance Ord num => Ord (NetDev num) where
-    compare NA NA             = EQ
-    compare NA _              = LT
-    compare _  NA             = GT
-    compare (N _ i1) (N _ i2) = i1 `compare` i2
-
-instance Ord num => Ord (NetDevInfo num) where
-    compare NI NI                 = EQ
-    compare NI ND {}              = LT
-    compare ND {} NI              = GT
-    compare (ND x1 y1) (ND x2 y2) = x1 `compare` x2 <> y1 `compare` y2
-
 netConfig :: IO MConfig
 netConfig = mkMConfig
     "<dev>: <rx>KB|<tx>KB"      -- template
     ["dev", "rx", "tx", "rxbar", "rxvbar", "rxipat", "txbar", "txvbar", "txipat", "up"]     -- available replacements
-
-operstateDir :: String -> FilePath
-operstateDir d = "/sys/class/net" </> d </> "operstate"
-
-existingDevs :: IO [String]
-existingDevs = getDirectoryContents "/sys/class/net" >>= filterM isDev
-  where isDev d | d `elem` excludes = return False
-                | otherwise = doesFileExist (operstateDir d)
-        excludes = [".", "..", "lo"]
-
-isUp :: String -> IO Bool
-isUp d = flip catchIOError (const $ return False) $ do
-  operstate <- B.readFile (operstateDir d)
-  return $! (head . B.lines) operstate `elem` ["up", "unknown"]
-
-readNetDev :: [String] -> IO NetDevRawTotal
-readNetDev ~[d, x, y] = do
-  up <- unsafeInterleaveIO $ isUp d
-  return $ N d (if up then ND (r x) (r y) else NI)
-    where r s | s == "" = 0
-              | otherwise = read s
-
-netParser :: B.ByteString -> IO [NetDevRawTotal]
-netParser = mapM (readNetDev . splitDevLine) . readDevLines
-  where readDevLines = drop 2 . B.lines
-        splitDevLine = map B.unpack . selectCols . filter (not . B.null) . B.splitWith (`elem` [' ',':'])
-        selectCols cols = map (cols!!) [0,1,9]
-
-findNetDev :: String -> IO NetDevRawTotal
-findNetDev dev = do
-  nds <- B.readFile "/proc/net/dev" >>= netParser
-  case filter isDev nds of
-    x:_ -> return x
-    _ -> return NA
-  where isDev (N d _) = d == dev
-        isDev NA = False
 
 formatNet :: Maybe IconPattern -> Float -> Monitor (String, String, String, String)
 formatNet mipat d = do
@@ -169,7 +111,7 @@ printNet opts nd =
 parseNet :: NetDevRef -> String -> IO NetDevRate
 parseNet nref nd = do
   (n0, t0) <- readIORef nref
-  n1 <- findNetDev nd
+  n1 <- MN.findNetDev nd
   t1 <- getCurrentTime
   writeIORef nref (n1, t1)
   let scx = realToFrac (diffUTCTime t1 t0)
@@ -213,7 +155,7 @@ startNet i a r cb = do
 
 startDynNet :: [String] -> Int -> (String -> IO ()) -> IO ()
 startDynNet a r cb = do
-  devs <- existingDevs
+  devs <- MN.existingDevs
   refs <- forM devs $ \d -> do
             t <- getCurrentTime
             nref <- newIORef (NA, t)

@@ -113,9 +113,10 @@ usage = do
 --   * Missing XMonad\/XMonadContrib modules due to ghc upgrade
 --
 buildLaunch :: Directories -> IO ()
-buildLaunch dirs@Directories{ dataDir } = do
+buildLaunch dirs = do
     whoami <- getProgName
-    let compiledConfig = "xmonad-"++arch++"-"++os
+    let bin = binFileName dirs
+    let compiledConfig = takeFileName bin
     unless (whoami == compiledConfig) $ do
       trace $ concat
         [ "XMonad is recompiling and replacing itself with another XMonad process because the current process is called "
@@ -125,7 +126,7 @@ buildLaunch dirs@Directories{ dataDir } = do
         ]
       recompile dirs False
       args <- getArgs
-      executeFile (dataDir </> compiledConfig) False args Nothing
+      executeFile bin False args Nothing
 
 sendRestart :: IO ()
 sendRestart = do
@@ -233,7 +234,7 @@ launch initxmc drs = do
         runX cf st $ do
             -- check for serialized state in a file.
             serializedSt <- do
-                path <- stateFileName
+                path <- asks $ stateFileName . directories
                 exists <- io (doesFileExist path)
                 if exists then readStateFile initxmc else return Nothing
 
@@ -315,10 +316,15 @@ handle (MapRequestEvent    {ev_window = w}) = withDisplay $ \dpy -> do
 
 -- window destroyed, unmanage it
 -- window gone,      unmanage it
-handle (DestroyWindowEvent {ev_window = w}) = whenX (isClient w) $ do
+-- broadcast to layouts
+handle e@(DestroyWindowEvent {ev_window = w}) = do
+  whenX (isClient w) $ do
     unmanage w
     modify (\s -> s { mapped       = S.delete w (mapped s)
                     , waitingUnmap = M.delete w (waitingUnmap s)})
+  -- the window is already unmanged, but we broadcast the event to all layouts
+  -- to trigger garbage-collection in case they hold window-specific resources
+  broadcastMessage e
 
 -- We track expected unmap events in waitingUnmap.  We ignore this event unless
 -- it is synthetic or we are not expecting an unmap notification from a window.

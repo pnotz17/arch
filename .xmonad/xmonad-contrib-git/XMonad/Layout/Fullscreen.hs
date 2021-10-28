@@ -1,7 +1,9 @@
 {-# LANGUAGE FlexibleContexts, MultiParamTypeClasses, FlexibleInstances #-}
+{-# OPTIONS_GHC -Wno-deprecations #-} -- FIXME: fullscreenStartup temporarily silenced
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Layout.Fullscreen
+-- Description :  Send messages about fullscreen windows to layouts.
 -- Copyright   :  (c) 2010 Audun Skaugen
 -- License     :  BSD-style (see xmonad/LICENSE)
 --

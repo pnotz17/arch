@@ -1,6 +1,7 @@
 --------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Util.EZConfig
+-- Description :  Configure key bindings easily in Emacs style.
 -- Copyright   :  Devin Mullins <me@twifkak.com>
 --                Brent Yorgey <byorgey@gmail.com> (key parsing)
 -- License     :  BSD3-style (see LICENSE)
@@ -710,9 +711,9 @@ multimediaKeys = filter ((/= noSymbol) . snd) . map (id &&& stringToKeysym) $
 checkKeymap :: XConfig l -> [(String, a)] -> X ()
 checkKeymap conf km = warn (doKeymapCheck conf km)
   where warn ([],[])   = return ()
-        warn (bad,dup) = spawn $ "xmessage 'Warning:\n"
+        warn (bad,dup) = xmessage $ "Warning:\n"
                             ++ msg "bad" bad ++ "\n"
-                            ++ msg "duplicate" dup ++ "'"
+                            ++ msg "duplicate" dup
         msg _ [] = ""
         msg m xs = m ++ " keybindings detected: " ++ showBindings xs
         showBindings = unwords . map (("\""++) . (++"\""))

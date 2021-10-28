@@ -1,10 +1,12 @@
 name:               xmonad-contrib
-version:            0.16.999
-homepage:           http://xmonad.org/
-synopsis:           Third party extensions for xmonad
+version:            0.17.0
+-- ^ also update cpp-options: -DXMONAD_CONTRIB_VERSION_*
+
+homepage:           https://xmonad.org/
+synopsis:           Community-maintained extensions extensions for xmonad
 description:
-    Third party tiling algorithms, configurations and scripts to xmonad,
-    a tiling window manager for X.
+    Community-maintained tiling algorithms and extension modules for xmonad,
+    an X11 tiling window manager.
     .
     For an introduction to building, configuring and using xmonad
     extensions, see "XMonad.Doc". In particular:
@@ -27,11 +29,11 @@ extra-source-files: README.md CHANGES.md scripts/generate-configs scripts/run-xm
                     scripts/xmonad-clock.c
                     XMonad/Config/dmwit.xmobarrc
                     XMonad/Config/Example.hs
-cabal-version:      >= 1.8
+cabal-version:      1.12
 build-type:         Simple
 bug-reports:        https://github.com/xmonad/xmonad-contrib/issues
 
-tested-with:        GHC == 8.4.4 || == 8.6.5 || == 8.8.4 || == 8.10.3 || == 9.0.1
+tested-with:        GHC == 8.4.4 || == 8.6.5 || == 8.8.4 || == 8.10.4 || == 9.0.1
 
 source-repository head
   type:     git
@@ -47,20 +49,24 @@ flag pedantic
   manual:      True
 
 library
-    build-depends: base >= 4.9 && < 5,
-                   bytestring >= 0.10 && < 0.11,
+    build-depends: base >= 4.11 && < 5,
+                   bytestring >= 0.10 && < 0.12,
                    containers >= 0.5 && < 0.7,
                    directory,
                    filepath,
-                   time >= 1.8 && < 1.12,
+                   time >= 1.8 && < 1.13,
                    process,
                    random,
                    mtl >= 1 && < 3,
                    unix,
                    X11 >= 1.10 && < 1.11,
-                   xmonad >= 0.16.9999 && < 0.18,
+                   xmonad >= 0.16.99999 && < 0.18,
                    utf8-string
+    default-language: Haskell2010
 
+    cpp-options:   -DXMONAD_CONTRIB_VERSION_MAJOR=0
+                   -DXMONAD_CONTRIB_VERSION_MINOR=17
+                   -DXMONAD_CONTRIB_VERSION_PATCH=0
     ghc-options:   -Wall -Wno-unused-do-bind
 
     if flag(pedantic)
@@ -192,6 +198,7 @@ library
                         XMonad.Hooks.SetWMName
                         XMonad.Hooks.StatusBar
                         XMonad.Hooks.StatusBar.PP
+                        XMonad.Hooks.TaffybarPagerHints
                         XMonad.Hooks.ToggleHook
                         XMonad.Hooks.UrgencyHook
                         XMonad.Hooks.WallpaperSetter
@@ -222,6 +229,7 @@ library
                         XMonad.Layout.Drawer
                         XMonad.Layout.Dwindle
                         XMonad.Layout.DwmStyle
+                        XMonad.Layout.FixedAspectRatio
                         XMonad.Layout.FixedColumn
                         XMonad.Layout.Fullscreen
                         XMonad.Layout.Gaps
@@ -375,6 +383,8 @@ test-suite tests
   type:           exitcode-stdio-1.0
   main-is:        Main.hs
   other-modules:  CycleRecentWS
+                  ExtensibleConf
+                  GridSelect
                   Instances
                   ManageDocks
                   NoBorders
@@ -383,31 +393,41 @@ test-suite tests
                   Selective
                   SwapWorkspaces
                   Utils
-                  ExtensibleConf
                   XMonad.Actions.CycleRecentWS
                   XMonad.Actions.CycleWS
                   XMonad.Actions.FocusNth
+                  XMonad.Actions.GridSelect
                   XMonad.Actions.PhysicalScreens
                   XMonad.Actions.RotateSome
                   XMonad.Actions.SwapWorkspaces
                   XMonad.Actions.TagWindows
+                  XMonad.Actions.WindowBringer
                   XMonad.Hooks.ManageDocks
+                  XMonad.Hooks.ManageHelpers
+                  XMonad.Hooks.UrgencyHook
                   XMonad.Hooks.WorkspaceHistory
+                  XMonad.Layout.Decoration
                   XMonad.Layout.LayoutModifier
                   XMonad.Layout.LimitWindows
                   XMonad.Layout.NoBorders
+                  XMonad.Layout.WindowArranger
                   XMonad.Prelude
                   XMonad.Prompt
                   XMonad.Prompt.OrgMode
                   XMonad.Prompt.Shell
+                  XMonad.Util.Dmenu
+                  XMonad.Util.Dzen
                   XMonad.Util.ExtensibleConf
                   XMonad.Util.ExtensibleState
                   XMonad.Util.Font
                   XMonad.Util.Image
+                  XMonad.Util.Invisible
+                  XMonad.Util.NamedWindows
                   XMonad.Util.PureX
                   XMonad.Util.Rectangle
                   XMonad.Util.Run
                   XMonad.Util.Stack
+                  XMonad.Util.Timer
                   XMonad.Util.Types
                   XMonad.Util.WindowProperties
                   XMonad.Util.WorkspaceCompare
@@ -420,15 +440,17 @@ test-suite tests
                , X11 >= 1.10 && < 1.11
                , containers
                , directory
-               , time >= 1.8 && < 1.12
+               , time >= 1.8 && < 1.13
                , hspec >= 2.4.0 && < 3
                , mtl
+               , random
                , process
                , unix
                , utf8-string
                , xmonad >= 0.16.9999 && < 0.18
   cpp-options: -DTESTING
   ghc-options: -Wall -Wno-unused-do-bind
+  default-language: Haskell2010
 
   if flag(pedantic)
      ghc-options: -Werror -Wwarn=deprecations

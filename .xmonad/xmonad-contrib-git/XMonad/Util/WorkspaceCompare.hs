@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Util.WorkspaceCompare
+-- Description :  Functions for examining, comparing, and sorting workspaces.
 -- Copyright   :  (c) Spencer Janssen <spencerjanssen@gmail.com>
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -32,7 +33,9 @@ type WorkspaceCompare = WorkspaceId -> WorkspaceId -> Ordering
 type WorkspaceSort = [WindowSpace] -> [WindowSpace]
 
 -- | Transforms a workspace list by filtering out the workspaces that
--- correspond to the given 'tag's.  Intended for use with logHooks.
+-- correspond to the given 'tag's.  Intended for use with 'logHook's (see
+-- 'XMonad.Hooks.StatusBar.PP.filterOutWsPP') and "XMonad.Hooks.EwmhDesktops"
+-- (see 'XMonad.Hooks.EwmhDesktops.addEwmhWorkspaceSort').
 filterOutWs :: [WorkspaceId] -> WorkspaceSort
 filterOutWs ws = filter (\S.Workspace{ S.tag = tag } -> tag `notElem` ws)
 
@@ -65,7 +68,7 @@ getWsCompareByTag = return compare
 
 -- | A comparison function for Xinerama based on visibility, workspace
 --   and screen id. It produces the same ordering as
---   'XMonad.Hooks.DynamicLog.pprWindowSetXinerama'.
+--   'XMonad.Hooks.StatusBar.PP.pprWindowSetXinerama'.
 getXineramaWsCompare :: X WorkspaceCompare
 getXineramaWsCompare = getXineramaPhysicalWsCompare $ screenComparatorById compare
 
@@ -101,7 +104,7 @@ getSortByTag :: X WorkspaceSort
 getSortByTag = mkWsSort getWsCompareByTag
 
 -- | Sort serveral workspaces for xinerama displays, in the same order
---   produced by 'XMonad.Hooks.DynamicLog.pprWindowSetXinerama': first
+--   produced by 'XMonad.Hooks.StatusBar.PP.pprWindowSetXinerama': first
 --   visible workspaces, sorted by screen, then hidden workspaces,
 --   sorted by tag.
 getSortByXineramaRule :: X WorkspaceSort

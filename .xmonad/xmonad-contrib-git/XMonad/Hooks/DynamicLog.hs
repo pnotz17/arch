@@ -3,6 +3,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Hooks.DynamicLog
+-- Description :  Send information about xmonad's state to an X11 property or standard output.
 -- Copyright   :  (c) Don Stewart <dons@cse.unsw.edu.au>
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -135,7 +136,7 @@ import XMonad.Hooks.StatusBar
 -- changes, you could make a keybinding to cycle the layout and
 -- display the current status:
 --
--- >    , ((mod1Mask, xK_a     ), sendMessage NextLayout >> (dynamicLogString myPP >>= \d->spawn $"xmessage "++d))
+-- >    , ((mod1Mask, xK_a     ), sendMessage NextLayout >> (dynamicLogString myPP >>= xmessage))
 --
 
 ------------------------------------------------------------------------

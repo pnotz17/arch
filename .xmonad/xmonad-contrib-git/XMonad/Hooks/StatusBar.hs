@@ -2,6 +2,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Hooks.StatusBar
+-- Description :  Composable and dynamic status bars.
 -- Copyright   :  (c) Yecine Megdiche <yecine.megdiche@gmail.com>
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -205,7 +206,7 @@ import qualified XMonad.StackSet as W
 -- the current layout when it changes, you could make a keybinding to cycle the
 -- layout and display the current status:
 --
--- > ((mod1Mask, xK_a), sendMessage NextLayout >> (dynamicLogString myPP >>= \d -> spawn $ "xmessage " ++ d))
+-- > ((mod1Mask, xK_a), sendMessage NextLayout >> (dynamicLogString myPP >>= xmessage))
 --
 -- If you use a status bar that does not support reading from a property
 -- (like dzen), and you don't want to use the 'statusBar' function, you can,
@@ -285,7 +286,20 @@ withEasySB sb k conf = docks . withSB sb $ conf
     { layoutHook = avoidStruts (layoutHook conf)
     , keys       = (<>) <$> keys' <*> keys conf
     }
-  where keys' = (`M.singleton` sendMessage ToggleStruts) . k
+  where
+    k' conf' = case k conf' of
+        (0, 0) ->
+            -- This usually means the user passed 'def' for the keybinding
+            -- function, and is otherwise meaningless to harmful depending on
+            -- whether 383ffb7 has been applied to xmonad or not. So do what
+            -- they probably intend.
+            --
+            -- A user who wants no keybinding function should probably use
+            -- 'withSB' instead, especially since NoSymbol didn't do anything
+            -- sane before 383ffb7. ++bsa
+            defToggleStrutsKey conf'
+        key -> key
+    keys' = (`M.singleton` sendMessage ToggleStruts) . k'
 
 -- | Default @mod-b@ key binding for 'withEasySB'
 defToggleStrutsKey :: XConfig t -> (KeyMask, KeySym)

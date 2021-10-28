@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Actions.CycleWS
+-- Description :  Cycle through workspaces.
 -- Copyright   :  (c) Joachim Breitner <mail@joachim-breitner.de>,
 --                    Nelson Elhage <nelhage@mit.edu> (`toggleWS' function)
 -- License     :  BSD3-style (see LICENSE)
@@ -302,7 +303,7 @@ anyWS = WSIs . return $ const True
 --   example, be used for skipping the workspace reserved for
 --   "XMonad.Util.NamedScratchpad":
 --
--- >  moveTo Next $ hidden :&: Not empty :&: ignoringWSs [scratchpadWorkspaceTag]
+-- >  moveTo Next $ hiddenWS :&: Not emptyWS :&: ignoringWSs [scratchpadWorkspaceTag]
 --
 ignoringWSs :: [WorkspaceId] -> WSType
 ignoringWSs ts = WSIs . return $ (`notElem` ts) . tag

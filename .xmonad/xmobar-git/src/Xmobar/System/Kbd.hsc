@@ -15,11 +15,14 @@
 
 module Xmobar.System.Kbd where
 
+import Control.Monad ((<=<))
+
 import Foreign
 import Foreign.C.Types
 import Foreign.C.String
 
 import Graphics.X11.Xlib
+import Graphics.X11.Xlib.Extras (none)
 
 #include <X11/XKBlib.h>
 #include <X11/extensions/XKB.h>
@@ -113,9 +116,9 @@ data XkbNamesRec = XkbNamesRec {
     symbols :: Atom,
     types :: Atom,
     compat :: Atom,
-    vmods :: Ptr Atom,
-    indicators :: Ptr Atom, -- array
-    groups :: Ptr Atom, -- array
+    vmods :: [Atom], -- Atom              vmods[XkbNumVirtualMods];
+    indicators :: [Atom], -- Atom              indicators[XkbNumIndicators];
+    groups :: [Atom], -- Atom              groups[XkbNumKbdGroups];
     keys :: Ptr XkbKeyNameRec,
     key_aliases :: Ptr CChar, -- dont care XkbKeyAliasRec,
     radio_groups :: Ptr Atom,
@@ -178,9 +181,9 @@ instance Storable XkbNamesRec where
         r_symbols <- (#peek XkbNamesRec, symbols ) ptr
         r_types <- (#peek XkbNamesRec, types ) ptr
         r_compat <- (#peek XkbNamesRec, compat ) ptr
-        r_vmods <- (#peek XkbNamesRec,  vmods ) ptr
-        r_indicators <- (#peek XkbNamesRec, indicators ) ptr
-        r_groups <- (#peek XkbNamesRec, groups ) ptr
+        r_vmods <- peekArray (#const XkbNumVirtualMods) $ (#ptr XkbNamesRec,  vmods ) ptr
+        r_indicators <- peekArray (#const XkbNumIndicators) $ (#ptr XkbNamesRec, indicators ) ptr
+        r_groups <- peekArray (#const XkbNumKbdGroups) $ (#ptr XkbNamesRec, groups ) ptr
         r_keys <- (#peek XkbNamesRec, keys ) ptr
         r_key_aliases <- (#peek XkbNamesRec, key_aliases  ) ptr
         r_radio_groups <- (#peek XkbNamesRec, radio_groups  ) ptr
@@ -303,7 +306,7 @@ getLayoutStr dpy =  do
         kbdDescPtr <- xkbAllocKeyboard
         status <- xkbGetNames dpy xkbSymbolsNameMask kbdDescPtr
         str <- getLayoutStr' status dpy kbdDescPtr
-        xkbFreeNames kbdDescPtr xkbGroupNamesMask 1
+        xkbFreeNames kbdDescPtr xkbSymbolsNameMask 1
         xkbFreeKeyboard kbdDescPtr 0 1
         return str
 
@@ -319,3 +322,23 @@ getLayoutStr' st dpy kbdDescPtr =
         else -- Behaviour on error
             do
                 return "Error while requesting layout!"
+
+getGrpNames :: Display -> IO [String]
+getGrpNames dpy =  do
+        kbdDescPtr <- xkbAllocKeyboard
+        status <- xkbGetNames dpy xkbGroupNamesMask kbdDescPtr
+        str <- getGrpNames' status dpy kbdDescPtr
+        xkbFreeNames kbdDescPtr xkbGroupNamesMask 1
+        xkbFreeKeyboard kbdDescPtr 0 1
+        return str
+
+getGrpNames' :: Status -> Display -> (Ptr XkbDescRec) -> IO [String]
+getGrpNames' st dpy kbdDescPtr =
+        if st == 0 then -- Success
+            do
+            kbdDesc <- peek kbdDescPtr
+            nameArray <- peek (names kbdDesc)
+            let grpsArr = groups nameArray
+            let grps = takeWhile (/=none) grpsArr
+            mapM (peekCString <=< xGetAtomName dpy) grps
+        else return ["Error while requesting layout!"]

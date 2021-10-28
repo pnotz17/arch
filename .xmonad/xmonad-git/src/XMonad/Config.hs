@@ -39,7 +39,7 @@ import XMonad.Operations
 import XMonad.ManageHook
 import qualified XMonad.StackSet as W
 import Data.Bits ((.|.))
-import Data.Default
+import Data.Default.Class
 import Data.Monoid
 import qualified Data.Map as M
 import System.Exit
@@ -239,7 +239,7 @@ keys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
   where
     helpCommand :: X ()
-    helpCommand = spawn ("echo " ++ show help ++ " | xmessage -file -")
+    helpCommand = xmessage help
 
 -- | Mouse bindings: default actions bound to mouse events
 mouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
@@ -297,6 +297,7 @@ help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "mod-Space        Rotate through the available layout algorithms",
     "mod-Shift-Space  Reset the layouts on the current workSpace to default",
     "mod-n            Resize/refresh viewed windows to the correct size",
+    "mod-Shift-/      Show this help message with the default keybindings",
     "",
     "-- move focus up or down the window stack",
     "mod-Tab        Move focus to the next window",

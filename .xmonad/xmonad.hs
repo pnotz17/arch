@@ -150,10 +150,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Youtube-dl Menu.
   , ((modMask .|. controlMask,xK_y),
      spawn "~/.local/bin/dm_ytdl")
-
-  -- Hex Menu.
-  , ((modMask .|. controlMask,xK_k),
-     spawn "~/.local/bin/dm_col")
       
   -- Exit Menu.
   , ((modMask .|. controlMask,xK_q),
@@ -208,7 +204,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
       
 main = do
   xmproc <- spawnPipe "$HOME/.local/bin/xmobar"
-  xmonad $ defaults {logHook = fadeInactiveLogHook 0.8 <+> dynamicLogWithPP xmobarPP 
+  xmonad $ docks $ defaults {logHook = fadeInactiveLogHook 0.8 <+> dynamicLogWithPP xmobarPP 
   { ppOutput          = hPutStrLn xmproc
   , ppCurrent         = xmobarColor "#b3afc2" "" . wrap "[" "]"
   , ppVisible         = xmobarColor "#b3afc2" ""
@@ -218,7 +214,7 @@ main = do
   , ppSep             = " | "}
 }
 
-defaults = defaultConfig {
+defaults = def {
   terminal           = myTerminal,
   focusFollowsMouse  = myFocusFollowsMouse,
   borderWidth        = myBorderWidth,
@@ -229,7 +225,6 @@ defaults = defaultConfig {
   keys               = myKeys,
   mouseBindings      = myMouseBindings,
   layoutHook         = myLayout,
-  manageHook         = manageDocks <+> myManageHook,
-  handleEventHook    = docksEventHook,
+  manageHook         = myManageHook,
   startupHook        = myStartupHook
 }

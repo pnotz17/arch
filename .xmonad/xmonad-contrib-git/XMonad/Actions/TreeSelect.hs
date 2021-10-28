@@ -6,6 +6,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Actions.TreeSelect
+-- Description :  Display workspaces or actions in a tree-like format.
 -- Copyright   :  (c) Tom Smeets <tom.tsmeets@gmail.com>
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -68,7 +69,6 @@ import Control.Monad.State
 import Data.Tree
 import Foreign (shiftL, shiftR, (.&.))
 import System.IO
-import System.Posix.Process (forkProcess, executeFile)
 import XMonad hiding (liftX)
 import XMonad.Prelude
 import XMonad.StackSet as W
@@ -409,7 +409,7 @@ treeselectWorkspace c xs f = do
                             , "XConfig.workspaces: "
                             ] ++ map tag ws
         hPutStrLn stderr msg
-        _ <- forkProcess $ executeFile "xmessage" True [msg] Nothing
+        xmessage msg
         return ()
   where
     mkNode n w = do

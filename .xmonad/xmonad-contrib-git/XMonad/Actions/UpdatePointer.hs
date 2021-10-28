@@ -2,6 +2,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonadContrib.UpdatePointer
+-- Description :  Causes the pointer to follow whichever window focus changes to.
 -- Copyright   :  (c) Robert Marlow <robreim@bobturf.org>, 2015 Evgeny Kurnevsky
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -60,6 +61,11 @@ import Control.Arrow ((&&&), (***))
 -- | Update the pointer's location to the currently focused
 -- window or empty screen unless it's already there, or unless the user was changing
 -- focus with the mouse
+--
+-- See also 'XMonad.Actions.UpdateFocus.focusUnderPointer' for an inverse
+-- operation that updates the focus instead. The two can be combined in a
+-- single config if neither goes into 'logHook' but are invoked explicitly in
+-- individual key bindings.
 updatePointer :: (Rational, Rational) -> (Rational, Rational) -> X ()
 updatePointer refPos ratio = do
   ws <- gets windowset

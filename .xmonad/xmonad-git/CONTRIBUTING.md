@@ -34,9 +34,11 @@ Awesome!  Here are a few things to keep in mind:
     nontrivial changes to xmonad.  There are a couple of ways you can
     chat with us:
 
-    - Post a message to the [mailing list][ml].
+    - Join the [`#xmonad` IRC channel] on `irc.libera.chat` or the
+      official [matrix channel], which is linked to IRC.  This is the
+      preferred (and fastest!) way to get into contact with us.
 
-    - Join the `#xmonad` IRC channel on `irc.libera.chat`.
+    - Post a message to the [mailing list][ml].
 
   * [XMonad.Doc.Developing][xmonad-doc-developing] is a great
     resource to get an overview of xmonad.  Make sure to also check
@@ -59,9 +61,10 @@ Here are some tips for getting your changes merged into xmonad:
   * Your changes should include relevant entries in the `CHANGES.md`
     file.  Help us communicate changes to the community.
 
-  * Make sure you test your changes using the [xmonad-testing][]
-    repository.  Include a new configuration file that shows off your
-    changes if possible by creating a PR on that repository as well.
+  * Make sure you test your changes against the most recent commit of
+    [xmonad][] (and [xmonad-contrib][], if you're contributing there).
+    If you're adding a new module or functionality, make sure to add an
+    example in the documentation and in the PR description.
 
   * Make sure you run the automated tests.  Both [xmonad-contrib][]
     and [xmonad][] have test-suites that you could run with
@@ -69,6 +72,36 @@ Here are some tips for getting your changes merged into xmonad:
 
   * Make sure you read the section on rebasing and squashing commits
     below.
+
+## Style Guidelines
+
+Below are some common style guidelines that all of the core modules
+follow.  Before submitting a pull request, make sure that your code does
+as well!
+
+  * Comment every top level function (particularly exported functions),
+    and provide a type signature; use Haddock syntax in the comments.
+
+  * Follow the coding style of the module that you are making changes to
+    (`n` spaces for indentation, where to break long type signatures, …)
+
+  * New code should not introduce any new warnings.  If you want to
+    check this yourself before submitting a pull request, there is the
+    `pedantic` flag, which is enforced in our CI.  You can enable it by
+    building your changes with `stack build --flag xmonad:pedantic` or
+    `cabal build --flag pedantic`.
+
+  * Likewise, your code should be free of [hlint] warnings; this is also
+    enforced in our GitHub CI.
+
+  * Partial functions are to be avoided: the window manager should not
+    crash, so do not call `error` or `undefined`
+
+  * Any pure function added to the core should have QuickCheck
+    properties precisely defining its behavior.
+
+  * New modules should identify the author, and be submitted under the
+    same license as xmonad (BSD3 license).
 
 ## Rebasing and Squashing Commits
 
@@ -149,9 +182,12 @@ each pull request contains just one commit.
      $ git push --force-with-lease
      ```
 
+[hlint]: https://github.com/ndmitchell/hlint
 [xmonad]: https://github.com/xmonad/xmonad
 [xmonad-contrib]: https://github.com/xmonad/xmonad-contrib
 [xmonad-testing]: https://github.com/xmonad/xmonad-testing
 [x11]: https://github.com/xmonad/X11
 [ml]: https://mail.haskell.org/cgi-bin/mailman/listinfo/xmonad
-[xmonad-doc-developing]: http://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Doc-Developing.html
+[xmonad-doc-developing]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Doc-Developing.html
+[`#xmonad` IRC channel]: https://web.libera.chat/#xmonad
+[matrix channel]: https://matrix.to/#/#xmonad:matrix.org

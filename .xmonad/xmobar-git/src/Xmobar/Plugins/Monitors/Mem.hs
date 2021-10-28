@@ -1,3 +1,4 @@
+{-#LANGUAGE CPP #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Plugins.Monitors.Mem
@@ -15,8 +16,14 @@
 module Xmobar.Plugins.Monitors.Mem (memConfig, runMem, totalMem, usedMem) where
 
 import Xmobar.Plugins.Monitors.Common
-import qualified Data.Map as M
 import System.Console.GetOpt
+
+#if defined(freebsd_HOST_OS)
+import qualified Xmobar.Plugins.Monitors.Mem.FreeBSD as MM
+#else
+import qualified Xmobar.Plugins.Monitors.Mem.Linux as MM
+#endif
+
 
 data MemOpts = MemOpts
   { usedIconPattern :: Maybe IconPattern
@@ -49,27 +56,11 @@ memConfig = mkMConfig
         "usedratio", "freeratio", "availableratio",
         "total", "free", "buffer", "cache", "available", "used"] -- available replacements
 
-fileMEM :: IO String
-fileMEM = readFile "/proc/meminfo"
-
-parseMEM :: IO [Float]
-parseMEM =
-    do file <- fileMEM
-       let content = map words $ take 8 $ lines file
-           info = M.fromList $ map (\line -> (head line, (read $ line !! 1 :: Float) / 1024)) content
-           [total, free, buffer, cache] = map (info M.!) ["MemTotal:", "MemFree:", "Buffers:", "Cached:"]
-           available = M.findWithDefault (free + buffer + cache) "MemAvailable:" info
-           used = total - available
-           usedratio = used / total
-           freeratio = free / total
-           availableratio = available / total
-       return [usedratio, freeratio, availableratio, total, free, buffer, cache, available, used]
-
 totalMem :: IO Float
-totalMem = fmap ((*1024) . (!!1)) parseMEM
+totalMem = fmap ((*1024) . (!!1)) MM.parseMEM
 
 usedMem :: IO Float
-usedMem = fmap ((*1024) . (!!6)) parseMEM
+usedMem = fmap ((*1024) . (!!6)) MM.parseMEM
 
 formatMem :: MemOpts -> [Float] -> Monitor [String]
 formatMem opts (r:fr:ar:xs) =
@@ -84,7 +75,7 @@ formatMem _ _ = replicate 10 `fmap` getConfigValue naString
 
 runMem :: [String] -> Monitor String
 runMem argv =
-    do m <- io parseMEM
+    do m <- io MM.parseMEM
        opts <- io $ parseOptsWith options defaultOpts argv
        l <- formatMem opts m
        parseTemplate l

@@ -2,6 +2,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module       : XMonad.Hooks.ManageHelpers
+-- Description  : Helper functions to be used in manageHook.
 -- Copyright    : (c) Lukas Mai
 -- License      : BSD
 --
@@ -24,11 +25,25 @@
 -- >         ],
 -- >         ...
 -- >     }
+--
+-- Here's how you can define more helpers like the ones from this module:
+--
+-- > -- some function you want to transform into an infix operator
+-- > f :: a -> b -> Bool
+-- >
+-- > -- a new helper
+-- > q ***? x = fmap (\a -> f a x) q
+-- > -- or
+-- > q ***? x = fmap (`f` x) q
+--
+-- Any existing operator can be "lifted" in the same way:
+--
+-- > q ++? x = fmap (++ x) q
 
 module XMonad.Hooks.ManageHelpers (
     Side(..),
     composeOne,
-    (-?>), (/=?), (<==?), (</=?), (-->>), (-?>>),
+    (-?>), (/=?), (^?), (~?), ($?), (<==?), (</=?), (-->>), (-?>>),
     currentWs,
     windowTag,
     isInProperty,
@@ -55,6 +70,7 @@ module XMonad.Hooks.ManageHelpers (
     doSink,
     doLower,
     doRaise,
+    doFocus,
     Match,
 ) where
 
@@ -92,6 +108,18 @@ infixr 0 -?>, -->>, -?>>
 -- | q \/=? x. if the result of q equals x, return False
 (/=?) :: (Eq a, Functor m) => m a -> a -> m Bool
 q /=? x = fmap (/= x) q
+
+-- | q ^? x. if the result of q 'isPrefixOf' x, return True
+(^?) :: (Eq a, Functor m) => m [a] -> [a] -> m Bool
+q ^? x = fmap (`isPrefixOf` x) q
+
+-- | q ~? x. if the result of q 'isSuffixOf' x, return True
+(~?) :: (Eq a, Functor m) => m [a] -> [a] -> m Bool
+q ~? x = fmap (`isInfixOf` x) q
+
+-- | q $? x. if the result of q 'isSuffixOf' x, return True
+($?) :: (Eq a, Functor m) => m [a] -> [a] -> m Bool
+q $? x = fmap (`isSuffixOf` x) q
 
 -- | q <==? x. if the result of q equals x, return True grouped with q
 (<==?) :: (Eq a, Functor m) => m a -> a -> m (Match a)
@@ -273,7 +301,7 @@ doHideIgnore = ask >>= \w -> liftX (hide w) >> doF (W.delete w)
 
 -- | Sinks a window
 doSink :: ManageHook
-doSink = reader (Endo . W.sink)
+doSink = doF . W.sink =<< ask
 
 -- | Lower an unmanaged window. Useful together with 'doIgnore' to lower
 -- special windows that for some reason don't do it themselves.
@@ -284,3 +312,7 @@ doLower = ask >>= \w -> liftX $ withDisplay $ \dpy -> io (lowerWindow dpy w) >> 
 -- special windows that for some reason don't do it themselves.
 doRaise :: ManageHook
 doRaise = ask >>= \w -> liftX $ withDisplay $ \dpy -> io (raiseWindow dpy w) >> mempty
+
+-- | Focus a window (useful in 'XMonad.Hooks.EwmhDesktops.setActivateHook').
+doFocus :: ManageHook
+doFocus = doF . W.focusWindow =<< ask

@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Hooks.DynamicBars
+-- Description :  Manage per-screen status bars.
 -- Copyright   :  (c) Ben Boeckel 2012
 -- License     :  BSD-style (as xmonad)
 --
@@ -12,7 +13,7 @@
 --
 -----------------------------------------------------------------------------
 
-module XMonad.Hooks.DynamicBars (
+module XMonad.Hooks.DynamicBars {-# DEPRECATED "Use XMonad.Hooks.StatusBar instead" #-} (
   -- * Usage
   -- $usage
     DynamicStatusBar

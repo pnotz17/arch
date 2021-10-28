@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Actions.DynamicWorkspaceOrder
+-- Description :  Remember a dynamically updateable ordering on workspaces.
 -- Copyright   :  (c) Brent Yorgey 2009
 -- License     :  BSD-style (see LICENSE)
 --
@@ -10,7 +11,7 @@
 --
 -- Remember a dynamically updateable ordering on workspaces, together
 -- with tools for using this ordering with "XMonad.Actions.CycleWS"
--- and "XMonad.Hooks.DynamicLog".
+-- and "XMonad.Hooks.StatusBar.PP".
 --
 -----------------------------------------------------------------------------
 
@@ -21,6 +22,8 @@ module XMonad.Actions.DynamicWorkspaceOrder
       getWsCompareByOrder
     , getSortByOrder
     , swapWith
+    , swapWithCurrent
+    , swapOrder
     , updateName
     , removeName
 
@@ -65,10 +68,10 @@ import Data.Ord (comparing)
 -- order of workspaces must be updated to use the auxiliary ordering.
 --
 -- To change the order in which workspaces are displayed by
--- "XMonad.Hooks.DynamicLog", use 'getSortByOrder' in your
--- 'XMonad.Hooks.DynamicLog.ppSort' field, for example:
+-- "XMonad.Hooks.StatusBar.PP", use 'getSortByOrder' in your
+-- 'XMonad.Hooks.StatusBar.PP.ppSort' field, for example:
 --
--- >   ... dynamicLogWithPP $ byorgeyPP {
+-- >   myPP = ... byorgeyPP {
 -- >     ...
 -- >     , ppSort = DO.getSortByOrder
 -- >     ...

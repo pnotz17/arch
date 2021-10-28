@@ -5,6 +5,10 @@ apt:
   libxrandr-dev
   libxss-dev
 
+github-patches:
+  .github/workflows/haskell-ci-hackage.patch
+
 raw-project
+  optimization: False
   package xmonad
     flags: +pedantic

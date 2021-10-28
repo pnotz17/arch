@@ -3,6 +3,7 @@
 --------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Util.NamedActions
+-- Description :  A wrapper for keybinding configuration that can list the available keybindings.
 -- Copyright   :  2009 Adam Vogt <vogt.adam@gmail.com>
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -48,7 +49,6 @@ module XMonad.Util.NamedActions (
 import XMonad.Actions.Submap(submap)
 import XMonad.Prelude (groupBy)
 import XMonad
-import System.Posix.Process(executeFile)
 import Control.Arrow(Arrow((&&&), second, (***)))
 import Data.Bits(Bits((.&.), complement))
 import System.Exit(exitSuccess)
@@ -204,9 +204,7 @@ showKm keybindings = padding $ do
 
 -- | An action to send to 'addDescrKeys' for showing the keybindings. See also 'showKm' and 'showKmSimple'
 xMessage :: [((KeyMask, KeySym), NamedAction)] -> NamedAction
-xMessage x = addName "Show Keybindings" $ io $ do
-    xfork $ executeFile "xmessage" True ["-default", "okay", unlines $ showKm x] Nothing
-    return ()
+xMessage x = addName "Show Keybindings" $ xmessage $ unlines $ showKm x
 
 -- | Merge the supplied keys with 'defaultKeysDescr', also adding a keybinding
 -- to run an action for showing the keybindings.

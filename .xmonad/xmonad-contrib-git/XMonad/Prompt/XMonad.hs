@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Prompt.XMonad
+-- Description :  A prompt for running XMonad commands.
 -- Copyright   :  (C) 2007 Andrea Rossato
 -- License     :  BSD3
 --
@@ -17,6 +18,7 @@ module XMonad.Prompt.XMonad (
                              -- $usage
                              xmonadPrompt,
                              xmonadPromptC,
+                             xmonadPromptCT,
                              XMonad,
                               ) where
 
@@ -38,10 +40,10 @@ import XMonad.Prelude (fromMaybe)
 -- For detailed instruction on editing the key binding see
 -- "XMonad.Doc.Extending#Editing_key_bindings".
 
-data XMonad = XMonad
+newtype XMonad = XMonad String
 
 instance XPrompt XMonad where
-    showXPrompt XMonad = "XMonad: "
+    showXPrompt (XMonad str) = str <> ": "
 
 xmonadPrompt :: XPConfig -> X ()
 xmonadPrompt c = do
@@ -50,6 +52,10 @@ xmonadPrompt c = do
 
 -- | An xmonad prompt with a custom command list
 xmonadPromptC :: [(String, X ())] -> XPConfig -> X ()
-xmonadPromptC commands c =
-    mkXPrompt XMonad c (mkComplFunFromList' c (map fst commands)) $
+xmonadPromptC = xmonadPromptCT "XMonad"
+
+-- | An xmonad prompt with a custom command list and a custom title
+xmonadPromptCT :: String -> [(String, X ())] -> XPConfig -> X ()
+xmonadPromptCT title' commands c =
+    mkXPrompt (XMonad title') c (mkComplFunFromList' c (map fst commands)) $
         fromMaybe (return ()) . (`lookup` commands)

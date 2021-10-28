@@ -1,3 +1,4 @@
+{-#LANGUAGE CPP #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Plugins.Monitors.Swap
@@ -16,30 +17,16 @@ module Xmobar.Plugins.Monitors.Swap where
 
 import Xmobar.Plugins.Monitors.Common
 
-import qualified Data.ByteString.Lazy.Char8 as B
+#if defined(freebsd_HOST_OS)
+import qualified Xmobar.Plugins.Monitors.Swap.FreeBSD as MS
+#else
+import qualified Xmobar.Plugins.Monitors.Swap.Linux as MS
+#endif
 
 swapConfig :: IO MConfig
 swapConfig = mkMConfig
         "Swap: <usedratio>%"                    -- template
         ["usedratio", "total", "used", "free"] -- available replacements
-
-fileMEM :: IO B.ByteString
-fileMEM = B.readFile "/proc/meminfo"
-
-parseMEM :: IO [Float]
-parseMEM =
-    do file <- fileMEM
-       let li i l
-               | l /= [] = head l !! i
-               | otherwise = B.empty
-           fs s l
-               | null l    = False
-               | otherwise = head l == B.pack s
-           get_data s = flip (/) 1024 . read . B.unpack . li 1 . filter (fs s)
-           st   = map B.words . B.lines $ file
-           tot  = get_data "SwapTotal:" st
-           free = get_data "SwapFree:" st
-       return [(tot - free) / tot, tot, tot - free, free]
 
 formatSwap :: [Float] -> Monitor [String]
 formatSwap (r:xs) = do
@@ -51,6 +38,6 @@ formatSwap _ = return $ replicate 4 "N/A"
 
 runSwap :: [String] -> Monitor String
 runSwap _ =
-    do m <- io parseMEM
+    do m <- io MS.parseMEM
        l <- formatSwap m
        parseTemplate l

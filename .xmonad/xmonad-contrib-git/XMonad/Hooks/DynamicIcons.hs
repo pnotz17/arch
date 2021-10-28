@@ -2,6 +2,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Hooks.DynamicIcons
+-- Description :  Dynamically update workspace names based on its contents\/windows on it.
 -- Copyright   :  (c) Will Pierlot <willp@outlook.com.au>
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -9,7 +10,7 @@
 -- Stability   :  unstable
 -- Portability :  unportable
 --
--- Dynamically augment workspace names logged to a status bar via DynamicLog
+-- Dynamically augment workspace names logged to a status bar
 -- based on the contents (windows) of the workspace.
 -----------------------------------------------------------------------------
 
@@ -18,12 +19,13 @@ module XMonad.Hooks.DynamicIcons (
     -- $usage
 
     -- * Creating Dynamic Icons
-    dynamicLogIconsWithPP, appIcon,
+    iconsPP, dynamicLogIconsWithPP, appIcon,
 
     -- * Customization
     dynamicIconsPP, getWorkspaceIcons,
     IconConfig(..),
     iconsFmtAppend, iconsFmtReplace, wrapUnwords,
+    iconsGetAll, iconsGetFocus,
 
     ) where
 import XMonad
@@ -31,8 +33,8 @@ import XMonad
 import qualified XMonad.StackSet as S
 import qualified Data.Map as M
 
-import XMonad.Hooks.DynamicLog
-import XMonad.Prelude (for, (<&>), (<=<), (>=>))
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Prelude (for, maybeToList, (<&>), (<=<), (>=>))
 
 -- $usage
 -- Dynamically augment Workspace's 'WorkspaceId' as shown on a status bar
@@ -53,11 +55,10 @@ import XMonad.Prelude (for, (<&>), (<=<), (>=>))
 -- >   , className =? "Spotify" <||> className =? "spotify" --> appIcon "阮"
 -- >   ]
 --
--- then you can add the hook to your config:
+-- then you can add it to your "XMonad.Hooks.StatusBar" config:
 --
--- > main = xmonad $ … $ def
--- >   { logHook = dynamicLogIconsWithPP icons xmobarPP
--- >   , … }
+-- > myBar = statusBarProp "xmobar" (iconsPP myIcons myPP)
+-- > main = xmonad . withSB myBar $ … $ def
 --
 -- Here is an example of this
 --
@@ -69,6 +70,18 @@ import XMonad.Prelude (for, (<&>), (<=<), (>=>))
 -- If you want to customize formatting and/or combine this with other
 -- 'PP' extensions like "XMonad.Util.ClickableWorkspaces", here's a more
 -- advanced example how to do that:
+--
+-- > myIconConfig = def{ iconConfigIcons = myIcons, iconConfigFmt = iconsFmtAppend concat }
+-- > myBar = statusBarProp "xmobar" (clickablePP =<< dynamicIconsPP myIconConfig myPP)
+-- > main = xmonad . withSB myBar . … $ def
+--
+-- This can be also used with "XMonad.Hooks.DynamicLog":
+--
+-- > main = xmonad $ … $ def
+-- >   { logHook = dynamicLogIconsWithPP myIcons xmobarPP
+-- >   , … }
+--
+-- or with more customziation:
 --
 -- > myIconConfig = def{ iconConfigIcons = myIcons, iconConfigFmt = iconsFmtAppend concat }
 -- > main = xmonad $ … $ def
@@ -85,9 +98,15 @@ appIcon = pure . pure
 dynamicLogIconsWithPP :: Query [String] -- ^ The 'IconSet' to use
                       -> PP -- ^ The 'PP' to alter
                       -> X () -- ^ The resulting 'X' action
-dynamicLogIconsWithPP q = dynamicLogWithPP <=< dynamicIconsPP def{ iconConfigIcons = q }
+dynamicLogIconsWithPP q = dynamicLogWithPP <=< iconsPP q
 
--- | Modify "XMonad.Hooks.DynamicLog"\'s pretty-printing format to augment
+-- | Adjusts the 'PP' with the given 'IconSet'
+iconsPP :: Query [String] -- ^ The 'IconSet' to use
+        -> PP -- ^ The 'PP' to alter
+        -> X PP -- ^ The resulting 'X PP'
+iconsPP q = dynamicIconsPP def{ iconConfigIcons = q }
+
+-- | Modify a pretty-printer, 'PP', to augment
 -- workspace names with icons based on the contents (windows) of the workspace.
 dynamicIconsPP :: IconConfig -> PP -> X PP
 dynamicIconsPP ic pp = getWorkspaceIcons ic <&> \ren -> pp{ ppRename = ppRename pp >=> ren }
@@ -95,16 +114,15 @@ dynamicIconsPP ic pp = getWorkspaceIcons ic <&> \ren -> pp{ ppRename = ppRename 
 -- | Returns a function for 'ppRename' that augments workspaces with icons
 -- according to the provided 'IconConfig'.
 getWorkspaceIcons :: IconConfig -> X (String -> WindowSpace -> String)
-getWorkspaceIcons IconConfig{..} = fmt <$> getWorkspaceIcons' iconConfigIcons
+getWorkspaceIcons conf@IconConfig{..} = fmt <$> getWorkspaceIcons' conf
   where
     fmt icons s w = iconConfigFmt s (M.findWithDefault [] (S.tag w) icons)
 
-getWorkspaceIcons' :: Query [String] -> X (M.Map WorkspaceId [String])
-getWorkspaceIcons' q = do
+getWorkspaceIcons' :: IconConfig  -> X (M.Map WorkspaceId [String])
+getWorkspaceIcons' IconConfig{..} = do
     ws <- gets (S.workspaces . windowset)
-    is <- for ws $ foldMap (runQuery q) . S.integrate' . S.stack
+    is <- for ws $ foldMap (runQuery iconConfigIcons) <=< iconConfigFilter . S.stack
     pure $ M.fromList (zip (map S.tag ws) is)
-
 
 -- | Datatype for expanded 'Icon' configurations
 data IconConfig = IconConfig
@@ -112,12 +130,15 @@ data IconConfig = IconConfig
       -- ^ What icons to use for each window.
     , iconConfigFmt :: WorkspaceId -> [String] -> String
       -- ^ How to format the result, see 'iconsFmtReplace', 'iconsFmtAppend'.
+    , iconConfigFilter :: Maybe (S.Stack Window) -> X [Window]
+      -- ^ Which windows (icons) to show.
     }
 
 instance Default IconConfig where
     def = IconConfig
         { iconConfigIcons = mempty
         , iconConfigFmt = iconsFmtReplace (wrapUnwords "{" "}")
+        , iconConfigFilter = iconsGetAll
         }
 
 -- | 'iconConfigFmt' that replaces the workspace name with icons, if any.
@@ -171,3 +192,11 @@ iconsFmtAppend cat ws is | null is   = ws
 wrapUnwords :: String -> String -> [String] -> String
 wrapUnwords _ _ [x] = x
 wrapUnwords l r xs  = wrap l r (unwords xs)
+
+-- | 'iconConfigFilter' that shows all windows of every workspace.
+iconsGetAll :: Maybe (S.Stack Window) -> X [Window]
+iconsGetAll = pure . S.integrate'
+
+-- | 'iconConfigFilter' that shows only the focused window for each workspace.
+iconsGetFocus :: Maybe (S.Stack Window) -> X [Window]
+iconsGetFocus = pure . maybeToList . fmap S.focus

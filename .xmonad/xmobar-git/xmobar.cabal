@@ -1,5 +1,5 @@
 name:               xmobar
-version:            0.39
+version:            0.40
 homepage:           http://xmobar.org
 synopsis:           A Minimalistic Text Based Status Bar
 description: 	    Xmobar is a minimalistic text based status bar.
@@ -92,6 +92,10 @@ flag with_weather
   description: Enable weather plugin.
   default: True
 
+flag with_kraken
+  description: Enable Kraken plugin.
+  default: False
+
 library
     default-language: Haskell2010
     hs-source-dirs:  src
@@ -136,6 +140,7 @@ library
                    Xmobar.Plugins.Date,
                    Xmobar.Plugins.EWMH,
                    Xmobar.Plugins.HandleReader,
+                   Xmobar.Plugins.QueueReader,
                    Xmobar.Plugins.PipeReader,
                    Xmobar.Plugins.MarqueePipeReader,
                    Xmobar.Plugins.StdinReader,
@@ -145,21 +150,25 @@ library
                    Xmobar.Plugins.NotmuchMail,
                    Xmobar.Plugins.Monitors,
                    Xmobar.Plugins.Monitors.Batt,
+                   Xmobar.Plugins.Monitors.Batt.Common,
                    Xmobar.Plugins.Monitors.Common.Output,
                    Xmobar.Plugins.Monitors.Common.Parsers,
                    Xmobar.Plugins.Monitors.Common.Files,
                    Xmobar.Plugins.Monitors.CoreTemp,
                    Xmobar.Plugins.Monitors.K10Temp,
+                   Xmobar.Plugins.Monitors.Cpu.Common,
                    Xmobar.Plugins.Monitors.CpuFreq,
                    Xmobar.Plugins.Monitors.Disk,
                    Xmobar.Plugins.Monitors.Mem,
                    Xmobar.Plugins.Monitors.MultiCoreTemp,
                    Xmobar.Plugins.Monitors.MultiCpu,
                    Xmobar.Plugins.Monitors.Net,
+                   Xmobar.Plugins.Monitors.Net.Common,
                    Xmobar.Plugins.Monitors.Swap,
                    Xmobar.Plugins.Monitors.Thermal,
                    Xmobar.Plugins.Monitors.ThermalZone,
                    Xmobar.Plugins.Monitors.Top,
+                   Xmobar.Plugins.Monitors.Top.Common,
                    Xmobar.Plugins.Monitors.Uptime,
                    Xmobar.Plugins.Monitors.Bright,
                    Xmobar.Plugins.Monitors.CatInt
@@ -169,7 +178,7 @@ library
     ghc-options: -funbox-strict-fields -Wall -fno-warn-unused-do-bind
 
     build-depends:
-      base >= 4.11.0 && < 4.15,
+      base >= 4.11.0 && < 4.16,
       containers,
       regex-compat,
       process,
@@ -274,10 +283,36 @@ library
        build-depends: http-conduit, http-types
        cpp-options: -DUVMETER
 
+    if flag(with_kraken)
+      other-modules: Xmobar.Plugins.Kraken
+      build-depends: aeson == 1.5.6.*
+                   , text == 1.2.4.*
+                   , unordered-containers == 0.2.14.*
+                   , vector == 0.12.3.*
+                   , wuss == 1.1.*
+                   , websockets == 0.12.*
+      cpp-options: -DKRAKEN
+
     if os(freebsd)
        -- enables freebsd specific code
+       extra-libraries: procstat
+                      , kvm
        build-depends: bsd-sysctl
-       cpp-options: -DFREEBSD
+       other-modules: Xmobar.Plugins.Monitors.Batt.FreeBSD,
+                      Xmobar.Plugins.Monitors.Cpu.FreeBSD,
+                      Xmobar.Plugins.Monitors.Mem.FreeBSD,
+                      Xmobar.Plugins.Monitors.Net.FreeBSD,
+                      Xmobar.Plugins.Monitors.Swap.FreeBSD,
+                      Xmobar.Plugins.Monitors.Top.FreeBSD,
+                      Xmobar.Plugins.Monitors.Uptime.FreeBSD
+    else
+       other-modules: Xmobar.Plugins.Monitors.Batt.Linux,
+                      Xmobar.Plugins.Monitors.Cpu.Linux,
+                      Xmobar.Plugins.Monitors.Mem.Linux,
+                      Xmobar.Plugins.Monitors.Net.Linux,
+                      Xmobar.Plugins.Monitors.Swap.Linux,
+                      Xmobar.Plugins.Monitors.Top.Linux,
+                      Xmobar.Plugins.Monitors.Uptime.Linux
 
 executable xmobar
     default-language:   Haskell2010
@@ -338,6 +373,7 @@ test-suite XmobarTest
                  Xmobar.Plugins.Monitors.Common.Output
                  Xmobar.Plugins.Monitors.Common.Files
                  Xmobar.Plugins.Monitors.Cpu
+                 Xmobar.Plugins.Monitors.Cpu.Common
                  Xmobar.Plugins.Monitors.CpuSpec
                  Xmobar.Plugins.Monitors.Common.Run
                  Xmobar.Run.Exec
@@ -353,6 +389,13 @@ test-suite XmobarTest
                      Xmobar.Plugins.Monitors.AlsaSpec
 
       cpp-options: -DALSA
+
+  if os(freebsd)
+       -- enables freebsd specific code
+      build-depends: bsd-sysctl
+      other-modules: Xmobar.Plugins.Monitors.Cpu.FreeBSD
+  else
+      other-modules: Xmobar.Plugins.Monitors.Cpu.Linux
 
 benchmark xmobarbench
   type: exitcode-stdio-1.0

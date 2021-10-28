@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Util.Loggers.NamedScratchpad
+-- Description :  A collection of Loggers for "XMonad.Util.NamedScratchpad".
 -- Copyright   :  (c) Brandon S Allbery <allbery.b@gmail.com>
 -- License     :  BSD-style (see LICENSE)
 --
@@ -34,7 +35,7 @@ import qualified XMonad.StackSet as W (allWindows)
 -- This is a set of 'Logger's for 'NamedScratchpad's.
 -- It provides a 'startupHook' and 'handleEventHook' to keep track of
 -- 'NamedScratchpad's, and several possible 'Logger's for use in
--- 'XMonad.Hooks.DynamicLog' 'ppExtras'.
+-- 'XMonad.Hooks.StatusBar.PP.ppExtras'.
 --
 -- You must add 'nspTrackStartup' to your 'startupHook' to initialize
 -- 'NamedScratchpad' tracking and to detect any currently running

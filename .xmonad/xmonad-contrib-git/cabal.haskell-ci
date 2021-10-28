@@ -9,7 +9,11 @@ apt:
 hlint: True
 hlint-yaml: .hlint.yaml
 
+github-patches:
+  .github/workflows/haskell-ci-hackage.patch
+
 raw-project
+  optimization: False
   package xmonad-contrib
     flags: +pedantic
     ghc-options: -j

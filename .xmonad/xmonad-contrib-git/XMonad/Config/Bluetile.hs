@@ -3,6 +3,7 @@
 ----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Config.Bluetile
+-- Description :  Default configuration of [Bluetile](http://projects.haskell.org/bluetile/).
 -- Copyright   :  (c) Jan Vornberger 2009
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -196,15 +197,13 @@ bluetileLayoutHook = avoidStruts $ minimize $ boringWindows $
             floatingDeco l = buttonDeco shrinkText defaultThemeWithButtons l
 
 bluetileConfig =
-    docks $
+    docks . ewmhFullscreen . ewmh $
     def
         { modMask = mod4Mask,   -- logo key
           manageHook = bluetileManageHook,
           layoutHook = bluetileLayoutHook,
-          logHook = currentWorkspaceOnTop >> ewmhDesktopsLogHook,
-          handleEventHook = ewmhDesktopsEventHook
-                                `mappend` fullscreenEventHook
-                                `mappend` minimizeEventHook
+          logHook = currentWorkspaceOnTop,
+          handleEventHook = minimizeEventHook
                                 `mappend` serverModeEventHook' bluetileCommands
                                 `mappend` positionStoreEventHook,
           workspaces = bluetileWorkspaces,

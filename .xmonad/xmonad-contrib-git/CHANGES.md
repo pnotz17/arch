@@ -1,6 +1,6 @@
 # Change Log / Release Notes
 
-## unknown
+## 0.17.0 (October 27, 2021)
 
 ### Breaking Changes
 
@@ -40,13 +40,27 @@
       `XMonad.Layout.Fullscreen.fullscreenSupport` now advertises it as well,
       and no configuration changes are required in this case.
 
-    - `ewmh` function will use `logHook` for handling activated window. And now
-      by default window activation will do nothing.
+    - Deprecated `ewmhDesktopsLogHookCustom` and `ewmhDesktopsEventHookCustom`;
+      these are now replaced by a composable `XMonad.Util.ExtensibleConf`-based
+      interface. Users are advised to just use the `ewmh` XConfig combinator
+      and customize behaviour using the provided `addEwmhWorkspaceSort`,
+      `addEwmhWorkspaceRename` functions, or better still, use integrations
+      provided by modules such as `XMonad.Actions.WorkspaceNames`.
 
-      You can use regular `ManageHook` combinators for changing window
-      activation behavior and then add resulting `ManageHook` using
-      `activateLogHook` to your `logHook`. Also, module `X.H.Focus` provides
-      additional combinators.
+      This interface now additionally allows customization of what happens
+      when clients request window activation. This can be used to ignore
+      activation of annoying applications, to mark windows as urgent instead
+      of focusing them, and more. There's also a new `XMonad.Hooks.Focus`
+      module extending the ManageHook EDSL with useful combinators.
+
+    - Ordering of windows that are set to `_NET_CLIENT_LIST` and `_NET_CLIENT_LIST_STACKING`
+      was changed to be closer to the spec. From now these two lists will have
+      differently sorted windows.
+
+    - `_NET_WM_STATE_DEMANDS_ATTENTION` was added to the list of supported
+      hints (as per `_NET_SUPPORTED`). This hint has long been understood by
+      `UrgencyHook`. This enables certain applications (e.g. kitty terminal
+      emulator) that check whether the hint is supported to use it.
 
   * All modules still exporting a `defaultFoo` constructor
 
@@ -118,7 +132,31 @@
     - Deprecated `EmptyWS`, `HiddenWS`, `NonEmptyWS`, `HiddenNonEmptyWS`,
       `HiddenEmptyWS`, `AnyWS` and `WSTagGroup`.
 
+  - `XMonad.Actions.GridSelect`
+
+    - `colorRangeFromClassName` now uses different hash function,
+      so colors of inactive window tiles will be different (but still inside
+      the provided color range).
+
+  * `XMonad.Actions.Search`
+
+    - Removed outdated `isohunt` search engine.
+
+    - Updated URLs for `codesearch`, `openstreetmap`, and `thesaurus`
+      search engines.
+
+    - Added `github` search engine.
+
 ### New Modules
+
+  * `XMonad.Layout.FixedAspectRatio`
+
+    Layout modifier for user provided per-window aspect ratios.
+
+  * `XMonad.Hooks.TaffybarPagerHints`
+
+    Add a module that exports information about XMonads internal state that is
+    not available through EWMH that is used by the taffybar status bar.
 
   * `XMonad.Hooks.StatusBar.PP`
 
@@ -141,8 +179,13 @@
       `xmobarFont` for selecting an alternative font.
 
     - Added `ppRename` to `PP`, which makes it possible for extensions like
-      `workspaceNamesPP`, `marshallPP` and/or `clickablePP` to compose
-      intuitively.
+      `workspaceNamesPP`, `marshallPP` and/or `clickablePP` (which need to
+      access the original `WorkspaceId`) to compose intuitively.
+
+    - Added `ppPrinters`, `WSPP` and `fallbackPrinters` as a generalization of
+      the `ppCurrent`, `ppVisible`… sextet, which makes it possible for
+      extensions like `copiesPP` (which acts as if there was a
+      `ppHiddenWithCopies`) to compose intuitively.
 
   * `XMonad.Hooks.StatusBar`
 
@@ -188,11 +231,12 @@
 
   * `XMonad.Hooks.DynamicIcons`
 
-    Added Dynamic Strings as `dynamicLogIconWithPP` based on a Workspaces Windows
+    Dynamically augment workspace names logged to a status bar via DynamicLog
+    based on the contents (windows) of the workspace.
 
   * `XMonad.Hooks.WindowSwallowing`
 
-    A handleEventHook that implements window swallowing:
+    HandleEventHooks that implement window swallowing or sublayouting:
     Hide parent windows like terminals when opening other programs (like image viewers) from within them,
     restoring them once the child application closes.
 
@@ -271,9 +315,26 @@
     as well as to actually invoke xrandr or autorandr when an output is
     (dis)connected.
 
+  * `XMonad.Actions.EasyMotion`
+
+    A new module that allows selection of visible screens using a key chord.
+    Inspired by [vim-easymotion](https://github.com/easymotion/vim-easymotion). See the animation
+    in the vim-easymotion repo to get some idea of the functionality of this
+    EasyMotion module.
+
 ### Bug Fixes and Minor Changes
 
   * Add support for GHC 9.0.1.
+
+  * `XMonad.Actions.WithAll`
+
+    - Added `killOthers`, which kills all unfocused windows on the
+      current workspace.
+
+  * `XMonad.Prompt.XMonad`
+
+    - Added `xmonadPromptCT`, which allows you to create an XMonad
+      prompt with a custom title.
 
   * `XMonad.Actions.DynamicWorkspaceGroups`
 
@@ -357,6 +418,9 @@
 
     - The API for this module is frozen: this is now a compatibility wrapper.
 
+    - References for this module are updated to point to `X.H.StatusBar` or
+      `X.H.StatusBar.PP`
+
   * `XMonad.Layout.BoringWindows`
 
     - Added boring-aware `swapUp`, `swapDown`, `siftUp`, and `siftDown` functions.
@@ -379,6 +443,9 @@
 
      - Exported the `scratchpadWorkspaceTag`.
 
+     - Added a new logHook `nsHideOnFocusLoss` for hiding scratchpads
+       when they lose focus.
+
   * `XMonad.Prompt.Window`
 
     - Added `allApplications` function which maps application executable
@@ -389,8 +456,12 @@
 
   * `XMonad.Prompt.WindowBringer`
 
-    - Added `windowApMap` function which maps application executable
+    - Added `windowAppMap` function which maps application executable
       names to its underlying window.
+
+    - A new field `windowFilter` was added to the config, which allows the user
+      to provide a function which will decide whether each window should be
+      included in the window bringer menu.
 
   * `XMonad.Actions.Search`
 
@@ -429,6 +500,10 @@
     - Restored compatibility with pre-0.13 configs by making the startup hook
       unnecessary for correct functioning (strut cache is initialized on-demand).
 
+      This is a temporary measure, however. The individual hooks are now
+      deprecated in favor of the `docks` combinator, `xmonad --recompile` now
+      reports deprecation warnings, and the hooks will be removed soon.
+
     - Fixed ignoring of strut updates from override-redirect windows, which is
       default for xmobar.
 
@@ -450,6 +525,9 @@
 
     - Added `windowTag`
 
+    - Added `(^?)`, `(~?)` and `($?)` operators as infix versions of `isPrefixOf`, `isInfixOf`
+      and `isSuffixOf` working with `ManageHook`s.
+
   * `XMonad.Util.EZConfig`
 
     - Added support for XF86Bluetooth.
@@ -467,7 +545,9 @@
     - Added `logConst` to log a constant `String`, and `logDefault` (infix: `.|`)
       to combine loggers.
 
-    - Added `logTitles` to log all window titles (focused and unfocused ones).
+    - Added `logTitles` to log all window titles (focused and unfocused
+      ones) on the focused workspace, as well as `logTitlesOnScreen` as
+      a screen-specific variant thereof.
 
   * `XMonad.Layout.Minimize`
 
@@ -475,13 +555,15 @@
 
   * `XMonad.Actions.WorkspaceNames`
 
-    - Added `workspaceNamesListTransform` which makes workspace names visible
-      to external pagers.
+    - Added `workspaceNamesEwmh` which makes workspace names visible to
+      external pagers.
 
   * `XMonad.Util.PureX`
 
     - Added `focusWindow` and `focusNth` which don't refresh (and thus
       possibly flicker) when they happen to be a no-op.
+
+    - Added `shiftWin` as a refresh tracking version of `W.shiftWin`.
 
   * Several `LayoutClass` instances now have an additional `Typeable`
     constraint which may break some advanced configs. The upside is that we
@@ -560,6 +642,9 @@
     - Fixed handling of floating window borders in multihead setups that was
       broken since 0.14.
 
+    - Added `OnlyFloat` constructor to `Ambiguity` to unconditionally
+      remove all borders on floating windows.
+
   * `XMonad.Hooks.UrgencyHook`
 
     - It's now possible to clear urgency of selected windows only using the
@@ -568,6 +653,10 @@
 
     - Added a variant of `filterUrgencyHook` that takes a generic `Query Bool`
       to select which windows should never be marked urgent.
+
+    - Added `askUrgent` and a `doAskUrgent` manage hook helper for marking
+      windows as urgent from inside of xmonad. This can be used as a less
+      intrusive action for windows requesting focus.
 
   * `XMonad.Hooks.ServerMode`
 
@@ -630,6 +719,12 @@
     - Added new aliases `PhysicalWindowSpace` and `VirtualWindowSpace`
       for a `WindowSpace` for easier to read function signatures.
 
+    - Added a few useful utility functions related to simplify using the
+      module; namely `workspaceOnScreen`, `focusWindow'`, `focusScreen`,
+      `nthWorkspace`, and `withWspOnScreen`.
+
+    - Fixed wrong type-signature of `onCurrentScreen`.
+
   * `XMonad.Actions.CopyWindow`
 
     - Added `copiesPP` to make a `PP` aware of copies of the focused
@@ -646,6 +741,36 @@
     - Added `ingoringWSs` as a `WSType` predicate to skip workspaces having a
       tag in a given list.
 
+  - `XMonad.Actions.DynamicWorkspaceOrder`
+
+    - Added `swapWithCurrent` and `swapOrder` to the list of exported names.
+
+  - `XMonad.Actions.Submap`, `XMonad.Util.Ungrab`:
+
+    - Fixed issue with keyboard/pointer staying grabbed when a blocking action
+      like `runProcessWithInput` was invoked.
+
+  - `XMonad.Actions.UpdateFocus`
+
+    - Added `focusUnderPointer`, that updates the focus based on pointer
+      position, an inverse of `X.A.UpdatePointer`, which moves the mouse
+      pointer to match the focused window). Together these can be used to
+      ensure focus stays in sync with mouse.
+
+  - `XMonad.Layout.MultiToggle`
+
+    - Added `isToggleActive` for querying the toggle state of transformers.
+      Useful to show the state in a status bar.
+
+  * `XMonad.Layout.Spacing`
+
+    - Removed deprecations for `spacing`, `spacingWithEdge`,
+      `smartSpacing`, and `smartSpacingWithEdge`.
+
+  * `XMonad.Actions.DynamicWorkspaces`
+
+    - Fixed a system freeze when using `X.A.CopyWindow.copy` in
+      combination with `removeWorkspace`.
 
 ## 0.16
 
@@ -970,13 +1095,6 @@
 
     Currently needs manual setting of the session start flag. This could be
     automated when this moves to the core repository.
-
-  * `XMonad.Actions.EasyMotion`
-
-    A new module that allows selection of visible screens using a key chord.
-    Inspired by [vim-easymotion](https://github.com/easymotion/vim-easymotion). See the animation
-    in the vim-easymotion repo to get some idea of the functionality of this
-    EasyMotion module.
 
   * `XMonad.Layout.MultiDishes`
 

@@ -1,10 +1,39 @@
 # Change Log / Release Notes
 
-## unknown (unknown)
+## 0.17.0 (October 27, 2021)
 
-  * Fixed a bug when using multiple screens with different dimensions,
-    causing some floating windows to be smaller/larger than the size they
-    requested.
+### Enhancements
+
+  * Migrated `X.L.LayoutCombinators.(|||)` into `XMonad.Layout`, providing the
+    ability to directly jump to a layout with the `JumpToLayout` message.
+
+  * Recompilation now detects `stack.yaml` (can be a symlink) alongside
+    `xmonad.hs` and switches to using `stack ghc`. We also updated INSTALL.md
+    with instructions for cabal-install that lead to correct recompilation.
+
+    Deprecation warnings during recompilation are no longer suppressed to make
+    it easier for us to clean up the codebase. These can still be suppressed
+    manually using an `OPTIONS_GHC` pragma with `-Wno-deprecations`.
+
+  * Improve handling of XDG directories.
+
+      1. If all three of xmonad's environment variables (`XMONAD_DATA_DIR,`
+         `XMONAD_CONFIG_DIR`, and `XMONAD_CACHE_DIR`) are set, use them.
+      2. If there is a build script called `build` (see [these build scripts]
+         for usage examples) or configuration `xmonad.hs` in `~/.xmonad`, set
+         all three directories to `~/.xmonad`.
+      3. Otherwise, use the `xmonad` directory in `XDG_DATA_HOME`,
+         `XDG_CONFIG_HOME`, and `XDG_CACHE_HOME` (or their respective
+         fallbacks). These directories are created if necessary.
+
+    In the cases of 1. and 3., the build script or executable is expected to be
+    in the config dir.
+
+    Additionally, the xmonad config binary and intermediate object files were
+    moved to the cache directory (only relevant if using XDG or
+    `XMONAD_CACHE_DIR`).
+
+  * Added `Foldable`, `Functor`, and `Traversable` instances for `Stack`.
 
   * Added `Typeable layout` constraint to `LayoutClass`, making it possible to
     cast `Layout` back into a concrete type and extract current layout state
@@ -13,40 +42,40 @@
   * Export constructor for `Choose` and `CLR` from `Module.Layout` to allow
     pattern-matching on the left and right sub-layouts of `Choose l r a`.
 
+  * Added `withUnfocused` function to `XMonad.Operations`, allowing for `X`
+    operations to be applied to unfocused windows.
+
+[these build scripts]: https://github.com/xmonad/xmonad-testing/tree/master/build-scripts
+
+### Bug Fixes
+
+  * Fixed a bug when using multiple screens with different dimensions, causing
+    some floating windows to be smaller/larger than the size they requested.
+
   * Compatibility with GHC 9.0
-
-  * Improve handling of XDG directories.
-
-      1. If all three of xmonad's environment variables (`XMONAD_DATA_DIR,`
-         `XMONAD_CONFIG_DIR`, and `XMONAD_CACHE_DIR`) are set, use them.
-      2. If there is a build script called `build` (see [here](https://github.com/xmonad/xmonad-testing/tree/master/build-scripts) for usage
-         examples) or configuration `xmonad.hs` in `~/.xmonad`, set all three
-         directories to `~/.xmonad`.
-      3. Otherwise, use the `xmonad` directory in `XDG_DATA_HOME`,
-         `XDG_CONFIG_HOME`, and `XDG_CACHE_HOME` (or their respective
-         fallbacks). These directories are created if necessary.
-
-    In the cases of 1. and 3., the build script or executable is
-    expected to be in the config dir.
-
-  * Change `ScreenDetail` to a newtype and make `RationalRect` strict in
-    its contents.
 
   * Fixed dunst notifications being obscured when moving floats.
     https://github.com/xmonad/xmonad/issues/208
 
-  * Added `Foldable`, `Functor`, and `Traversable` instances for `Stack`.
+### Breaking Changes
+
+  * Made `(<&&>)` and `(<||>)` non-strict in their right operand; i.e., these
+    operators now implement short-circuit evaluation so the right operand is
+    evaluated only if the left operand does not suffice to determine the
+    result.
+
+  * Change `ScreenDetail` to a newtype and make `RationalRect` strict in its
+    contents.
+
+  * Added the `extensibleConf` field to `XConfig` which makes it easier for
+    contrib modules to have composable configuration (custom hooks, …).
 
   * `util/GenerateManpage.hs` is no longer distributed in the tarball.
     Instead, the manpage source is regenerated and manpage rebuilt
     automatically in CI.
 
-  * Added the `extensibleConf` field to `XConfig` which makes it easier for
-    contrib modules to have composable configuration (custom hooks, …).
-
-  * Migrated `X.L.LayoutCombinators.(|||)` into `XMonad.Layout`,
-    providing the ability to directly jump to a layout with the
-    `JumpToLayout` message.
+  * `DestroyWindowEvent` is now broadcasted to layouts to let them know
+    window-specific resources can be discarded.
 
 ## 0.15 (September 30, 2018)
 

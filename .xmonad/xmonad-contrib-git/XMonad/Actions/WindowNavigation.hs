@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Actions.WindowNavigation
+-- Description :  Experimental rewrite of "XMonad.Layout.WindowNavigation".
 -- Copyright   :  (c) 2007  David Roundy <droundy@darcs.net>,
 --                          Devin Mullins <me@twifkak.com>
 -- Maintainer  :  Devin Mullins <me@twifkak.com>
@@ -61,6 +62,11 @@ import qualified Data.Set as S
 -- >     config <- withWindowNavigation (xK_w, xK_a, xK_s, xK_d)
 -- >             $ def { ... }
 -- >     xmonad config
+--
+-- Or, for the brave souls:
+--
+-- > main = xmonad =<< withWindowNavigation (xK_w, xK_a, xK_s, xK_d)
+-- >             $ def { ... }
 --
 -- Here, we pass in the keys for navigation in counter-clockwise order from up.
 -- It creates keybindings for @modMask@ to move to window, and @modMask .|. shiftMask@

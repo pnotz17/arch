@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Actions.Submap
+-- Description :  Create a sub-mapping of key bindings.
 -- Copyright   :  (c) Jason Creighton <jcreigh@gmail.com>
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -92,5 +93,6 @@ submapDefaultWithKey defAction keys = do
 
     io $ ungrabPointer d currentTime
     io $ ungrabKeyboard d currentTime
+    io $ sync d False
 
     fromMaybe (defAction (m', s)) (M.lookup (m', s) keys)

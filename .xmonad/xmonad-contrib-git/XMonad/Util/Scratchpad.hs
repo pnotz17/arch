@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Util.Scratchpad
+-- Description :  Very handy hotkey-launched toggleable floating terminal window.
 -- Copyright   :  (c) Braden Shepherdson 2008
 -- License     :  BSD-style (as xmonad)
 --
@@ -110,7 +111,9 @@ scratchpadManageHook rect = namedScratchpadManageHook [NS "" "" scratchpadQuery 
 
 
 -- | Transforms a workspace list containing the SP workspace into one that
--- doesn't contain it. Intended for use with logHooks.
+-- doesn't contain it. Intended for use with 'logHook's (see
+-- 'XMonad.Hooks.StatusBar.PP.filterOutWsPP') and "XMonad.Hooks.EwmhDesktops"
+-- (see 'XMonad.Hooks.EwmhDesktops.addEwmhWorkspaceSort').
 scratchpadFilterOutWorkspace :: [WindowSpace] -> [WindowSpace]
 scratchpadFilterOutWorkspace = filterOutWs [scratchpadWorkspaceTag]
 
