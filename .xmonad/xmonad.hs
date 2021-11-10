@@ -16,8 +16,8 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.Circle
 import XMonad.Layout.Tabbed (simpleTabbed)
 import XMonad.Layout.MultiColumns (multiCol)
-import XMonad.Layout.ThreeColumns (ThreeCol (ThreeCol, ThreeColMid))
-import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
+import XMonad.Layout.ThreeColumns (ThreeCol(ThreeCol,ThreeColMid))
+import XMonad.Layout.Renamed (renamed,Rename(Replace,CutWordsLeft))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -148,11 +148,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "~/.local/bin/dm_pass")
   
   -- Youtube-dl Menu.
-  , ((modMask .|. controlMask,xK_y),
-     spawn "~/.local/bin/dm_ytdl")
+  , ((mod1Mask, xK_d),
+      spawn "~/.local/bin/dm_ytdl")
       
   -- Exit Menu.
-  , ((modMask .|. controlMask,xK_q),
+  , ((mod1Mask, xK_e),
      spawn "~/.local/bin/dm_power")
   
   -- Toggle Struts.
@@ -204,7 +204,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
       
 main = do
   xmproc <- spawnPipe "$HOME/.local/bin/xmobar"
-  xmonad $ docks $ defaults {logHook = fadeInactiveLogHook 0.8 <+> dynamicLogWithPP xmobarPP 
+  xmonad $ docks $ defaults {logHook = fadeInactiveLogHook 0.9 <+> dynamicLogWithPP xmobarPP 
   { ppOutput          = hPutStrLn xmproc
   , ppCurrent         = xmobarColor "#b3afc2" "" . wrap "[" "]"
   , ppVisible         = xmobarColor "#b3afc2" ""
