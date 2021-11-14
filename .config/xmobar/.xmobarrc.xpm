@@ -1,5 +1,5 @@
 Config { 
-	font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinting=true",additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
+font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinting=true",additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
@@ -11,7 +11,7 @@ Config {
        , iconRoot = ".xmonad/xpm/"  -- default: "."
        , commands = [
               Run UnsafeStdinReader
-            , Run Uptime ["-t", "<days>:<hours>"] 6000
+            , Run Uptime ["-t", "Up: <days>:<hours>"] 6000
             , Run Com "uname" ["-r"] "" 3600
             , Run Com "sh" ["-c", "checkupdates | wc -l"] "checkupdates" 21            
             , Run DiskU [("/", "hdd: <free> free")] [] 60
@@ -21,12 +21,12 @@ Config {
             , Run Swap [] 10
             , Run Network "enp2s0" ["--template", "Net: <tx>kB | <rx>kB", "-L","1000","-H","5000", "--low", "gray", "--normal","green","--high","red"] 10
   		    , Run Alsa "default" "Master" ["-t", "Vol: <volume>%"] 
-            , Run Date "<fc=#b3afc2>%a, %d.%m.%Y</fc> / <fc=#ffd7a7>%H:%M</fc> " "date" 10     
+            , Run Date "<fc=#b3afc2>%a, %d.%m.%Y</fc> / <fc=#b3afc2>%H:%M</fc> " "date" 10     
             , Run Weather "LGTS" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000        
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<action=`xdotool key control+alt+g`><icon=haskell.xpm/></action><fc=#b3afc2> | </fc>%UnsafeStdinReader%} {<icon=pacman.xpm/> Pacman: %checkupdates% | <icon=cpu.xpm/> %cpu% | <icon=ram.xpm/> %memory% | <icon=swap.xpm/> %swap% | <icon=volume.xpm/> %alsa:default:Master% | <icon=calendar.xpm/> %date% |"}
+       , template = "<action=`xdotool key control+alt+g`><icon=haskell.xpm/></action><fc=#b3afc2> | </fc>%UnsafeStdinReader%} {<icon=clock.xpm/> %uptime% | <icon=pacman.xpm/> Pacman: %checkupdates% | <icon=cpu.xpm/> %cpu% | <icon=ram.xpm/> %memory% | <icon=swap.xpm/> %swap% | <icon=volume.xpm/> %alsa:default:Master% | <icon=calendar.xpm/> %date% |"}
 
 
 
