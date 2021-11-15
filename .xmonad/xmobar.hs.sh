@@ -12,15 +12,15 @@ Config {
 		
 		, commands = [ 
 		  Run UnsafeStdinReader
-		, Run Com ".config/xmobar/scripts/sb_gmail" [] "count" 16000
-		, Run Com ".config/xmobar/scripts/sb_updates" [] "pacupdate" 16000
-		, Run Com ".config/xmobar/scripts/sb_unitemp" [] "temp" 2
-		, Run Com "bash" [".config/xmobar/scripts/sb_cpu"] "cpu" 20
-		, Run Com "bash" [".config/xmobar/scripts/sb_ram"] "ram" 20
-		, Run Com ".config/xmobar/scripts/sb_vol" [] "vol" 2
-		, Run Com ".config/xmobar/scripts/sb_up" [] "up" 20
-		, Run Com ".config/xmobar/scripts/sb_do" [] "down" 20
-		, Run Com ".config/xmobar/scripts/sb_time" [] "date" 50
+		, Run Com ".config/xmobar/scripts/gmail" [] "count" 16000
+		, Run Com ".config/xmobar/scripts/pacman" [] "pacupdate" 16000
+		, Run Com ".config/xmobar/scripts/unitemp" [] "temp" 2
+		, Run Com "bash" [".config/xmobar/scripts/cpu"] "cpu" 20
+		, Run Com "bash" [".config/xmobar/scripts/ram"] "ram" 20
+		, Run Com ".config/xmobar/scripts/vol" [] "vol" 2
+		, Run Com ".config/xmobar/scripts/netup" [] "up" 20
+		, Run Com ".config/xmobar/scripts/netdown" [] "down" 20
+		, Run Com ".config/xmobar/scripts/time" [] "date" 50
 		]
 		
 , sepChar = "%"
