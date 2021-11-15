@@ -129,7 +129,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   
   -- Launch Your Browser.
   , ((modMask .|. shiftMask, xK_b),
-     spawn "firefox")
+     spawn "waterfox")
    
   -- Launch dmenu.
   , ((modMask, xK_p),

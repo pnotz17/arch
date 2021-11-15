@@ -26,7 +26,7 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<action=`xdotool key control+alt+g`><icon=haskell.xpm/></action><fc=#b3afc2> | </fc>%UnsafeStdinReader%} { %uptime% | %enp2s0% | %disku% | %coretemp% | %cpu% | %memory% | %swap% | %alsa:default:Master% | <icon=mail.xpm/> %count% | <icon=pacman_alt.xpm/> %checkupdates% | %date% |"}
+       , template = "<action=`xdotool key control+alt+g`><icon=haskell.xpm/></action><fc=#b3afc2> | </fc>%UnsafeStdinReader%} { %uptime% | %enp2s0% | %disku% | %coretemp% | %cpu% | %memory% | %swap% | %alsa:default:Master% | <icon=mail.xpm/> %count% | <icon=pacman.xpm/> %checkupdates% | %date% |"}
 
 
 
