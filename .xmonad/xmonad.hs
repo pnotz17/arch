@@ -203,7 +203,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   ]
       
 main = do
-  xmproc <- spawnPipe "$HOME/.local/bin/xmobar"
+  xmproc <- spawnPipe "$HOME/.local/bin/xmobar ~/.xmonad/xmobar.hs"
   xmonad $ docks $ defaults {logHook = fadeInactiveLogHook 0.9 <+> dynamicLogWithPP xmobarPP 
   { ppOutput          = hPutStrLn xmproc
   , ppCurrent         = xmobarColor "#b3afc2" "" . wrap "[" "]"

@@ -12,7 +12,7 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
        , commands = [
               Run UnsafeStdinReader
             , Run Uptime ["-t","<icon=clock.xpm/> <days>:<hours>"] 6000
-		    , Run Com ".xmonad/scripts/sb_gmail" [] "count" 16000
+		    , Run Com ".xmonad/scripts/gmail" [] "count" 16000
             , Run Com "sh" ["-c", "checkupdates | wc -l"] "checkupdates" 21            
             , Run DiskU [("/","<icon=hdd.xpm/> <free>")] [] 60
             , Run CoreTemp ["-t","<icon=temp.xpm/> <core0>C | <icon=temp.xpm/> <core1>C","-L", "40", "-H", "60","-l", "#b3afc2", "-n", "#b3afc2", "-h", "red"] 50     
