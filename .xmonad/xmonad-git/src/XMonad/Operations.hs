@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleContexts, FlexibleInstances, MultiParamTypeClasses, PatternGuards #-}
+{-# LANGUAGE FlexibleContexts, FlexibleInstances, MultiParamTypeClasses, PatternGuards, LambdaCase #-}
 -- --------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Operations
@@ -254,8 +254,7 @@ setWindowBorderWithFallback dpy w color basic = io $
       setWindowBorder dpy w pixel
   where
     fallback :: C.SomeException -> IO ()
-    fallback e = do hPrint stderr e >> hFlush stderr
-                    setWindowBorder dpy w basic
+    fallback _ = setWindowBorder dpy w basic
 
 -- | Hide a window by unmapping it and setting Iconified.
 hide :: Window -> X ()
@@ -342,15 +341,16 @@ getCleanedScreenInfo = io .  fmap nubScreens . getScreenInfo
 -- | The screen configuration may have changed (due to -- xrandr),
 -- update the state and refresh the screen, and reset the gap.
 rescreen :: X ()
-rescreen = do
-    xinesc <- withDisplay getCleanedScreenInfo
-
-    windows $ \ws@(W.StackSet { W.current = v, W.visible = vs, W.hidden = hs }) ->
-        let (xs, ys) = splitAt (length xinesc) $ map W.workspace (v:vs) ++ hs
-            (a:as)   = zipWith3 W.Screen xs [0..] $ map SD xinesc
-        in  ws { W.current = a
-               , W.visible = as
-               , W.hidden  = ys }
+rescreen = withDisplay getCleanedScreenInfo >>= \case
+    [] -> trace "getCleanedScreenInfo returned []"
+    xinesc:xinescs ->
+        windows $ \ws@W.StackSet{ W.current = v, W.visible = vs, W.hidden = hs } ->
+            let (xs, ys) = splitAt (length xinescs) (map W.workspace vs ++ hs)
+                a = W.Screen (W.workspace v) 0 (SD xinesc)
+                as = zipWith3 W.Screen xs [1..] $ map SD xinescs
+            in  ws { W.current = a
+                   , W.visible = as
+                   , W.hidden  = ys }
 
 -- ---------------------------------------------------------------------
 

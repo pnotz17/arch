@@ -83,26 +83,28 @@ When the time comes to release another version of xmonad and xmonad-contrib:
      versions and that `.github/workflows/stack.yml` tests with several recent
      revisions of [Stackage][] LTS.
 
-  4. Create a release on GitHub:
-
-     - https://github.com/xmonad/xmonad/releases/new
-     - https://github.com/xmonad/xmonad-contrib/releases/new
-
-     CI will upload a release candidate to Hackage. Check again that
-     everything looks good. To publish a final release, run the CI workflow
-     once again with the correct version number:
+  4. Trigger the Haskell-CI workflow and fill in the candidate version number.
+     This will upload a release candidate to Hackage.
 
      - https://github.com/xmonad/xmonad/actions/workflows/haskell-ci.yml
      - https://github.com/xmonad/xmonad-contrib/actions/workflows/haskell-ci.yml
 
-     See [haskell-ci-hackage.patch][] for details about the release infrastructure.
+     Check that everything looks good. If not, push fixes and do another
+     candidate. When everything's ready, create a release on GitHub:
+
+     - https://github.com/xmonad/xmonad/releases/new
+     - https://github.com/xmonad/xmonad-contrib/releases/new
+
+     CI will automatically upload the final release to Hackage.
+
+     See [haskell-ci-hackage.patch][] for details about the Hackage automation.
 
   5. Update the website:
 
      - Post a [new release announcement][web-announce]
      - Check install instructions, guided tour, keybindings cheat sheet, …
 
-  7. Post announcement to:
+  6. Post announcement to:
 
      - [xmonad.org website](https://github.com/xmonad/xmonad-web/tree/gh-pages/news/_posts)
      - [XMonad mailing list](https://mail.haskell.org/mailman/listinfo/xmonad)
@@ -111,13 +113,17 @@ When the time comes to release another version of xmonad and xmonad-contrib:
      - [Twitter](https://twitter.com/xmonad)
      - [Reddit](https://www.reddit.com/r/xmonad/)
 
-     See [old announcements][old-announce] for inspiration.
+     See [old announcements][old-announce] ([even older][older-announce]) for inspiration.
+
+  7. Bump version for development (add `.9`) and prepare fresh sections in
+     [`CHANGES.md`](CHANGES.md).
 
 [packdeps]: https://hackage.haskell.org/package/packdeps
 [Stackage]: https://www.stackage.org/
 [haskell-ci-hackage.patch]: .github/workflows/haskell-ci-hackage.patch
 [web-announce]: https://github.com/xmonad/xmonad-web/tree/gh-pages/news/_posts
-[old-announce]: https://github.com/xmonad/xmonad-web/tree/55614349421ebafaef4a47424fcb16efa80ff768
+[old-announce]: https://github.com/xmonad/xmonad-web/blob/gh-pages/news/_posts/2021-10-27-xmonad-0-17-0.md
+[older-announce]: https://github.com/xmonad/xmonad-web/tree/55614349421ebafaef4a47424fcb16efa80ff768
 
 ## Website and Other Accounts
 
