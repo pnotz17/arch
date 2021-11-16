@@ -6,7 +6,7 @@ compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 # Environment variables
 export TERM=st-256color
 export EDITOR=nvim
-export BROWSER=firefox
+export BROWSER=waterfox
 export PATH=$HOME/.local/bin:$PATH
 
 # History
@@ -33,12 +33,13 @@ ls --color=auto &> /dev/null
 
 # Aliases
 alias pw='bash -c '"'"'echo `tr -dc $([ $# -gt 1 ] && echo $2 || echo "A-Za-z0-9") < /dev/urandom | head -c $([ $# -gt 0 ] && echo $1 || echo 30)`'"'"' --'
-alias dm='doas mount /dev/sda2 /hdd1 && doas mount /dev/sdb2 /hdd2 && doas mount /dev/sdc2 /hdd3 && doas mount /dev/sdd2 /hdd4 && doas mount /dev/sda1 /mnt/gentoo'
 alias sc='doas rm -r ~/.cache/ ~/.local/share/xorg/ ~/.local/share/recently-used.xbel'
-alias sm=' doas reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist-arch'
+alias sm='doas reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist'
+alias dm='doas mount /dev/sda2 /hdd1 && doas mount /dev/sdb2 /hdd2'
 alias jc='doas journalctl --rotate --vacuum-time=1s'
-alias gi=' grep -iE 'installed' /var/log/pacman.log'
-alias gu=' grep -iE 'upgraded' /var/log/pacman.log'
+alias gi='grep -iE 'installed' /var/log/pacman.log'
+alias gu='grep -iE 'upgraded' /var/log/pacman.log'
+alias xr='xmonad --recompile; xmonad --restart'
 alias c='git commit -m "changes in dotfiles"'
 alias ro='doas pacman -Rns $(pacman -Qtdq)'
 alias pl='doas pacman -Qqe > pkglist.txt'
