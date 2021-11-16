@@ -32,9 +32,9 @@ myNormalBorderColor         = "#b3afc2"
 myFocusedBorderColor        = "#b3afc2"
 
 myWorkspaces = clickable $ [" 01 ", " 02 ", " 03 ", " 04 ", " 05 ", " 06 ", " 07 ", " 08 ", " 09 "]
- where
- clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |(i,ws) <- zip [1..9] l,let n = i ]
-	
+ where                                                                       
+ clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l,let n = i ]
+
 myLayout = renamed [CutWordsLeft 1] $ spacing 11 $ avoidStruts $ smartBorders(
   Tall 1 (3/100) (1/2) |||
   Mirror (Tall 1 (3/100) (1/2)) |||
