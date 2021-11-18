@@ -12,14 +12,15 @@ if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
 fi
 
 # autostart
-/usr/local/bin/xclickroot -r ~/src/xmenu/xmenu.sh &
+/usr/local/bin/xclickroot -r ~/git/xmenu/xmenu.sh &
 /usr/bin/feh --bg-fill ~/wallpaper.jpg &
 /usr/bin/dunst ~/.config/dunst/dunstrc &
-~/.local/bin/bars/dwm_bar_emoji &
+#~/.local/bin/bars/dwm_bar_emoji &
 #~/.local/bin/xs_destroyah &
 
 # dwm start loop
 #while true; do
     #/usr/local/bin/dwm 2> /dev/null
 #done
-exec /usr/bin/qtile start > /tmp/.start_qtile ; xinit /tmp/.start_qtile -- :2
+#exec /usr/bin/qtile start > /tmp/.start_qtile ; xinit /tmp/.start_qtile -- :2
+exec xmonad
