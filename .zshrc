@@ -6,7 +6,7 @@ compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 # Environment variables
 export TERM=st-256color
 export EDITOR=nvim
-export BROWSER=waterfox
+export BROWSER=firefox
 export PATH=$HOME/.local/bin:$PATH
 
 # History
