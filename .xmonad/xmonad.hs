@@ -23,7 +23,7 @@ import qualified Data.Map        as M
 
 myModMask            = mod4Mask
 myTerminal           = "st"
-myBorderWidth        = 3
+myBorderWidth        = 1
 myFocusFollowsMouse  = True
 myClickJustFocuses   = True
 myNormalBorderColor  = "#B3AFC2"
@@ -237,6 +237,6 @@ main = do
   mouseBindings        = myMouseBindings,
   layoutHook           = myLayout,
   manageHook           = myManageHook,
-  logHook              = myLogHook xmproc,
-  startupHook          = myStartupHook
+  startupHook          = myStartupHook, 
+  logHook              = myLogHook xmproc <+> fadeInactiveLogHook 0.8
   }
