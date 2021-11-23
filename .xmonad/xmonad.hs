@@ -26,16 +26,27 @@ myTerminal                  = "st"
 myBorderWidth               = 3
 myFocusFollowsMouse         = True
 myClickJustFocuses          = False
-xmobarCurrentWorkspaceColor = "#FFFFFF"
-xmobarTitleColor            = "#FFFFFF"
-myNormalBorderColor         = "#b3afc2"
-myFocusedBorderColor        = "#b3afc2"
+xmobarCurrentWorkspaceColor = "#B3AFC2"
+xmobarTitleColor            = "#B3AFC2"
+myNormalBorderColor         = "#B3AFC2"
+myFocusedBorderColor        = "#FF0000"
 
-myWorkspaces = clickable $ [" 01 ", " 02 ", " 03 ", " 04 ", " 05 ", " 06 ", " 07 ", " 08 ", " 09 "]
+myWorkspaces = 
+ clickable $ 
+ [" 01 ", 
+  " 02 ", 
+  " 03 ", 
+  " 04 ", 
+  " 05 ", 
+  " 06 ", 
+  " 07 ", 
+  " 08 ", 
+  " 09 " ]
  where                                                                       
  clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l,let n = i ]
 
-myLayout = renamed [CutWordsLeft 1] $ spacing 11 $ avoidStruts $ smartBorders(
+myLayout = renamed [CutWordsLeft 1] $ spacing 13 $ avoidStruts $ smartBorders(
+  
   Tall 1 (3/100) (1/2) |||
   Mirror (Tall 1 (3/100) (1/2)) |||
   ThreeColMid 1 (3/100) (1/2) |||
@@ -47,7 +58,7 @@ myLayout = renamed [CutWordsLeft 1] $ spacing 11 $ avoidStruts $ smartBorders(
   noBorders (fullscreenFull Full)
 
 myManageHook = composeAll
-  [className =? "mpv" --> doFloat] 
+  [className =? "mpv" --> doFloat]
   
 myStartupHook = do
   setDefaultCursor xC_left_ptr
@@ -129,7 +140,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   
   -- Launch Your Browser.
   , ((modMask .|. shiftMask, xK_b),
-     spawn "waterfox")
+     spawn "firefox")
    
   -- Launch dmenu.
   , ((modMask, xK_p),
@@ -152,7 +163,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       spawn "~/.local/bin/dm_ytdl")
       
   -- Exit Menu.
-  , ((mod1Mask, xK_e),
+  , ((mod1Mask, xK_q),
      spawn "~/.local/bin/dm_power")
   
   -- Toggle Struts.
@@ -204,13 +215,16 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
       
 main = do
   xmproc <- spawnPipe "$HOME/.local/bin/xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ docks $ defaults {logHook = fadeInactiveLogHook 0.9 <+> dynamicLogWithPP xmobarPP 
-  { ppOutput          = hPutStrLn xmproc
-  , ppCurrent         = xmobarColor "#b3afc2" "" . wrap "[" "]"
-  , ppVisible         = xmobarColor "#b3afc2" ""
-  , ppHidden          = xmobarColor "#b3afc2" "" . wrap "*" ""
-  , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  
-  , ppTitle           = xmobarColor "#b3afc2" "" . shorten 60        
+  xmonad $ docks $ defaults {
+  logHook = dynamicLogWithPP xmobarPP { 
+    ppOutput          = hPutStrLn xmproc
+  , ppCurrent         = xmobarColor "#FF0000" "" . wrap "[" "]"
+  , ppVisible         = xmobarColor "#B3AFC2" ""
+  , ppHidden          = xmobarColor "#404040" "" . wrap "*" ""   -- Hidden workspaces in xmobar
+  , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""  
+  , ppUrgent          = xmobarColor "#C45500" "" . wrap "!" "!"  
+  , ppLayout          = xmobarColor "#FF0000" ""
+  , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60        
   , ppSep             = " | "}
 }
 
@@ -226,5 +240,5 @@ defaults = def {
   mouseBindings      = myMouseBindings,
   layoutHook         = myLayout,
   manageHook         = myManageHook,
-  startupHook        = myStartupHook
+  startupHook        = myStartupHook <+> fadeInactiveLogHook 0.9  
 }
