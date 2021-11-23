@@ -5,7 +5,7 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
        , bgColor = "black"
        , fgColor = "grey"
        , alpha = 221
-       , position = TopW L 100 27
+       , position = TopW L 100 
        , allDesktops = True
        , overrideRedirect = True
        , iconRoot = ".xmonad/xpm/"  
@@ -19,7 +19,7 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
             , Run Memory ["-t","<icon=ram.xpm/> <usedratio>%","-H","50","--normal","green","--high","red"] 7
             , Run Swap ["-t","<icon=swap.xpm/> <usedratio>%"] 7
   		    , Run Alsa "default" "Master" ["-t", "<icon=volume.xpm/> <volume>%"] 
-            , Run Com ".xmonad/scripts/mail" [] "count" 16000
+            , Run Com ".xmonad/scripts/mail" [] "count" 21
 		    , Run Com "echo" ["<icon=mail.xpm/> "] "mail" 3600
             , Run Com "sh" ["-c", "checkupdates | wc -l"] "checkupdates" 21
             , Run Com "echo" ["<icon=pacman.xpm/> "] "pacman" 3600
@@ -28,7 +28,7 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %eth0% | %disku% | %coretemp% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %mail%%count% | %pacman%%checkupdates% | %date% |"}
+       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %eth0% | %disku% | %coretemp% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %date% |"}
 
 
 
