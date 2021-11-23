@@ -21,15 +21,13 @@ import XMonad.Layout.Renamed (renamed,Rename(Replace,CutWordsLeft))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-myModMask                   = mod4Mask
-myTerminal                  = "st"
-myBorderWidth               = 3
-myFocusFollowsMouse         = True
-myClickJustFocuses          = False
-xmobarCurrentWorkspaceColor = "#B3AFC2"
-xmobarTitleColor            = "#B3AFC2"
-myNormalBorderColor         = "#B3AFC2"
-myFocusedBorderColor        = "#FF0000"
+myModMask            = mod4Mask
+myTerminal           = "st"
+myBorderWidth        = 3
+myFocusFollowsMouse  = True
+myClickJustFocuses   = True
+myNormalBorderColor  = "#B3AFC2"
+myFocusedBorderColor = "#FF0000"
 
 myWorkspaces = 
  clickable $ 
@@ -46,7 +44,6 @@ myWorkspaces =
  clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l,let n = i ]
 
 myLayout = renamed [CutWordsLeft 1] $ spacing 13 $ avoidStruts $ smartBorders(
-  
   Tall 1 (3/100) (1/2) |||
   Mirror (Tall 1 (3/100) (1/2)) |||
   ThreeColMid 1 (3/100) (1/2) |||
@@ -56,15 +53,27 @@ myLayout = renamed [CutWordsLeft 1] $ spacing 13 $ avoidStruts $ smartBorders(
   simpleTabbed |||
   Circle |||
   noBorders (fullscreenFull Full)
+  
+myLogHook xmproc = dynamicLogWithPP xmobarPP { 
+    ppOutput          = hPutStrLn xmproc
+  , ppCurrent         = xmobarColor "#FF0000" "" . wrap "[" "]"
+  , ppVisible         = xmobarColor "#B3AFC2" ""
+  , ppHidden          = xmobarColor "#666666" "" . wrap "*" ""   
+  , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""  
+  , ppUrgent          = xmobarColor "#C45500" "" . wrap "!" "!"  
+  , ppLayout          = xmobarColor "#FF0000" ""
+  , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60        
+  , ppSep             = " | "
+  }
 
 myManageHook = composeAll
   [className =? "mpv" --> doFloat]
-  
+
 myStartupHook = do
   setDefaultCursor xC_left_ptr
   spawnOnce "picom -b &"
   setWMName "LG3D"
-    
+
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Start a terminal.  Terminal to start is specified by myTerminal variable.
   [ ((modMask .|. shiftMask, xK_Return),
@@ -212,33 +221,22 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, button3),
        (\w -> focus w >> mouseResizeWindow w))
   ]
-      
+
 main = do
   xmproc <- spawnPipe "$HOME/.local/bin/xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ docks $ defaults {
-  logHook = dynamicLogWithPP xmobarPP { 
-    ppOutput          = hPutStrLn xmproc
-  , ppCurrent         = xmobarColor "#FF0000" "" . wrap "[" "]"
-  , ppVisible         = xmobarColor "#B3AFC2" ""
-  , ppHidden          = xmobarColor "#666666" "" . wrap "*" ""   
-  , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""  
-  , ppUrgent          = xmobarColor "#C45500" "" . wrap "!" "!"  
-  , ppLayout          = xmobarColor "#FF0000" ""
-  , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60        
-  , ppSep             = " | "}
-}
-
-defaults = def {
-  terminal           = myTerminal,
-  focusFollowsMouse  = myFocusFollowsMouse,
-  borderWidth        = myBorderWidth,
-  modMask            = myModMask,
-  workspaces         = myWorkspaces,
-  normalBorderColor  = myNormalBorderColor,
-  focusedBorderColor = myFocusedBorderColor,
-  keys               = myKeys,
-  mouseBindings      = myMouseBindings,
-  layoutHook         = myLayout,
-  manageHook         = myManageHook,
-  startupHook        = myStartupHook <+> fadeInactiveLogHook 0.9  
-}
+  
+  xmonad $ docks $ def {
+  terminal             = myTerminal,
+  focusFollowsMouse    = myFocusFollowsMouse,
+  borderWidth          = myBorderWidth,
+  modMask              = myModMask,
+  workspaces           = myWorkspaces,
+  normalBorderColor    = myNormalBorderColor,
+  focusedBorderColor   = myFocusedBorderColor,
+  keys                 = myKeys,
+  mouseBindings        = myMouseBindings,
+  layoutHook           = myLayout,
+  manageHook           = myManageHook,
+  logHook              = myLogHook xmproc,
+  startupHook          = myStartupHook
+  }
