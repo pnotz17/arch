@@ -57,7 +57,7 @@ myLayout = renamed [CutWordsLeft 1] $ spacing 13 $ avoidStruts $ smartBorders(
   
 myLogHook xmproc = dynamicLogWithPP xmobarPP { 
     ppOutput          = hPutStrLn xmproc
-  , ppCurrent         = xmobarColor "#FF0000" "" . wrap "[" "]" 
+  , ppCurrent         = xmobarColor "#FFFFFF" "" . wrap "[" "]" 
   , ppVisible         = xmobarColor "#B3AFC2" ""                
   , ppHidden          = xmobarColor "#666666" "" . wrap "*" ""   
   , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""       
