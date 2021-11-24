@@ -59,11 +59,12 @@ myLogHook xmproc = dynamicLogWithPP xmobarPP {
     ppOutput          = hPutStrLn xmproc
   , ppCurrent         = xmobarColor "#FF0000" "" . wrap "[" "]" 
   , ppVisible         = xmobarColor "#B3AFC2" ""                
-  , ppHidden          = xmobarColor "#B3AFC2" "" . wrap "*" ""   
+  , ppHidden          = xmobarColor "#666666" "" . wrap "*" ""   
   , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""       
-  , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60    
-  , ppSep             = " | "                     
   , ppUrgent          = xmobarColor "#C45500" "" . wrap "!" "!" 
+  , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60    
+  , ppLayout          = xmobarColor "#FF0000" "" 
+  , ppSep             = " | "                     
   , ppExtras          = [windowCount]                          
   , ppOrder           = \(ws:l:t:ex) -> [ws,l]++ex++[t]
   }
@@ -77,7 +78,6 @@ myStartupHook = do
   setWMName "LG3D"
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-  
   -- Start a terminal.  Terminal to start is specified by myTerminal variable.
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
