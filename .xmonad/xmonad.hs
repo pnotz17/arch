@@ -28,6 +28,7 @@ myFocusFollowsMouse  = True
 myClickJustFocuses   = True
 myNormalBorderColor  = "#B3AFC2"
 myFocusedBorderColor = "#FF0000"
+windowCount          = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 myWorkspaces = 
  clickable $ 
@@ -56,14 +57,15 @@ myLayout = renamed [CutWordsLeft 1] $ spacing 13 $ avoidStruts $ smartBorders(
   
 myLogHook xmproc = dynamicLogWithPP xmobarPP { 
     ppOutput          = hPutStrLn xmproc
-  , ppCurrent         = xmobarColor "#FF0000" "" . wrap "[" "]"
-  , ppVisible         = xmobarColor "#B3AFC2" ""
-  , ppHidden          = xmobarColor "#666666" "" . wrap "*" ""   
-  , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""  
-  , ppUrgent          = xmobarColor "#C45500" "" . wrap "!" "!"  
-  , ppLayout          = xmobarColor "#FF0000" ""
-  , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60        
-  , ppSep             = " | "
+  , ppCurrent         = xmobarColor "#FF0000" "" . wrap "[" "]" 
+  , ppVisible         = xmobarColor "#B3AFC2" ""                
+  , ppHidden          = xmobarColor "#B3AFC2" "" . wrap "*" ""   
+  , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""       
+  , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60    
+  , ppSep             = " | "                     
+  , ppUrgent          = xmobarColor "#C45500" "" . wrap "!" "!" 
+  , ppExtras          = [windowCount]                          
+  , ppOrder           = \(ws:l:t:ex) -> [ws,l]++ex++[t]
   }
 
 myManageHook = composeAll
@@ -75,6 +77,7 @@ myStartupHook = do
   setWMName "LG3D"
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+  
   -- Start a terminal.  Terminal to start is specified by myTerminal variable.
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
@@ -204,12 +207,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   [((m .|. modMask, k), windows $ f i)
       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-      , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+      , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+  ]
+  
   ++
 
   [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+  ]
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   [   ((modMask, button1),
