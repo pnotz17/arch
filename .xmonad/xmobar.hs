@@ -3,11 +3,11 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
-       , fgColor = "grey"
+       , fgColor = "white"
        , alpha = 221
-       , position = TopW L 100 
+       , position = TopW L 100 23
        , allDesktops = True
-       , overrideRedirect = True
+       , overrideRedirect = False
        , iconRoot = ".xmonad/xpm/"  
        , commands = [
               Run UnsafeStdinReader
