@@ -28,7 +28,7 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %eth0% | %disku% | %coretemp% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %date% |"}
+       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %eth0% | %disku% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %date% |"}
 
 
 
