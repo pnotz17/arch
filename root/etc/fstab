@@ -1,0 +1,35 @@
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+
+# /dev/sda1
+UUID=470776f9-847a-42ff-b5e5-433b85a2b7db	/           ext4      	rw,relatime		0 1
+
+# /dev/sda2
+UUID=05835209-d6d2-43c8-a41b-bf3f4ff17e48	/hdd1       ext4      	noatime,defaults	0 1
+
+# /dev/sdb1
+UUID=36e3699f-844c-4d89-aa81-69b6b96df3bd	/hdd2       ext4      	noatime,defaults	0 1
+
+# /dev/sdc
+UUID=1c953b8c-d64f-4bdf-8fa4-99801ee94b7f	/hdd3       ext4      	noatime,defaults	0 1
+
+/swapfile none swap sw 0 0
+
+#lsblk
+#ls -l /dev/disk/by-uuid/ find the uuid and edit /etc/fstab
+#mount -o remount,rw /
+#sudo chmod -R 777 /hdd? to have user privlages
+
+#swapfile
+#dd if=/dev/zero of=/swapfile bs=1M count=2400 status=progress
+#chmod 600 /swapfile 
+#mkswap /swapfile	
+#/swapfile		none		swap		sw		0 0
+#swapon /swapfile
+#swapon -s
+
+#Remove swap file
+# swapoff /swapfile
+# rm -f /swapfile
