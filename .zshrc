@@ -46,6 +46,7 @@ alias pl='doas pacman -Qqe > pkglist.txt'
 alias up='doas pacman -Syu --noconfirm'
 alias pc='doas pacman -Scc --noconfirm'
 alias build='doas make clean install'
+alias r='doas chown -R $USER:$USER'
 alias mf='fc-list | grep ".local"'
 alias lu='ls -l /dev/disk/by-uuid'
 alias af='fc-list | grep "fonts"'
@@ -53,7 +54,6 @@ alias pk='pacman -Q  |  wc -l'
 alias yc='yay -Scc --noconfirm'
 alias rm='doas pacman -Rscnd'
 alias poweroff='doas poweroff'
-alias r='doas chmod -R 777'
 alias pss='doas pacman -Ss'
 alias ls='ls --color=auto'
 alias reboot='doas reboot'
@@ -94,4 +94,4 @@ git_branch_test_color() {
 
 # Prompt
 setopt prompt_subst
-PROMPT='%F{none}%n@%F{red}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
+PROMPT='%F{#FFFFFF}%n@%F{#FF0000}%m:%15<..<%~%<<$(git_branch_test_color)%F{none}%# '
