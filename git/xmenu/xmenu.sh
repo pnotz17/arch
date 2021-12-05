@@ -4,22 +4,21 @@
 cat <<EOF | xmenu -r | sh &
 File manager	spacefm
 Terminal 	st
-Web browser	waterfox	
+Web browser	firefox
 Accessories
-	feh	feh ~/media/wallpapers/*
-	sxiv	sxiv -t  ~/media/wallpapers/*
-	vim	st -e nvim
+	feh	feh ~/multi/wallpapers/*
+	sxiv	sxiv -t  ~/multi/wallpapers/*
+	vim	st -e vim
 Development
 	geany	geany
 Graphics
 	gimp	gimp
 Network
-	firefox	firefox
+	waterfox	waterfox
 	mutt	st -e mutt
 	transmission	transmission-gtk
 Multimedia
 	alsa mixer	st -e alsamixer
-	mpv	mpv
 Office
 Settings 
 	Customize Look & Feel	lxappearance
