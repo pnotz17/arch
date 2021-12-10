@@ -92,18 +92,18 @@ printf "%s%s\n" "$icon"
 }
 
 UPSPEED() {
-T1=`cat /sys/class/net/lo/statistics/tx_bytes`
+T1=`cat /sys/class/net/eth0/statistics/tx_bytes`
 sleep 1
-T2=`cat /sys/class/net/lo/statistics/tx_bytes`
+T2=`cat /sys/class/net/eth0/statistics/tx_bytes`
 TBPS=`expr $T2 - $T1`
 TKBPS=`expr $TBPS / 1024`
 printf  "⬆️ $TKBPS kb"
 }
 
 DOWNSPEED() {
-R1=`cat /sys/class/net/lo/statistics/rx_bytes`
+R1=`cat /sys/class/net/eth0/statistics/rx_bytes`
 sleep 1
-R2=`cat /sys/class/net/lo/statistics/rx_bytes`
+R2=`cat /sys/class/net/eth0/statistics/rx_bytes`
 RBPS=`expr $R2 - $R1`
 RKBPS=`expr $RBPS / 1024`
 printf  "⬇️ $RKBPS kb"
