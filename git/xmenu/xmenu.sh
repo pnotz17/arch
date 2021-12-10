@@ -4,7 +4,7 @@
 cat <<EOF | xmenu -r | sh &
 File manager	spacefm
 Terminal 	st
-Web browser	firefox
+Web browser	qutebrowser
 Accessories
 	feh	feh ~/multi/wallpapers/*
 	sxiv	sxiv -t  ~/multi/wallpapers/*
@@ -14,16 +14,16 @@ Development
 Graphics
 	gimp	gimp
 Network
-	waterfox	waterfox
+	waterfox	/home/pnotz17/.local/bin/waterfox
 	mutt	st -e mutt
 	transmission	transmission-gtk
 Multimedia
 	alsa mixer	st -e alsamixer
 Office
 Settings 
-	Customize Look & Feel	lxappearance
+	customize Look & Feel	lxappearance
 System 
-	htop	st -e htop
+	top	st -e top
 Kill	xkill
 
 Leave
