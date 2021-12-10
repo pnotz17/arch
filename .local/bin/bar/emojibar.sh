@@ -6,7 +6,7 @@ echo  "🏠 $LINUX"
 }
 
 MAIL() {
-COUNT=`curl -su user:pass https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+COUNT=`curl -su pnotz17:PhxL92VdsLTyqxC https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 COUNT=`echo "$COUNT" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
 echo  "📫 $COUNT"
 }
@@ -92,18 +92,18 @@ printf "%s%s\n" "$icon"
 }
 
 UPSPEED() {
-T1=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+T1=`cat /sys/class/net/lo/statistics/tx_bytes`
 sleep 1
-T2=`cat /sys/class/net/enp2s0/statistics/tx_bytes`
+T2=`cat /sys/class/net/lo/statistics/tx_bytes`
 TBPS=`expr $T2 - $T1`
 TKBPS=`expr $TBPS / 1024`
 printf  "⬆️ $TKBPS kb"
 }
 
 DOWNSPEED() {
-R1=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+R1=`cat /sys/class/net/lo/statistics/rx_bytes`
 sleep 1
-R2=`cat /sys/class/net/enp2s0/statistics/rx_bytes`
+R2=`cat /sys/class/net/lo/statistics/rx_bytes`
 RBPS=`expr $R2 - $R1`
 RKBPS=`expr $RBPS / 1024`
 printf  "⬇️ $RKBPS kb"
@@ -120,8 +120,8 @@ echo "📥 $downloading 🛑 $paused 📤 $seeding 🗄️ $idle"
 }
 
 while true; do
-	xsetroot -name "[  $(UPTIME)  ] [  $(UPSPEED)  ] [  $(DOWNSPEED)  ] [  $(DISK)  ] [  $(CPUTEMP)  ] [  $(CPUFREQUENCY)  ] [  $(RAM)  ] [  $(ALSA)  ] [  $(CLOCK)  ] [  $(NETWORK)  ]"
-	#xsetroot -name "|  $(MAIL)  |  $(DISK)  |  $(CPUTEMP)  |  $(CPUFREQUENCY)  |  $(RAM)  |  $(ALSA)  |  $(UPSPEED)  |  $(DOWNSPEED)  |  $(CLOCK)  |  $(NETWORK)  |"
+	#xsetroot -name "[  $(UPTIME)  ] [  $(UPSPEED)  ] [  $(DOWNSPEED)  ] [  $(DISK)  ] [  $(CPUTEMP)  ] [  $(CPUFREQUENCY)  ] [  $(RAM)  ] [  $(ALSA)  ] [  $(CLOCK)  ] [  $(NETWORK)  ]"
+	xsetroot -name "|  $(UPDATES)  |  $(CPUFREQUENCY)  |  $(RAM)  |  $(ALSA)  |  $(UPSPEED)  |  $(DOWNSPEED)  |  $(CLOCK)  |  $(NETWORK)  |"
 	#xsetroot -name "/   $(UPSPEED)   /   $(DOWNSPEED)   /   $(CPUTEMP)   /   $(CPUFREQUENCY)   /   $(RAM)   /   $(ALSA)   /   $(CLOCK)  /   $(NETWORK)   /"
 	sleep 2
 done &
