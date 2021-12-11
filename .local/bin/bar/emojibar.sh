@@ -121,8 +121,8 @@ echo "📥 $downloading 🛑 $paused 📤 $seeding 🗄️ $idle"
 
 while true; do
 	#xsetroot -name "[  $(UPTIME)  ] [  $(UPSPEED)  ] [  $(DOWNSPEED)  ] [  $(DISK)  ] [  $(CPUTEMP)  ] [  $(CPUFREQUENCY)  ] [  $(RAM)  ] [  $(ALSA)  ] [  $(CLOCK)  ] [  $(NETWORK)  ]"
-	xsetroot -name "|  $(UPDATES)  |  $(CPUFREQUENCY)  |  $(RAM)  |  $(ALSA)  |  $(UPSPEED)  |  $(DOWNSPEED)  |  $(CLOCK)  |  $(NETWORK)  |"
-	#xsetroot -name "/   $(UPSPEED)   /   $(DOWNSPEED)   /   $(CPUTEMP)   /   $(CPUFREQUENCY)   /   $(RAM)   /   $(ALSA)   /   $(CLOCK)  /   $(NETWORK)   /"
+	#xsetroot -name "|  $(UPDATES)  |  $(CPUFREQUENCY)  |  $(RAM)  |  $(ALSA)  |  $(UPSPEED)  |  $(DOWNSPEED)  |  $(CLOCK)  |  $(NETWORK)  |"
+	xsetroot -name "/   $(UPSPEED)   /   $(DOWNSPEED)   /   $(CPUFREQUENCY)   /   $(RAM)   /   $(ALSA)   /   $(CLOCK)  /   $(NETWORK)   /"
 	sleep 2
 done &
 
