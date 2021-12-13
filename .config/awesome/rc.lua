@@ -1,5 +1,10 @@
+-- awesome_mode: api-level=4:screen=on
+-- If LuaRocks is installed, make sure that packages installed through it are
+-- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
--- Standard awesome library
+-- =====================================================================
+-- {{{ s_libs
+-- =====================================================================
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
@@ -18,7 +23,11 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- {{{ Error handling
+-- =====================================================================
+-- {{{ s_error
+-- =====================================================================
+-- Check if awesome encountered an error during startup and fell back to
+-- another config (This code will only ever execute for the fallback config)
 naughty.connect_signal("request::display_error", function(message, startup)
     naughty.notification {
         urgency = "critical",
@@ -27,11 +36,9 @@ naughty.connect_signal("request::display_error", function(message, startup)
     }
 end)
 
--- {{{ Variable definitions
-beautiful.init("~/.config/awesome/custom/theme.lua") 
-beautiful.gap_single_client = true
-beautiful.useless_gap = 3
-
+-- =====================================================================
+-- {{{ s_vars
+-- =====================================================================
 -- This is used later as the default terminal and editor to run.
 terminal = "st"
 editor = os.getenv("EDITOR") or "vim"
@@ -43,8 +50,23 @@ editor_cmd = terminal .. " -e " .. editor
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
+altkey = "Mod1"
 
--- {{{ Menu
+-- =====================================================================
+-- {{{ s_theme
+-- =====================================================================
+beautiful.init("~/.config/awesome/custom/theme.lua") 
+beautiful.gap_single_client = true
+beautiful.useless_gap = 3
+
+-- =====================================================================
+-- {{{ s_autostart
+-- =====================================================================
+awful.spawn.with_shell("picom -b &")
+
+-- =====================================================================
+-- {{{ s_menu
+-- =====================================================================
 myawesomemenu = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
@@ -64,7 +86,9 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
--- {{{ Tag layout
+-- =====================================================================
+-- {{{ s_layouts
+-- =====================================================================
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
         --awful.layout.suit.floating,
@@ -83,33 +107,112 @@ tag.connect_signal("request::default_layouts", function()
     })
 end)
 
--- {{{ Wallpaper
---screen.connect_signal("request::wallpaper", function(s)
-    --awful.wallpaper {
-        --screen = s,
-        --widget = {
-            --{
-                --image     = beautiful.wallpaper,
-                --upscale   = true,
-                --downscale = true,
-                --widget    = wibox.widget.imagebox,
-            --},
-            --valign = "center",
-            --halign = "center",
-            --tiled  = false,
-            --widget = wibox.container.tile,
-        --}
-    --}
---end)
+-- =====================================================================
+-- {{{ s_wallpaper
+-- =====================================================================
+if beautiful.wallpaper then
+    for s = 1, screen.count() do
+        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+    end
+end
 
--- {{{ Widgets
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- =====================================================================
+-- {{{ s_widgets
+-- =====================================================================
+-- separator 
+spr = wibox.widget.textbox('   |   ')
 
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+-- pacman 
+pacwidget = wibox.widget.textbox()
+pacwidget_t = awful.tooltip({ objects = { pacwidget},})
+vicious.register(pacwidget, vicious.widgets.pkg,
 
--- {{{ Wibar
+function(widget,args)
+	local io = { popen = io.popen }
+	local s = io.popen("checkupdates")
+	local str = ''
+	local i = 0
+	for line in s:lines() do
+	str = str .. line .. "\n"
+	i = i + 1
+end
+	pacwidget_t:set_text(str)
+	s:close()	
+    return "PACMAN: "   .. i .. ""
+end , 1800, "Arch")
+
+-- hdd 
+fswidget = wibox.widget.textbox()
+vicious.register(fswidget, vicious.widgets.fs, " HDD:  ${/ used_p}%", 10)
+
+-- tempreture 
+local function script_output()
+    local f = io.popen("~/.local/bin/??")
+    local out = f:read("*a")
+    f:close()
+    return { out }
+end
+thermalwidget  = wibox.widget.textbox()
+vicious.register(thermalwidget, script_output, "TEM: $1")
+
+-- email 
+function run_script()
+    local filedescriptor = io.popen("~/.local/bin/??")
+    local value = filedescriptor:read()
+   filedescriptor:close()
+    return {value}
+end
+mailwidget = wibox.widget.textbox()
+vicious.register(mailwidget, run_script, '$1', 20)
+ 
+-- cpu 
+cpuwidget = wibox.widget.textbox()
+vicious.register(cpuwidget, vicious.widgets.cpu, "CPU: $1%")
+
+-- memory 
+memwidget = wibox.widget.textbox()
+vicious.register(memwidget, vicious.widgets.mem, "RAM: $1%")
+
+-- volume 
+volumewidget = wibox.widget.textbox()
+volumewidget:set_font(beautiful.font)
+volumewidget:set_align("right")
+
+function update_volume(widget)
+	local fd = io.popen("amixer sget Master")
+	local status = fd:read("*all")
+	fd:close()
+	local volume = string.match(status, "(%d?%d?%d)%%")
+	volume = string.format("% 3d", volume)
+	status = string.match(status, "%[(o[^%]]*)%]")
+	if string.find(status, "on", 1, true) then
+	volume = volume .. "%"
+	else
+	volume = volume .. "婢"
+end
+	widget:set_markup("VOL:" .. volume)
+end
+
+update_volume(volumewidget)
+mytimer = timer({ timeout = 0.2 })
+mytimer:connect_signal("timeout", function () update_volume(volumewidget) end)
+mytimer:start()
+
+-- netup 
+netupwidget = wibox.widget.textbox()
+vicious.register(netupwidget, vicious.widgets.net, 'OUT:  ${enp2s0 up_mb}', 2)
+
+-- netdown 
+netdownwidget = wibox.widget.textbox()
+vicious.register(netdownwidget, vicious.widgets.net, 'IN:  ${enp2s0 down_mb}', 2)
+
+-- datetime
+datetimewidget = wibox.widget.textbox()
+vicious.register(datetimewidget, vicious.widgets.date, " %b %d, %R ")
+
+-- =====================================================================
+-- {{{ s_wibox
+-- =====================================================================
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.
     awful.tag({ "01", "02", "03", "04", "05", "06", "07", "08", "09" }, s, awful.layout.layouts[1])
@@ -181,21 +284,25 @@ screen.connect_signal("request::desktop_decoration", function(s)
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 wibox.widget.systray(),
-                mytextclock,
+                datetimewidget,
                 s.mylayoutbox,
             },
         }
     }
 end)
 
--- {{{ Mouse bindings
+-- =====================================================================
+-- {{{ s_mouse_bindings
+-- =====================================================================
 awful.mouse.append_global_mousebindings({
     --awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewprev),
     awful.button({ }, 5, awful.tag.viewnext),
 })
 
--- {{{ Key bindings
+-- =====================================================================
+-- {{{ s_globalkeys
+-- =====================================================================
 -- General Awesome keys
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -413,6 +520,9 @@ awful.keyboard.append_global_keybindings({
     }
 })
 
+-- =====================================================================
+-- {{{ s_clientkeys
+-- =====================================================================
 client.connect_signal("request::default_mousebindings", function()
     awful.mouse.append_client_mousebindings({
         awful.button({ }, 1, function (c)
@@ -480,7 +590,9 @@ client.connect_signal("request::default_keybindings", function()
     })
 end)
 
--- {{{ Rules
+-- =====================================================================
+-- {{{ s_rules
+-- =====================================================================
 ruled.client.connect_signal("request::rules", function()
     -- All clients will match this rule.
     ruled.client.append_rule {
@@ -500,9 +612,10 @@ ruled.client.connect_signal("request::rules", function()
         rule_any = {
             instance = { "copyq", "pinentry" },
             class    = {
-                "mpv", 
-                "gimp", 
-                "Sxiv",
+			  "mpv",
+			  "Sxiv",
+			  "gimp",
+              "pinentry",
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown there might not match defined rules here.
@@ -532,7 +645,9 @@ ruled.client.connect_signal("request::rules", function()
     -- }
 end)
 
--- {{{ Titlebars
+-- =====================================================================
+-- {{{ titlebar
+-- =====================================================================
 client.connect_signal("request::titlebars", function(c)
     -- buttons for the titlebar
     local buttons = {
@@ -570,7 +685,9 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
--- {{{ Notifications
+-- =====================================================================
+-- {{{ s_notification
+-- =====================================================================
 ruled.notification.connect_signal('request::rules', function()
     -- All notifications will match this rule.
     ruled.notification.append_rule {

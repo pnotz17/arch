@@ -43,13 +43,13 @@ theme.taglist_squares = true
 
 -- Gaps
 theme.gap_single_client = true
-theme.useless_gap = 2
+theme.useless_gap = 3
 
 -- Maximized clients have no border
 theme.maximized_hide_border = true
 
 -- Default master width
-theme.master_width_factor = 0.7
+theme.master_width_factor = 0.55
 -- theme.master_fill_policy = 'master_width_factor'
 
 -- Menu
