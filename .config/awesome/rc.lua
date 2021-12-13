@@ -79,10 +79,10 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "open terminal", terminal }
                                   }
                         })
-
+                        
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
-
+                                     
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
@@ -93,13 +93,13 @@ tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
         --awful.layout.suit.floating,
         awful.layout.suit.tile,
-        --awful.layout.suit.tile.left,
-        --awful.layout.suit.tile.bottom,
-        --awful.layout.suit.tile.top,
+        awful.layout.suit.tile.left,
+        awful.layout.suit.tile.bottom,
+        awful.layout.suit.tile.top,
         --awful.layout.suit.fair,
         --awful.layout.suit.fair.horizontal,
         --awful.layout.suit.spiral,
-        --awful.layout.suit.spiral.dwindle,
+        awful.layout.suit.spiral.dwindle,
         --awful.layout.suit.max,
         --awful.layout.suit.max.fullscreen,
         --awful.layout.suit.magnifier,
@@ -141,7 +141,7 @@ end
     return "PACMAN: "   .. i .. ""
 end , 1800, "Arch")
 
--- hdd 
+-- disk 
 fswidget = wibox.widget.textbox()
 vicious.register(fswidget, vicious.widgets.fs, " HDD:  ${/ used_p}%", 10)
 
@@ -330,9 +330,9 @@ awful.keyboard.append_global_keybindings({
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 	
--- My keybindings
-	awful.key({ modkey }, "d", 
-		function () awful.util.spawn("dmenu_run") 
+-- My Keys
+	awful.key({ modkey, "Shift" }, "g", 
+		function () awful.util.spawn("geany") 
     end),
 	awful.key({ modkey, "Shift" }, "f", 
 		function () awful.util.spawn("spacefm") 
@@ -340,6 +340,15 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ modkey, "Shift" }, "b", 
 		function () awful.util.spawn("firefox") 
     end),
+	awful.key({ modkey }, "d", 
+		function () awful.util.spawn("dmenu_run") 
+    end),
+     awful.key({ modkey, modkey, "Control" }, "d",   
+		function () awful.util.spawn(".local/bin/dm_fm") 
+    end),
+    awful.key({ }, "Print", 
+		function () awful.util.spawn(".local/bin/dm_ss", 
+    false) end),
     awful.key({ modkey, modkey }, "q",   
 		function () awful.util.spawn(".local/bin/dm_power") 
     end),
@@ -352,10 +361,7 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ }, "F12", 
 		function ()awful.util.spawn("amixer set Master 2%+", 
 	false) end),
-	awful.key({ }, "Print", 
-		function () awful.util.spawn(".local/bin/dm_ss", 
-    false) end),    
-    awful.key({ modkey }, "b", function ()
+	awful.key({ modkey }, "b", function ()
 		for s in screen do
                 s.mywibox.visible = not s.mywibox.visible
                 if s.mybottomwibox then
