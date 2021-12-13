@@ -4,7 +4,7 @@
 cat <<EOF | xmenu -r | sh &
 File manager	spacefm
 Terminal 	st
-Web browser	waterfox
+Web browser	firefox
 Accessories
 	feh	feh ~/multi/wallpapers/*
 	sxiv	sxiv -t  ~/multi/wallpapers/*
@@ -14,7 +14,7 @@ Development
 Graphics
 	gimp	gimp
 Network
-	waterfox	/home/pnotz17/.local/bin/waterfox
+	waterfox	waterfox
 	mutt	st -e mutt
 	transmission	transmission-gtk
 Multimedia
@@ -27,7 +27,7 @@ System
 Kill	xkill
 
 Leave
-	Exit		pkill -KILL -u pnotz17
+	Exit		pkill -KILL -u $USER
 	Reboot			doas reboot
 	Shutdown		doas poweroff
 EOF
