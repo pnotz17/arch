@@ -378,6 +378,18 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ }, "F12", 
 		function ()awful.util.spawn("amixer set Master 2%+", 
 	false) end),
+	awful.key({ modkey, "Control" }, "]", function () 
+      local t = awful.screen.focused().selected_tag
+      t.gap = t.gap + 1
+      awful.layout.arrange(awful.screen.focused())
+    end,
+    {description = "increment useless gaps", group = "tag"}),
+	awful.key({ modkey, "Control" }, "[", function ()
+      local t = awful.screen.focused().selected_tag
+      t.gap = t.gap - 1
+      awful.layout.arrange(awful.screen.focused())
+    end,
+    {description = "decrease useless gaps", group = "tag"}),
 	awful.key({ modkey }, "b", function ()
 		for s in screen do
                 s.mywibox.visible = not s.mywibox.visible
