@@ -62,7 +62,7 @@ altkey = "Mod1"
 -- =====================================================================
 beautiful.init("~/.config/awesome/custom/theme.lua") 
 beautiful.gap_single_client = true
-beautiful.useless_gap = 3
+beautiful.useless_gap = 1
 
 -- =====================================================================
 -- {{{ s_menu
@@ -120,8 +120,18 @@ end
 -- {{{ s_widgets
 -- =====================================================================
 -- separator 
-spr = wibox.widget.textbox('   |   ')
+seperator = wibox.widget.textbox('  ')
 
+-- mail 
+function run_script()
+    local filedescriptor = io.popen("~/.local/bin/??")
+    local value = filedescriptor:read()
+   filedescriptor:close()
+    return {value}
+end
+mailwidget = wibox.widget.textbox()
+vicious.register(mailwidget, run_script, '$1', 20)
+ 
 -- pacman 
 pacwidget = wibox.widget.textbox()
 pacwidget_t = awful.tooltip({ objects = { pacwidget},})
@@ -138,14 +148,14 @@ function(widget,args)
 end
 	pacwidget_t:set_text(str)
 	s:close()	
-    return "PACMAN: "   .. i .. ""
+    return "Repo "   .. i .. ""
 end , 1800, "Arch")
 
 -- disk 
 fswidget = wibox.widget.textbox()
 vicious.register(fswidget, vicious.widgets.fs, " HDD:  ${/ used_p}%", 10)
 
--- tempreture 
+-- temperature 
 local function script_output()
     local f = io.popen("~/.local/bin/??")
     local out = f:read("*a")
@@ -153,25 +163,15 @@ local function script_output()
     return { out }
 end
 thermalwidget  = wibox.widget.textbox()
-vicious.register(thermalwidget, script_output, "TEM: $1")
+vicious.register(thermalwidget, script_output, "Tmp $1")
 
--- email 
-function run_script()
-    local filedescriptor = io.popen("~/.local/bin/??")
-    local value = filedescriptor:read()
-   filedescriptor:close()
-    return {value}
-end
-mailwidget = wibox.widget.textbox()
-vicious.register(mailwidget, run_script, '$1', 20)
- 
 -- cpu 
 cpuwidget = wibox.widget.textbox()
-vicious.register(cpuwidget, vicious.widgets.cpu, "CPU: $1%")
+vicious.register(cpuwidget, vicious.widgets.cpu, "Cpu $1%")
 
 -- memory 
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, "RAM: $1%")
+vicious.register(memwidget, vicious.widgets.mem, "Mem $1%")
 
 -- volume 
 volumewidget = wibox.widget.textbox()
@@ -188,9 +188,9 @@ function update_volume(widget)
 	if string.find(status, "on", 1, true) then
 	volume = volume .. "%"
 	else
-	volume = volume .. "婢"
+	volume = volume .. "	Muted"
 end
-	widget:set_markup("VOL:" .. volume)
+	widget:set_markup("Vol" .. volume)
 end
 
 update_volume(volumewidget)
@@ -200,15 +200,15 @@ mytimer:start()
 
 -- netup 
 netupwidget = wibox.widget.textbox()
-vicious.register(netupwidget, vicious.widgets.net, 'OUT:  ${enp2s0 up_mb}', 2)
+vicious.register(netupwidget, vicious.widgets.net, 'Out  ${enp2s0 up_mb}', 2)
 
 -- netdown 
 netdownwidget = wibox.widget.textbox()
-vicious.register(netdownwidget, vicious.widgets.net, 'IN:  ${enp2s0 down_mb}', 2)
+vicious.register(netdownwidget, vicious.widgets.net, 'In  ${enp2s0 down_mb}', 2)
 
 -- datetime
 datetimewidget = wibox.widget.textbox()
-vicious.register(datetimewidget, vicious.widgets.date, " %b %d, %R ")
+vicious.register(datetimewidget, vicious.widgets.date, "%b %d, %R")
 
 -- =====================================================================
 -- {{{ s_wibox
@@ -283,8 +283,18 @@ screen.connect_signal("request::desktop_decoration", function(s)
             s.mytasklist, -- Middle widget
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
-                wibox.widget.systray(),
+                seperator,
+                pacwidget,
+                seperator,
+                cpuwidget,
+                seperator,
+                memwidget,
+                seperator,
+                volumewidget,
+                seperator,
                 datetimewidget,
+                seperator,
+                wibox.widget.systray(),
                 s.mylayoutbox,
             },
         }
