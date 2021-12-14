@@ -120,7 +120,7 @@ end
 -- {{{ s_widgets
 -- =====================================================================
 -- separator 
-seperator = wibox.widget.textbox('  ')
+seperator = wibox.widget.textbox('   ')
 
 -- mail 
 function run_script()
@@ -148,7 +148,7 @@ function(widget,args)
 end
 	pacwidget_t:set_text(str)
 	s:close()	
-    return "Repo "   .. i .. ""
+    return "Rep "   .. i .. ""
 end , 1800, "Arch")
 
 -- disk 
@@ -294,14 +294,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 seperator,
                 volumewidget,
                 seperator,
-                netupwidget,
-                seperator,
-                netdownwidget,
-                seperator,
+                --netupwidget,
+                --seperator,
+                --netdownwidget,
+                --seperator,
                 datetimewidget,
                 seperator,
-                wibox.widget.systray(),
-                seperator,
+                --wibox.widget.systray(),
+                --seperator,
                 s.mylayoutbox,
             },
         }

@@ -7,7 +7,7 @@ local default_titlebar_path = default_theme_path .. "/titlebar/"
 
 -- Theme fonts and colors
 theme = {}
-theme.font                     = "UbuntuMono Nerd Font 10"
+theme.font                     = "Ubuntu Nerd Font 10"
 theme.bg_normal     = "#0A0A0A"
 theme.bg_focus      = "#202020aa"
 theme.bg_urgent     = "#ff0000"
