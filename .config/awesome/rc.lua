@@ -153,7 +153,7 @@ end , 1800, "Arch")
 
 -- disk 
 fswidget = wibox.widget.textbox()
-vicious.register(fswidget, vicious.widgets.fs, " HDD:  ${/ used_p}%", 10)
+vicious.register(fswidget, vicious.widgets.fs, "Fs ${/ used_p}%", 1800)
 
 -- temperature 
 local function script_output()
@@ -188,7 +188,7 @@ function update_volume(widget)
 	if string.find(status, "on", 1, true) then
 	volume = volume .. "%"
 	else
-	volume = volume .. "	Muted"
+	volume = " Muted "
 end
 	widget:set_markup("Vol" .. volume)
 end
@@ -200,11 +200,11 @@ mytimer:start()
 
 -- netup 
 netupwidget = wibox.widget.textbox()
-vicious.register(netupwidget, vicious.widgets.net, 'Out  ${enp2s0 up_mb}', 2)
+vicious.register(netupwidget, vicious.widgets.net, 'Tx/Out ${enp2s0 up_kb}')
 
 -- netdown 
 netdownwidget = wibox.widget.textbox()
-vicious.register(netdownwidget, vicious.widgets.net, 'In  ${enp2s0 down_mb}', 2)
+vicious.register(netdownwidget, vicious.widgets.net, 'Tx/In ${enp2s0 down_kb}')
 
 -- datetime
 datetimewidget = wibox.widget.textbox()
@@ -286,15 +286,22 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 seperator,
                 pacwidget,
                 seperator,
+                fswidget,
+                seperator,
                 cpuwidget,
                 seperator,
                 memwidget,
                 seperator,
                 volumewidget,
                 seperator,
+                netupwidget,
+                seperator,
+                netdownwidget,
+                seperator,
                 datetimewidget,
                 seperator,
-                wibox.widget.systray(),
+                --wibox.widget.systray(),
+                --seperator,
                 s.mylayoutbox,
             },
         }
