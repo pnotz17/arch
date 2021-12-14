@@ -37,6 +37,11 @@ naughty.connect_signal("request::display_error", function(message, startup)
 end)
 
 -- =====================================================================
+-- {{{ s_autostart
+-- =====================================================================
+awful.spawn.with_shell("picom -b &")
+
+-- =====================================================================
 -- {{{ s_vars
 -- =====================================================================
 -- This is used later as the default terminal and editor to run.
@@ -58,11 +63,6 @@ altkey = "Mod1"
 beautiful.init("~/.config/awesome/custom/theme.lua") 
 beautiful.gap_single_client = true
 beautiful.useless_gap = 3
-
--- =====================================================================
--- {{{ s_autostart
--- =====================================================================
-awful.spawn.with_shell("picom -b &")
 
 -- =====================================================================
 -- {{{ s_menu
@@ -665,7 +665,7 @@ client.connect_signal("request::titlebars", function(c)
         end),
     }
 
-    awful.titlebar(c, { size = 15}) : setup {
+    awful.titlebar(c, { size = 17}) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
