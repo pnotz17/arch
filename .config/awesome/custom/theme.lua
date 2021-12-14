@@ -41,10 +41,6 @@ theme.taglist_squares = true
 -- Don't show app icons in wibar
 -- theme.tasklist_disable_icon = true
 
--- Gaps
-theme.gap_single_client = true
-theme.useless_gap = 3
-
 -- Maximized clients have no border
 theme.maximized_hide_border = true
 
@@ -56,19 +52,12 @@ theme.master_width_factor = 0.55
 theme.menu_width = 200
 
 -- Wibar
-theme.wibar_height = 22
+theme.wibar_height = 20
 
 -- Icons
 theme.awesome_icon = '/usr/share/awesome/themes/sky/awesome-icon.png'
-theme.icon_theme = 'Papirus-Dark'
+theme.icon_theme = 'Clarity'
 
--- Bling
-theme.flash_focus_start_opacity = 0.8       -- the starting opacity
-theme.flash_focus_step = 0.01               -- the step of animation
-theme.mstab_tabbar_position = "bottom"
-
-theme.layout_fairh      = default_theme_path.."layouts/fairhw.png"
-theme.layout_fairv      = default_theme_path.."layouts/fairvw.png"
 theme.layout_floating   = default_theme_path.."layouts/floatingw.png"
 theme.layout_magnifier  = default_theme_path.."layouts/magnifierw.png"
 theme.layout_max        = default_theme_path.."layouts/maxw.png"
@@ -105,7 +94,7 @@ theme.titlebar_maximized_button_focus_inactive  = default_titlebar_path .. "maxi
 theme.titlebar_maximized_button_normal_active   = default_titlebar_path .. "maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active    = default_titlebar_path .. "maximized_focus_active.png"
 
-theme.titlebar_move_to_prev_tag_button_normal = "~/.config/awesome/arrow-back.png"
-theme.titlebar_move_to_next_tag_button_normal = "~/.config/awesome/arrow-forward.png"
+--theme.titlebar_move_to_prev_tag_button_normal = "~/.config/awesome/arrow-back.png"
+--theme.titlebar_move_to_next_tag_button_normal = "~/.config/awesome/arrow-forward.png"
 
 return theme

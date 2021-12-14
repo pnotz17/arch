@@ -300,8 +300,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 seperator,
                 datetimewidget,
                 seperator,
-                --wibox.widget.systray(),
-                --seperator,
+                wibox.widget.systray(),
+                seperator,
                 s.mylayoutbox,
             },
         }
