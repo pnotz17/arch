@@ -5,7 +5,7 @@
 #exports
 export TERM="st-256color"                     
 export EDITOR="vim"  
-export BROWSER="waterfox"          
+export BROWSER="firefox"          
 export PATH=$HOME/.local/bin:$PATH
 export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
 
@@ -14,8 +14,8 @@ HISTCONTROL=ignoredups:erasedups
 
 #aliases
 alias pw='bash -c '"'"'echo `tr -dc $([ $# -gt 1 ] && echo $2 || echo "A-Za-z0-9") < /dev/urandom | head -c $([ $# -gt 0 ] && echo $1 || echo 30)`'"'"' --'
+alias sm='doas reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist'
 alias sc='doas rm -r ~/.cache/ ~/.local/share/xorg/ ~/.local/share/recently-used.xbel'
-alias sm='doas reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist'
 alias dm='doas mount /dev/sda2 /hdd1 && doas mount /dev/sdb2 /hdd2'
 alias jc='doas journalctl --rotate --vacuum-time=1s'
 alias ug='doas grub-mkconfig -o /boot/grub/grub.cfg'
@@ -37,13 +37,11 @@ alias yc='yay -Scc --noconfirm'
 alias rm='doas pacman -Rscnd'
 alias poweroff='doas poweroff'
 alias pss='doas pacman -Ss'
-alias ls='ls --color=auto'
 alias reboot='doas reboot'
 alias ps='doas pacman -S'
 alias x='doas chmod +x'
 alias ss='doas spacefm'
 alias dg='doas geany'
-alias t='doas touch'
 alias l='doas ln -s'
 alias ex='tar -xpvf'
 alias co='tar -zcvf'
