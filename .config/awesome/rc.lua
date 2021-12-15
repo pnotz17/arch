@@ -200,11 +200,11 @@ mytimer:start()
 
 -- netup 
 netupwidget = wibox.widget.textbox()
-vicious.register(netupwidget, vicious.widgets.net, 'Tx/Out ${enp2s0 up_kb}')
+vicious.register(netupwidget, vicious.widgets.net, 'Tx/Up ${eth0 up_kb}')
 
 -- netdown 
 netdownwidget = wibox.widget.textbox()
-vicious.register(netdownwidget, vicious.widgets.net, 'Tx/In ${enp2s0 down_kb}')
+vicious.register(netdownwidget, vicious.widgets.net, 'Tx/Down ${eth0 down_kb}')
 
 -- datetime
 datetimewidget = wibox.widget.textbox()
@@ -294,10 +294,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 seperator,
                 volumewidget,
                 seperator,
-                --netupwidget,
-                --seperator,
-                --netdownwidget,
-                --seperator,
+                netupwidget,
+                seperator,
+                netdownwidget,
+                seperator,
                 datetimewidget,
                 seperator,
                 --wibox.widget.systray(),
@@ -648,8 +648,6 @@ ruled.client.connect_signal("request::rules", function()
             instance = { "copyq", "pinentry" },
             class    = {
 			  "mpv",
-			  "Sxiv",
-			  "gimp",
               "pinentry",
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
