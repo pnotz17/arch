@@ -110,23 +110,40 @@ mouse = [
 
 groups= [
 	Group("1",
-		  label="dev",
-		  ),
+    label="01",
+    ),
 	
 	Group("2",
-		  label="www",
-		  ),
+    label="02",
+    ),
 	
 	Group("3",
-		  label="code",
-		  ),
+	label="03",
+	),
 	
 	Group("4",
-		  label="sys",
-		  ),
+	label="04",
+	),
 	
 	Group("5",
-		  label="doc"),
+	label="05"
+	),
+	
+	Group("6",
+    label="06",
+    ),
+	
+	Group("7",
+	label="07",
+    ),
+	
+	Group("8",
+	label="08",
+	),
+	
+	Group("9",
+	label="09",
+	),
 ]
 
 for i in range(len(groups)):
@@ -171,7 +188,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-	font     ='Droid Sans Mono Nerd Font',
+	font     ='Ubuntu Nerd Font',
 	fontsize =13,
 	padding  =4.75,
 	)
@@ -203,7 +220,7 @@ screens = [
 				),
 				
 				widget.CurrentLayout(
-				font='UbuntuMono Nerd Font',
+				font='Ubuntu Nerd Font',
                 foreground=colors['1'],
                 ),
 	

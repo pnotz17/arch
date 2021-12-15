@@ -21,3 +21,5 @@ fi
 while true; do
     /usr/local/bin/dwm 2> /dev/null
 done
+#exec qtile start > /tmp/.start_qtile; xinit /tmp/.start_qtile -- :2
+#exec awesome
