@@ -119,10 +119,18 @@ end
 -- =====================================================================
 -- {{{ s_widgets
 -- =====================================================================
--- separator 
-seperator = wibox.widget.textbox('   ')
+-- Separator 
+seperator = wibox.widget.textbox(" :: ")
 
--- mail 
+-- Os 
+syswidget = wibox.widget.textbox()
+vicious.register( syswidget, vicious.widgets.os, "$2" )
+
+-- Uptime
+uptimewidget = wibox.widget.textbox()
+vicious.register( uptimewidget, vicious.widgets.uptime, "On $2.$3" )
+
+-- Mail 
 function run_script()
     local filedescriptor = io.popen("~/.local/bin/??")
     local value = filedescriptor:read()
@@ -132,30 +140,15 @@ end
 mailwidget = wibox.widget.textbox()
 vicious.register(mailwidget, run_script, '$1', 20)
  
--- pacman 
+-- Pacman 
 pacwidget = wibox.widget.textbox()
-pacwidget_t = awful.tooltip({ objects = { pacwidget},})
-vicious.register(pacwidget, vicious.widgets.pkg,
+vicious.register(pacwidget,vicious.widgets.pkg,"Rep $1",600,"Arch")
 
-function(widget,args)
-	local io = { popen = io.popen }
-	local s = io.popen("checkupdates")
-	local str = ''
-	local i = 0
-	for line in s:lines() do
-	str = str .. line .. "\n"
-	i = i + 1
-end
-	pacwidget_t:set_text(str)
-	s:close()	
-    return "Rep "   .. i .. ""
-end , 1800, "Arch")
-
--- disk 
+-- Filesystem 
 fswidget = wibox.widget.textbox()
 vicious.register(fswidget, vicious.widgets.fs, "Fs ${/ used_p}%", 1800)
 
--- temperature 
+-- Temperature 
 local function script_output()
     local f = io.popen("~/.local/bin/??")
     local out = f:read("*a")
@@ -165,19 +158,16 @@ end
 thermalwidget  = wibox.widget.textbox()
 vicious.register(thermalwidget, script_output, "Tmp $1")
 
--- cpu 
+-- Cpu 
 cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu, "Cpu $1%")
 
--- memory 
+-- Memory 
 memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem, "Mem $1%")
 
--- volume 
+-- Volume 
 volumewidget = wibox.widget.textbox()
-volumewidget:set_font(beautiful.font)
-volumewidget:set_align("right")
-
 function update_volume(widget)
 	local fd = io.popen("amixer sget Master")
 	local status = fd:read("*all")
@@ -198,15 +188,15 @@ mytimer = timer({ timeout = 0.2 })
 mytimer:connect_signal("timeout", function () update_volume(volumewidget) end)
 mytimer:start()
 
--- netup 
+-- Netup 
 netupwidget = wibox.widget.textbox()
 vicious.register(netupwidget, vicious.widgets.net, 'Tx/Up ${eth0 up_kb}')
 
--- netdown 
+-- Netdown 
 netdownwidget = wibox.widget.textbox()
 vicious.register(netdownwidget, vicious.widgets.net, 'Tx/Down ${eth0 down_kb}')
 
--- datetime
+-- Datetime
 datetimewidget = wibox.widget.textbox()
 vicious.register(datetimewidget, vicious.widgets.date, "%b %d, %R")
 
@@ -283,6 +273,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
             s.mytasklist, -- Middle widget
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
+                seperator,
+                uptimewidget,
                 seperator,
                 pacwidget,
                 seperator,
