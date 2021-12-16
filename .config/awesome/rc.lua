@@ -188,6 +188,16 @@ mytimer = timer({ timeout = 0.2 })
 mytimer:connect_signal("timeout", function () update_volume(volumewidget) end)
 mytimer:start()
 
+-- Weather 
+local weatherwidget = wibox.widget.textbox()
+weather_t = awful.tooltip({ objects = { weatherwidget },})
+
+vicious.register(weatherwidget, vicious.widgets.weather,
+function (widget, args)
+weather_t:set_text("City: " .. args["{city}"] .."\nWind: " .. args["{windkmh}"] .. "km/h " .. args["{wind}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%")
+return "Weather " .. args["{tempc}"] .. "C"
+end, 300, "LGTS")
+
 -- Netup 
 netupwidget = wibox.widget.textbox()
 vicious.register(netupwidget, vicious.widgets.net, 'Tx/Up ${eth0 up_kb}')
