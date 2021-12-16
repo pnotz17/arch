@@ -60,7 +60,7 @@ altkey = "Mod1"
 -- =====================================================================
 -- {{{ s_theme
 -- =====================================================================
-beautiful.init("~/.config/awesome/custom/theme.lua") 
+beautiful.init("~/.config/awesome/theme.lua") 
 beautiful.gap_single_client = true
 beautiful.useless_gap = 1
 
