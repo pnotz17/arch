@@ -1,4 +1,4 @@
-static const char *fonts[]            ={"CaskaydiaCove Nerd Font:style=Regular:size=9:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=9:antialias=true:autohint=true",};
+static const char *fonts[]            ={"Monospace:style=Regular:size=10:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=10:antialias=true:autohint=true",};
 static const char normbgcolor[]       = "#121213";	/* bar backround color */
 static const char normfgcolor[]       = "#BDBDBD";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#000000";	/* highlighted tag // tasklist // focused window background color*/
@@ -22,12 +22,10 @@ static const unsigned int alphas[][3] = {
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
-static const char *tags[]  = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" };
-//static const char *tags[] = { "01", "02", "03", "04", "05", "06", "07", "08", "09" };
-//static const char *tags[]  = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" };
-//static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
-////static const char *tags[] = { "dev", "www", "code", "sys", "doc"};
 
+//static const char *tags[] = { "01", "02", "03", "04", "05", "06", "07", "08", "09" };
+static const char *tags[]  = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" };
+//static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
 
 static const Rule rules[] = {
 	{ "mpv",     NULL,       NULL,       0,            1,           -1 },
