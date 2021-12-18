@@ -1,6 +1,6 @@
 static const char *fonts[]            ={"Monospace:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
 static const char normbgcolor[]       = "#121213";	/* bar backround color */
-static const char normfgcolor[]       = "#FFFFFF";	/* bar foreground color on right & left*/
+static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#000000";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
 static const char unselbordercolor[]  = "#000000";	/* unfocused window border color*/
@@ -10,8 +10,8 @@ static const unsigned int gappx       = 31;              /* gaps between windows
 static const unsigned int snap        = 33;             /* snap pixel */
 static const int showbar              = 1;              /* 0 means no bar */
 static const int topbar               = 1;              /* 0 means bottom bar */
-static const unsigned int baralpha    = 0xd0;
-static const unsigned int borderalpha = OPAQUE;
+static const unsigned int baralpha    = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
+static const unsigned int borderalpha = 221;		/* OPAQUE is defined to be 0xFF, same as 255. Choose your values between 0 and 255 where 255 is not transparent at all */
 static const char *colors[][3] = {
 	[SchemeNorm] = { normfgcolor, normbgcolor, unselbordercolor },
 	[SchemeSel]  = { selfgcolor, selbgcolor,  selbordercolor  },
@@ -22,9 +22,9 @@ static const unsigned int alphas[][3] = {
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
-static const char *tags[] = { "01", "02", "03", "04", "05", "06", "07", "08", "09" };
+//static const char *tags[] = { "01", "02", "03", "04", "05", "06", "07", "08", "09" };
+static const char *tags[] = {"<1>","<2>","<3>","<4>","<5>","<6>","<7>","<8>","<9>"};
 //static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
-//static const char *tags[] = { "dev", "www", "code", "sys", "doc"};
 
 static const Rule rules[] = {
 	{ "mpv",     NULL,       NULL,       0,            1,           -1 },
