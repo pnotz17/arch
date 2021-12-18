@@ -1,6 +1,6 @@
 static const char *fonts[]            ={"CaskaydiaCove Nerd Font:style=Regular:size=9:antialias=true:autohint=true","Noto Color Emoji:style=Regular:size=9:antialias=true:autohint=true",};
 static const char normbgcolor[]       = "#121213";	/* bar backround color */
-static const char normfgcolor[]       = "#FFFFFF";	/* bar foreground color on right & left*/
+static const char normfgcolor[]       = "#BDBDBD";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#000000";	/* highlighted tag // tasklist // focused window background color*/
 static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
 static const char unselbordercolor[]  = "#000000";	/* unfocused window border color*/
