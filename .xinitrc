@@ -18,8 +18,9 @@ fi
 ~/.local/bin/bar/emojibar.sh &
 
 # dwm start loop
-while true; do
-    /usr/local/bin/dwm 2> /dev/null
-done
+#while true; do
+    #/usr/local/bin/dwm 2> /dev/null
+#done
+#exec xmonad
 #exec qtile start > /tmp/.start_qtile; xinit /tmp/.start_qtile -- :2
-#exec awesome
+exec awesome
