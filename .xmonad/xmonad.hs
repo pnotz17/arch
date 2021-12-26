@@ -32,28 +32,28 @@ windowCount          = gets $ Just . show . length . W.integrate' . W.stack . W.
 
 myWorkspaces = 
   clickable $ 
-  -- [" 01 ", 
-   -- " 02 ", 
-   -- " 03 ", 
-   -- " 04 ", 
-   -- " 05 ", 
-   -- " 06 ", 
-   -- " 07 ", 
-   -- " 08 ", 
-   -- " 09 " ]
- [" <icon=terminal.xpm/> ", 
-  " <icon=folder.xpm/> ", 
-  " <icon=browser.xpm/> ", 
-  " <icon=image.xpm/> ", 
-  " <icon=camera.xpm/> ", 
-  " <icon=credit.xpm/> ", 
-  " <icon=hacker.xpm/> ", 
-  " <icon=tools.xpm/> ", 
-  " <icon=magnet.xpm/> " ]
+  [" 01 ", 
+   " 02 ", 
+   " 03 ", 
+   " 04 ", 
+   " 05 ", 
+   " 06 ", 
+   " 07 ", 
+   " 08 ", 
+   " 09 " ]
+ -- [" <icon=terminal.xpm/> ", 
+  -- " <icon=folder.xpm/> ", 
+  -- " <icon=browser.xpm/> ", 
+  -- " <icon=image.xpm/> ", 
+  -- " <icon=camera.xpm/> ", 
+  -- " <icon=credit.xpm/> ", 
+  -- " <icon=hacker.xpm/> ", 
+  -- " <icon=tools.xpm/> ", 
+  -- " <icon=magnet.xpm/> " ]
   where                                                                       
   clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l,let n = i ]
 
-myLayout = renamed [CutWordsLeft 1] $ spacing 13 $ avoidStruts $ smartBorders(
+myLayout = renamed [CutWordsLeft 1] $ spacing 1 $ avoidStruts $ smartBorders(
   Tall 1 (3/100) (1/2) |||
   Mirror (Tall 1 (3/100) (1/2)) |||
   ThreeColMid 1 (3/100) (1/2) |||
@@ -168,10 +168,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "amixer -q set Master toggle")
 
   , ((0, xK_F11),
-     spawn "amixer -q set Master 5%-")
+     spawn "amixer -q set Master 1%-")
 
   , ((0, xK_F12),
-     spawn "amixer -q set Master 5%+")
+     spawn "amixer -q set Master 1%+")
      
   , ((0, xK_Print),
      spawn  "~/.local/bin/dm_ss")
