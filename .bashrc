@@ -28,13 +28,14 @@ alias pl='doas pacman -Qqe > pkglist.txt'
 alias up='doas pacman -Syyu --noconfirm'
 alias pc='doas pacman -Scc --noconfirm'
 alias build='doas make clean install'
-alias r='doas chown -R $USER:$USER'
+alias cu='doas chown -R $USER:$USER'
 alias mf='fc-list | grep ".local"'
 alias lu='ls -l /dev/disk/by-uuid'
 alias af='fc-list | grep "fonts"'
 alias pk='pacman -Q  |  wc -l'
 alias yc='yay -Scc --noconfirm'
 alias rm='doas pacman -Rscnd'
+alias rp='doas chmod -R 777'
 alias poweroff='doas poweroff'
 alias ci='doas chattr -V +i'
 alias cr='doas chattr -V -i'
@@ -42,9 +43,10 @@ alias sy='doas pacman -Syy'
 alias pss='doas pacman -Ss'
 alias reboot='doas reboot'
 alias ps='doas pacman -S'
+alias um='doas umount -R'
 alias x='doas chmod +x'
 alias ss='doas spacefm'
-alias dg='doas geany'
+alias gg='doas geany'
 alias l='doas ln -s'
 alias ex='tar -xpvf'
 alias co='tar -zcvf'
@@ -73,16 +75,8 @@ shopt -s checkwinsize
 #ignore upper and lowercase when TAB completion
 bind "set completion-ignore-case on"
 
-#If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
 #syntax highlighting, autosuggestions, menu-completion, abbreviations with Bash Line Editor
 source ~/.local/share/blesh/ble.sh     
-
-#enable bash completion in interactive shells
-  if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-      . /etc/bash_completion
-  fi
 
 #git prompt
 git_prompt() {
