@@ -132,7 +132,7 @@ vicious.register( uptimewidget, vicious.widgets.uptime, "On $2.$3" )
 
 -- Mail 
 function run_script()
-    local filedescriptor = io.popen("~/.local/bin/??")
+    local filedescriptor = io.popen("~/.config/awesome/scripts/tm")
     local value = filedescriptor:read()
    filedescriptor:close()
     return {value}
@@ -156,7 +156,7 @@ local function script_output()
     return { out }
 end
 thermalwidget  = wibox.widget.textbox()
-vicious.register(thermalwidget, script_output, "Tmp $1")
+vicious.register(thermalwidget, script_output, "Tm $1")
 
 -- Cpu 
 cpuwidget = wibox.widget.textbox()
@@ -189,14 +189,23 @@ mytimer:connect_signal("timeout", function () update_volume(volumewidget) end)
 mytimer:start()
 
 -- Weather 
-local weatherwidget = wibox.widget.textbox()
-weather_t = awful.tooltip({ objects = { weatherwidget },})
+--local weatherwidget = wibox.widget.textbox()
+--weather_t = awful.tooltip({ objects = { weatherwidget },})
 
-vicious.register(weatherwidget, vicious.widgets.weather,
-function (widget, args)
-weather_t:set_text("City: " .. args["{city}"] .."\nWind: " .. args["{windkmh}"] .. "km/h " .. args["{wind}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%")
-return "Weather " .. args["{tempc}"] .. "C"
-end, 300, "LGTS")
+--vicious.register(weatherwidget, vicious.widgets.weather,
+--function (widget, args)
+--weather_t:set_text("City: " .. args["{city}"] .."\nWind: " .. args["{windkmh}"] .. "km/h " .. args["{wind}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%")
+--return "Weather " .. args["{tempc}"] .. "C"
+--end, 300, "LGKZ")
+
+function run_script()
+    local filedescriptor = io.popen("~/.config/awesome/scripts/weather")
+    local value = filedescriptor:read()
+   filedescriptor:close()
+    return {value}
+end
+weatherwidget = wibox.widget.textbox()
+vicious.register(weatherwidget, run_script, 'Fc $1', 20)
 
 -- Netup 
 netupwidget = wibox.widget.textbox()
