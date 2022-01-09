@@ -15,6 +15,7 @@ fakeroot
 feh
 file
 findutils
+firefox
 flex
 gawk
 gcc
@@ -56,6 +57,7 @@ vim
 wget
 which
 xclip
+xdotool
 xf86-video-intel
 xorg-server
 xorg-xinit
