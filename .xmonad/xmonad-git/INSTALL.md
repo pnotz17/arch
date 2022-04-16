@@ -52,6 +52,16 @@ $ sudo pacman -S \
 > pkgconf
 ```
 
+#### Void
+
+``` console
+$ sudo xbps-install \
+> git \
+> ncurses-libtinfo-libs ncurses-libtinfo-devel \
+> libX11-devel libXft-devel libXinerama-devel libXrandr-devel libXScrnSaver-devel \
+> pkg-config
+```
+
 ## Preparation
 
 We'll use the [XDG] directory specifications here, meaning our
@@ -200,7 +210,9 @@ Installing things is as easy as typing `stack install`.  This will
 install the correct version of GHC, as well as build all of the required
 packages (`stack build`) and then copy the relevant executables
 (`xmonad`, in our case) to `~/.local/bin`.  Make sure to add that
-directory to your `$PATH`!
+directory to your `$PATH`!  The command `which xmonad` should now return
+that executable.  In case it does not, check if you still have xmonad
+installed via your package manager and uninstall it.
 
 If you're getting build failures while building the `X11` package it may
 be that you don't have the required C libraries installed.  See

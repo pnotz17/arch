@@ -4,7 +4,7 @@
 ------------------------------------------------------------------------------
 -- |
 -- Module: Xmobar.X11.Draw
--- Copyright: (c) 2018, 2020 Jose Antonio Ortega Ruiz
+-- Copyright: (c) 2018, 2020, 2022 Jose Antonio Ortega Ruiz
 -- License: BSD3-style (see LICENSE)
 --
 -- Maintainer: jao@gnu.org
@@ -28,17 +28,16 @@ import Data.Map hiding ((\\), foldr, map, filter)
 import Data.List ((\\))
 import qualified Data.List.NonEmpty as NE
 
-import Graphics.X11.Xlib hiding (textExtents, textWidth)
+import Graphics.X11.Xlib hiding (textExtents, textWidth, Segment)
 import Graphics.X11.Xlib.Extras
 
 import Xmobar.Config.Types
+import Xmobar.Run.Parsers hiding (parseString)
 import qualified Xmobar.X11.Bitmap as B
-import Xmobar.X11.Actions (Action(..))
 import Xmobar.X11.Types
 import Xmobar.X11.Text
 import Xmobar.X11.ColorCache
 import Xmobar.X11.Window (drawBorder)
-import Xmobar.X11.Parsers hiding (parseString)
 import Xmobar.System.Utils (safeIndex)
 
 #ifdef XFT
@@ -50,7 +49,7 @@ fi :: (Integral a, Num b) => a -> b
 fi = fromIntegral
 
 -- | Draws in and updates the window
-drawInWin :: Rectangle -> [[(Widget, TextRenderInfo, Int, Maybe [Action])]] -> X ()
+drawInWin :: Rectangle -> [[Segment]] -> X ()
 drawInWin wr@(Rectangle _ _ wid ht) ~[left,center,right] = do
   r <- ask
   let (c,d) = (config &&& display) r
@@ -71,6 +70,7 @@ drawInWin wr@(Rectangle _ _ wid ht) ~[left,center,right] = do
 #endif
   withColors d [bgColor c, borderColor c] $ \[bgcolor, bdcolor] -> do
     gc <- liftIO $ createGC  d w
+    liftIO $ setGraphicsExposures d gc False
 #if XFT
     when (alpha c == 255) $ do
 #else
@@ -89,8 +89,8 @@ drawInWin wr@(Rectangle _ _ wid ht) ~[left,center,right] = do
     -- free up everything (we do not want to leak memory!)
     liftIO $ freeGC d gc
     liftIO $ freePixmap d p
-    -- resync
-    liftIO $ sync d False
+    -- resync (discard events, we don't read/process events from this display conn)
+    liftIO $ sync d True
 
 verticalOffset :: (Integral b, Integral a, MonadIO m) =>
                   a -> Widget -> XFont -> Int -> Config -> m b
@@ -105,8 +105,19 @@ verticalOffset ht (Icon _) _ _ conf
   | otherwise = return $ fi (ht `div` 2) - 1
 verticalOffset _ (Hspace _) _ voffs _ = return $ fi voffs
 
-printString :: Display -> Drawable -> XFont -> GC -> String -> String
-            -> Position -> Position -> Position -> Position -> String -> Int -> IO ()
+printString :: Display
+            -> Drawable
+            -> XFont
+            -> GC
+            -> String
+            -> String
+            -> Position
+            -> Position
+            -> Position
+            -> Position
+            -> String
+            -> Int
+            -> IO ()
 printString d p (Core fs) gc fc bc x y _ _ s a = do
     setFont d gc $ fontFromFontStruct fs
     withColors d [fc, bc] $ \[fc', bc'] -> do
@@ -133,8 +144,14 @@ printString dpy drw fs@(Xft fonts) _ fc bc x y ay ht s al =
 #endif
 
 -- | An easy way to print the stuff we need to print
-printStrings :: Drawable -> GC -> NE.NonEmpty XFont -> NE.NonEmpty Int -> Position
-             -> Align -> [((Position, Position), Box)] -> [(Widget, TextRenderInfo, Int, Position)] -> X ()
+printStrings :: Drawable
+             -> GC
+             -> NE.NonEmpty XFont
+             -> NE.NonEmpty Int
+             -> Position
+             -> Align
+             -> [((Position, Position), Box)]
+             -> [(Widget, TextRenderInfo, Int, Position)] -> X ()
 printStrings _ _ _ _ _ _ _ [] = return ()
 printStrings dr gc fontlist voffs offs a boxes sl@((s,c,i,l):xs) = do
   r <- ask
@@ -149,9 +166,7 @@ printStrings dr gc fontlist voffs offs a boxes sl@((s,c,i,l):xs) = do
                  C -> (remWidth + offs) `div` 2
                  R -> remWidth
                  L -> offs
-      (fc,bc) = case break (==',') (tColorsString c) of
-                 (f,',':b) -> (f, b           )
-                 (f,    _) -> (f, bgColor conf)
+      (fc,bc) = colorComponents conf (tColorsString c)
   valign <- verticalOffset ht s fontst voff conf
   let (ht',ay) = case (tBgTopOffset c, tBgBottomOffset c) of
                    (-1,_)  -> (0, -1)
@@ -165,14 +180,20 @@ printStrings dr gc fontlist voffs offs a boxes sl@((s,c,i,l):xs) = do
     (Hspace _) -> liftIO $ return ()
   let triBoxes = tBoxes c
       dropBoxes = filter (\(_,b) -> b `notElem` triBoxes) boxes
-      boxes' = map (\((x1,_),b) -> ((x1, offset + l), b)) (filter (\(_,b) -> b `elem` triBoxes) boxes)
+      boxes' = map (\((x1,_),b) -> ((x1, offset + l), b))
+                   (filter (\(_,b) -> b `elem` triBoxes) boxes)
             ++ map ((offset, offset + l),) (triBoxes \\ map snd boxes)
   if Prelude.null xs
     then liftIO $ drawBoxes d dr gc (fromIntegral ht) (dropBoxes ++ boxes')
     else liftIO $ drawBoxes d dr gc (fromIntegral ht) dropBoxes
   printStrings dr gc fontlist voffs (offs + l) a boxes' xs
 
-drawBoxes :: Display -> Drawable -> GC -> Position -> [((Position, Position), Box)] -> IO ()
+drawBoxes :: Display
+          -> Drawable
+          -> GC
+          -> Position
+          -> [((Position, Position), Box)]
+          -> IO ()
 drawBoxes _ _ _ _ [] = return ()
 drawBoxes d dr gc ht (b:bs) = do
   let (xx, Box bb offset lineWidth fc mgs) = b
@@ -195,9 +216,18 @@ drawBoxes d dr gc ht (b:bs) = do
       _ -> drawBoxBorder d dr gc bb    offset ht xx lw mgs
   drawBoxes d dr gc ht bs
 
-drawBoxBorder :: Display -> Drawable -> GC -> BoxBorder -> BoxOffset -> Position
-                 -> (Position, Position) -> Position -> BoxMargins -> IO ()
-drawBoxBorder d dr gc pos (BoxOffset alg offset) ht (x1,x2) lw (BoxMargins mt mr mb ml) = do
+drawBoxBorder :: Display
+              -> Drawable
+              -> GC
+              -> BoxBorder
+              -> BoxOffset
+              -> Position
+              -> (Position, Position)
+              -> Position
+              -> BoxMargins
+              -> IO ()
+drawBoxBorder
+  d dr gc pos (BoxOffset alg offset) ht (x1,x2) lw (BoxMargins mt mr mb ml) = do
   let (p1,p2) = case alg of
                  L -> (0,      -offset)
                  C -> (offset, -offset)

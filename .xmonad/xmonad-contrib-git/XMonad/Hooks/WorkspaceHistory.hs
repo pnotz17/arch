@@ -28,9 +28,9 @@ module XMonad.Hooks.WorkspaceHistory (
   , workspaceHistoryModify
   ) where
 
-import           Control.Applicative
-import           Prelude
-
+import Control.Applicative
+import Control.DeepSeq
+import Prelude
 import XMonad
 import XMonad.StackSet hiding (delete, filter, new)
 import XMonad.Prelude (delete, find, foldl', groupBy, nub, sortBy)
@@ -65,6 +65,13 @@ newtype WorkspaceHistory = WorkspaceHistory
                                          -- reverse-chronological order.
   } deriving (Read, Show)
 
+-- @ScreenId@ is not an instance of NFData, but is a newtype on @Int@. @seq@
+-- is enough for forcing it. This requires us to provide an instance.
+instance NFData WorkspaceHistory where
+  rnf (WorkspaceHistory hist) =
+    let go = liftRnf2 rwhnf rwhnf
+    in liftRnf go hist
+
 instance ExtensionClass WorkspaceHistory where
     initialValue = WorkspaceHistory []
     extensionType = PersistentExtension
@@ -72,13 +79,15 @@ instance ExtensionClass WorkspaceHistory where
 -- | A 'logHook' that keeps track of the order in which workspaces have
 -- been viewed.
 workspaceHistoryHook :: X ()
-workspaceHistoryHook = gets windowset >>= (XS.modify . updateLastActiveOnEachScreen)
+workspaceHistoryHook = workspaceHistoryHookExclude []
 
 -- | Like 'workspaceHistoryHook', but with the ability to exclude
 -- certain workspaces.
 workspaceHistoryHookExclude :: [WorkspaceId] -> X ()
-workspaceHistoryHookExclude ws =
-  gets windowset >>= XS.modify . updateLastActiveOnEachScreenExclude ws
+workspaceHistoryHookExclude ws = XS.modify' . update =<< gets windowset
+  where
+    update :: WindowSet -> WorkspaceHistory -> WorkspaceHistory
+    update s = force . updateLastActiveOnEachScreenExclude ws s
 
 workspaceHistoryWithScreen :: X [(ScreenId, WorkspaceId)]
 workspaceHistoryWithScreen = XS.gets history
@@ -101,7 +110,7 @@ workspaceHistoryTransaction action = do
   startingHistory <- XS.gets history
   action
   new <- flip updateLastActiveOnEachScreen (WorkspaceHistory startingHistory) <$> gets windowset
-  XS.put new
+  XS.put $! force new
 
 -- | Update the last visible workspace on each monitor if needed
 -- already there, or move it to the front if it is.
@@ -125,4 +134,4 @@ updateLastActiveOnEachScreenExclude ws StackSet {current = cur, visible = vis} w
 
 -- | Modify a the workspace history with a given pure function.
 workspaceHistoryModify :: ([(ScreenId, WorkspaceId)] -> [(ScreenId, WorkspaceId)]) -> X ()
-workspaceHistoryModify action = XS.modify $ WorkspaceHistory . action . history
+workspaceHistoryModify action = XS.modify' $ force . WorkspaceHistory . action . history

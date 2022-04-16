@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 -- |
 -- Module: Xmobar.App.Main
--- Copyright: (c) 2018, 2019, 2020 Jose Antonio Ortega Ruiz
+-- Copyright: (c) 2018, 2019, 2020, 2022 Jose Antonio Ortega Ruiz
 -- License: BSD3-style (see LICENSE)
 --
 -- Maintainer: jao@gnu.org
@@ -17,61 +17,28 @@
 
 module Xmobar.App.Main (xmobar, xmobarMain, configFromArgs) where
 
-import Control.Concurrent.Async (Async, cancel)
-import Control.Exception (bracket)
-import Control.Monad (unless)
 
-import Data.Foldable (for_)
-import qualified Data.Map as Map
 import Data.List (intercalate)
 import System.Posix.Process (executeFile)
 import System.Environment (getArgs)
 import System.FilePath ((</>), takeBaseName, takeDirectory, takeExtension)
 import Text.Parsec.Error (ParseError)
-import Data.List.NonEmpty (NonEmpty(..))
 
-import Graphics.X11.Xlib
+import Control.Monad (unless)
 
+import Xmobar.App.Config
 import Xmobar.Config.Types
 import Xmobar.Config.Parse
-import Xmobar.System.Signal (setupSignalHandler, withDeferSignals)
-import Xmobar.Run.Template
-import Xmobar.X11.Types
-import Xmobar.X11.Text
-import Xmobar.X11.Window
+import Xmobar.X11.Loop (x11Loop)
+import Xmobar.Text.Loop (textLoop)
 import Xmobar.App.Opts (recompileFlag, verboseFlag, getOpts, doOpts)
-import Xmobar.App.EventLoop (startLoop, startCommand, newRefreshLock, refreshLock)
 import Xmobar.App.Compile (recompile, trace)
-import Xmobar.App.Config
-import Xmobar.App.Timer (withTimer)
 
 xmobar :: Config -> IO ()
-xmobar conf = withDeferSignals $ do
-  initThreads
-  d <- openDisplay ""
-  fs    <- initFont d (font conf)
-  fl    <- mapM (initFont d) (additionalFonts conf)
-  cls   <- mapM (parseTemplate (commands conf) (sepChar conf))
-                (splitTemplate (alignSep conf) (template conf))
-  sig   <- setupSignalHandler
-  refLock <- newRefreshLock
-  withTimer (refreshLock refLock) $
-    bracket (mapM (mapM $ startCommand sig) cls)
-            cleanupThreads
-            $ \vars -> do
-      (r,w) <- createWin d fs conf
-      let ic = Map.empty
-          to = textOffset conf
-          ts = textOffsets conf ++ replicate (length fl) (-1)
-      startLoop (XConf d r w (fs :| fl) (to :| ts) ic conf) sig refLock vars
+xmobar cfg = if textOutput cfg then textLoop cfg else x11Loop cfg
 
 configFromArgs :: Config -> IO Config
 configFromArgs cfg = getArgs >>= getOpts >>= doOpts cfg . fst
-
-cleanupThreads :: [[([Async ()], a)]] -> IO ()
-cleanupThreads vars =
-  for_ (concat vars) $ \(asyncs, _) ->
-    for_ asyncs cancel
 
 buildLaunch :: [String] -> Bool -> Bool -> String -> ParseError -> IO ()
 buildLaunch args verb force p e = do
@@ -106,5 +73,6 @@ xmobarMain = do
     Just p -> do r <- readConfig defaultConfig p
                  case r of
                    Left e ->
-                     buildLaunch (filter (/= p) args) (verboseFlag flags) (recompileFlag flags) p e
+                     buildLaunch (filter (/= p) args) (verboseFlag flags)
+                                 (recompileFlag flags) p e
                    Right (c, defs) -> doOpts c flags >>= xmobar' defs

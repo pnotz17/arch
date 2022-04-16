@@ -4,24 +4,177 @@
 
 ### Breaking Changes
 
+  * `XMonad.Util.EZConfig`
+
+    - The functions `parseKey`, `parseKeyCombo`, and `parseKeySequence`
+      now return a `Parser` (from `XMonad.Util.Parser`) instead of a
+      `ReadP`.
+
+  * `XMonad.Config.{Arossato,Dmwit,Droundy,Monad,Prime,Saegesser,Sjanssen}`
+
+    - Deprecated all of these modules.  The user-specific configuration
+      modules may still be found [on the website].
+
+ * `XMonad.Util.NamedScratchpad`
+
+    - Scratchpads are now only based on the argument given to
+      `namedScratchpadManageHook`; all other scratchpad arguments are,
+      while still present, ignored.  Users passing all of their
+      scratchpads to functions like `namedScratchpadAction` (as is shown
+      in the module's documentation) should _not_ notice any difference
+      in behaviour.
+
+  * `XMonad.Util.DynamicScratchpads`
+
+    - Deprecated the module; use the new dynamic scratchpad
+      functionality of `XMonad.Util.NamedScratchpad` instead.
+
+[on the website]: https://xmonad.org/configurations.html
+
 ### New Modules
+
+  * `XMonad.Actions.PerLayoutKeys`
+
+    Customizes a keybinding on a per-layout basis. Based on PerWorkspaceKeys.
 
   * `XMonad.Layout.CenteredIfSingle`
 
     Layout modifier that, if only a single window is on screen, places that window
     in the middle of the screen.
 
+  * `XMonad.Util.ActionQueue`
+
+    Put XMonad actions in the queue to be executed every time the
+    `logHook` (or, alternatively, a hook of your choice) runs.
+
+  * `XMonad.Hooks.BorderPerWindow`
+
+    While XMonad provides config to set all window borders at the same
+    width, this extension lets user set border width for a specific window
+    using a ManageHook.
+
+  * `XMonad.Util.Parser`
+
+    A wrapper around the 'ReadP' parser combinator, providing behaviour
+    that's closer to the more popular parser combinator libraries.
+
+  * `XMonad.Hooks.StatusBar.WorkspaceScreen`
+
+    In multi-head setup, it might be useful to have screen information of the
+    visible workspaces combined with the workspace name, for example in a status
+    bar. This module provides utility functions to do just that.
+
+  * `XMonad.Hooks.ShowWName`
+
+    Flashes the name of the current workspace when switching to it.
+    Like `XMonad.Layout.ShowWName`, but as a logHook.
+
 ### Bug Fixes and Minor Changes
+
+  * `XMonad.Prompt.OrgMode`
+
+    - Fixes the date parsing issue such that entries with format of
+      `todo +d 12 02 2024` works.
 
   * `XMonad.Prompt`
 
     - Added `transposeChars` to interchange the characters around the
       point and bound it to `C-t` in the Emacs XPKeymaps.
 
+    - Added xft-based font fallback support.  This may be used by
+      appending other fonts to the given string:
+      `xft:iosevka-11,FontAwesome-9`.  Note that this requires
+      `xmonad-contrib` to be compiled with `X11-xft` version 0.3.4 or
+      higher.
+
   * `XMonad.Hooks.WindowSwallowing`
 
     - Fixed windows getting lost when used in conjunction with
       `smartBorders` and a single window.
+
+  * `XMonad.Util.EZConfig`
+
+    - Added support for Modifier Keys `KeySym`s for Emacs-like `additionalKeysP`.
+
+  * `XMonad.Hooks.ManageHelpers`
+
+    - Flipped how `(^?)`, `(~?)`, and `($?)` work to more accurately
+      reflect how one uses these operators.
+
+    - Added `isMinimized`
+
+  * `XMonad.Actions.WindowNavigation`
+
+    -  Fixed navigation getting "stuck" in certain situations for
+       widescreen resolutions.
+
+  * `XMonad.Layout.BinarySpacePartition`
+
+    - Hidden windows are now ignored by the layout so that hidden windows in
+      the stack don't offset position calculations in the layout.
+
+  * `XMonad.Layout.MagicFocus`
+
+    - The focused window will always be at the master area in the stack being
+      passed onto the modified layout, even when focus leaves the workspace
+      using the modified layout.
+
+  * `XMonad.Actions.TreeSelect`
+
+    - Added xft-based font fallback support.  This may be used by
+      appending other fonts to the given string:
+      `xft:iosevka-11,FontAwesome-9`.  Note that this requires
+      `xmonad-contrib` to be compiled with `X11-xft` version 0.3.4 or
+      higher.
+
+  * `XMonad.Actions.FloatKeys`
+
+    - Changed type signature of `keysMoveWindow` from `D -> Window -> X ()`
+      to `ChangeDim -> Window -> X ()` to allow negative numbers without compiler warnings.
+
+  * `XMonad.Util.Hacks`
+
+    - Added `trayerPaddingXmobarEventHook` (plus generic variants for other
+      trays/panels) to communicate trayer resize events to XMobar so that
+      padding space may be reserved on xmobar for the tray.  Requires `xmobar`
+      version 0.40 or higher.
+
+  * `XMonad.Layout.VoidBorders`
+
+    - Added new layout modifier `normalBorders` which can be used for
+      resetting borders back in layouts where you want borders after calling
+      `voidBorders`.
+
+  * `XMonad.Prelude`
+
+    - Added `keymaskToString` and `keyToString` to show a key mask and a
+      key in the style of `XMonad.Util.EZConfig`.
+
+    - Added `WindowScreen`, which is a type synonym for the specialized `Screen`
+      type, that results from the `WindowSet` definition in `XMonad.Core`.
+
+  * `XMonad.Util.XUtils`
+
+    - Added `withSimpleWindow`, `showSimpleWindow`, `WindowConfig`, and
+      `WindowRect` in order to simplify the handling of simple popup
+      windows.
+
+  * `XMonad.Actions.Submap`
+
+    - Added `visualSubmap` to visualise the available keys and their
+      actions when inside a submap.
+
+  * `XMonad.Prompt`, `XMonad.Actions.TreeSelect`, `XMonad.Actions.GridSelect`
+
+    - Key bindings now behave similarly to xmonad core:
+      State of mouse buttons and XKB layout groups is ignored.
+      Translation of key codes to symbols ignores modifiers, so `Shift-Tab` is
+      now just `(shiftMap, xK_Tab)` instead of `(shiftMap, xK_ISO_Left_Tab)`.
+
+  * `XMonad.Util.NamedScratchpad`
+
+    - Added support for dynamic scratchpads in the form of
+      `dynamicNSPAction` and `toggleDynamicNSP`.
 
 ## 0.17.0 (October 27, 2021)
 
@@ -794,6 +947,9 @@
 
     - Fixed a system freeze when using `X.A.CopyWindow.copy` in
       combination with `removeWorkspace`.
+
+    - `withWorkspace` now honors the users `searchPredicate`, for
+      example `fuzzyMatch` from `Prompt.FuzzyMatch`.
 
 ## 0.16
 

@@ -24,11 +24,11 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
             , Run Com "sh" ["-c", "checkupdates | wc -l"] "checkupdates" 21
             , Run Com "echo" ["<icon=pacman.xpm/> "] "pacman" 3600
             , Run Date "<icon=calendar.xpm/> <fc=#b3afc2>%H:%M</fc>" "date" 7     
-            , Run Weather "LGKZ" ["-t","<icon=weather.xpm/> <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 24000        
+            , Run Weather "EDDW" ["-t","<icon=weather.xpm/> <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 24000        
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %lo% | %disku% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %LGKZ% | %date% |"}
+       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %lo% | %disku% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %EDDW% | %date% |"}
 
 
 

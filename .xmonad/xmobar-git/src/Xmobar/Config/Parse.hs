@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
 -- |
 -- Module: Xmobar.Config.Parse
--- Copyright: (c) 2018, 2020 Jose Antonio Ortega Ruiz
+-- Copyright: (c) 2018, 2020, 2022 Jose Antonio Ortega Ruiz
 -- License: BSD3-style (see LICENSE)
 --
 -- Maintainer: jao@gnu.org
@@ -57,28 +57,32 @@ parseConfig defaultConfig =
         x <- perms
         eof
         s <- getState
-        return (x,s)
+        return (x, s)
 
       perms = permute $ Config
               <$?> pFont <|?> pFontList <|?> pWmClass <|?> pWmName
-              <|?> pBgColor <|?> pFgColor
-              <|?> pPosition <|?> pTextOffset <|?> pTextOffsets
+              <|?> pBgColor <|?> pFgColor <|?> pPosition
+              <|?> pTextOutput <|?> pTextOutputFormat
+              <|?> pTextOffset <|?> pTextOffsets
               <|?> pIconOffset <|?> pBorder
               <|?> pBdColor <|?> pBdWidth <|?> pAlpha <|?> pHideOnStart
               <|?> pAllDesktops <|?> pOverrideRedirect <|?> pPickBroadest
               <|?> pLowerOnStart <|?> pPersistent <|?> pIconRoot
               <|?> pCommands <|?> pSepChar <|?> pAlignSep <|?> pTemplate
-              <|?> pVerbose
+              <|?> pVerbose <|?> pSignal
 
-      fields    = [ "font", "additionalFonts","bgColor", "fgColor"
+      fields    = [ "font", "additionalFonts", "bgColor", "fgColor"
                   , "wmClass", "wmName", "sepChar"
                   , "alignSep" , "border", "borderColor" ,"template"
                   , "position" , "textOffset", "textOffsets", "iconOffset"
                   , "allDesktops", "overrideRedirect", "pickBroadest"
                   , "hideOnStart", "lowerOnStart", "persistent", "iconRoot"
-                  , "alpha", "commands", "verbose"
+                  , "alpha", "commands", "verbose", "signal", "textOutput"
+                  , "textOutputFormat"
                   ]
 
+      pTextOutput = readField textOutput "textOutput"
+      pTextOutputFormat = readField textOutputFormat "textOutputFormat"
       pFont = strField font "font"
       pFontList = strListField additionalFonts "additionalFonts"
       pWmClass = strField wmClass "wmClass"
@@ -105,6 +109,9 @@ parseConfig defaultConfig =
       pIconRoot = readField iconRoot "iconRoot"
       pAlpha = readField alpha "alpha"
       pVerbose = readField verbose "verbose"
+
+      pSignal = field signal "signal" $
+        fail "signal is meant for use with Xmobar as a library.\n It is not meant for use in the configuration file."
 
       pCommands = field commands "commands" readCommands
 

@@ -3,7 +3,7 @@ version:            0.17.0.9
 -- ^ also update cpp-options: -DXMONAD_CONTRIB_VERSION_*
 
 homepage:           https://xmonad.org/
-synopsis:           Community-maintained extensions extensions for xmonad
+synopsis:           Community-maintained extensions for xmonad
 description:
     Community-maintained tiling algorithms and extension modules for xmonad,
     an X11 tiling window manager.
@@ -33,7 +33,7 @@ cabal-version:      1.12
 build-type:         Simple
 bug-reports:        https://github.com/xmonad/xmonad-contrib/issues
 
-tested-with:        GHC == 8.4.4 || == 8.6.5 || == 8.8.4 || == 8.10.4 || == 9.0.1 || == 9.2.1
+tested-with:        GHC == 8.4.4 || == 8.6.5 || == 8.8.4 || == 8.10.7 || == 9.0.2 || == 9.2.2
 
 source-repository head
   type:     git
@@ -61,7 +61,8 @@ library
                    unix,
                    X11 >= 1.10 && < 1.11,
                    xmonad >= 0.16.99999 && < 0.18,
-                   utf8-string
+                   utf8-string,
+                   deepseq
     default-language: Haskell2010
 
     cpp-options:   -DXMONAD_CONTRIB_VERSION_MAJOR=0
@@ -117,6 +118,7 @@ library
                         XMonad.Actions.Navigation2D
                         XMonad.Actions.NoBorders
                         XMonad.Actions.OnScreen
+                        XMonad.Actions.PerLayoutKeys
                         XMonad.Actions.PerWindowKeys
                         XMonad.Actions.PerWorkspaceKeys
                         XMonad.Actions.PhysicalScreens
@@ -167,6 +169,7 @@ library
                         XMonad.Doc.Configuring
                         XMonad.Doc.Developing
                         XMonad.Doc.Extending
+                        XMonad.Hooks.BorderPerWindow
                         XMonad.Hooks.CurrentWorkspaceOnTop
                         XMonad.Hooks.DebugEvents
                         XMonad.Hooks.DebugKeyEvents
@@ -196,8 +199,10 @@ library
                         XMonad.Hooks.Script
                         XMonad.Hooks.ServerMode
                         XMonad.Hooks.SetWMName
+                        XMonad.Hooks.ShowWName
                         XMonad.Hooks.StatusBar
                         XMonad.Hooks.StatusBar.PP
+                        XMonad.Hooks.StatusBar.WorkspaceScreen
                         XMonad.Hooks.TaffybarPagerHints
                         XMonad.Hooks.ToggleHook
                         XMonad.Hooks.UrgencyHook
@@ -334,6 +339,7 @@ library
                         XMonad.Prompt.XMonad
                         XMonad.Prompt.Zsh
                         XMonad.Util.ActionCycle
+                        XMonad.Util.ActionQueue
                         XMonad.Util.ClickableWorkspaces
                         XMonad.Util.Cursor
                         XMonad.Util.CustomKeys
@@ -356,6 +362,7 @@ library
                         XMonad.Util.NamedScratchpad
                         XMonad.Util.NamedWindows
                         XMonad.Util.NoTaskbar
+                        XMonad.Util.Parser
                         XMonad.Util.Paste
                         XMonad.Util.PositionStore
                         XMonad.Util.PureX
@@ -384,6 +391,7 @@ test-suite tests
   type:           exitcode-stdio-1.0
   main-is:        Main.hs
   other-modules:  CycleRecentWS
+                  EZConfig
                   ExtensibleConf
                   GridSelect
                   Instances
@@ -400,6 +408,7 @@ test-suite tests
                   XMonad.Actions.GridSelect
                   XMonad.Actions.PhysicalScreens
                   XMonad.Actions.RotateSome
+                  XMonad.Actions.Submap
                   XMonad.Actions.SwapWorkspaces
                   XMonad.Actions.TagWindows
                   XMonad.Actions.WindowBringer
@@ -418,12 +427,15 @@ test-suite tests
                   XMonad.Prompt.Shell
                   XMonad.Util.Dmenu
                   XMonad.Util.Dzen
+                  XMonad.Util.EZConfig
                   XMonad.Util.ExtensibleConf
                   XMonad.Util.ExtensibleState
                   XMonad.Util.Font
                   XMonad.Util.Image
                   XMonad.Util.Invisible
+                  XMonad.Util.NamedActions
                   XMonad.Util.NamedWindows
+                  XMonad.Util.Parser
                   XMonad.Util.PureX
                   XMonad.Util.Rectangle
                   XMonad.Util.Run
@@ -448,6 +460,7 @@ test-suite tests
                , process
                , unix
                , utf8-string
+               , deepseq
                , xmonad >= 0.16.9999 && < 0.18
   cpp-options: -DTESTING
   ghc-options: -Wall -Wno-unused-do-bind

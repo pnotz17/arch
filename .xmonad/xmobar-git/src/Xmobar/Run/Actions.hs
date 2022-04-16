@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Xmobar.Actions
+-- Module      :  Xmobar.Run.Actions
 -- Copyright   :  (c) Alexander Polakov
 -- License     :  BSD-style (see LICENSE)
 --
@@ -10,18 +10,27 @@
 --
 -----------------------------------------------------------------------------
 
-module Xmobar.X11.Actions (Action(..), runAction, stripActions) where
+module Xmobar.Run.Actions ( Button
+                          , Action(..)
+                          , runAction
+                          , runAction'
+                          , stripActions) where
 
 import System.Process (system)
 import Control.Monad (void)
 import Text.Regex (Regex, subRegex, mkRegex, matchRegex)
-import Graphics.X11.Types (Button)
+import Data.Word (Word32)
 
-data Action = Spawn [Button] String
-                deriving (Eq, Show)
+type Button = Word32
+
+data Action = Spawn [Button] String deriving (Eq, Read, Show)
 
 runAction :: Action -> IO ()
 runAction (Spawn _ s) = void $ system (s ++ "&")
+
+-- | Run action with stdout redirected to stderr
+runAction' :: Action -> IO ()
+runAction' (Spawn _ s) = void $ system (s ++ " 1>&2 &")
 
 stripActions :: String -> String
 stripActions s = case matchRegex actionRegex s of

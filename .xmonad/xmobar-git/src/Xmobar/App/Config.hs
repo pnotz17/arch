@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 -- |
 -- Module: Xmobar.Config.Defaults
--- Copyright: (c) 2018, 2019, 2020 Jose Antonio Ortega Ruiz
+-- Copyright: (c) 2018, 2019, 2020, 2022 Jose Antonio Ortega Ruiz
 -- License: BSD3-style (see LICENSE)
 --
 -- Maintainer: jao@gnu.org
@@ -64,6 +64,9 @@ defaultConfig =
            , template = "%StdinReader% }{ " ++
                         "<fc=#00FF00>%uname%</fc> * <fc=#FF0000>%theDate%</fc>"
            , verbose = False
+           , signal = SignalChan Nothing
+           , textOutput = False
+           , textOutputFormat = Plain
            }
 
 -- | Return the path to the xmobar data directory.  This directory is

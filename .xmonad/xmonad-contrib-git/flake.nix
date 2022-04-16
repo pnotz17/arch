@@ -2,7 +2,7 @@
 {
   inputs = {
     flake-utils.url = github:numtide/flake-utils;
-    git-ignore-nix.url = github:IvanMalison/gitignore.nix/master;
+    git-ignore-nix.url = github:hercules-ci/gitignore.nix/master;
     xmonad.url = github:xmonad/xmonad;
   };
   outputs = { self, flake-utils, nixpkgs, git-ignore-nix, xmonad }:
@@ -12,19 +12,24 @@
         overrides = prev.lib.composeExtensions (old.overrides or (_: _: {}))
         (hself: hsuper: {
           xmonad-contrib =
-            hself.callCabal2nix "xmonad-contrib" (git-ignore-nix.gitIgnoreSource ./.) { };
+            hself.callCabal2nix "xmonad-contrib" (git-ignore-nix.lib.gitignoreSource ./.) { };
         });
       });
     };
     overlays = xmonad.overlays ++ [ overlay ];
   in flake-utils.lib.eachDefaultSystem (system:
-  let pkgs = import nixpkgs { inherit system overlays; };
+  let
+    pkgs = import nixpkgs { inherit system overlays; };
+    modifyDevShell =
+      if builtins.pathExists ./develop.nix
+      then import ./develop.nix
+      else _: x: x;
   in
   rec {
-    devShell = pkgs.haskellPackages.shellFor {
+    devShell = pkgs.haskellPackages.shellFor (modifyDevShell pkgs {
       packages = p: [ p.xmonad-contrib ];
       nativeBuildInputs = [ pkgs.cabal-install ];
-    };
+    });
     defaultPackage = pkgs.haskellPackages.xmonad-contrib;
   }) // { inherit overlay overlays; } ;
 }

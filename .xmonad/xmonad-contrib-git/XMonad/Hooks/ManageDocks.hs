@@ -1,4 +1,4 @@
-{-# LANGUAGE PatternGuards, FlexibleInstances, MultiParamTypeClasses, CPP #-}
+{-# LANGUAGE PatternGuards, FlexibleInstances, MultiParamTypeClasses, CPP, LambdaCase #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module       : XMonad.Hooks.ManageDocks
@@ -42,10 +42,11 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Util.Types
 import XMonad.Util.WindowProperties (getProp32s)
 import qualified XMonad.Util.ExtensibleState as XS
-import XMonad.Prelude (All (..), fi, filterM, foldlM, void, when, (<=<))
+import XMonad.Prelude
 
-import qualified Data.Set as S
-import qualified Data.Map as M
+import qualified Data.Set        as S
+import qualified Data.Map        as M
+import qualified XMonad.StackSet as W
 
 -- $usage
 -- To use this module, add the following import to @~\/.xmonad\/xmonad.hs@:
@@ -147,15 +148,20 @@ requestDockEvents w = whenX (not <$> isClient w) $ withDisplay $ \dpy ->
     withWindowAttributes dpy w $ \attrs -> io $ selectInput dpy w $
         wa_your_event_mask attrs .|. propertyChangeMask .|. structureNotifyMask
 
--- | Checks if a window is a DOCK or DESKTOP window
+-- | Checks if a window is a DOCK or DESKTOP window.
+-- Ignores xmonad's own windows (usually _NET_WM_WINDOW_TYPE_DESKTOP) to avoid
+-- unnecessary refreshes.
 checkDock :: Query Bool
-checkDock = ask >>= \w -> liftX $ do
-    dock <- getAtom "_NET_WM_WINDOW_TYPE_DOCK"
-    desk <- getAtom "_NET_WM_WINDOW_TYPE_DESKTOP"
-    mbr <- getProp32s "_NET_WM_WINDOW_TYPE" w
-    case mbr of
-        Just rs -> return $ any ((`elem` [dock,desk]) . fromIntegral) rs
-        _       -> return False
+checkDock = isDockOrDesktop <&&> (not <$> isXMonad)
+  where
+    isDockOrDesktop = ask >>= \w -> liftX $ do
+        dock <- getAtom "_NET_WM_WINDOW_TYPE_DOCK"
+        desk <- getAtom "_NET_WM_WINDOW_TYPE_DESKTOP"
+        mbr <- getProp32s "_NET_WM_WINDOW_TYPE" w
+        case mbr of
+            Just rs -> return $ any ((`elem` [dock,desk]) . fromIntegral) rs
+            _       -> return False
+    isXMonad = className =? "xmonad"
 
 -- | Whenever a new dock appears, refresh the layout immediately to avoid the
 -- new dock.
@@ -200,26 +206,33 @@ getStrut w = do
 -- | Goes through the list of windows and find the gap so that all
 --   STRUT settings are satisfied.
 calcGap :: S.Set Direction2D -> X (Rectangle -> Rectangle)
-calcGap ss = withDisplay $ \dpy -> do
+calcGap ss = do
     rootw <- asks theRoot
     struts <- filter careAbout . concat . M.elems <$> getStrutCache
 
-    -- we grab the window attributes of the root window rather than checking
-    -- the width of the screen because xlib caches this info and it tends to
-    -- be incorrect after RAndR
-    wa <- io $ getWindowAttributes dpy rootw
-    let screen = r2c $ Rectangle (fi $ wa_x wa) (fi $ wa_y wa) (fi $ wa_width wa) (fi $ wa_height wa)
+    -- If possible, we grab the window attributes of the root window rather
+    -- than checking the width of the screen because xlib caches this info
+    -- and it tends to be incorrect after RAndR
+    screen <- safeGetWindowAttributes rootw >>= \case
+        Nothing -> gets $ r2c . screenRect . W.screenDetail . W.current . windowset
+        Just wa -> pure . r2c $ Rectangle (fi $ wa_x wa) (fi $ wa_y wa) (fi $ wa_width wa) (fi $ wa_height wa)
     return $ \r -> c2r $ foldr (reduce screen) (r2c r) struts
   where careAbout (s,_,_,_) = s `S.member` ss
 
 -- | Adjust layout automagically: don't cover up any docks, status
 --   bars, etc.
+--
+--   Note that this modifier must be applied before any modifier that
+--   changes the screen rectangle, or struts will be applied in the wrong
+--   place and may affect the other modifier(s) in odd ways. This is
+--   most commonly seen with the 'spacing' modifier and friends.
 avoidStruts :: LayoutClass l a => l a -> ModifiedLayout AvoidStruts l a
 avoidStruts = avoidStrutsOn [U,D,L,R]
 
 -- | Adjust layout automagically: don't cover up docks, status bars,
---   etc. on the indicated sides of the screen.  Valid sides are U
---   (top), D (bottom), R (right), or L (left).
+--   etc. on the indicated sides of the screen.  Valid sides are 'U'
+--   (top), 'D' (bottom), 'R' (right), or 'L' (left). The warning in
+--   'avoidStruts' applies to this modifier as well.
 avoidStrutsOn :: LayoutClass l a =>
                  [Direction2D]
               -> l a

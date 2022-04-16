@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Xmobar
--- Copyright   :  (c) 2011, 2012, 2013, 2014, 2015, 2017, 2018, 2019 Jose Antonio Ortega Ruiz
+-- Copyright   :  (c) 2011, 2012, 2013, 2014, 2015, 2017, 2018, 2019, 2022 Jose Antonio Ortega Ruiz
 --                (c) 2007 Andrea Rossato
 -- License     :  BSD-style (see LICENSE)
 --
@@ -23,6 +23,7 @@ module Xmobar (xmobar
               , Runnable (..)
               , Exec (..)
               , Command (..)
+              , SignalType (..)
               , module Xmobar.Config.Types
               , module Xmobar.Config.Parse
               , module Xmobar.Plugins.BufferedPipeReader
@@ -50,9 +51,9 @@ module Xmobar (xmobar
 
 import Xmobar.Run.Runnable
 import Xmobar.Run.Exec
-import Xmobar.Run.Command
 import Xmobar.Config.Types
 import Xmobar.Config.Parse
+import Xmobar.Plugins.Command
 import Xmobar.Plugins.BufferedPipeReader
 import Xmobar.Plugins.CommandReader
 import Xmobar.Plugins.Date
@@ -74,6 +75,8 @@ import Xmobar.Plugins.StdinReader
 import Xmobar.Plugins.MarqueePipeReader
 import Xmobar.Plugins.XMonadLog
 import Xmobar.Plugins.NotmuchMail
+
+import Xmobar.System.Signal(SignalType (..))
 
 import Xmobar.App.Main(xmobar, xmobarMain, configFromArgs)
 import Xmobar.App.Config(defaultConfig)

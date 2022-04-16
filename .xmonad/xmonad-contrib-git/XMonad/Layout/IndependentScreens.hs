@@ -78,7 +78,7 @@ import qualified XMonad.StackSet as W
 -- screen into a physical workspace name.
 --
 -- A complete example abusing many of the functions below is available in the
--- "XMonad.Config.Dmwit" module.
+-- <https://xmonad.org/configurations.html XMonad.Config.Dmwit> configuration.
 
 type VirtualWorkspace  = WorkspaceId
 type PhysicalWorkspace = WorkspaceId
@@ -148,7 +148,7 @@ withWspOnScreen screenId operation ws = case workspaceOnScreen screenId ws of
     Nothing -> ws
 
 -- | Get the workspace that is active on a given screen.
-screenOnMonitor :: ScreenId -> WindowSet -> Maybe (W.Screen WorkspaceId (Layout Window) Window ScreenId ScreenDetail)
+screenOnMonitor :: ScreenId -> WindowSet -> Maybe WindowScreen
 screenOnMonitor screenId ws = find ((screenId ==) . W.screen) (W.current ws : W.visible ws)
 
 -- | Focus a window, switching workspace on the correct Xinerama screen if neccessary.

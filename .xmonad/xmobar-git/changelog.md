@@ -1,10 +1,44 @@
+## Version 0.43 (unreleased)
+
+_New features_
+
+  - New monitor `Load` providing load averages (stolen from Finn
+    Lawler, with FreeBSD support thanks to Michał Zielonka).
+  - New argument `scale` for `Memory` monitor to scale size units.
+
+_Bug fixes_
+
+  - MultiCoreTemp: allow temperature directory names with more than
+    one digit.
+
+## Version 0.42 (March, 2022)
+
+_New features_
+
+  - New text mode (thanks to Pavel Kagulin, see issue #601), with
+    output formats compatible with color terminals and pango.
+  - New text mode with format following swaybar-protocol, supporting
+    colors, faces, boxes and actions.
+
+_Bug fixes_
+
+   - Fix for bottom placement (#608)
+   - Fix for memory leak during X drawing (#609)
+
+## Version 0.41 (January, 2022)
+
+_New features_
+
+  - Disk monitors for FreeBSD (Michał Zielonka).
+  - Improvements to signal handling when using xmobar as a library (John Soo).
+
 ## Version 0.40 (November, 2021)
 
 _New features_
 
   - New plugin: `QueueReader` (Guy Gastineau).
   - Greatly improved FreeBSD support: Mem, Network and Swap monitors
-    fixes, and CI build for FreeBSD (Michal Zielonka).
+    fixes, and CI build for FreeBSD (Michał Zielonka).
   - New template markup: `<hspace>`(tulthix)
 
 ## Version 0.39 (August, 2021)

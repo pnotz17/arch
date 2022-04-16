@@ -18,7 +18,7 @@ module XMonad.Operations (
     manage, unmanage, killWindow, kill, isClient,
     setInitialProperties, setWMState, setWindowBorderWithFallback,
     hide, reveal, tileWindow,
-    setTopFocus, focus,
+    setTopFocus, focus, isFixedSizeOrTransient,
 
     -- * Manage Windows
     windows, refresh, rescreen, modifyWindowSet, windowBracket, windowBracket_, clearEvents, getCleanedScreenInfo,
@@ -78,6 +78,16 @@ import Graphics.X11.Xlib.Extras
 -- ---------------------------------------------------------------------
 -- Window manager operations
 
+-- | Detect whether a window has fixed size or is transient. This check
+-- can be used to determine whether the window should be floating or not
+--
+isFixedSizeOrTransient :: Display -> Window -> X Bool
+isFixedSizeOrTransient d w = do
+    sh <- io $ getWMNormalHints d w
+    let isFixedSize = isJust (sh_min_size sh) && sh_min_size sh == sh_max_size sh
+    isTransient <- isJust <$> io (getTransientForHint d w)
+    return (isFixedSize || isTransient)
+
 -- |
 -- Add a new window to be managed in the current workspace.
 -- Bring it into focus.
@@ -87,10 +97,8 @@ import Graphics.X11.Xlib.Extras
 --
 manage :: Window -> X ()
 manage w = whenX (not <$> isClient w) $ withDisplay $ \d -> do
-    sh <- io $ getWMNormalHints d w
 
-    let isFixedSize = sh_min_size sh /= Nothing && sh_min_size sh == sh_max_size sh
-    isTransient <- isJust <$> io (getTransientForHint d w)
+    shouldFloat <- isFixedSizeOrTransient d w
 
     rr <- snd `fmap` floatLocation w
     -- ensure that float windows don't go over the edge of the screen
@@ -98,8 +106,8 @@ manage w = whenX (not <$> isClient w) $ withDisplay $ \d -> do
                                               = W.RationalRect (0.5 - wid/2) (0.5 - h/2) wid h
         adjust r = r
 
-        f ws | isFixedSize || isTransient = W.float w (adjust rr) . W.insertUp w . W.view i $ ws
-             | otherwise                  = W.insertUp w ws
+        f ws | shouldFloat = W.float w (adjust rr) . W.insertUp w . W.view i $ ws
+             | otherwise   = W.insertUp w ws
             where i = W.tag $ W.workspace $ W.current ws
 
     mh <- asks (manageHook . config)
@@ -250,7 +258,7 @@ setWindowBorderWithFallback :: Display -> Window -> String -> Pixel -> X ()
 setWindowBorderWithFallback dpy w color basic = io $
     C.handle fallback $ do
       wa <- getWindowAttributes dpy w
-      pixel <- color_pixel . fst <$> allocNamedColor dpy (wa_colormap wa) color
+      pixel <- setPixelSolid . color_pixel . fst <$> allocNamedColor dpy (wa_colormap wa) color
       setWindowBorder dpy w pixel
   where
     fallback :: C.SomeException -> IO ()
@@ -504,10 +512,14 @@ cleanMask km = do
     nlm <- gets numberlockMask
     return (complement (nlm .|. lockMask) .&. km)
 
+-- | Set the 'Pixel' alpha value to 255.
+setPixelSolid :: Pixel -> Pixel
+setPixelSolid p = (p .|. 0xff000000)
+
 -- | Get the 'Pixel' value for a named color.
 initColor :: Display -> String -> IO (Maybe Pixel)
 initColor dpy c = C.handle (\(C.SomeException _) -> return Nothing) $
-    (Just . color_pixel . fst) <$> allocNamedColor dpy colormap c
+    (Just . setPixelSolid . color_pixel . fst) <$> allocNamedColor dpy colormap c
     where colormap = defaultColormap dpy (defaultScreen dpy)
 
 ------------------------------------------------------------------------
@@ -650,14 +662,20 @@ float w = do
 
 -- | Accumulate mouse motion events
 mouseDrag :: (Position -> Position -> X ()) -> X () -> X ()
-mouseDrag f done = do
+mouseDrag = mouseDragCursor Nothing
+
+-- | Like 'mouseDrag', but with the ability to specify a custom cursor
+-- shape.
+mouseDragCursor :: Maybe Glyph -> (Position -> Position -> X ()) -> X () -> X ()
+mouseDragCursor cursorGlyph f done = do
     drag <- gets dragging
     case drag of
         Just _ -> return () -- error case? we're already dragging
         Nothing -> do
             XConf { theRoot = root, display = d } <- ask
-            io $ grabPointer d root False (buttonReleaseMask .|. pointerMotionMask)
-                    grabModeAsync grabModeAsync none none currentTime
+            io $ do cursor <- maybe (pure none) (createFontCursor d) cursorGlyph
+                    grabPointer d root False (buttonReleaseMask .|. pointerMotionMask)
+                      grabModeAsync grabModeAsync none cursor currentTime
             modify $ \s -> s { dragging = Just (motion, cleanup) }
  where
     cleanup = do
@@ -675,7 +693,9 @@ mouseMoveWindow w = whenX (isClient w) $ withDisplay $ \d -> do
     (_, _, _, ox', oy', _, _, _) <- io $ queryPointer d w
     let ox = fromIntegral ox'
         oy = fromIntegral oy'
-    mouseDrag (\ex ey -> do
+    mouseDragCursor
+              (Just xC_fleur)
+              (\ex ey -> do
                   io $ moveWindow d w (fromIntegral (fromIntegral (wa_x wa) + (ex - ox)))
                                       (fromIntegral (fromIntegral (wa_y wa) + (ey - oy)))
                   float w
@@ -688,12 +708,13 @@ mouseResizeWindow w = whenX (isClient w) $ withDisplay $ \d -> do
     wa <- io $ getWindowAttributes d w
     sh <- io $ getWMNormalHints d w
     io $ warpPointer d none w 0 0 0 0 (fromIntegral (wa_width wa)) (fromIntegral (wa_height wa))
-    mouseDrag (\ex ey -> do
+    mouseDragCursor
+              (Just xC_bottom_right_corner)
+              (\ex ey -> do
                  io $ resizeWindow d w `uncurry`
                     applySizeHintsContents sh (ex - fromIntegral (wa_x wa),
                                                ey - fromIntegral (wa_y wa))
                  float w)
-
               (float w)
 
 -- ---------------------------------------------------------------------

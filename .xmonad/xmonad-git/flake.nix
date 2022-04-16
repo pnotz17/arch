@@ -2,7 +2,7 @@
 {
   inputs = {
     flake-utils.url = github:numtide/flake-utils;
-    git-ignore-nix.url = github:IvanMalison/gitignore.nix/master;
+    git-ignore-nix.url = github:hercules-ci/gitignore.nix/master;
   };
   outputs = { self, flake-utils, nixpkgs, git-ignore-nix }:
   let
@@ -10,7 +10,7 @@
       haskellPackages = prev.haskellPackages.override (old: {
         overrides = prev.lib.composeExtensions (old.overrides or (_: _: {}))
         (hself: hsuper: {
-          xmonad = hself.callCabal2nix "xmonad" (git-ignore-nix.gitIgnoreSource ./.) { };
+          xmonad = hself.callCabal2nix "xmonad" (git-ignore-nix.lib.gitignoreSource ./.) { };
         });
       });
     };

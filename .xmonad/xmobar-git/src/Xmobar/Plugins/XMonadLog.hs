@@ -21,14 +21,17 @@ import Control.Monad
 import Graphics.X11
 import Graphics.X11.Xlib.Extras
 import Xmobar.Run.Exec
+import Xmobar.Run.Actions (stripActions)
+
 #ifdef UTF8
 #undef UTF8
 import Codec.Binary.UTF8.String as UTF8
 #define UTF8
 #endif
+
 import Foreign.C (CChar)
+import Data.List (intercalate)
 import Xmobar.X11.Events (nextEvent')
-import Xmobar.X11.Actions (stripActions)
 
 data XMonadLog = XMonadLog
                | UnsafeXMonadLog
@@ -54,11 +57,12 @@ instance Exec XMonadLog where
                 UnsafeXPropertyLog a -> a
                 NamedXPropertyLog a _ -> a
                 UnsafeNamedXPropertyLog a _ -> a
+            stripNL = intercalate " - " . lines
             sanitize = case x of
                 UnsafeXMonadLog -> id
                 UnsafeXPropertyLog _ -> id
                 UnsafeNamedXPropertyLog _ _ -> id
-                _ -> stripActions
+                _ -> stripActions . stripNL
 
         d <- openDisplay ""
         xlog <- internAtom d atom False

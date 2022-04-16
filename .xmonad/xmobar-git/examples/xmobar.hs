@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Copyright: (c) 2018, 2019 Jose Antonio Ortega Ruiz
+-- Copyright: (c) 2018, 2019, 2022 Jose Antonio Ortega Ruiz
 -- License: BSD3-style (see LICENSE)
 --
 -- Maintainer: jao@gnu.org
@@ -49,6 +49,7 @@ config = defaultConfig {
   , iconRoot = "."
   , allDesktops = True
   , overrideRedirect = True
+  , textOutputFormat = Ansi
   , commands = [ Run $ Weather "EGPH" ["-t","<station>: <tempC>C",
                                         "-L","18","-H","25",
                                         "--normal","green",

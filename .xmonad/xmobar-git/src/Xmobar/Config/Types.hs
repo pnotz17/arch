@@ -16,10 +16,13 @@ module Xmobar.Config.Types
     ( -- * Configuration
       -- $config
       Config (..)
-    , XPosition (..), Align (..), Border(..)
+    , XPosition (..), Align (..), Border (..), TextOutputFormat (..)
+    , SignalChan (..)
     ) where
 
+import qualified Control.Concurrent.STM as STM
 import Xmobar.Run.Runnable (Runnable(..))
+import Xmobar.System.Signal (SignalType)
 
 -- $config
 -- Configuration data type
@@ -33,6 +36,8 @@ data Config =
            , bgColor :: String      -- ^ Backgroud color
            , fgColor :: String      -- ^ Default font color
            , position :: XPosition  -- ^ Top Bottom or Static
+           , textOutput :: Bool     -- ^ Write data to stdout instead of X
+           , textOutputFormat :: TextOutputFormat -- ^ Which color format to use for stdout: Ansi or Pango
            , textOffset :: Int      -- ^ Offset from top of window for text
            , textOffsets :: [Int]   -- ^ List of offsets for additionalFonts
            , iconOffset :: Int      -- ^ Offset from top of window for icons
@@ -65,6 +70,7 @@ data Config =
                                     --   right text alignment
            , template :: String     -- ^ The output template
            , verbose :: Bool        -- ^ Emit additional debug messages
+           , signal :: SignalChan   -- ^ The signal channel used to send signals to xmobar
            } deriving (Read, Show)
 
 data XPosition = Top
@@ -91,3 +97,14 @@ data Border = NoBorder
             | BottomBM Int
             | FullBM Int
               deriving ( Read, Show, Eq )
+
+data TextOutputFormat = Plain | Ansi | Pango | Swaybar deriving (Read, Show, Eq)
+
+newtype SignalChan = SignalChan { unSignalChan :: Maybe (STM.TMVar SignalType) }
+
+instance Read SignalChan where
+  readsPrec _ _ = fail "SignalChan is not readable from a String"
+
+instance Show SignalChan where
+  show (SignalChan (Just _)) = "SignalChan (Just <tmvar>)"
+  show (SignalChan Nothing) = "SignalChan Nothing"

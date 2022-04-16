@@ -1,6 +1,6 @@
 name:               xmobar
-version:            0.40
-homepage:           http://xmobar.org
+version:            0.43
+homepage:           https://github.com/jaor/xmobar
 synopsis:           A Minimalistic Text Based Status Bar
 description: 	    Xmobar is a minimalistic text based status bar.
                     .
@@ -110,31 +110,38 @@ library
                    Xmobar.Config.Types,
                    Xmobar.Config.Parse,
                    Xmobar.Run.Types,
+                   Xmobar.Run.Timer,
                    Xmobar.Run.Template,
                    Xmobar.Run.Exec,
-                   Xmobar.Run.Command,
                    Xmobar.Run.Runnable
-                   Xmobar.App.EventLoop,
+                   Xmobar.Run.Actions,
+                   Xmobar.Run.Parsers,
+                   Xmobar.Run.Loop,
                    Xmobar.App.Config,
                    Xmobar.App.Main,
                    Xmobar.App.Opts,
                    Xmobar.App.Compile,
-                   Xmobar.App.Timer,
                    Xmobar.System.Utils,
                    Xmobar.System.StatFS,
                    Xmobar.System.Environment,
                    Xmobar.System.Localize,
                    Xmobar.System.Signal,
                    Xmobar.System.Kbd,
-                   Xmobar.X11.Actions,
+                   Xmobar.Text.Ansi,
+                   Xmobar.Text.Loop,
+                   Xmobar.Text.Pango,
+                   Xmobar.Text.Swaybar,
+                   Xmobar.Text.SwaybarClicks,
+                   Xmobar.Text.Output,
                    Xmobar.X11.Events,
-                   Xmobar.X11.Parsers,
+                   Xmobar.X11.Loop,
                    Xmobar.X11.Types,
                    Xmobar.X11.Text,
                    Xmobar.X11.Bitmap,
                    Xmobar.X11.ColorCache,
                    Xmobar.X11.Window,
                    Xmobar.X11.Draw,
+                   Xmobar.Plugins.Command,
                    Xmobar.Plugins.BufferedPipeReader,
                    Xmobar.Plugins.CommandReader,
                    Xmobar.Plugins.Date,
@@ -159,6 +166,9 @@ library
                    Xmobar.Plugins.Monitors.Cpu.Common,
                    Xmobar.Plugins.Monitors.CpuFreq,
                    Xmobar.Plugins.Monitors.Disk,
+                   Xmobar.Plugins.Monitors.Disk.Common,
+                   Xmobar.Plugins.Monitors.Load,
+                   Xmobar.Plugins.Monitors.Load.Common,
                    Xmobar.Plugins.Monitors.Mem,
                    Xmobar.Plugins.Monitors.MultiCoreTemp,
                    Xmobar.Plugins.Monitors.MultiCpu,
@@ -178,24 +188,25 @@ library
     ghc-options: -funbox-strict-fields -Wall -fno-warn-unused-do-bind
 
     build-depends:
-      base >= 4.11.0 && < 4.16,
-      containers,
-      regex-compat,
-      process,
-      old-locale,
-      bytestring >= 0.10.8.2,
-      directory,
-      unix,
-      time,
-      filepath,
-      transformers,
-      X11 >= 1.6.1,
-      mtl >= 2.1 && < 2.3,
-      parsec == 3.1.*,
-      parsec-numbers >= 0.1.0,
-      stm >= 2.3 && < 2.6,
-      extensible-exceptions == 0.1.*,
-      async
+                  X11 >= 1.6.1,
+                  aeson >= 1.4.7.1,
+                  async,
+                  base >= 4.11.0 && < 4.17,
+                  bytestring >= 0.10.8.2,
+                  containers,
+                  directory,
+                  extensible-exceptions == 0.1.*,
+                  filepath,
+                  mtl >= 2.1 && < 2.3,
+                  old-locale,
+                  parsec == 3.1.*,
+                  parsec-numbers >= 0.1.0,
+                  process,
+                  regex-compat,
+                  stm >= 2.3 && < 2.6,
+                  time,
+                  transformers,
+                  unix
 
     if impl(ghc < 8.0.2)
        -- Disable building with GHC before 8.0.2.
@@ -297,9 +308,12 @@ library
        -- enables freebsd specific code
        extra-libraries: procstat
                       , kvm
+                      , geom
        build-depends: bsd-sysctl
        other-modules: Xmobar.Plugins.Monitors.Batt.FreeBSD,
                       Xmobar.Plugins.Monitors.Cpu.FreeBSD,
+                      Xmobar.Plugins.Monitors.Disk.FreeBSD,
+                      Xmobar.Plugins.Monitors.Load.FreeBSD,
                       Xmobar.Plugins.Monitors.Mem.FreeBSD,
                       Xmobar.Plugins.Monitors.Net.FreeBSD,
                       Xmobar.Plugins.Monitors.Swap.FreeBSD,
@@ -308,6 +322,8 @@ library
     else
        other-modules: Xmobar.Plugins.Monitors.Batt.Linux,
                       Xmobar.Plugins.Monitors.Cpu.Linux,
+                      Xmobar.Plugins.Monitors.Disk.Linux,
+                      Xmobar.Plugins.Monitors.Load.Linux,
                       Xmobar.Plugins.Monitors.Mem.Linux,
                       Xmobar.Plugins.Monitors.Net.Linux,
                       Xmobar.Plugins.Monitors.Swap.Linux,
@@ -377,7 +393,7 @@ test-suite XmobarTest
                  Xmobar.Plugins.Monitors.CpuSpec
                  Xmobar.Plugins.Monitors.Common.Run
                  Xmobar.Run.Exec
-                 Xmobar.App.Timer
+                 Xmobar.Run.Timer
                  Xmobar.System.Signal
 
   if flag(with_alsa) || flag(all_extensions)

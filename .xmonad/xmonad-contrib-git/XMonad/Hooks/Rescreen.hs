@@ -13,9 +13,9 @@
 module XMonad.Hooks.Rescreen (
     -- * Usage
     -- $usage
-    RescreenConfig(..),
     addAfterRescreenHook,
     addRandrChangeHook,
+    RescreenConfig(..),
     rescreenHook,
     ) where
 
@@ -28,29 +28,32 @@ import qualified XMonad.Util.ExtensibleConf as XC
 -- This module provides a replacement for the screen configuration change
 -- handling in core that enables attaching custom hooks to screen (xrandr)
 -- configuration change events. These can be used to restart/reposition status
--- bars or systrays automatically after xrandr, as well as to actually invoke
--- xrandr or autorandr when an output is (dis)connected.
+-- bars or systrays automatically after xrandr
+-- ('XMonad.Hooks.StatusBar.dynamicSBs' uses this module internally), as well
+-- as to actually invoke xrandr or autorandr when an output is (dis)connected.
 --
--- You can use it by including the following in your @~\/.xmonad\/xmonad.hs@:
+-- To use this, include the following in your @~\/.xmonad\/xmonad.hs@:
 --
--- > import XMonad.Hooks.RescreenHook
+-- > import XMonad.Hooks.Rescreen
 --
--- defining your custom hooks:
+-- define your custom hooks:
 --
 -- > myAfterRescreenHook :: X ()
--- > myAfterRescreenHook = …
+-- > myAfterRescreenHook = spawn "fbsetroot -solid red"
 --
 -- > myRandrChangeHook :: X ()
--- > myRandrChangeHook = …
+-- > myRandrChangeHook = spawn "autorandr --change"
 --
--- > rescreenCfg = def{
--- >     afterRescreenHook = myAfterRescreenHook,
--- >     randrChangeHook = myRandrChangeHook
--- > }
+-- and hook them into your 'xmonad' config:
 --
--- and adding 'rescreenHook' to your 'xmonad' config:
+-- > main = xmonad $ …
+-- >               . addAfterRescreenHook myAfterRescreenHook
+-- >               . addRandrChangeHook myRandrChangeHook
+-- >               . …
+-- >               $ def{…}
 --
--- > main = xmonad $ … . rescreenHook rescreenCfg . … $ def{…}
+-- See documentation of 'rescreenHook' for details about when these hooks are
+-- called.
 
 -- | Hook configuration for 'rescreenHook'.
 data RescreenConfig = RescreenConfig
@@ -95,11 +98,11 @@ rescreenHook = XC.once $ \c -> c
 
 -- | Shortcut for 'rescreenHook'.
 addAfterRescreenHook :: X () -> XConfig l -> XConfig l
-addAfterRescreenHook h = rescreenHook def{ afterRescreenHook = h }
+addAfterRescreenHook h = rescreenHook def{ afterRescreenHook = userCodeDef () h }
 
 -- | Shortcut for 'rescreenHook'.
 addRandrChangeHook :: X () -> XConfig l -> XConfig l
-addRandrChangeHook h = rescreenHook def{ randrChangeHook = h }
+addRandrChangeHook h = rescreenHook def{ randrChangeHook = userCodeDef () h }
 
 -- | Startup hook to listen for @RRScreenChangeNotify@ events.
 rescreenStartupHook :: X ()

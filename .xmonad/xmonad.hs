@@ -206,7 +206,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   ]
 
 main = do
-  xmproc <- spawnPipe "$HOME/.local/bin/xmobar ~/.xmonad/xmobar.hs"
+  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
   xmonad $ docks $ def {
   terminal             = myTerminal,
   focusFollowsMouse    = myFocusFollowsMouse,
