@@ -27,7 +27,7 @@ myBorderWidth        = 1
 myFocusFollowsMouse  = True
 myClickJustFocuses   = True
 myNormalBorderColor  = "#B3AFC2"
-myFocusedBorderColor = "#FF0000"
+myFocusedBorderColor = "#000000"
 windowCount          = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 myWorkspaces = 
