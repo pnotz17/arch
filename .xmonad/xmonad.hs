@@ -8,6 +8,7 @@ import XMonad.Hooks.SetWMName
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Util.Cursor
+import XMonad.Hooks.WindowSwallowing
 import XMonad.Hooks.FadeInactive
 import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
@@ -220,5 +221,6 @@ main = do
   layoutHook           = myLayout,
   manageHook           = myManageHook,
   startupHook          = myStartupHook, 
-  logHook              = myLogHook xmproc <+> fadeInactiveLogHook 0.8
+  logHook              = myLogHook xmproc <+> fadeInactiveLogHook 0.8,
+  handleEventHook      = swallowEventHook (className =? "st-256color") (return True)
   }
