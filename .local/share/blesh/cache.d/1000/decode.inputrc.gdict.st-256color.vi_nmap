@@ -1,4 +1,0 @@
-ble-decode-key/bind 'vi_nmap' '1114133' 'ble/widget/history-search-backward empty=emulate-readline'
-ble-decode-key/bind 'vi_nmap' '1114136' 'ble/widget/history-search-forward empty=emulate-readline'
-ble-decode-key/bind 'vi_nmap' '67108959' 'ble/widget/vi_nmap/undo'
-ble-decode-key/bind 'vi_nmap' '117' 'ble/widget/vi_nmap/undo'
