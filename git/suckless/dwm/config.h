@@ -1,12 +1,12 @@
-static const char *fonts[]            ={"DaddyTimeMono Nerd Font:style=Book:size=10","EmojiOne:style=Regular:size=10:antialias=true:autohint=true",};
+static const char *fonts[]            ={"DaddyTimeMono Nerd Font:style=Book:size=11","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
 static const char normbgcolor[]       = "#121213";	/* bar backround color */
 static const char normfgcolor[]       = "#C0C0C0";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#000000";	/* highlighted tag // tasklist // focused window background color*/
-static const char selfgcolor[] 	      = "#FFFFFF";	/* focused tag and tasklist foreground color*/
+static const char selfgcolor[] 	      = "#787878";	/* focused tag and tasklist foreground color*/
 static const char unselbordercolor[]  = "#000000";	/* unfocused window border color*/
-static const char selbordercolor[]    = "#B3AFC2";	/* focused window border color*/
+static const char selbordercolor[]    = "#A52A2A";	/* focused window border color*/
 static const unsigned int borderpx    = 1;              /* border pixel of windows */
-static const unsigned int gappx       = 31;             /* gaps between windows */
+static const unsigned int gappx       = 5;             /* gaps between windows */
 static const unsigned int snap        = 33;             /* snap pixel */
 static const int showbar              = 1;              /* 0 means no bar */
 static const int topbar               = 1;              /* 0 means bottom bar */
@@ -22,8 +22,9 @@ static const unsigned int alphas[][3] = {
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
-static const char *tags[] = {"<1>","<2>","<3>","<4>","<5>","<6>","<7>","<8>","<9>"};
+static const char *tags[] = {"{1}","{2}","{3}","{4}","{5}","{6}","{7}","{8}","{9}"};
 //static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
+//static const char *tags[] = {"<1>","<2>","<3>","<4>","<5>","<6>","<7>","<8>","<9>"};
 
 static const Rule rules[] = {
 	{ "mpv",      NULL,       NULL,       0,            1,           -1 },

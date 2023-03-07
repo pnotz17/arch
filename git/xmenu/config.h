@@ -1,18 +1,17 @@
 static struct Config config = {
-	/* font, separate different fonts with comma */
-	.font ="Sans:style=Regular:size=7:antialias=true:autohint=true",
+	.font = "Sans:size=9",
 
 	/* colors */
-	.background_color = "#010101",
-	.foreground_color = "#666666",
+	.background_color = "#060606",
+	.foreground_color = "#A1A1A1",
 	.selbackground_color = "#121213",
 	.selforeground_color = "#FFFFFF",
 	.separator_color = "#CDC7C2",
 	.border_color = "#E6E6E6",
 
-	/* sizes in pixels */
-	.width_pixels = 105,        /* minimum width of a menu */
-	.height_pixels = 28,        /* height of a single menu item */
+/* sizes in pixels */
+	.width_pixels = 130,        /* minimum width of a menu */
+	.height_pixels = 25,        /* height of a single menu item */
 	.border_pixels = 0,         /* menu border */
 	.separator_pixels = 3,      /* space around separator */
 	.gap_pixels = 0,            /* gap between menus */

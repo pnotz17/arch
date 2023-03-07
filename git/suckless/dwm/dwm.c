@@ -245,9 +245,6 @@ static void bstack(Monitor *m);
 static void centeredmaster(Monitor *m);
 static void centeredfloatingmaster(Monitor *m);
 
-
-
-
 /* variables */
 static const char broken[] = "broken";
 static char stext[1024];
@@ -888,7 +885,7 @@ drawbar(Monitor *m)
 			drw_rect(drw, x, 0, w, bh, 1, 1);
 		}
 	}
-	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
+	drw_map(drw , m->barwin, 0, 0, m->ww, bh);
 }
 
 void
