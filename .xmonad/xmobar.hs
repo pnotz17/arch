@@ -1,5 +1,5 @@
 Config { 
-font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinting=true",additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
+font = "xft:RobotoMono Nerd Font Mono:style=Regular:pixelsize=13:antialias=true:hinting=true",additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
@@ -12,7 +12,7 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
        , commands = [
               Run UnsafeStdinReader
             , Run Uptime ["-t","<icon=clock.xpm/> <days>:<hours>"] 24000
-            , Run Network "lo" ["--template", "<icon=netup.xpm/> <tx>kB | <icon=netdown.xpm/> <rx>kB", "-L","1000","-H","5000", "--low", "gray", "--normal","green","--high","red"] 7
+            , Run Network "eth0" ["--template", "<icon=netup.xpm/> <tx>kB | <icon=netdown.xpm/> <rx>kB", "-L","1000","-H","5000", "--low", "gray", "--normal","green","--high","red"] 7
             , Run DiskU [("/","<icon=hdd.xpm/> <free>")] [] 21
             , Run CoreTemp ["-t","<icon=temp.xpm/> <core0>C | <icon=temp.xpm/> <core1>C","-L", "40", "-H", "60","-l", "#b3afc2", "-n", "#b3afc2", "-h", "red"] 3     
             , Run Cpu ["-t","<icon=cpu.xpm/> <total>%","-H","50","--normal","green","--high","red"] 7
@@ -28,7 +28,7 @@ font = "xft:UbuntuMono Nerd Font:style=Regular:pixelsize=13:antialias=true:hinti
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %lo% | %disku% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %EDDW% | %date% |"}
+       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %eth0% | %disku% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %EDDW% | %date% |"}
 
 
 
