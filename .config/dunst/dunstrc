@@ -1,13 +1,15 @@
 [global]
     monitor = 0
-    follow = keyboard
-    width = 370
-    height = 350
-    offset = 0x19
-    padding = 2
-    horizontal_padding = 2
-    transparency = 21
-    font = Monospace 11
+    width = 300
+    height = 300
+    offset = 10x50
+    padding = 8
+    horizontal_padding = 8
+    frame_width = 1
+    frame_color = "#AAAAAA"
+    alignment = center
+    transparency = 0
+    font = FreeMono 12
     format = "<b>%s</b>\n%b"
 
 [urgency_low]
@@ -24,4 +26,4 @@
     background = "#FF0000"
     foreground = "#000000"
     frame_color = "#FF0000"
-    timeout = 10
+    timeout = 13
