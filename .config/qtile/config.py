@@ -153,7 +153,7 @@ for i in range(len(groups)):
 colors = {
     '0': '000000',
     '1': 'FFFFFF',
-    '2': 'B5B5B5',
+    '2': '787878',
     '3': 'FF0000',
     '4': '121212',
     '5': 'B3AFC2',
@@ -173,7 +173,7 @@ layouts = [
 	layout.Tile		 (**layout_theme),
 	layout.RatioTile (**layout_theme),
 	layout.Matrix    (**layout_theme),
-	layout.TreeTab   (font="Mono", 
+	layout.TreeTab   (font="Ubuntu Nerd Font", 
 					  fontsize=13, 
 					  panel_width=175, 
 					  bg_color="#1c1b1c", 
@@ -189,7 +189,7 @@ layouts = [
 
 widget_defaults = dict(
 	font     ='Ubuntu Nerd Font',
-	fontsize =13,
+	fontsize =15,
 	padding  =4.75,
 	)
 extension_defaults = widget_defaults.copy()
@@ -203,7 +203,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt='|',
+				fmt='::',
 				foreground=colors['2'],
 				),
 				
@@ -215,7 +215,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt='|',
+				fmt='::',
 				foreground=colors['2'],
 				),
 				
@@ -225,7 +225,7 @@ screens = [
                 ),
 	
 				widget.TextBox(
-				fmt='|',
+				fmt='::',
 				foreground=colors['2'],
 				),
 				
@@ -240,7 +240,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt=' | ',
+				fmt=' :: ',
 				foreground=colors['2'],
 				),
 				
@@ -251,7 +251,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt=' | ',
+				fmt=' :: ',
 				foreground=colors['2'],
 				),
 				
@@ -262,7 +262,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt=' | ',
+				fmt=' :: ',
 				foreground=colors['2'],
 				),
 				
@@ -273,7 +273,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt=' | ',
+				fmt=' :: ',
 				foreground=colors['2'],
 				),
 				
@@ -284,7 +284,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt=' | ',
+				fmt=' :: ',
 				foreground=colors['2'],
 				),
 				
@@ -295,7 +295,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt=' | ',
+				fmt=' :: ',
 				foreground=colors['2'],
 				),
 				
@@ -306,7 +306,7 @@ screens = [
 				),
 				
 				widget.TextBox(
-				fmt=' | ',
+				fmt=' :: ',
 				foreground=colors['2'],
 				),
 				
@@ -314,7 +314,7 @@ screens = [
 				padding=5,
 				),
 				],
-			20,
+			21,
 		background=colors['0'],
 	opacity=0.90),),
 ]
