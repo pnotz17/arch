@@ -4,7 +4,7 @@
 #xrandr --output VGA1 --mode 1408x792_60.00 --scale-from 1920x1080 &
 xrandr -s 1920x1080i &
 xrdb -merge ~/.Xresources
-xset r rate 400 100
+xset r rate 250 60
 
 # dbus
 if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
@@ -16,7 +16,7 @@ fi
 /usr/local/bin/xclickroot -r ~/git/xmenu/xmenu.sh &
 /usr/bin/feh --bg-fill ~/wallpaper.jpg &
 /usr/bin/dunst ~/.config/dunst/dunstrc &
-~/.local/bin/bar/awesomebar.sh &
+#~/.local/bin/bar/dwm.sh &
 
 # dwm start loop
 while true; do
@@ -24,4 +24,3 @@ while true; do
 done
 #exec xmonad
 #exec qtile start > /tmp/.start_qtile; xinit /tmp/.start_qtile -- :2
-#exec awesome
