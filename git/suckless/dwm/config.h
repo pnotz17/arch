@@ -1,10 +1,10 @@
 static const char *fonts[]            ={"DaddyTimeMono Nerd Font:style=Book:size=11","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
-static const char normbgcolor[]       = "#131313";	/* bar backround color */
-static const char normfgcolor[]       = "#D6D6D6";	/* bar foreground color on right & left*/
-static const char selbgcolor[] 	      = "#000000";	/* highlighted tag // tasklist // focused window background color*/
-static const char selfgcolor[] 	      = "#BFBFBF";	/* focused tag and tasklist foreground color*/
-static const char unselbordercolor[]  = "#000000";	/* unfocused window border color*/
-static const char selbordercolor[]    = "#000000";	/* focused window border color*/
+static const char normbgcolor[]       = "#0a0a0a";	/* bar backround color */
+static const char normfgcolor[]       = "#a5a5a5";	/* bar foreground color on right & left*/
+static const char selbgcolor[] 	      = "#222222";	/* highlighted tag // tasklist // focused window background color*/
+static const char selfgcolor[] 	      = "#ffffff";	/* focused tag and tasklist foreground color*/
+static const char unselbordercolor[]  = "#121213";	/* unfocused window border color*/
+static const char selbordercolor[]    = "#b3afc2";	/* focused window border color*/
 static const unsigned int borderpx    = 1;              /* border pixel of windows */
 static const unsigned int gappx       = 5;             /* gaps between windows */
 static const unsigned int snap        = 33;             /* snap pixel */
@@ -27,6 +27,7 @@ static const unsigned int alphas[][3] = {
 //static const char *tags[] = {"{1}","{2}","{3}","{4}","{5}","{6}","{7}","{8}","{9}"};
 //static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
 //static const char *tags[] = { "fm", "www", "sys", "doc", "mis", "mus", "vid", "eml", "gfx" };
+//static const char *tags[] = {"01","02","03","04","05","06","07","08","09" };
 static const char *tags[] = {":{1}:",":{2}:",":{3}:",":{4}:",":{5}:",":{6}:",":{7}:",":{8}:",":{9}:"};
 
 static const Rule rules[] = {
