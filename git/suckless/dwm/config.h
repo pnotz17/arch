@@ -1,4 +1,4 @@
-static const char *fonts[]            ={"DaddyTimeMono Nerd Font:style=Book:size=11","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
+static const char *fonts[]            ={"DaddyTimeMono Nerd Font:style=Book:size=11::antialias=true:hinting=true","EmojiOne:style=Regular:size=11:antialias=true:autohint=true",};
 static const char normbgcolor[]       = "#0a0a0a";	/* bar backround color */
 static const char normfgcolor[]       = "#a5a5a5";	/* bar foreground color on right & left*/
 static const char selbgcolor[] 	      = "#222222";	/* highlighted tag // tasklist // focused window background color*/
