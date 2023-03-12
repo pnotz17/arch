@@ -1,5 +1,7 @@
 static struct Config config = {
-	.font = "DaddyTimeMono Nerd Font:style=Book:size=10::antialias=true:hinting=true",
+	.font = "Comic Mono:style=Normal:size=9:antialias=true:hinting=true",
+	//.font = "Cantarell:style=Regular:size=9:antialias=true:hinting=true",
+	//.font = "FreeSans:style=Regular:size=9:antialias=true:hinting=true",
 
 	/* colors */
 	.background_color = "#060606",
@@ -10,11 +12,11 @@ static struct Config config = {
 	.border_color = "#E6E6E6",
 
 /* sizes in pixels */
-	.width_pixels = 130,        /* minimum width of a menu */
-	.height_pixels = 25,        /* height of a single menu item */
+	.width_pixels = 91,        /* minimum width of a menu */
+	.height_pixels = 21,        /* height of a single menu item */
 	.border_pixels = 0,         /* menu border */
-	.separator_pixels = 3,      /* space around separator */
-	.gap_pixels = 0,            /* gap between menus */
+	.separator_pixels = 0,      /* space around separator */
+	.gap_pixels = 3,            /* gap between menus */
 
 	/* text alignment, set to LeftAlignment, CenterAlignment or RightAlignment */
 	.alignment = LeftAlignment,

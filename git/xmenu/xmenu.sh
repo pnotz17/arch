@@ -2,7 +2,7 @@
 
 #cat <<EOF | xmenu -r | sh >$HOME/log 2>&1 &
 cat <<EOF | xmenu -r | sh &
-Applications
+Apps
 	spacefm
 	st
 	firefox	firefox	
@@ -11,8 +11,6 @@ Applications
 	vim	st -e vim
 	geany	geany
 	gimp	gimp
-	mutt	st -e mutt
-	transmission	transmission-gtk
 System 
 	look & feel	lxappearance
 	top	st -e top
