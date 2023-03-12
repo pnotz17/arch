@@ -34,7 +34,7 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 };
 
-static const float mfact     = 0.50; 
+static const float mfact     = 0.53; 
 static const int nmaster     = 1;    
 static const int resizehints = 0;   
 
@@ -73,17 +73,16 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("st") },
-	{ MODKEY|ControlMask,           XK_r,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY|ControlMask,           XK_b,      togglebar,      {0} },
+	{ MODKEY,             		XK_Return, spawn,          SHCMD("st") },
+	{ MODKEY,             		XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_comma,  setlayout,      {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -96,6 +95,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_b,	   spawn,	   SHCMD("firefox") },
 	{ MODKEY,			XK_f,	   spawn,	   SHCMD("spacefm") },
 	{ MODKEY,			XK_g,	   spawn,	   SHCMD("geany") },
+	{ MODKEY,           		XK_r,      quit,           {0} },
 	{ Mod1Mask,			XK_f,      spawn, 	   SHCMD("~/.local/bin/dm_fm") },
 	{ Mod1Mask,			XK_e,      spawn, 	   SHCMD("~/.local/bin/dm_ed")},
 	{ Mod1Mask,			XK_p,      spawn,          SHCMD("~/.local/bin/dm_pass") },
