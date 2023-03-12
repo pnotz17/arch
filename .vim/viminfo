@@ -11,6 +11,10 @@
 # hlsearch on (H) or off (h):
 ~h
 # Command Line History (newest to oldest):
+:q!
+|2,0,1678606657,,"q!"
+:wq!
+|2,0,1678605379,,"wq!"
 :q
 |2,0,1678504793,,"q"
 :Pluginstall
@@ -29,124 +33,255 @@
 # Registers:
 
 # File marks:
-'0  1  0  ~/.config/dunst/dunstrc
-|4,48,1,0,1678505296,"~/.config/dunst/dunstrc"
-'1  1  0  ~/.config/mpv/mpv.conf
-|4,49,1,0,1678504979,"~/.config/mpv/mpv.conf"
-'2  3  1  ~/.gitconfig
-|4,50,3,1,1678504355,"~/.gitconfig"
-'3  3  1  ~/.gitconfig
-|4,51,3,1,1678504355,"~/.gitconfig"
+'0  1  0  ~/.local/dmenu/config.h
+|4,48,1,0,1678607056,"~/.local/dmenu/config.h"
+'1  16  30  ~/.xinitrc
+|4,49,16,30,1678606657,"~/.xinitrc"
+'2  1  0  ~/dot/artix/git/suckless/dwm/config.h
+|4,50,1,0,1678605783,"~/dot/artix/git/suckless/dwm/config.h"
+'3  16  50  ~/.xinitrc
+|4,51,16,50,1678605379,"~/.xinitrc"
+'4  1  0  ~/git/xmenu/config.h
+|4,52,1,0,1678605251,"~/git/xmenu/config.h"
+'5  1  0  ~/git/suckless/dwm/config.h
+|4,53,1,0,1678605094,"~/git/suckless/dwm/config.h"
+'6  19  0  ~/.xinitrc
+|4,54,19,0,1678578579,"~/.xinitrc"
+'7  19  0  ~/.xinitrc
+|4,55,19,0,1678578579,"~/.xinitrc"
+'8  19  0  ~/.xinitrc
+|4,56,19,0,1678578579,"~/.xinitrc"
+'9  19  0  ~/.xinitrc
+|4,57,19,0,1678578579,"~/.xinitrc"
 
 # Jumplist (newest first):
--'  1  0  ~/.config/dunst/dunstrc
-|4,39,1,0,1678505296,"~/.config/dunst/dunstrc"
--'  1  0  ~/.config/mpv/mpv.conf
-|4,39,1,0,1678504979,"~/.config/mpv/mpv.conf"
--'  1  0  ~/.config/mpv/mpv.conf
-|4,39,1,0,1678504979,"~/.config/mpv/mpv.conf"
--'  1  0  ~/.config/mpv/mpv.conf
-|4,39,1,0,1678504979,"~/.config/mpv/mpv.conf"
--'  1  0  ~/.config/mpv/mpv.conf
-|4,39,1,0,1678504979,"~/.config/mpv/mpv.conf"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  3  1  ~/.gitconfig
-|4,39,3,1,1678504355,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
--'  1  0  ~/.gitconfig
-|4,39,1,0,1678504295,"~/.gitconfig"
+-'  1  0  ~/.local/dmenu/config.h
+|4,39,1,0,1678607056,"~/.local/dmenu/config.h"
+-'  16  30  ~/.xinitrc
+|4,39,16,30,1678606657,"~/.xinitrc"
+-'  16  30  ~/.xinitrc
+|4,39,16,30,1678606657,"~/.xinitrc"
+-'  1  0  ~/.xinitrc
+|4,39,1,0,1678606639,"~/.xinitrc"
+-'  1  0  ~/.xinitrc
+|4,39,1,0,1678606639,"~/.xinitrc"
+-'  1  0  ~/dot/artix/git/suckless/dwm/config.h
+|4,39,1,0,1678605783,"~/dot/artix/git/suckless/dwm/config.h"
+-'  1  0  ~/dot/artix/git/suckless/dwm/config.h
+|4,39,1,0,1678605783,"~/dot/artix/git/suckless/dwm/config.h"
+-'  1  0  ~/dot/artix/git/suckless/dwm/config.h
+|4,39,1,0,1678605783,"~/dot/artix/git/suckless/dwm/config.h"
+-'  1  0  ~/dot/artix/git/suckless/dwm/config.h
+|4,39,1,0,1678605783,"~/dot/artix/git/suckless/dwm/config.h"
+-'  16  50  ~/.xinitrc
+|4,39,16,50,1678605379,"~/.xinitrc"
+-'  16  50  ~/.xinitrc
+|4,39,16,50,1678605379,"~/.xinitrc"
+-'  16  50  ~/.xinitrc
+|4,39,16,50,1678605379,"~/.xinitrc"
+-'  16  50  ~/.xinitrc
+|4,39,16,50,1678605379,"~/.xinitrc"
+-'  1  0  ~/.xinitrc
+|4,39,1,0,1678605297,"~/.xinitrc"
+-'  1  0  ~/.xinitrc
+|4,39,1,0,1678605297,"~/.xinitrc"
+-'  1  0  ~/.xinitrc
+|4,39,1,0,1678605297,"~/.xinitrc"
+-'  1  0  ~/.xinitrc
+|4,39,1,0,1678605297,"~/.xinitrc"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/xmenu/config.h
+|4,39,1,0,1678605251,"~/git/xmenu/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  1  0  ~/git/suckless/dwm/config.h
+|4,39,1,0,1678605094,"~/git/suckless/dwm/config.h"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  19  0  ~/.xinitrc
+|4,39,19,0,1678578579,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
+-'  26  0  ~/.xinitrc
+|4,39,26,0,1678578567,"~/.xinitrc"
 
 # History of marks within files (newest to oldest):
+
+> ~/.local/dmenu/config.h
+	*	1678607002	0
+	"	1	0
+
+> ~/.xinitrc
+	*	1678606654	0
+	"	16	30
+	^	16	31
+	.	16	30
+	+	26	0
+	+	19	0
+	+	16	30
+
+> ~/dot/artix/git/suckless/dwm/config.h
+	*	1678605780	0
+	"	1	0
+
+> ~/git/xmenu/config.h
+	*	1678605247	0
+	"	1	0
+
+> ~/git/suckless/dwm/config.h
+	*	1678605091	0
+	"	1	0
 
 > ~/.config/dunst/dunstrc
 	*	1678505292	0
