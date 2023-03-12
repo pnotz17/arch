@@ -1,6 +1,5 @@
 static struct Config config = {
-	.font = "Comic Mono:style=Normal:size=9:antialias=true:hinting=true",
-	//.font = "Cantarell:style=Regular:size=9:antialias=true:hinting=true",
+	.font = "Cantarell:style=Regular:size=9:antialias=true:hinting=true",
 	//.font = "FreeSans:style=Regular:size=9:antialias=true:hinting=true",
 
 	/* colors */
