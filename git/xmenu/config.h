@@ -1,5 +1,5 @@
 static struct Config config = {
-	.font = "Sans:size=9",
+	.font = "DaddyTimeMono Nerd Font:style=Book:size=10::antialias=true:hinting=true",
 
 	/* colors */
 	.background_color = "#060606",
