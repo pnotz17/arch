@@ -9,7 +9,7 @@
 -- Stability   :  unstable
 -- Portability :  unportable
 --
--- 'XMonad.Util.Loggers' for 'XMonad.Util.NamedScratchpad'
+-- "XMonad.Util.Loggers" for "XMonad.Util.NamedScratchpad"
 --
 -----------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ import qualified XMonad.StackSet as W (allWindows)
 -- (This is difficult to change; "minimizing" by moving it back to 'NSP'
 -- is even harder.)
 -- I hide the 'NamedScratchpad's from the taskbar and use this to track
--- them instead (see 'XMonad.Util.NoTaskbar').
+-- them instead (see "XMonad.Util.NoTaskbar").
 
 -- The extension data for tracking NSP windows
 newtype NSPTrack = NSPTrack [Maybe Window]
@@ -59,7 +59,7 @@ instance ExtensionClass NSPTrack where
 
 -- | 'startupHook' to initialize scratchpad activation tracking
 --
--- > , startupHook = ... <+> nspTrackStartup scratchpads
+-- > , startupHook = ... <> nspTrackStartup scratchpads
 --
 -- If you kickstart the 'logHook', do it /after/ 'nspTrackStartup'!
 nspTrackStartup :: [NamedScratchpad] -> X ()
@@ -83,7 +83,7 @@ scratchpadWindow ns = foldM sp' Nothing (zip [0..] ns)
 
 -- | 'handleEventHook' to track scratchpad activation/deactivation
 --
--- > , handleEventHook = ... <+> nspTrackHook scratchpads
+-- > , handleEventHook = ... <> nspTrackHook scratchpads
 nspTrackHook :: [NamedScratchpad] -> Event -> X All
 nspTrackHook _ DestroyWindowEvent{ev_window = w} = do
   XS.modify $ \(NSPTrack ws) -> NSPTrack $ map (\sw -> if sw == Just w then Nothing else sw) ws

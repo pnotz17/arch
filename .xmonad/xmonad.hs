@@ -33,15 +33,15 @@ windowCount          = gets $ Just . show . length . W.integrate' . W.stack . W.
 
 myWorkspaces = 
   clickable $ 
-  [" 01 ", 
-   " 02 ", 
-   " 03 ", 
-   " 04 ", 
-   " 05 ", 
-   " 06 ", 
-   " 07 ", 
-   " 08 ", 
-   " 09 " ]
+  [":01:", 
+   ":02:", 
+   ":03:", 
+   ":04:", 
+   ":05:", 
+   ":06:", 
+   ":07:", 
+   ":08:", 
+   ":09:" ]
  -- [" <icon=terminal.xpm/> ", 
   -- " <icon=folder.xpm/> ", 
   -- " <icon=browser.xpm/> ", 

@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 -- |
 -- Module: Xmobar.Types
--- Copyright: (c) 2018 Jose Antonio Ortega Ruiz
+-- Copyright: (c) 2018, 2022 Jose Antonio Ortega Ruiz
 -- License: BSD3-style (see LICENSE)
 --
 -- Maintainer: jao@gnu.org
@@ -15,27 +15,27 @@
 ------------------------------------------------------------------------------
 
 
-module Xmobar.X11.Types (X, XConf (..)) where
+module Xmobar.X11.Types where
 
-import Graphics.X11.Xlib
-import Control.Monad.Reader
-import Data.Map
+import qualified Graphics.X11.Xlib as X11
 import qualified Data.List.NonEmpty as NE
 
-import Xmobar.X11.Bitmap
-import Xmobar.X11.Text
+import Control.Monad.Reader (ReaderT)
+
 import Xmobar.Config.Types
+
+import Xmobar.X11.Bitmap (BitmapCache)
+import Xmobar.X11.Text (XFont)
 
 -- | The X type is a ReaderT
 type X = ReaderT XConf IO
 
 -- | The ReaderT inner component
 data XConf =
-    XConf { display   :: Display
-          , rect      :: Rectangle
-          , window    :: Window
-          , fontListS :: NE.NonEmpty XFont
-          , verticalOffsets :: NE.NonEmpty Int
-          , iconS     :: Map FilePath Bitmap
+    XConf { display   :: X11.Display
+          , rect      :: X11.Rectangle
+          , window    :: X11.Window
+          , fontList  :: NE.NonEmpty XFont
+          , iconCache :: BitmapCache
           , config    :: Config
           }

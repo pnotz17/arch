@@ -1,4 +1,10 @@
-{-# LANGUAGE FlexibleContexts, FlexibleInstances, MultiParamTypeClasses, PatternGuards, LambdaCase #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternGuards #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
 -- --------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Operations
@@ -27,10 +33,11 @@ module XMonad.Operations (
     -- * Keyboard and Mouse
     cleanMask, extraModifiers,
     mouseDrag, mouseMoveWindow, mouseResizeWindow,
-    setButtonGrab, setFocusX,
+    setButtonGrab, setFocusX, cacheNumlockMask, mkGrabs,
 
     -- * Messages
     sendMessage, broadcastMessage, sendMessageWithNoRefresh,
+    sendRestart, sendReplace,
 
     -- * Save and Restore State
     StateFile (..), writeStateToFile, readStateFile, restart,
@@ -57,15 +64,17 @@ import qualified XMonad.StackSet as W
 import Data.Maybe
 import Data.Monoid          (Endo(..),Any(..))
 import Data.List            (nub, (\\), find)
-import Data.Bits            ((.|.), (.&.), complement, testBit)
+import Data.Bits            ((.|.), (.&.), complement, setBit, testBit)
 import Data.Function        (on)
 import Data.Ratio
 import qualified Data.Map as M
 import qualified Data.Set as S
 
 import Control.Arrow (second)
+import Control.Monad.Fix (fix)
 import Control.Monad.Reader
 import Control.Monad.State
+import Control.Monad (forM, forM_, guard, join, unless, void, when)
 import qualified Control.Exception as C
 
 import System.IO
@@ -136,7 +145,7 @@ killWindow w = withDisplay $ \d -> do
                 setEventType ev clientMessage
                 setClientMessageEvent ev w wmprot 32 wmdelt currentTime
                 sendEvent d w False noEventMask ev
-        else killClient d w >> return ()
+        else void (killClient d w)
 
 -- | Kill the currently focused client.
 kill :: X ()
@@ -187,7 +196,7 @@ windows f = do
 
         let m   = W.floating ws
             flt = [(fw, scaleRationalRect viewrect r)
-                    | fw <- filter (flip M.member m) (W.index this)
+                    | fw <- filter (`M.member` m) (W.index this)
                     , Just r <- [M.lookup fw m]]
             vs = flt ++ rs
 
@@ -213,7 +222,7 @@ windows f = do
     -- all windows that are no longer in the windowset are marked as
     -- withdrawn, it is important to do this after the above, otherwise 'hide'
     -- will overwrite withdrawnState with iconicState
-    mapM_ (flip setWMState withdrawnState) (W.allWindows old \\ W.allWindows ws)
+    mapM_ (`setWMState` withdrawnState) (W.allWindows old \\ W.allWindows ws)
 
     isMouseFocused <- asks mouseFocused
     unless isMouseFocused $ clearEvents enterWindowMask
@@ -229,8 +238,8 @@ windowBracket :: (a -> Bool) -> X a -> X a
 windowBracket p action = withWindowSet $ \old -> do
   a <- action
   when (p a) . withWindowSet $ \new -> do
-    modifyWindowSet $ \_ -> old
-    windows         $ \_ -> new
+    modifyWindowSet $ const old
+    windows         $ const new
   return a
 
 -- | Perform an @X@ action. If it returns @Any True@, unwind the
@@ -417,7 +426,7 @@ setFocusX w = withWindowSet $ \ws -> do
     currevt <- asks currentEvent
     let inputHintSet = wmh_flags hints `testBit` inputHintBit
 
-    when ((inputHintSet && wmh_input hints) || (not inputHintSet)) $
+    when (inputHintSet && wmh_input hints || not inputHintSet) $
       io $ do setInputFocus dpy w revertToPointerRoot 0
     when (wmtf `elem` protocols) $
       io $ allocaXEvent $ \ev -> do
@@ -425,11 +434,45 @@ setFocusX w = withWindowSet $ \ws -> do
         setClientMessageEvent ev w wmprot 32 wmtf $ maybe currentTime event_time currevt
         sendEvent dpy w False noEventMask ev
         where event_time ev =
-                if (ev_event_type ev) `elem` timedEvents then
+                if ev_event_type ev `elem` timedEvents then
                   ev_time ev
                 else
                   currentTime
               timedEvents = [ keyPress, keyRelease, buttonPress, buttonRelease, enterNotify, leaveNotify, selectionRequest ]
+
+cacheNumlockMask :: X ()
+cacheNumlockMask = do
+    dpy <- asks display
+    ms <- io $ getModifierMapping dpy
+    xs <- sequence [ do ks <- io $ keycodeToKeysym dpy kc 0
+                        if ks == xK_Num_Lock
+                            then return (setBit 0 (fromIntegral m))
+                            else return (0 :: KeyMask)
+                   | (m, kcs) <- ms, kc <- kcs, kc /= 0
+                   ]
+    modify (\s -> s { numberlockMask = foldr (.|.) 0 xs })
+
+-- | Given a list of keybindings, turn the given 'KeySym's into actual
+-- 'KeyCode's and prepare them for grabbing.
+mkGrabs :: [(KeyMask, KeySym)] -> X [(KeyMask, KeyCode)]
+mkGrabs ks = withDisplay $ \dpy -> do
+    let (minCode, maxCode) = displayKeycodes dpy
+        allCodes = [fromIntegral minCode .. fromIntegral maxCode]
+    -- build a map from keysyms to lists of keysyms (doing what
+    -- XGetKeyboardMapping would do if the X11 package bound it)
+    syms <- forM allCodes $ \code -> io (keycodeToKeysym dpy code 0)
+    let -- keycodeToKeysym returns noSymbol for all unbound keycodes,
+        -- and we don't want to grab those whenever someone accidentally
+        -- uses def :: KeySym
+        keysymMap = M.delete noSymbol $
+            M.fromListWith (++) (zip syms [[code] | code <- allCodes])
+        keysymToKeycodes sym = M.findWithDefault [] sym keysymMap
+    extraMods <- extraModifiers
+    pure [ (mask .|. extraMod, keycode)
+         | (mask, sym) <- ks
+         , keycode     <- keysymToKeycodes sym
+         , extraMod    <- extraMods
+         ]
 
 ------------------------------------------------------------------------
 -- Message handling
@@ -438,7 +481,7 @@ setFocusX w = withWindowSet $ \ws -> do
 -- layout the windows, in which case changes are handled through a refresh.
 sendMessage :: Message a => a -> X ()
 sendMessage a = windowBracket_ $ do
-    w <- W.workspace . W.current <$> gets windowset
+    w <- gets $ W.workspace . W.current . windowset
     ml' <- handleMessage (W.layout w) (SomeMessage a) `catchX` return Nothing
     whenJust ml' $ \l' ->
         modifyWindowSet $ \ws -> ws { W.current = (W.current ws)
@@ -473,9 +516,62 @@ updateLayout i ml = whenJust ml $ \l ->
 -- | Set the layout of the currently viewed workspace.
 setLayout :: Layout Window -> X ()
 setLayout l = do
-    ss@(W.StackSet { W.current = c@(W.Screen { W.workspace = ws })}) <- gets windowset
+    ss@W.StackSet{ W.current = c@W.Screen{ W.workspace = ws }} <- gets windowset
     handleMessage (W.layout ws) (SomeMessage ReleaseResources)
-    windows $ const $ ss {W.current = c { W.workspace = ws { W.layout = l } } }
+    windows $ const $ ss{ W.current = c{ W.workspace = ws{ W.layout = l } } }
+
+-- | Signal xmonad to restart itself.
+sendRestart :: IO ()
+sendRestart = do
+    dpy <- openDisplay ""
+    rw  <- rootWindow dpy $ defaultScreen dpy
+    xmonad_restart <- internAtom dpy "XMONAD_RESTART" False
+    allocaXEvent $ \e -> do
+        setEventType e clientMessage
+        setClientMessageEvent' e rw xmonad_restart 32 []
+        sendEvent dpy rw False structureNotifyMask e
+    sync dpy False
+
+-- | Signal compliant window managers to exit.
+sendReplace :: IO ()
+sendReplace = do
+    dpy <- openDisplay ""
+    let dflt = defaultScreen dpy
+    rootw <- rootWindow dpy dflt
+    replace dpy dflt rootw
+
+-- | Signal compliant window managers to exit.
+replace :: Display -> ScreenNumber -> Window -> IO ()
+replace dpy dflt rootw = do
+    -- check for other WM
+    wmSnAtom <- internAtom dpy ("WM_S" ++ show dflt) False
+    currentWmSnOwner <- xGetSelectionOwner dpy wmSnAtom
+    when (currentWmSnOwner /= 0) $ do
+        -- prepare to receive destroyNotify for old WM
+        selectInput dpy currentWmSnOwner structureNotifyMask
+
+        -- create off-screen window
+        netWmSnOwner <- allocaSetWindowAttributes $ \attributes -> do
+            set_override_redirect attributes True
+            set_event_mask attributes propertyChangeMask
+            let screen = defaultScreenOfDisplay dpy
+                visual = defaultVisualOfScreen screen
+                attrmask = cWOverrideRedirect .|. cWEventMask
+            createWindow dpy rootw (-100) (-100) 1 1 0 copyFromParent copyFromParent visual attrmask attributes
+
+        -- try to acquire wmSnAtom, this should signal the old WM to terminate
+        xSetSelectionOwner dpy wmSnAtom netWmSnOwner currentTime
+
+        -- SKIPPED: check if we acquired the selection
+        -- SKIPPED: send client message indicating that we are now the WM
+
+        -- wait for old WM to go away
+        fix $ \again -> do
+            evt <- allocaXEvent $ \event -> do
+                windowEvent dpy currentWmSnOwner structureNotifyMask event
+                get_EventType event
+
+            when (evt /= destroyNotify) again
 
 ------------------------------------------------------------------------
 -- Utilities
@@ -514,12 +610,12 @@ cleanMask km = do
 
 -- | Set the 'Pixel' alpha value to 255.
 setPixelSolid :: Pixel -> Pixel
-setPixelSolid p = (p .|. 0xff000000)
+setPixelSolid p = p .|. 0xff000000
 
 -- | Get the 'Pixel' value for a named color.
 initColor :: Display -> String -> IO (Maybe Pixel)
 initColor dpy c = C.handle (\(C.SomeException _) -> return Nothing) $
-    (Just . setPixelSolid . color_pixel . fst) <$> allocNamedColor dpy colormap c
+    Just . setPixelSolid . color_pixel . fst <$> allocNamedColor dpy colormap c
     where colormap = defaultColormap dpy (defaultScreen dpy)
 
 ------------------------------------------------------------------------
@@ -539,7 +635,7 @@ writeStateToFile = do
         maybeShow _ = Nothing
 
         wsData   = W.mapLayout show . windowset
-        extState = catMaybes . map maybeShow . M.toList . extensibleState
+        extState = mapMaybe maybeShow . M.toList . extensibleState
 
     path <- asks $ stateFileName . directories
     stateData <- gets (\s -> StateFile (wsData s) (extState s))
@@ -602,11 +698,10 @@ floatLocation w =
     catchX go $ do
       -- Fallback solution if `go' fails.  Which it might, since it
       -- calls `getWindowAttributes'.
-      sc <- W.current <$> gets windowset
+      sc <- gets $ W.current . windowset
       return (W.screen sc, W.RationalRect 0 0 1 1)
 
-  where fi x = fromIntegral x
-        go = withDisplay $ \d -> do
+  where go = withDisplay $ \d -> do
           ws <- gets windowset
           wa <- io $ getWindowAttributes d w
           let bw = (fromIntegral . wa_border_width) wa
@@ -631,6 +726,9 @@ floatLocation w =
                   else W.RationalRect (0.5 - width/2) (0.5 - height/2) width height
 
           return (W.screen sc, rr)
+
+        fi :: (Integral a, Num b) => a -> b
+        fi = fromIntegral
 
 -- | Given a point, determine the screen (if any) that contains it.
 pointScreen :: Position -> Position
@@ -730,7 +828,7 @@ mkAdjust w = withDisplay $ \d -> liftIO $ do
     sh <- getWMNormalHints d w
     wa <- C.try $ getWindowAttributes d w
     case wa of
-         Left  err -> const (return id) (err :: C.SomeException)
+         Left (_ :: C.SomeException) -> return id
          Right wa' ->
             let bw = fromIntegral $ wa_border_width wa'
             in  return $ applySizeHints bw sh

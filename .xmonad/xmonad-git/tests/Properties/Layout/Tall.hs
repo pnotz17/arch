@@ -11,8 +11,9 @@ import XMonad.Layout
 
 import Graphics.X11.Xlib.Types (Rectangle(..))
 
-import Data.Maybe
+import Control.Applicative
 import Data.List (sort)
+import Data.Maybe
 import Data.Ratio
 
 ------------------------------------------------------------------------
@@ -27,14 +28,30 @@ prop_tile_non_overlap rect windows nmaster = noOverlaps (tile pct rect nmaster w
   where _ = rect :: Rectangle
         pct = 3 % 100
 
+-- with a ratio of 1, no stack windows are drawn of there is at least
+-- one master window around.
+prop_tile_max_ratio = extremeRatio 1 drop
+
+-- with a ratio of 0, no master windows are drawn at all if there are
+-- any stack windows around.
+prop_tile_min_ratio = extremeRatio 0 take
+
+extremeRatio amount getRects rect = do
+    w@(NonNegative windows) <- arbitrary `suchThat` (> NonNegative 0)
+    NonNegative nmaster     <- arbitrary `suchThat` (< w)
+    let tiled = tile amount rect nmaster windows
+    pure $ if   nmaster == 0
+           then prop_tile_non_overlap rect windows nmaster
+           else all ((== 0) . rect_width) $ getRects nmaster tiled
+
 -- splitting horizontally yields sensible results
 prop_split_horizontal (NonNegative n) x =
-      (noOverflows (+) (rect_x x) (rect_width x)) ==>
+      noOverflows (+) (rect_x x) (rect_width x) ==>
         sum (map rect_width xs) == rect_width x
      &&
-        all (== rect_height x) (map rect_height xs)
+        all (\s -> rect_height s == rect_height x) xs
      &&
-        (map rect_x xs) == (sort $ map rect_x xs)
+        map rect_x xs == sort (map rect_x xs)
 
     where
         xs = splitHorizontally n x
@@ -49,13 +66,20 @@ prop_split_vertical (r :: Rational) x =
 
 
 -- pureLayout works.
-prop_purelayout_tall n r1 r2 rect = do
+prop_purelayout_tall n d r rect = do
   x <- (arbitrary :: Gen T) `suchThat` (isJust . peek)
-  let layout = Tall n r1 r2
+  let layout = Tall n d r
       st = fromJust . stack . workspace . current $ x
       ts = pureLayout layout rect st
+      ntotal = length (index x)
   return $
-        length ts == length (index x)
+       (if r == 0 then
+          -- (<=) for Bool is the logical implication
+          (0 <= n && n <= ntotal) <= (length ts == ntotal - n)
+        else if r == 1 then
+          (0 <= n && n <= ntotal) <= (length ts == n)
+        else
+          length ts == ntotal)
       &&
         noOverlaps (map snd ts)
       &&
@@ -72,7 +96,7 @@ prop_shrink_tall (NonNegative n) (Positive delta) (NonNegative frac) =
         -- remaining fraction should shrink
     where
          l1                   = Tall n delta frac
-         Just l2@(Tall n' delta' frac') = l1 `pureMessage` (SomeMessage Shrink)
+         Just l2@(Tall n' delta' frac') = l1 `pureMessage` SomeMessage Shrink
         --  pureMessage :: layout a -> SomeMessage -> Maybe (layout a)
 
 
@@ -93,7 +117,7 @@ prop_expand_tall (NonNegative n)
     where
          frac                 = min 1 (n1 % d1)
          l1                   = Tall n delta frac
-         Just l2@(Tall n' delta' frac') = l1 `pureMessage` (SomeMessage Expand)
+         Just l2@(Tall n' delta' frac') = l1 `pureMessage` SomeMessage Expand
         --  pureMessage :: layout a -> SomeMessage -> Maybe (layout a)
 
 -- what happens when we send an IncMaster message to Tall
@@ -102,7 +126,7 @@ prop_incmaster_tall (NonNegative n) (Positive delta) (NonNegative frac)
        delta == delta'  && frac == frac' && n' == n + k
     where
          l1                   = Tall n delta frac
-         Just l2@(Tall n' delta' frac') = l1 `pureMessage` (SomeMessage (IncMasterN k))
+         Just l2@(Tall n' delta' frac') = l1 `pureMessage` SomeMessage (IncMasterN k)
         --  pureMessage :: layout a -> SomeMessage -> Maybe (layout a)
 
 

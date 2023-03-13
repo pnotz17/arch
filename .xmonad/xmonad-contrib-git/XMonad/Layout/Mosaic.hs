@@ -1,4 +1,8 @@
-{-# LANGUAGE FlexibleInstances, MultiParamTypeClasses, PatternGuards #-}
+{-# LANGUAGE DeriveFoldable #-}
+{-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternGuards #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Layout.Mosaic
@@ -58,9 +62,9 @@ import Control.Arrow(second, first)
 --
 --  > , ((modm, xK_r), sendMessage Reset)
 --
--- For more detailed instructions on editing the layoutHook see:
---
--- "XMonad.Doc.Extending#Editing_the_layout_hook"
+-- For more detailed instructions on editing the layoutHook see
+-- <https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial> and
+-- "XMonad.Doc.Extending#Editing_the_layout_hook".
 
 data Aspect
     = Taller
@@ -111,7 +115,7 @@ instance LayoutClass Mosaic a where
         nextIx (ov,ix,mix)
                 | mix <= 0 || ov = fromIntegral $ nls `div` 2
                 | otherwise = max 0 $ (*fi (pred nls)) $ min 1 $ ix / fi mix
-        rect = rects !! maybe (nls `div` 2) round (nextIx <$> state)
+        rect = rects !! maybe (nls `div` 2) (round . nextIx) state
         state' = fmap (\x@(ov,_,_) -> (ov,nextIx x,pred nls)) state
                     `mplus` Just (True,fromIntegral nls / 2,pred nls)
         ss' = maybe ss (const ss `either` const ssExt) $ zipRemain ss ssExt
@@ -179,16 +183,7 @@ normalize :: Fractional a => [a] -> [a]
 normalize x = let s = sum x in map (/s) x
 
 data Tree a = Branch (Tree a) (Tree a) | Leaf a | Empty
-
-instance Foldable Tree where
-   foldMap _f Empty = mempty
-   foldMap f (Leaf x) = f x
-   foldMap f (Branch l r) = foldMap f l `mappend` foldMap f r
-
-instance Functor Tree where
-   fmap f (Leaf x) = Leaf $ f x
-   fmap f (Branch l r) = Branch (fmap f l) (fmap f r)
-   fmap _ Empty = Empty
+  deriving (Functor, Show, Foldable)
 
 instance Semigroup (Tree a) where
     Empty <> x = x

@@ -16,7 +16,7 @@
 --
 -----------------------------------------------------------------------------
 
-module XMonad.Layout.Named
+module XMonad.Layout.Named {-# DEPRECATED "Use XMonad.Layout.Renamed instead" #-}
     ( -- * Usage
       -- $usage
       named,
@@ -37,9 +37,9 @@ import XMonad.Layout.Renamed
 -- > myLayout = named "real big" Full ||| (nameTail $ named "real big" $ Full) ||| etc..
 -- > main = xmonad def { layoutHook = myLayout }
 --
--- For more detailed instructions on editing the layoutHook see:
---
--- "XMonad.Doc.Extending#Editing_the_layout_hook"
+-- For more detailed instructions on editing the layoutHook see
+-- <https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial> and
+-- "XMonad.Doc.Extending#Editing_the_layout_hook".
 --
 -- Note that this module has been deprecated and may be removed in a future
 -- release, please use "XMonad.Layout.Renamed" instead.

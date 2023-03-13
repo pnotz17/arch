@@ -1,11 +1,12 @@
 Config { 
-font = "xft:RobotoMono Nerd Font Mono:style=Regular:pixelsize=13:antialias=true:hinting=true",additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
+-- font = "xft:RobotoMono Nerd Font Mono:style=Regular:pixelsize=13:antialias=true:hinting=true",additionalFonts = [ "xft:FontAwesome:pixelsize=13" ]
+font = "RobotoMono Nerd Font Mono 9",additionalFonts = [ "FontAwesome 9" ]
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
        , fgColor = "#b3afc2"
        , alpha = 221
-       , position = TopW L 100 23
+       , position = TopW L 100 21
        , allDesktops = True
        , overrideRedirect = False
        , iconRoot = ".xmonad/xpm/"  
@@ -28,7 +29,8 @@ font = "xft:RobotoMono Nerd Font Mono:style=Regular:pixelsize=13:antialias=true:
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %eth0% | %disku% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %EDDW% | %date% |"}
+       , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %eth0% | %disku% | %cpu% | %memory% | %alsa:default:Master% | %date% |"}
+-- , template = "<icon=haskell.xpm/> | %UnsafeStdinReader%} { %uptime% | %eth0% | %disku% | %cpu% | %memory% | %swap% | %alsa:default:Master% | %EDDW% | %date% |"}
 
 
 

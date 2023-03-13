@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------
 -- |
 -- Module: Xmobar.Plugins.Monitors.Strings
--- Copyright: (c) 2018, 2019, 2020 Jose Antonio Ortega Ruiz
+-- Copyright: (c) 2018, 2019, 2020, 2022 Jose Antonio Ortega Ruiz
 -- License: BSD3-style (see LICENSE)
 --
 -- Maintainer: jao@gnu.org
@@ -140,7 +140,7 @@ showWithUnits d n x
 padString :: Int -> Int -> String -> Bool -> String -> String -> String
 padString mnw mxw pad pr ellipsis s =
   let len = length s
-      rmin = if mnw < 0 then 0 else mnw
+      rmin = max mnw 0
       rmax = if mxw <= 0 then max len rmin else mxw
       (rmn, rmx) = if rmin <= rmax then (rmin, rmax) else (rmax, rmin)
       rlen = min (max rmn len) rmx
@@ -223,7 +223,7 @@ showPercentBar v x = do
   bw <- getConfigValue barWidth
   let c = bw < 1
       w = if c then length bf else bw
-      len = min w $ round (fromIntegral w * x)
+      len = min w $ (if c then ceiling else round) (fromIntegral w * x)
       bfs = if c then [bf !! max 0 (len - 1)] else take len $ cycle bf
   s <- colorizeString v bfs
   return $ s ++ if c then "" else take (bw - len) (cycle bb)
@@ -261,9 +261,10 @@ logScaling f v = do
   l <- fromIntegral `fmap` getConfigValue low
   bw <- fromIntegral `fmap` getConfigValue barWidth
   let [ll, hh] = sort [l, h]
+      bw' = if bw > 0 then bw else 10
       scaled x | x == 0.0 = 0
-               | x <= ll = 1 / bw
-               | otherwise = f + logBase 2 (x / hh) / bw
+               | x <= ll = 1 / bw'
+               | otherwise = f + logBase 2 (x / hh) / bw'
   return $ scaled v
 
 showLogBar :: Float -> Float -> Monitor String

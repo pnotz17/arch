@@ -83,14 +83,14 @@ import qualified XMonad.StackSet as W
 -- > layoutHook = avoidStrutsOn [U,L] (tall ||| mirror tall ||| ...)
 --
 -- For detailed instructions on editing your key bindings, see
--- "XMonad.Doc.Extending#Editing_key_bindings".
+-- <https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial>.
 --
 
 -- | Add docks functionality to the given config.  See above for an example.
 docks :: XConfig a -> XConfig a
-docks c = c { startupHook     = docksStartupHook <+> startupHook c
-            , handleEventHook = docksEventHook <+> handleEventHook c
-            , manageHook      = manageDocks <+> manageHook c }
+docks c = c { startupHook     = docksStartupHook <> startupHook c
+            , handleEventHook = docksEventHook <> handleEventHook c
+            , manageHook      = manageDocks <> manageHook c }
 
 type WindowStruts = M.Map Window [Strut]
 
@@ -137,7 +137,7 @@ updateStrut w cache = do
 -- | Detects if the given window is of type DOCK and if so, reveals
 --   it, but does not manage it.
 manageDocks :: ManageHook
-manageDocks = checkDock --> (doIgnore <+> doRequestDockEvents)
+manageDocks = checkDock --> (doIgnore <> doRequestDockEvents)
   where
     doRequestDockEvents = ask >>= liftX . requestDockEvents >> mempty
 

@@ -1,6 +1,218 @@
 # Change Log / Release Notes
 
-## unknown
+## _unreleased_
+
+### Breaking Changes
+
+  * Deprecated the `XMonad.Layout.StateFull` module and
+    `XMonad.Layout.TrackFloating.(t|T)rackFloating` in favour of
+    `XMonad.Layout.FocusTracking`.
+
+  * Dropped support for GHC 8.4.
+
+  * `XMonad.Util.ExclusiveScratchpads`
+
+    - Deprecated the module in favour of the (new) exclusive scratchpad
+      functionality of `XMonad.Util.NamedScratchpad`.
+
+  * `XMonad.Actions.CycleWorkspaceByScreen`
+
+    - The type of `repeatableAction` has changed, and it's deprecated in
+      favour of `X.A.Repeatable.repeatable`.
+
+  * `XMonad.Hooks.DynamicProperty`
+
+    - Deprecated the module in favour of the more aptly named
+      `XMonad.Hooks.OnPropertyChange`.
+
+  * `XMonad.Util.Scratchpad`:
+
+    - Deprecated the module; use `XMonad.Util.NamedScratchpad` instead.
+
+  * `XMonad.Actions.Navigation2D`
+
+    - Removed deprecated function `hybridNavigation`.
+
+  * `XMonad.Layout.Spacing`
+
+    - Removed deprecated functions `SpacingWithEdge`, `SmartSpacing`,
+      `SmartSpacingWithEdge`, `ModifySpacing`, `setSpacing`, and
+      `incSpacing`.
+
+  * `XMonad.Actions.MessageFeedback`
+
+    - Removed deprecated functions `send`, `sendSM`, `sendSM_`,
+      `tryInOrder`, `tryInOrder_`, `tryMessage`, and `tryMessage_`.
+
+  * `XMonad.Prompt.Window`
+
+    - Removed deprecated functions `windowPromptGoto`,
+      `windowPromptBring`, and `windowPromptBringCopy`.
+
+  * `XMonad.Hooks.ICCCMFocus`
+
+    - Removed deprecated module.  This was merged into xmonad.
+
+  * `XMonad.Layout.LayoutBuilderP`
+
+    - Removed deprecated module; use `XMonad.Layout.LayoutBuilder`
+      instead.
+
+  * `XMonad.Hooks.RestoreMinimized`
+
+    - Removed deprecated module; use `XMonad.Hooks.Minimize` instead.
+
+  * `XMonad.Layout.Named`
+
+    - Deprecated the entire module, use `XMonad.Layout.Renamed` instead.
+
+  * `XMonad.Actions.SinkAll`
+
+    - Deprecated the entire module, use `XMonad.Actions.WithAll`
+      instead.
+
+  * `XMonad.Hooks.EwmhDesktops`
+
+    - `_NET_CLIENT_LIST_STACKING` puts windows in the current workspace at the
+      top in bottom-to-top order, followed by visible workspaces, followed by
+      invisible workspaces.  Within visible and invisible groups, workspaces are
+      ordered lexicographically, as before.  Currently focused window will
+      always be the topmost, meaning the last in the list.
+
+### New Modules
+
+  * `XMonad.Layout.FocusTracking`.
+
+    - Replaces `X.L.StateFull` and half of `X.L.TrackFloating`.
+
+  * `XMonad.Actions.MostRecentlyUsed`
+
+    - Tab through windows by recency of use. Based on the Alt+Tab behaviour
+      common outside of xmonad.
+
+  * `XMonad.Util.History`
+
+    - Track history in *O(log n)* time. Provides `History`, a variation on a
+      LIFO stack with a uniqueness property. In order to achieve the desired
+      asymptotics, the data type is implemented as an ordered Map.
+
+  * `XMonad.Actions.Repeatable`
+
+    - Actions you'd like to repeat. Factors out the shared logic of
+      `X.A.CycleRecentWS`, `X.A.CycleWorkspaceByScreen` and `X.A.CycleWindows`.
+
+  * `XMonad.Hooks.OnPropertyChange`:
+
+    - A new module replicating the functionality of
+      `XMonad.Hooks.DynamicProperty`, but with more discoverable names.
+
+### Bug Fixes and Minor Changes
+  * `XMonad.Util.Loggers`
+
+    - Added `logClassname`, `logClassnames`, `logClassnames'`,
+      `logClassnameOnScreen`, `logClassnamesOnScreen`, `logClassnamesOnScreen'`,
+      and `ClassnamesFormat`. These are all equivalents of their `Title`
+      counterparts, allowing logging the window classname instead.
+
+  * `XMonad.Hooks.StatusBar.PP`
+
+    - `dynamicLogString` now forces its result and produces an error string if
+      it throws an exception. Use `dynamicLogString'` if for some reason you
+      need the old behavior.
+
+  * `XMonad.Util.EZConfig`
+
+    - Added `remapKeysP`, which remaps keybindings from one binding to
+      another.
+
+    - Made `additionalKeys{,P}`, `removeKeys{,P}`, `remapKeysP`, and
+      `{additional,remove}MouseBindings` `infixl 4` so they can more easily
+      be concatenated with `(++)`.
+
+  * `XMonad.Util.NamedScratchpad`
+
+    - Added `addExclusives`, `resetFocusedNSP`, `setNoexclusive`,
+      `resizeNoexclusive`, and `floatMoveNoexclusive` in order to augment
+      named scratchpads with the exclusive scratchpad functionality of
+      `XMonad.Util.ExclusiveScratchpads`.
+
+  * `XMonad.Layout.BorderResize`
+
+    - Added `borderResizeNear` as a variant of `borderResize` that can
+      control how many pixels near a border resizing still works.
+
+  * `XMonad.Util.Run`
+
+    - It is now ensured that all arguments of `execute` and `eval` are
+      quoted.  Likewise, `executeNoQuote` is added as a version of
+      `execute` that does not do that.
+
+    - Added `findFile` as a shorthand to call `find-file`.
+
+    - Added `list` and `saveExcursion` to the list of Emacs commands.
+
+  * `XMonad.Util.Parser`
+
+    - Added the `gather`, `count`, `between`, `option`, `optionally`,
+      `skipMany`, `skipMany1`, `chainr`, `chainr1`, `chainl`, `chainl1`,
+      and `manyTill` functions, in order to achieve feature parity with
+      `Text.ParserCombinators.ReadP`.
+
+  * `XMonad.Actions.FloatKeys`
+
+    - Added `directionMoveWindow` and `directionMoveWindow` as more
+      alternatives to the existing functions.
+
+  * `XMonad.Hooks.InsertPosition`
+
+    - Added `setupInsertPosition` as a combinator alternative to
+      `insertPosition`.
+
+  * `XMonad.Actions.Navigation2D`
+
+    - Added `sideNavigation` as a fallback to the default tiling strategy,
+      in case `lineNavigation` can't find a window.  This benefits
+      especially users who use `XMonad.Layout.Spacing`.
+
+  * `XMonad.Prompt.OrgMode`
+
+    - Added `orgPromptRefile` and `orgPromptRefileTo` for interactive
+      and targeted refiling of the entered note into some existing tree
+      of headings, respectively.
+
+    - Allowed the time specification in `HHMM` format.
+
+  * `XMonad.Actions.Search`
+
+    - Added `aur`, `flora`, `ncatlab`, `protondb`, `rosettacode`,
+      `sourcehut`, `steam`, `voidpgks_x86_64`, `voidpgks_x86_64_musl`,
+      `arXiv`, `clojureDocs`, `cratesIo`, `rustStd`, `noogle`, and
+      `zbmath` search engines.
+
+  * `XMonad.Layout.ResizableThreeColumns`
+
+    - Fixed an issue where the bottom right window would not respond to
+      `MirrorShrink` and `MirrorExpand` messages.
+
+  * `XMonad.Hooks.EwmhDesktops`
+
+    - Added `disableEwmhManageDesktopViewport` to avoid setting the
+      `_NET_DESKTOP_VIEWPORT` property, as it can lead to issues with
+      some status bars (see this
+      [polybar issue](https://github.com/polybar/polybar/issues/2603)).
+
+  * `XMonad.Hooks.StatusBar`
+
+    - Added `startAllStatusBars` to start the configured status bars.
+
+  * `XMonad.Util.NamedActions`
+
+    - Changed `addDescrKeys` and `addDescrKeys'` to not discard the
+      keybindings in the current config.
+
+### Other changes
+
+## 0.17.1 (September 3, 2022)
 
 ### Breaking Changes
 
@@ -15,7 +227,7 @@
     - Deprecated all of these modules.  The user-specific configuration
       modules may still be found [on the website].
 
- * `XMonad.Util.NamedScratchpad`
+  * `XMonad.Util.NamedScratchpad`
 
     - Scratchpads are now only based on the argument given to
       `namedScratchpadManageHook`; all other scratchpad arguments are,
@@ -28,6 +240,11 @@
 
     - Deprecated the module; use the new dynamic scratchpad
       functionality of `XMonad.Util.NamedScratchpad` instead.
+
+  * `XMonad.Hooks.UrgencyHook`
+
+    - Deprecated `urgencyConfig`; use `def` from the new `Default`
+      instance of `UrgencyConfig` instead.
 
 [on the website]: https://xmonad.org/configurations.html
 
@@ -69,12 +286,48 @@
     Flashes the name of the current workspace when switching to it.
     Like `XMonad.Layout.ShowWName`, but as a logHook.
 
+  * `XMonad.Actions.RepeatAction`
+
+    A module for adding a keybinding to repeat the last action, similar
+    to Vim's `.` or Emacs's `dot-mode`.
+
+  * `XMonad.Util.Grab`
+
+    Utilities for making grabbing and ungrabbing keys more convenient.
+
+  * `XMonad.Hooks.Modal`
+
+    This module implements modal keybindings for xmonad.
+
+  * `XMonad.Layout.SideBorderDecoration`
+
+    This module allows for having a configurable border position around
+    windows; i.e., it can move the border to either cardinal direction.
+
 ### Bug Fixes and Minor Changes
+
+  * `XMonad.Prompt.Pass`
+
+    - Added new versions of the `pass` functions that allow user-specified
+      prompts.
+
+  * `XMonad.Prompt.AppendFile`
+
+    - Use `XMonad.Prelude.mkAbsolutePath` to force names to be relative to the
+      home directory and support `~/` prefixes.
 
   * `XMonad.Prompt.OrgMode`
 
-    - Fixes the date parsing issue such that entries with format of
-      `todo +d 12 02 2024` works.
+    - Fixed the date parsing issue such that entries with a format of
+      `todo +d 12 02 2024` work.
+
+    - Added the ability to specify alphabetic (`#A`, `#B`, and `#C`)
+      [priorities] at the end of the input note.
+
+  * `XMonad.Prompt.Unicode`
+
+    - Fixed the display of non-ASCII characters in the description of Unicode
+      characters
 
   * `XMonad.Prompt`
 
@@ -91,6 +344,14 @@
 
     - Fixed windows getting lost when used in conjunction with
       `smartBorders` and a single window.
+
+    - No longer needs `pstree` to detect child/parent relationships.
+
+    - Fixed some false positives in child/parent relationship detection.
+
+  * `XMonad.Actions.SpawnOn`
+
+    - Fixed parsing of `/proc/*/stat` to correctly handle complex process names.
 
   * `XMonad.Util.EZConfig`
 
@@ -153,6 +414,10 @@
     - Added `WindowScreen`, which is a type synonym for the specialized `Screen`
       type, that results from the `WindowSet` definition in `XMonad.Core`.
 
+    - Modified `mkAbsolutePath` to support a leading environment variable, so
+      things like `$HOME/NOTES` work. If you want more general environment
+      variable support, comment on [this PR].
+
   * `XMonad.Util.XUtils`
 
     - Added `withSimpleWindow`, `showSimpleWindow`, `WindowConfig`, and
@@ -175,6 +440,29 @@
 
     - Added support for dynamic scratchpads in the form of
       `dynamicNSPAction` and `toggleDynamicNSP`.
+
+  * `XMonad.Hooks.EwmhDesktops`
+
+    - Added support for `_NET_DESKTOP_VIEWPORT`, which is required by
+      some status bars.
+
+  * `XMonad.Util.Run`
+
+    - Added an EDSL—particularly geared towards programs like terminals
+      or Emacs—to spawn processes from XMonad in a compositional way.
+
+  * `XMonad.Hooks.UrgencyHook`
+
+    - Added a `Default` instance for `UrgencyConfig` and `DzenUrgencyHook`.
+
+[this PR]: https://github.com/xmonad/xmonad-contrib/pull/744
+[priorities]: https://orgmode.org/manual/Priorities.html
+
+### Other changes
+
+  * Migrated the sample build scripts from the deprecated `xmonad-testing` repo to
+    `scripts/build`. This will be followed by a documentation update in the `xmonad`
+    repo.
 
 ## 0.17.0 (October 27, 2021)
 
@@ -724,6 +1012,11 @@
     - Added `logTitles` to log all window titles (focused and unfocused
       ones) on the focused workspace, as well as `logTitlesOnScreen` as
       a screen-specific variant thereof.
+
+    - Added `logTitles'` and `logTitleOnScreen'`.  These act like
+      `logTitles` and `logTitlesOnScreen` but use a record as an input
+      to enable logging for more window types.  For example, currently
+      urgent windows are additionally supported.
 
   * `XMonad.Layout.Minimize`
 

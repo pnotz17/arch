@@ -1,15 +1,40 @@
 # Change Log / Release Notes
 
-## unknown
+## _unreleased_
+
+### Breaking Changes
+
+* Dropped support for GHC 8.4.
+
+### Enhancements
+
+* Exported `sendRestart` and `sendReplace` from `XMonad.Operations`.
+
+* Exported `buildLaunch` from `XMonad.Main`.
+
+* `Tall` does not draw windows with zero area.
+
+### Bug Fixes
+
+## 0.17.1 (September 3, 2022)
 
 ### Enhancements
 
   * Added custom cursor shapes for resizing and moving windows.
 
+  * Exported `cacheNumlockMask` and `mkGrabs` from `XMonad.Operations`.
+
 ### Bug Fixes
 
   * Fixed border color of windows with alpha channel. Now all windows have the
     same opaque border color.
+
+  * Change the main loop to try to avoid [GHC bug 21708] on systems
+    running GHC 9.2 up to version 9.2.3. The issue has been fixed in
+    [GHC 9.2.4] and all later releases.
+
+[GHC bug 21708]: https://gitlab.haskell.org/ghc/ghc/-/issues/21708
+[GHC 9.2.4]: https://discourse.haskell.org/t/ghc-9-2-4-released/4851
 
 ## 0.17.0 (October 27, 2021)
 

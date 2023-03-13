@@ -65,7 +65,7 @@ Example usage in your @~\/.xmonad\/xmonad.hs@ file:
 >     , (f, mask) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]]
 
 For detailed instructions on editing your key bindings, see
-"XMonad.Doc.Extending#Editing_key_bindings".
+<https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial>.
  -}
 
 -- | The type of the index of a screen by location
@@ -75,7 +75,7 @@ getScreenIdAndRectangle :: W.Screen i l a ScreenId ScreenDetail -> (ScreenId, Re
 getScreenIdAndRectangle screen = (W.screen screen, rect) where
   rect = screenRect $ W.screenDetail screen
 
--- | Translate a physical screen index to a "ScreenId"
+-- | Translate a physical screen index to a 'ScreenId'
 getScreen:: ScreenComparator -> PhysicalScreen -> X (Maybe ScreenId)
 getScreen (ScreenComparator cmpScreen) (P i) = do w <- gets windowset
                                                   let screens = W.current w : W.visible w

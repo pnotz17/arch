@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Xmobar.Config
+-- Module      :  Xmobar.Config.Types
 -- Copyright   :  (c) Andrea Rossato
 -- License     :  BSD-style (see LICENSE)
 --
@@ -13,16 +13,29 @@
 -----------------------------------------------------------------------------
 
 module Xmobar.Config.Types
-    ( -- * Configuration
-      -- $config
-      Config (..)
+    ( Config (..)
     , XPosition (..), Align (..), Border (..), TextOutputFormat (..)
+    , Segment
+    , FontIndex
+    , Box(..)
+    , BoxBorder(..)
+    , BoxOffset(..)
+    , BoxMargins(..)
+    , TextRenderInfo(..)
+    , Widget(..)
     , SignalChan (..)
+    , Action (..)
+    , Button
     ) where
 
 import qualified Control.Concurrent.STM as STM
-import Xmobar.Run.Runnable (Runnable(..))
-import Xmobar.System.Signal (SignalType)
+import qualified Xmobar.Run.Runnable as R
+import qualified Xmobar.System.Signal as S
+
+import Data.Int (Int32)
+import Foreign.C.Types (CInt)
+
+import Xmobar.Run.Actions (Action (..), Button)
 
 -- $config
 -- Configuration data type
@@ -37,7 +50,8 @@ data Config =
            , fgColor :: String      -- ^ Default font color
            , position :: XPosition  -- ^ Top Bottom or Static
            , textOutput :: Bool     -- ^ Write data to stdout instead of X
-           , textOutputFormat :: TextOutputFormat -- ^ Which color format to use for stdout: Ansi or Pango
+           , textOutputFormat :: TextOutputFormat
+                -- ^ Which color format to use for stdout: Ansi or Pango
            , textOffset :: Int      -- ^ Offset from top of window for text
            , textOffsets :: [Int]   -- ^ List of offsets for additionalFonts
            , iconOffset :: Int      -- ^ Offset from top of window for icons
@@ -59,8 +73,8 @@ data Config =
            , persistent :: Bool     -- ^ Whether automatic hiding should
                                     --   be enabled or disabled
            , iconRoot :: FilePath   -- ^ Root folder for icons
-           , commands :: [Runnable] -- ^ For setting the command,
-                                    --   the command arguments
+           , commands :: [R.Runnable] -- ^ For setting the command,
+                                      --   the command arguments
                                     --   and refresh rate for the programs
                                     --   to run (optional)
            , sepChar :: String      -- ^ The character to be used for indicating
@@ -70,21 +84,95 @@ data Config =
                                     --   right text alignment
            , template :: String     -- ^ The output template
            , verbose :: Bool        -- ^ Emit additional debug messages
-           , signal :: SignalChan   -- ^ The signal channel used to send signals to xmobar
+           , signal :: SignalChan   -- ^ Channel to send signals to xmobar
+           , dpi :: Double          -- ^ DPI scaling factor for fonts
            } deriving (Read, Show)
 
-data XPosition = Top
-               | TopH Int
-               | TopW Align Int
-               | TopSize Align Int Int
-               | TopP Int Int
+-- | The position datatype
+data XPosition = Top            -- ^ Top of the screen, full width, auto height
+
+               | TopH           -- ^ Top of the screen, full width with
+                                --   specific height
+                  Int           -- ^ Height (in pixels)
+
+                 -- | Top of the screen, full width with
+                 --   specific height and margins
+               | TopHM
+                  Int           -- ^ Height (in pixels)
+                  Int           -- ^ Left margin (in pixels)
+                  Int           -- ^ Right margin (in pixels)
+                  Int           -- ^ Top margin (in pixels)
+                  Int           -- ^ Bottom margin (in pixels)
+
+                 -- | Top of the screen with specific width
+                 --   (as screen percentage) and alignment
+               | TopW
+                  Align         -- ^ Alignement (L|C|R)
+                  Int           -- ^ Width as screen percentage (0-100)
+
+                 -- | Top of the screen with specific width
+                 --   (as screen percentage), height and
+                 --   alignment
+               | TopSize
+                  Align         -- ^ Alignement (L|C|R)
+                  Int           -- ^ Width as screen percentage (0-100)
+                  Int           -- ^ Height (in pixels)
+
+                 -- | Top of the screen with specific left/right
+                 --   margins
+               | TopP
+                  Int           -- ^ Left margin (in pixels)
+                  Int           -- ^ Right margin (in pixels)
+
+                 -- | Bottom of the screen, full width, auto height
                | Bottom
-               | BottomH Int
-               | BottomP Int Int
-               | BottomW Align Int
-               | BottomSize Align Int Int
-               | Static {xpos, ypos, width, height :: Int}
-               | OnScreen Int XPosition
+
+               | BottomH        -- ^ Bottom of the screen, full width, with
+                                --   specific height
+                  Int           -- ^ Height (in pixels)
+
+                 -- | Bottom of the screen with specific height
+                 --   and margins
+               | BottomHM
+                  Int           -- ^ Height (in pixels)
+                  Int           -- ^ Left margin (in pixels)
+                  Int           -- ^ Right margin (in pixels)
+                  Int           -- ^ Top margin (in pixels)
+                  Int           -- ^ Bottom margin (in pixels)
+
+                 -- | Bottom of the screen with specific
+                 --   left/right margins
+               | BottomP
+                  Int           -- ^ Left margin (in pixels)
+                  Int           -- ^ Bottom margin (in pixels)
+
+                 -- | Bottom of the screen with specific width
+                 --   (as screen percentage) and alignment
+                 --   and alignment
+               | BottomW
+                  Align         -- ^ Alignement (L|C|R)
+                  Int           -- ^ Width as screen percentage (0-100)
+
+                 -- | Bottom of the screen with specific width
+                 --   (as screen percentage), height
+                 --   and alignment
+               | BottomSize
+                  Align         -- ^ Alignement (L|C|R)
+                  Int           -- ^ Width as screen percentage (0-100)
+                  Int           -- ^ Height (in pixels)
+
+                 -- | Static position and specific size
+               | Static { xpos :: Int   -- ^ Position X (in pixels)
+                        , ypos :: Int   -- ^ Position Y (in pixels)
+                        , width :: Int  -- ^ Width (in pixels)
+                        , height :: Int -- ^ Height (in pixels)
+                        }
+
+                 -- | Along with the position characteristics
+                 --   specify the screen to display the bar
+               | OnScreen
+                  Int           -- ^ Screen id (primary is 0)
+                  XPosition     -- ^ Position
                  deriving ( Read, Show, Eq )
 
 data Align = L | R | C deriving ( Read, Show, Eq )
@@ -100,7 +188,9 @@ data Border = NoBorder
 
 data TextOutputFormat = Plain | Ansi | Pango | Swaybar deriving (Read, Show, Eq)
 
-newtype SignalChan = SignalChan { unSignalChan :: Maybe (STM.TMVar SignalType) }
+type FontIndex = Int
+
+newtype SignalChan = SignalChan {unSignalChan :: Maybe (STM.TMVar S.SignalType)}
 
 instance Read SignalChan where
   readsPrec _ _ = fail "SignalChan is not readable from a String"
@@ -108,3 +198,34 @@ instance Read SignalChan where
 instance Show SignalChan where
   show (SignalChan (Just _)) = "SignalChan (Just <tmvar>)"
   show (SignalChan Nothing) = "SignalChan Nothing"
+
+data Widget = Icon String | Text String | Hspace Int32 deriving Show
+
+data BoxOffset = BoxOffset Align Int32 deriving (Eq, Show)
+
+-- margins: Top, Right, Bottom, Left
+data BoxMargins = BoxMargins Int32 Int32 Int32 Int32 deriving (Eq, Show)
+
+data BoxBorder = BBTop
+               | BBBottom
+               | BBVBoth
+               | BBLeft
+               | BBRight
+               | BBHBoth
+               | BBFull
+                 deriving (Read, Eq, Show)
+
+data Box = Box { bBorder :: BoxBorder
+               , bOffset :: BoxOffset
+               , bWidth :: CInt
+               , bColor :: String
+               , bMargins :: BoxMargins
+               } deriving (Eq, Show)
+
+data TextRenderInfo = TextRenderInfo { tColorsString   :: String
+                                     , tBgTopOffset    :: Int32
+                                     , tBgBottomOffset :: Int32
+                                     , tBoxes          :: [Box]
+                                     } deriving Show
+
+type Segment = (Widget, TextRenderInfo, FontIndex, Maybe [Action])

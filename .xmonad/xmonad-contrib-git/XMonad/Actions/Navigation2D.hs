@@ -46,7 +46,6 @@ module XMonad.Actions.Navigation2D ( -- * Usage
                                    , sideNavigation
                                    , sideNavigationWithBias
                                    , hybridOf
-                                   , hybridNavigation
                                    , fullScreenRect
                                    , singleWindowRect
                                    , switchLayer
@@ -98,7 +97,15 @@ import XMonad.Util.Types
 -- >                              False
 -- >               $ def
 --
--- Alternatively, you can use navigation2DP:
+-- /NOTE/: the @def@ argument to 'navigation2D' contains the strategy
+-- that decides which windows actually get selected.  While the default
+-- behaviour tries to keep them into account, if you use modules that
+-- influence tiling in some way, like "XMonad.Layout.Spacing" or
+-- "XMonad.Layout.Gaps", you should think about using a different
+-- strategy, if you find the default behaviour to be unnatural.  Check
+-- out the [finer points](#g:Finer_Points) below for more information.
+--
+-- Alternatively to 'navigation2D', you can use 'navigation2DP':
 --
 -- > main = xmonad $ navigation2DP def
 -- >                               ("<Up>", "<Left>", "<Down>", "<Right>")
@@ -108,7 +115,7 @@ import XMonad.Util.Types
 -- >               $ def
 --
 -- That's it. If instead you'd like more control, you can combine
--- withNavigation2DConfig and additionalNav2DKeys or additionalNav2DKeysP:
+-- 'withNavigation2DConfig' and 'additionalNav2DKeys' or 'additionalNav2DKeysP':
 --
 -- > main = xmonad $ withNavigation2DConfig def
 -- >               $ additionalNav2DKeys (xK_Up, xK_Left, xK_Down, xK_Right)
@@ -162,7 +169,7 @@ import XMonad.Util.Types
 --
 -- For detailed instruction on editing the key binding see:
 --
--- "XMonad.Doc.Extending#Editing_key_bindings".
+-- <https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial>.
 
 -- $finer_points
 -- #Finer_Points#
@@ -179,9 +186,19 @@ import XMonad.Util.Types
 -- values in the above example to 'True'.  You could also decide you want
 -- wrapping only for a subset of the operations and no wrapping for others.
 --
--- By default, all layouts use the 'defaultTiledNavigation' strategy specified
--- in the 'Navigation2DConfig' (by default, line navigation is used).  To
--- override this behaviour for some layouts, add a pair (\"layout name\",
+-- By default, all layouts use the 'defaultTiledNavigation' strategy
+-- specified in the 'Navigation2DConfig' (by default, line navigation is
+-- used).  Many more navigation strategies are available; some may feel
+-- more natural, depending on the layout and user:
+--
+--   * 'lineNavigation'
+--   * 'centerNavigation'
+--   * 'sideNavigation'
+--   * 'sideNavigationWithBias'
+--
+-- There is also the ability to combine two strategies with 'hybridOf'.
+--
+-- To override the default behaviour for some layouts, add a pair (\"layout name\",
 -- navigation strategy) to the 'layoutNavigation' list in the
 -- 'Navigation2DConfig', where \"layout name\" is the string reported by the
 -- layout's description method (normally what is shown as the layout name in
@@ -327,7 +344,7 @@ centerNavigation = N 2 doCenterNavigation
 -- and push it to the right until it intersects with at least one other window.
 -- Of those windows, one with a point that is the closest to the centre of the
 -- line (+1) is selected. This is probably the most intuitive strategy for the
--- tiled layer when using XMonad.Layout.Spacing.
+-- tiled layer when using "XMonad.Layout.Spacing".
 sideNavigation :: Navigation2D
 sideNavigation = N 1 (doSideNavigationWithBias 1)
 
@@ -358,10 +375,6 @@ hybridOf :: Navigation2D -> Navigation2D -> Navigation2D
 hybridOf (N g1 s1) (N g2 s2) = N (max g1 g2) $ applyToBoth s1 s2
   where
     applyToBoth f g a b c = f a b c <|> g a b c
-
-{-# DEPRECATED hybridNavigation "Use hybridOf with lineNavigation and centerNavigation as arguments." #-}
-hybridNavigation :: Navigation2D
-hybridNavigation = hybridOf lineNavigation centerNavigation
 
 -- | Stores the configuration of directional navigation. The 'Default' instance
 -- uses line navigation for the tiled layer and for navigation between screens,
@@ -433,7 +446,7 @@ additionalNav2DKeys (u, l, d, r) modifiers wrap =
 -- mapping from key prefix to action, and a bool to indicate if wrapping should
 -- occur, and returns a function from XConfig to XConfig. Example:
 --
--- >  additionalNav2DKeysP def ("w", "a", "s", "d") [("M-", windowGo), ("M-S-", windowSwap)] False myConfig
+-- >  additionalNav2DKeysP ("w", "a", "s", "d") [("M-", windowGo), ("M-S-", windowSwap)] False myConfig
 additionalNav2DKeysP :: (String, String, String, String) -> [(String, Direction2D -> Bool -> X ())] ->
                         Bool -> XConfig l -> XConfig l
 additionalNav2DKeysP (u, l, d, r) modifiers wrap =
@@ -451,7 +464,7 @@ withNavigation2DConfig conf2d xconf = xconf { startupHook  = startupHook xconf
                                             }
 
 instance Default Navigation2DConfig where
-    def                   = Navigation2DConfig { defaultTiledNavigation = lineNavigation
+    def                   = Navigation2DConfig { defaultTiledNavigation = hybridOf lineNavigation sideNavigation
                                                , floatNavigation        = centerNavigation
                                                , screenNavigation       = lineNavigation
                                                , layoutNavigation       = []

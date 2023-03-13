@@ -1,4 +1,6 @@
-{-# LANGUAGE MultiParamTypeClasses, FlexibleContexts, NamedFieldPuns #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+
 ----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Main
@@ -13,17 +15,18 @@
 --
 -----------------------------------------------------------------------------
 
-module XMonad.Main (xmonad, launch) where
+module XMonad.Main (xmonad, buildLaunch, launch) where
 
 import System.Locale.SetLocale
 import qualified Control.Exception as E
 import Data.Bits
 import Data.List ((\\))
-import Data.Function
+import Data.Foldable (traverse_)
 import qualified Data.Map as M
 import qualified Data.Set as S
 import Control.Monad.Reader
 import Control.Monad.State
+import Control.Monad (filterM, guard, unless, void, when)
 import Data.Maybe (fromMaybe, isJust)
 import Data.Monoid (getAll)
 
@@ -87,14 +90,14 @@ usage :: IO ()
 usage = do
     self <- getProgName
     putStr . unlines $
-        concat ["Usage: ", self, " [OPTION]"] :
-        "Options:" :
-        "  --help                       Print this message" :
-        "  --version                    Print the version number" :
-        "  --recompile                  Recompile your xmonad.hs" :
-        "  --replace                    Replace the running window manager with xmonad" :
-        "  --restart                    Request a running xmonad process to restart" :
-        []
+        [ "Usage: " <> self <> " [OPTION]"
+        , "Options:"
+        , "  --help                       Print this message"
+        , "  --version                    Print the version number"
+        , "  --recompile                  Recompile your xmonad.hs"
+        , "  --replace                    Replace the running window manager with xmonad"
+        , "  --restart                    Request a running xmonad process to restart"
+        ]
 
 -- | Build the xmonad configuration file with ghc, then execute it.
 -- If there are no errors, this function does not return.  An
@@ -127,25 +130,6 @@ buildLaunch dirs = do
       recompile dirs False
       args <- getArgs
       executeFile bin False args Nothing
-
-sendRestart :: IO ()
-sendRestart = do
-    dpy <- openDisplay ""
-    rw <- rootWindow dpy $ defaultScreen dpy
-    xmonad_restart <- internAtom dpy "XMONAD_RESTART" False
-    allocaXEvent $ \e -> do
-        setEventType e clientMessage
-        setClientMessageEvent' e rw xmonad_restart 32 []
-        sendEvent dpy rw False structureNotifyMask e
-    sync dpy False
-
--- | a wrapper for 'replace'
-sendReplace :: IO ()
-sendReplace = do
-    dpy <- openDisplay ""
-    let dflt = defaultScreen dpy
-    rootw  <- rootWindow dpy dflt
-    replace dpy dflt rootw
 
 -- | Entry point into xmonad for custom builds.
 --
@@ -242,7 +226,7 @@ launch initxmc drs = do
             let extst = maybe M.empty extensibleState serializedSt
             modify (\s -> s {extensibleState = extst})
 
-            setNumlockMask
+            cacheNumlockMask
             grabKeys
             grabButtons
 
@@ -264,10 +248,11 @@ launch initxmc drs = do
             userCode $ startupHook initxmc
 
             rrData <- io $ xrrQueryExtension dpy
-            let rrUpdate = when (isJust rrData) . void . xrrUpdateConfiguration
 
             -- main loop, for all you HOF/recursion fans out there.
-            forever $ prehandle =<< io (nextEvent dpy e >> rrUpdate e >> getEvent e)
+            -- forever $ prehandle =<< io (nextEvent dpy e >> rrUpdate e >> getEvent e)
+            -- sadly, 9.2.{1,2,3} join points mishandle the above and trash the heap (see #389)
+            mainLoop dpy e rrData
 
     return ()
       where
@@ -278,6 +263,8 @@ launch initxmc drs = do
                       in local (\c -> c { mousePosition = mouse, currentEvent = Just e }) (handleWithHook e)
         evs = [ keyPress, keyRelease, enterNotify, leaveNotify
               , buttonPress, buttonRelease]
+        rrUpdate e r = when (isJust r) (void (xrrUpdateConfiguration e))
+        mainLoop d e r = io (nextEvent d e >> rrUpdate e r >> getEvent e) >>= prehandle >> mainLoop d e r
 
 
 -- | Runs handleEventHook from the configuration and runs the default handler
@@ -330,7 +317,7 @@ handle e@(DestroyWindowEvent {ev_window = w}) = do
 -- it is synthetic or we are not expecting an unmap notification from a window.
 handle (UnmapEvent {ev_window = w, ev_send_event = synthetic}) = whenX (isClient w) $ do
     e <- gets (fromMaybe 0 . M.lookup w . waitingUnmap)
-    if (synthetic || e == 0)
+    if synthetic || e == 0
         then unmanage w
         else modify (\s -> s { waitingUnmap = M.update mpred w (waitingUnmap s) })
  where mpred 1 = Nothing
@@ -340,7 +327,7 @@ handle (UnmapEvent {ev_window = w, ev_send_event = synthetic}) = whenX (isClient
 handle e@(MappingNotifyEvent {}) = do
     io $ refreshKeyboardMapping e
     when (ev_request e `elem` [mappingKeyboard, mappingModifier]) $ do
-        setNumlockMask
+        cacheNumlockMask
         grabKeys
 
 -- handle button release, which may finish dragging.
@@ -428,7 +415,7 @@ handle event@(PropertyEvent { ev_event_type = t, ev_atom = a })
 
 handle e@ClientMessageEvent { ev_message_type = mt } = do
     a <- getAtom "XMONAD_RESTART"
-    if (mt == a)
+    if mt == a
         then restart "xmonad" True
         else broadcastMessage e
 
@@ -459,38 +446,14 @@ scan dpy rootw = do
         skip :: E.SomeException -> IO Bool
         skip _ = return False
 
-setNumlockMask :: X ()
-setNumlockMask = do
-    dpy <- asks display
-    ms <- io $ getModifierMapping dpy
-    xs <- sequence [ do
-                        ks <- io $ keycodeToKeysym dpy kc 0
-                        if ks == xK_Num_Lock
-                            then return (setBit 0 (fromIntegral m))
-                            else return (0 :: KeyMask)
-                        | (m, kcs) <- ms, kc <- kcs, kc /= 0]
-    modify (\s -> s { numberlockMask = foldr (.|.) 0 xs })
-
 -- | Grab the keys back
 grabKeys :: X ()
 grabKeys = do
     XConf { display = dpy, theRoot = rootw } <- ask
-    let grab kc m = io $ grabKey dpy kc m rootw True grabModeAsync grabModeAsync
-        (minCode, maxCode) = displayKeycodes dpy
-        allCodes = [fromIntegral minCode .. fromIntegral maxCode]
     io $ ungrabKey dpy anyKey anyModifier rootw
-    ks <- asks keyActions
-    -- build a map from keysyms to lists of keysyms (doing what
-    -- XGetKeyboardMapping would do if the X11 package bound it)
-    syms <- forM allCodes $ \code -> io (keycodeToKeysym dpy code 0)
-    let keysymMap' = M.fromListWith (++) (zip syms [[code] | code <- allCodes])
-    -- keycodeToKeysym returns noSymbol for all unbound keycodes, and we don't
-    -- want to grab those whenever someone accidentally uses def :: KeySym
-    let keysymMap = M.delete noSymbol keysymMap'
-    let keysymToKeycodes sym = M.findWithDefault [] sym keysymMap
-    forM_ (M.keys ks) $ \(mask,sym) ->
-         forM_ (keysymToKeycodes sym) $ \kc ->
-              mapM_ (grab kc . (mask .|.)) =<< extraModifiers
+    let grab :: (KeyMask, KeyCode) -> X ()
+        grab (km, kc) = io $ grabKey dpy kc km rootw True grabModeAsync grabModeAsync
+    traverse_ grab =<< mkGrabs =<< asks (M.keys . keyActions)
 
 -- | Grab the buttons
 grabButtons :: X ()
@@ -501,37 +464,4 @@ grabButtons = do
     io $ ungrabButton dpy anyButton anyModifier rootw
     ems <- extraModifiers
     ba <- asks buttonActions
-    mapM_ (\(m,b) -> mapM_ (grab b . (m .|.)) ems) (M.keys $ ba)
-
--- | @replace@ to signals compliant window managers to exit.
-replace :: Display -> ScreenNumber -> Window -> IO ()
-replace dpy dflt rootw = do
-    -- check for other WM
-    wmSnAtom <- internAtom dpy ("WM_S" ++ show dflt) False
-    currentWmSnOwner <- xGetSelectionOwner dpy wmSnAtom
-    when (currentWmSnOwner /= 0) $ do
-        -- prepare to receive destroyNotify for old WM
-        selectInput dpy currentWmSnOwner structureNotifyMask
-
-        -- create off-screen window
-        netWmSnOwner <- allocaSetWindowAttributes $ \attributes -> do
-            set_override_redirect attributes True
-            set_event_mask attributes propertyChangeMask
-            let screen = defaultScreenOfDisplay dpy
-                visual = defaultVisualOfScreen screen
-                attrmask = cWOverrideRedirect .|. cWEventMask
-            createWindow dpy rootw (-100) (-100) 1 1 0 copyFromParent copyFromParent visual attrmask attributes
-
-        -- try to acquire wmSnAtom, this should signal the old WM to terminate
-        xSetSelectionOwner dpy wmSnAtom netWmSnOwner currentTime
-
-        -- SKIPPED: check if we acquired the selection
-        -- SKIPPED: send client message indicating that we are now the WM
-
-        -- wait for old WM to go away
-        fix $ \again -> do
-            evt <- allocaXEvent $ \event -> do
-                windowEvent dpy currentWmSnOwner structureNotifyMask event
-                get_EventType event
-
-            when (evt /= destroyNotify) again
+    mapM_ (\(m,b) -> mapM_ (grab b . (m .|.)) ems) (M.keys ba)

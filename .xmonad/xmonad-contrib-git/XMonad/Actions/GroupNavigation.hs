@@ -33,8 +33,8 @@ module XMonad.Actions.GroupNavigation ( -- * Usage
                                       , isOnAnyVisibleWS
                                       ) where
 
-import Control.Monad.Reader
-import Control.Monad.State
+import Control.Monad.Reader (ask, asks)
+import Control.Monad.State (gets)
 import Control.DeepSeq
 import Data.Map ((!))
 import qualified Data.Map as Map
@@ -43,11 +43,11 @@ import qualified Data.Sequence as Seq
 import qualified Data.Set as Set
 import Graphics.X11.Types
 import GHC.Generics
-import Prelude hiding (concatMap, drop, elem, filter, null, reverse)
+import Prelude hiding (drop, elem, filter, null, reverse)
 import XMonad.Core
 import XMonad.ManageHook
 import XMonad.Operations (windows, withFocused)
-import XMonad.Prelude (elem, foldl')
+import XMonad.Prelude (elem, foldl', (>=>))
 import qualified XMonad.StackSet as SS
 import qualified XMonad.Util.ExtensibleState as XS
 
@@ -224,7 +224,7 @@ isOnAnyVisibleWS :: Query Bool
 isOnAnyVisibleWS = do
   w <- ask
   ws <- liftX $ gets windowset
-  let allVisible = concat $ maybe [] SS.integrate . SS.stack . SS.workspace <$> SS.current ws:SS.visible ws
+  let allVisible = concatMap (maybe [] SS.integrate . SS.stack . SS.workspace) (SS.current ws:SS.visible ws)
       visibleWs = w `elem` allVisible
       unfocused = Just w /= SS.peek ws
   return $ visibleWs && unfocused

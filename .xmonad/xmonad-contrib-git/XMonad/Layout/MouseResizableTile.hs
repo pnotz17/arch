@@ -20,7 +20,7 @@ module XMonad.Layout.MouseResizableTile (
                                     -- $usage
                                     mouseResizableTile,
                                     mouseResizableTileMirrored,
-                                    MRTMessage (ShrinkSlave, ExpandSlave),
+                                    MRTMessage (ShrinkSlave, ExpandSlave, SetMasterFraction, SetLeftSlaveFraction, SetRightSlaveFraction),
 
                                     -- * Parameters
                                     -- $mrtParameters
@@ -35,6 +35,7 @@ module XMonad.Layout.MouseResizableTile (
                                    ) where
 
 import XMonad hiding (tile, splitVertically, splitHorizontallyBy)
+import XMonad.Prelude
 import qualified XMonad.StackSet as W
 import XMonad.Util.XUtils
 import Graphics.X11 as X
@@ -52,9 +53,9 @@ import Graphics.X11 as X
 -- > main = xmonad def { layoutHook = myLayout }
 --
 --
--- For more detailed instructions on editing the layoutHook see:
---
--- "XMonad.Doc.Extending#Editing_the_layout_hook"
+-- For more detailed instructions on editing the layoutHook see
+-- <https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial> and
+-- "XMonad.Doc.Extending#Editing_the_layout_hook".
 --
 -- You may also want to add the following key bindings:
 --
@@ -63,7 +64,7 @@ import Graphics.X11 as X
 --
 -- For detailed instruction on editing the key binding see:
 --
--- "XMonad.Doc.Extending#Editing_key_bindings".
+-- <https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial>.
 
 -- $mrtParameters
 -- The following functions are also labels for updating the @data@ (whose
@@ -146,7 +147,7 @@ instance LayoutClass MouseResizableTile Window where
                                             (rightFracs st ++ repeat (slaveFrac st)) sr' num drg
             rects' = map (mirrorAdjust id mirrorRect . sanitizeRectangle sr') rects
         mapM_ deleteDragger $ draggers st
-        (draggerWrs, newDraggers) <- unzip <$> mapM
+        (draggerWrs, newDraggers) <- mapAndUnzipM
                                         (createDragger sr . adjustForMirror (isMirrored st))
                                         preparedDraggers
         return (draggerWrs ++ zip wins rects', Just $ st { draggers = newDraggers,

@@ -1,5 +1,5 @@
 name:               xmonad-contrib
-version:            0.17.0.9
+version:            0.17.1.9
 -- ^ also update cpp-options: -DXMONAD_CONTRIB_VERSION_*
 
 homepage:           https://xmonad.org/
@@ -23,17 +23,22 @@ license:            BSD3
 license-file:       LICENSE
 author:             Spencer Janssen & others
 maintainer:         xmonad@haskell.org
-extra-source-files: README.md CHANGES.md scripts/generate-configs scripts/run-xmonad.sh
+extra-source-files: README.md
+                    CHANGES.md
+                    scripts/run-xmonad.sh
                     scripts/window-properties.sh
-                    scripts/xinitrc scripts/xmonad-acpi.c
+                    scripts/xinitrc
+                    scripts/xmonad-acpi.c
                     scripts/xmonad-clock.c
+                    scripts/xmonadctl.hs
+                    scripts/xmonadpropread.hs
                     XMonad/Config/dmwit.xmobarrc
                     XMonad/Config/Example.hs
 cabal-version:      1.12
 build-type:         Simple
 bug-reports:        https://github.com/xmonad/xmonad-contrib/issues
 
-tested-with:        GHC == 8.4.4 || == 8.6.5 || == 8.8.4 || == 8.10.7 || == 9.0.2 || == 9.2.2
+tested-with:        GHC == 8.6.5 || == 8.8.4 || == 8.10.7 || == 9.0.2 || == 9.2.5 || == 9.4.3
 
 source-repository head
   type:     git
@@ -67,14 +72,14 @@ library
 
     cpp-options:   -DXMONAD_CONTRIB_VERSION_MAJOR=0
                    -DXMONAD_CONTRIB_VERSION_MINOR=17
-                   -DXMONAD_CONTRIB_VERSION_PATCH=0
+                   -DXMONAD_CONTRIB_VERSION_PATCH=1
     ghc-options:   -Wall -Wno-unused-do-bind
 
     if flag(pedantic)
-       ghc-options: -Werror -Wwarn=deprecations
+       ghc-options: -Werror -Wwarn=deprecations -Wwarn=dodgy-imports
 
     -- Keep this in sync with the oldest version in 'tested-with'
-    if impl(ghc > 8.4.4)
+    if impl(ghc > 8.6.5)
        -- don't treat unused-imports warning as errors, they may be necessary
        -- for compatibility with older versions of base (or other deps)
        ghc-options: -Wwarn=unused-imports
@@ -113,6 +118,7 @@ library
                         XMonad.Actions.LinkWorkspaces
                         XMonad.Actions.MessageFeedback
                         XMonad.Actions.Minimize
+                        XMonad.Actions.MostRecentlyUsed
                         XMonad.Actions.MouseGestures
                         XMonad.Actions.MouseResize
                         XMonad.Actions.Navigation2D
@@ -126,6 +132,8 @@ library
                         XMonad.Actions.Prefix
                         XMonad.Actions.Promote
                         XMonad.Actions.RandomBackground
+                        XMonad.Actions.RepeatAction
+                        XMonad.Actions.Repeatable
                         XMonad.Actions.RotSlaves
                         XMonad.Actions.RotateSome
                         XMonad.Actions.Search
@@ -184,17 +192,17 @@ library
                         XMonad.Hooks.FadeWindows
                         XMonad.Hooks.FloatNext
                         XMonad.Hooks.Focus
-                        XMonad.Hooks.ICCCMFocus
                         XMonad.Hooks.InsertPosition
                         XMonad.Hooks.ManageDebug
                         XMonad.Hooks.ManageDocks
                         XMonad.Hooks.ManageHelpers
                         XMonad.Hooks.Minimize
+                        XMonad.Hooks.Modal
+                        XMonad.Hooks.OnPropertyChange
                         XMonad.Hooks.Place
                         XMonad.Hooks.PositionStoreHooks
                         XMonad.Hooks.RefocusLast
                         XMonad.Hooks.Rescreen
-                        XMonad.Hooks.RestoreMinimized
                         XMonad.Hooks.ScreenCorners
                         XMonad.Hooks.Script
                         XMonad.Hooks.ServerMode
@@ -237,6 +245,7 @@ library
                         XMonad.Layout.DwmStyle
                         XMonad.Layout.FixedAspectRatio
                         XMonad.Layout.FixedColumn
+                        XMonad.Layout.FocusTracking
                         XMonad.Layout.Fullscreen
                         XMonad.Layout.Gaps
                         XMonad.Layout.Grid
@@ -253,7 +262,6 @@ library
                         XMonad.Layout.ImageButtonDecoration
                         XMonad.Layout.IndependentScreens
                         XMonad.Layout.LayoutBuilder
-                        XMonad.Layout.LayoutBuilderP
                         XMonad.Layout.LayoutCombinators
                         XMonad.Layout.LayoutHints
                         XMonad.Layout.LayoutModifier
@@ -289,6 +297,7 @@ library
                         XMonad.Layout.ResizeScreen
                         XMonad.Layout.Roledex
                         XMonad.Layout.ShowWName
+                        XMonad.Layout.SideBorderDecoration
                         XMonad.Layout.SimpleDecoration
                         XMonad.Layout.SimpleFloat
                         XMonad.Layout.Simplest
@@ -352,7 +361,9 @@ library
                         XMonad.Util.ExtensibleConf
                         XMonad.Util.ExtensibleState
                         XMonad.Util.Font
+                        XMonad.Util.Grab
                         XMonad.Util.Hacks
+                        XMonad.Util.History
                         XMonad.Util.Image
                         XMonad.Util.Invisible
                         XMonad.Util.Loggers
@@ -365,6 +376,7 @@ library
                         XMonad.Util.Parser
                         XMonad.Util.Paste
                         XMonad.Util.PositionStore
+                        XMonad.Util.Process
                         XMonad.Util.PureX
                         XMonad.Util.Rectangle
                         XMonad.Util.RemoteWindows
@@ -407,6 +419,7 @@ test-suite tests
                   XMonad.Actions.FocusNth
                   XMonad.Actions.GridSelect
                   XMonad.Actions.PhysicalScreens
+                  XMonad.Actions.Repeatable
                   XMonad.Actions.RotateSome
                   XMonad.Actions.Submap
                   XMonad.Actions.SwapWorkspaces
@@ -436,6 +449,7 @@ test-suite tests
                   XMonad.Util.NamedActions
                   XMonad.Util.NamedWindows
                   XMonad.Util.Parser
+                  XMonad.Util.Process
                   XMonad.Util.PureX
                   XMonad.Util.Rectangle
                   XMonad.Util.Run
@@ -451,6 +465,7 @@ test-suite tests
   build-depends: base
                , QuickCheck >= 2
                , X11 >= 1.10 && < 1.11
+               , bytestring >= 0.10 && < 0.12
                , containers
                , directory
                , time >= 1.8 && < 1.13
@@ -467,10 +482,10 @@ test-suite tests
   default-language: Haskell2010
 
   if flag(pedantic)
-     ghc-options: -Werror -Wwarn=deprecations
+     ghc-options: -Werror -Wwarn=deprecations -Wwarn=dodgy-imports
 
   -- Keep this in sync with the oldest version in 'tested-with'
-  if impl(ghc > 8.4.4)
+  if impl(ghc > 8.6.5)
      -- don't treat unused-imports warning as errors, they may be necessary
      -- for compatibility with older versions of base (or other deps)
      ghc-options: -Wwarn=unused-imports

@@ -2,7 +2,7 @@
 
 ## The XMonad Core Team
 
-  * Brandon S Allbery [GitHub][geekosaur], IRC: `geekosaur`
+  * Brandon S Allbery [GitHub][geekosaur], IRC: `geekosaur`, [GPG][gpg:geekosaur]
 
   * Brent Yorgey [GitHub][byorgey], IRC: `byorgey`
 
@@ -21,6 +21,7 @@
 [liskin]: https://github.com/liskin
 [slotThe]: https://github.com/slotThe
 
+[gpg:geekosaur]: https://github.com/geekosaur.gpg
 [gpg:liskin]: https://github.com/liskin.gpg
 [gpg:slotThe]: https://github.com/slotThe.gpg
 
@@ -116,7 +117,12 @@ When the time comes to release another version of xmonad and xmonad-contrib:
 
      See [old announcements][old-announce] ([even older][older-announce]) for inspiration.
 
-  7. Bump version for development (add `.9`) and prepare fresh sections in
+  7. Trigger xmonad-docs build to generate and persist docs for the just
+     released version:
+
+     - https://github.com/xmonad/xmonad-docs/actions/workflows/stack.yml
+
+  8. Bump version for development (add `.9`) and prepare fresh sections in
      [`CHANGES.md`](CHANGES.md).
 
 [packdeps]: https://hackage.haskell.org/package/packdeps

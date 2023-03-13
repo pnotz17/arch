@@ -1,13 +1,14 @@
-{-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE LambdaCase   #-}
+{-# LANGUAGE BangPatterns        #-}
+{-# LANGUAGE LambdaCase          #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 --------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Prelude
 -- Description :  Utility functions and re-exports.
--- Copyright   :  slotThe <soliditsallgood@mailbox.org>
+-- Copyright   :  (c) 2021  Tony Zorman
 -- License     :  BSD3-style (see LICENSE)
 --
--- Maintainer  :  slotThe <soliditsallgood@mailbox.org>
+-- Maintainer  :  Tony Zorman <soliditsallgood@mailbox.org>
 --
 -- Utility functions and re-exports for a more ergonomic developing
 -- experience.  Users themselves will not find much use here.
@@ -22,6 +23,8 @@ module XMonad.Prelude (
     NonEmpty((:|)),
     notEmpty,
     safeGetWindowAttributes,
+    mkAbsolutePath,
+    findM,
 
     -- * Keys
     keyToString,
@@ -58,6 +61,9 @@ import Data.Bits
 import Data.List.NonEmpty (NonEmpty ((:|)))
 import Data.Tuple (swap)
 import GHC.Stack
+import System.Directory (getHomeDirectory)
+import System.Environment (getEnv)
+import Control.Exception (SomeException, handle)
 import qualified XMonad.StackSet as W
 
 -- | Short for 'fromIntegral'.
@@ -78,11 +84,26 @@ chunksOf i xs = chunk : chunksOf i rest
 (!?) xs n | n < 0 = Nothing
           | otherwise = listToMaybe $ drop n xs
 
--- | Multivariant composition.
+-- | Multivariable composition.
 --
 -- > f .: g ≡ (f .) . g ≡ \c d -> f (g c d)
 (.:) :: (a -> b) -> (c -> d -> a) -> c -> d -> b
 (.:) = (.) . (.)
+
+-- | Like 'find', but takes a monadic function instead; retains the
+-- short-circuiting behaviour of the non-monadic version.
+--
+-- For example,
+--
+-- > findM (\a -> putStr (show a <> " ") >> pure False) [1..10]
+--
+-- would print "1 2 3 4 5 6 7 8 9 10" and return @Nothing@, while
+--
+-- > findM (\a -> putStr (show a <> " ") >> pure True) [1..10]
+--
+-- would print @"1"@ and return @Just 1@.
+findM :: Monad m => (a -> m Bool) -> [a] -> m (Maybe a)
+findM p = foldr (\x -> ifM (p x) (pure $ Just x)) (pure Nothing)
 
 -- | 'Data.List.NonEmpty.fromList' with a better error message. Useful to
 -- silence GHC's Pattern match(es) are non-exhaustive warning in places where
@@ -92,12 +113,35 @@ notEmpty :: HasCallStack => [a] -> NonEmpty a
 notEmpty [] = error "unexpected empty list"
 notEmpty (x:xs) = x :| xs
 
--- | A safe version of 'Graphics.X11.Extras.getWindowAttributes'.
+-- | A safe version of 'Graphics.X11.Xlib.Extras.getWindowAttributes'.
 safeGetWindowAttributes :: Window -> X (Maybe WindowAttributes)
 safeGetWindowAttributes w = withDisplay $ \dpy -> io . alloca $ \p ->
   xGetWindowAttributes dpy w p >>= \case
     0 -> pure Nothing
     _ -> Just <$> peek p
+
+-- | (Naïvely) turn a relative path into an absolute one.
+--
+-- * If the path starts with @\/@, do nothing.
+--
+-- * If it starts with @~\/@, replace that with the actual home
+-- * directory.
+--
+-- * If it starts with @$@, read the name of an environment
+-- * variable and replace it with the contents of that.
+--
+-- * Otherwise, prepend the home directory and @\/@ to the path.
+mkAbsolutePath :: MonadIO m => FilePath -> m FilePath
+mkAbsolutePath ps = do
+  home <- io getHomeDirectory
+  case ps of
+    '/'       : _ -> pure ps
+    '~' : '/' : _ -> pure (home <> drop 1 ps)
+    '$'       : _ -> let (v,ps') = span (`elem` ("_"<>['A'..'Z']<>['a'..'z']<>['0'..'9'])) (drop 1 ps)
+                      in io ((\(_ :: SomeException) -> pure "") `handle` getEnv v) Exports.<&> (<> ps')
+    _             -> pure (home <> ('/' : ps))
+{-# SPECIALISE mkAbsolutePath :: FilePath -> IO FilePath #-}
+{-# SPECIALISE mkAbsolutePath :: FilePath -> X  FilePath #-}
 
 -----------------------------------------------------------------------
 -- Keys
@@ -171,7 +215,7 @@ regularKeys = map (first (:[]))
 allSpecialKeys :: [(String, KeySym)]
 allSpecialKeys = functionKeys <> specialKeys <> multimediaKeys
 
--- | A list pairing function key descriptor strings (e.g. @\"<F2>\"@)
+-- | A list pairing function key descriptor strings (e.g. @\"\<F2\>\"@)
 -- with the associated KeySyms.
 functionKeys :: [(String, KeySym)]
 functionKeys = [ ('F' : show n, k)

@@ -29,6 +29,9 @@ module XMonad.Layout.ImageButtonDecoration
       -- $usage
       imageButtonDeco
     , defaultThemeWithImageButtons
+    , shrinkText
+    , CustomShrink(CustomShrink)
+    , Shrinker
     , imageTitleBarButtonHandler
     , ImageButtonDecoration
     ) where

@@ -16,7 +16,11 @@
 ------------------------------------------------------------------------------
 
 
-module Xmobar.Config.Parse(readConfig, parseConfig) where
+module Xmobar.Config.Parse(readConfig
+                          , parseConfig
+                          , indexedFont
+                          , indexedOffset
+                          , colorComponents) where
 
 import Text.ParserCombinators.Parsec
 import Text.ParserCombinators.Parsec.Number (int)
@@ -26,16 +30,15 @@ import Data.Functor ((<&>))
 
 import Xmobar.Config.Types
 
-#if defined XFT || defined UTF8
 import qualified System.IO as S (readFile)
-#endif
 
-readFileSafe :: FilePath -> IO String
-#if defined XFT || defined UTF8
-readFileSafe = S.readFile
-#else
-readFileSafe = readFile
-#endif
+-- | Splits a colors string into its two components
+colorComponents :: Config -> String -> (String, String)
+colorComponents conf c =
+  case break (==',') c of
+    (f,',':b) -> (f, b)
+    (f,    _) -> (f, bgColor conf)
+
 
 stripComments :: String -> String
 stripComments =
@@ -69,7 +72,7 @@ parseConfig defaultConfig =
               <|?> pAllDesktops <|?> pOverrideRedirect <|?> pPickBroadest
               <|?> pLowerOnStart <|?> pPersistent <|?> pIconRoot
               <|?> pCommands <|?> pSepChar <|?> pAlignSep <|?> pTemplate
-              <|?> pVerbose <|?> pSignal
+              <|?> pVerbose <|?> pSignal <|?> pDpi
 
       fields    = [ "font", "additionalFonts", "bgColor", "fgColor"
                   , "wmClass", "wmName", "sepChar"
@@ -78,7 +81,7 @@ parseConfig defaultConfig =
                   , "allDesktops", "overrideRedirect", "pickBroadest"
                   , "hideOnStart", "lowerOnStart", "persistent", "iconRoot"
                   , "alpha", "commands", "verbose", "signal", "textOutput"
-                  , "textOutputFormat"
+                  , "textOutputFormat", "dpi"
                   ]
 
       pTextOutput = readField textOutput "textOutput"
@@ -109,6 +112,7 @@ parseConfig defaultConfig =
       pIconRoot = readField iconRoot "iconRoot"
       pAlpha = readField alpha "alpha"
       pVerbose = readField verbose "verbose"
+      pDpi = readField dpi "dpi"
 
       pSignal = field signal "signal" $
         fail "signal is meant for use with Xmobar as a library.\n It is not meant for use in the configuration file."
@@ -182,4 +186,18 @@ commandsErr = "commands: this usually means that a command could not" ++
 -- parsed.
 readConfig :: Config -> FilePath -> IO (Either ParseError (Config,[String]))
 readConfig defaultConfig f =
-  liftIO (readFileSafe f) <&> parseConfig defaultConfig
+  liftIO (S.readFile f) <&> parseConfig defaultConfig
+
+-- | Extracts from a configuration the additional font at the corresponding index.
+-- Returns the default font if not present.
+indexedFont :: Config -> FontIndex -> String
+indexedFont config idx =
+  if idx < 1 || idx > length (additionalFonts config)
+  then font config else additionalFonts config !! (idx - 1)
+
+-- | Extracts from a configuration the offset at the corresponding index.
+-- Returns the default offset if not present.
+indexedOffset :: Config -> FontIndex -> Int
+indexedOffset config idx =
+  if idx < 1 || idx > length (textOffsets config)
+  then textOffset config else textOffsets config !! (idx - 1)

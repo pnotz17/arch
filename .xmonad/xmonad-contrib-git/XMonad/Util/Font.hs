@@ -64,16 +64,23 @@ stringToPixel d s = fromMaybe fallBack <$> io getIt
           fallBack = blackPixel d (defaultScreen d)
 
 -- | Convert a @Pixel@ into a @String@.
+--
+-- This function removes any alpha channel from the @Pixel@, because X11
+-- mishandles alpha channels and produces black.
 pixelToString :: (MonadIO m) => Display -> Pixel -> m String
 pixelToString d p = do
     let cm = defaultColormap d (defaultScreen d)
-    (Color _ r g b _) <- io (queryColor d cm $ Color p 0 0 0 0)
+    (Color _ r g b _) <- io (queryColor d cm $ Color (p .&. 0x00FFFFFF) 0 0 0 0)
     return ("#" ++ hex r ++ hex g ++ hex b)
   where
     -- NOTE: The @Color@ type has 16-bit values for red, green, and
     -- blue, even though the actual type in X is only 8 bits wide.  It
     -- seems that the upper and lower 8-bit sections of the @Word16@
     -- values are the same.  So, we just discard the lower 8 bits.
+    --
+    -- (Strictly, X11 supports 16-bit values but no visual supported
+    -- by XOrg does. It is still correct to discard the lower bits, as
+    -- they are not guaranteed to be meaningful in such visuals.)
     hex = printf "%02x" . (`shiftR` 8)
 
 econst :: a -> IOException -> a
@@ -116,12 +123,15 @@ initXMF s =
   if xftPrefix `isPrefixOf` s then
      do dpy <- asks display
         let fonts = case wordsBy (== ',') (drop (length xftPrefix) s) of
-              []       -> "xft:monospace" :| []  -- NE.singleton only in base 4.15
+              []       -> fallback :| []  -- NE.singleton only in base 4.15
               (x : xs) -> x :| xs
-        Xft <$> io (traverse (openFont dpy) fonts)
+        fb <- io $ openFont dpy fallback
+        fmap Xft . io $ traverse (\f -> E.catch (openFont dpy f) (econst $ pure fb))
+                                 fonts
   else Utf8 <$> initUtf8Font s
  where
   xftPrefix = "xft:"
+  fallback  = "xft:monospace"
   openFont dpy str = xftFontOpen dpy (defaultScreenOfDisplay dpy) str
   wordsBy p str = case dropWhile p str of
     ""   -> []

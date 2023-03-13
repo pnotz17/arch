@@ -1,6 +1,13 @@
-{-# LANGUAGE ExistentialQuantification, FlexibleInstances, GeneralizedNewtypeDeriving,
-             MultiParamTypeClasses, TypeSynonymInstances, DeriveDataTypeable,
-             LambdaCase, NamedFieldPuns, DeriveTraversable #-}
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DerivingVia #-}
 
 -----------------------------------------------------------------------------
 -- |
@@ -35,17 +42,19 @@ module XMonad.Core (
 import XMonad.StackSet hiding (modify)
 
 import Prelude
-import Control.Exception (fromException, try, bracket, bracket_, throw, finally, SomeException(..))
+import Control.Exception (fromException, try, bracket_, throw, finally, SomeException(..))
 import qualified Control.Exception as E
 import Control.Applicative ((<|>), empty)
 import Control.Monad.Fail
+import Control.Monad.Fix (fix)
 import Control.Monad.State
 import Control.Monad.Reader
+import Control.Monad (filterM, guard, void, when)
 import Data.Semigroup
 import Data.Traversable (for)
 import Data.Time.Clock (UTCTime)
 import Data.Default.Class
-import Data.List (isInfixOf)
+import System.Environment (lookupEnv)
 import System.FilePath
 import System.IO
 import System.Info
@@ -60,8 +69,9 @@ import System.Exit
 import Graphics.X11.Xlib
 import Graphics.X11.Xlib.Extras (getWindowAttributes, WindowAttributes, Event)
 import Data.Typeable
-import Data.List ((\\))
+import Data.List (isInfixOf, (\\))
 import Data.Maybe (isJust,fromMaybe)
+import Data.Monoid (Ap(..))
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -157,12 +167,7 @@ newtype ScreenDetail = SD { screenRect :: Rectangle }
 --
 newtype X a = X (ReaderT XConf (StateT XState IO) a)
     deriving (Functor, Applicative, Monad, MonadFail, MonadIO, MonadState XState, MonadReader XConf)
-
-instance Semigroup a => Semigroup (X a) where
-    (<>) = liftM2 (<>)
-
-instance (Monoid a) => Monoid (X a) where
-    mempty = pure mempty
+    deriving (Semigroup, Monoid) via Ap X a
 
 instance Default a => Default (X a) where
     def = return def
@@ -170,15 +175,10 @@ instance Default a => Default (X a) where
 type ManageHook = Query (Endo WindowSet)
 newtype Query a = Query (ReaderT Window X a)
     deriving (Functor, Applicative, Monad, MonadReader Window, MonadIO)
+    deriving (Semigroup, Monoid) via Ap Query a
 
 runQuery :: Query a -> Window -> X a
-runQuery (Query m) w = runReaderT m w
-
-instance Semigroup a => Semigroup (Query a) where
-    (<>) = liftM2 (<>)
-
-instance Monoid a => Monoid (Query a) where
-    mempty = pure mempty
+runQuery (Query m) = runReaderT m
 
 instance Default a => Default (Query a) where
     def = return def
@@ -195,7 +195,7 @@ catchX job errcase = do
     st <- get
     c <- ask
     (a, s') <- io $ runX c st job `E.catch` \e -> case fromException e of
-                        Just x -> throw e `const` (x `asTypeOf` ExitSuccess)
+                        Just (_ :: ExitCode) -> throw e
                         _ -> do hPrint stderr e; runX c st errcase
     put s'
     return a
@@ -203,12 +203,12 @@ catchX job errcase = do
 -- | Execute the argument, catching all exceptions.  Either this function or
 -- 'catchX' should be used at all callsites of user customized code.
 userCode :: X a -> X (Maybe a)
-userCode a = catchX (Just `liftM` a) (return Nothing)
+userCode a = catchX (Just <$> a) (return Nothing)
 
 -- | Same as userCode but with a default argument to return instead of using
 -- Maybe, provided for convenience.
 userCodeDef :: a -> X a -> X a
-userCodeDef defValue a = fromMaybe defValue `liftM` userCode a
+userCodeDef defValue a = fromMaybe defValue <$> userCode a
 
 -- ---------------------------------------------------------------------
 -- Convenient wrappers to state
@@ -229,7 +229,7 @@ withWindowAttributes dpy win f = do
 
 -- | True if the given window is the root window
 isRoot :: Window -> X Bool
-isRoot w = (w==) <$> asks theRoot
+isRoot w = asks $ (w ==) . theRoot
 
 -- | Wrapper for the common case of atom internment
 getAtom :: String -> X Atom
@@ -431,7 +431,7 @@ catchIO f = io (f `E.catch` \(SomeException e) -> hPrint stderr e >> hFlush stde
 --
 -- Note this function assumes your locale uses utf8.
 spawn :: MonadIO m => String -> m ()
-spawn x = spawnPID x >> return ()
+spawn x = void $ spawnPID x
 
 -- | Like 'spawn', but returns the 'ProcessID' of the launched application
 spawnPID :: MonadIO m => String -> m ProcessID
@@ -445,14 +445,19 @@ xfork x = io . forkProcess . finally nullStdin $ do
                 x
  where
     nullStdin = do
+#if MIN_VERSION_unix(2,8,0)
+        fd <- openFd "/dev/null" ReadOnly defaultFileFlags
+#else
         fd <- openFd "/dev/null" ReadOnly Nothing defaultFileFlags
+#endif
         dupTo fd stdInput
         closeFd fd
 
 -- | Use @xmessage@ to show information to the user.
 xmessage :: MonadIO m => String -> m ()
 xmessage msg = void . xfork $ do
-    executeFile "xmessage" True
+    xmessageBin <- fromMaybe "xmessage" <$> liftIO (lookupEnv "XMONAD_XMESSAGE")
+    executeFile xmessageBin True
         [ "-default", "okay"
         , "-xrm", "*international:true"
         , "-xrm", "*fontSet:-*-fixed-medium-r-normal-*-18-*-*-*-*-*-*-*,-*-fixed-*-*-*-*-18-*-*-*-*-*-*-*,-*-*-*-*-*-*-18-*-*-*-*-*-*-*"
@@ -645,11 +650,12 @@ getModTime f = E.catch (Just <$> getModificationTime f) (\(SomeException _) -> r
 compile :: Directories -> Compile -> IO ExitCode
 compile dirs method =
     bracket_ uninstallSignalHandlers installSignalHandlers $
-        bracket (openFile (errFileName dirs) WriteMode) hClose $ \err -> do
+        withFile (errFileName dirs) WriteMode $ \err -> do
             let run = runProc (cfgDir dirs) err
             case method of
-                CompileGhc ->
-                    run "ghc" ghcArgs
+                CompileGhc -> do
+                    ghc <- fromMaybe "ghc" <$> lookupEnv "XMONAD_GHC"
+                    run ghc ghcArgs
                 CompileStackGhc stackYaml ->
                     run "stack" ["build", "--silent", "--stack-yaml", stackYaml] .&&.
                     run "stack" ("ghc" : "--stack-yaml" : stackYaml : "--" : ghcArgs)

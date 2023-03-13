@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE TupleSections #-}
 --------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Util.EZConfig
@@ -23,6 +24,7 @@ module XMonad.Util.EZConfig (
                              -- * Adding or removing keybindings
 
                              additionalKeys, additionalKeysP,
+                             remapKeysP,
                              removeKeys, removeKeysP,
                              additionalMouseBindings, removeMouseBindings,
 
@@ -90,6 +92,7 @@ import Data.Ord (comparing)
 additionalKeys :: XConfig a -> [((KeyMask, KeySym), X ())] -> XConfig a
 additionalKeys conf keyList =
     conf { keys = M.union (M.fromList keyList) . keys conf }
+infixl 4 `additionalKeys`
 
 -- | Like 'additionalKeys', except using short @String@ key
 --   descriptors like @\"M-m\"@ instead of @(modMask, xK_m)@, as
@@ -104,6 +107,42 @@ additionalKeys conf keyList =
 additionalKeysP :: XConfig l -> [(String, X ())] -> XConfig l
 additionalKeysP conf keyList =
     conf { keys = \cnf -> M.union (mkKeymap cnf keyList) (keys conf cnf) }
+infixl 4 `additionalKeysP`
+
+-- |
+-- Remap keybindings from one binding to another.  More precisely, the
+-- input list contains pairs of the form @(TO, FROM)@, and maps the
+-- action bound to @FROM@ to the key @TO@.  For example, the following
+-- would bind @"M-m"@ to what's bound to @"M-c"@ (which is to close the
+-- focused window, in this case):
+--
+-- > main :: IO ()
+-- > main = xmonad $ def `remapKeysP` [("M-m", "M-c")]
+--
+-- NOTE: Submaps are not transparent, and thus these keys can't be
+-- accessed in this way: more explicitly, the @FROM@ string may **not**
+-- be a submap.  However, the @TO@ can be a submap without problems.
+-- This means that
+--
+-- > xmonad $ def `remapKeysP` [("M-m", "M-c a")]
+--
+-- is illegal (and indeed will just disregard the binding altogether),
+-- while
+--
+-- > xmonad $ def `remapKeysP` [("M-c a", "M-m")]
+--
+-- is totally fine.
+remapKeysP :: XConfig l -> [(String, String)] -> XConfig l
+remapKeysP conf keyList =
+    conf { keys = \cnf -> mkKeymap cnf (keyList' cnf) <> keys conf cnf }
+  where
+   keyList' :: XConfig Layout -> [(String, X ())]
+   keyList' cnf =
+     mapMaybe (traverse (\s -> case readKeySequence cnf s of
+                                 Just [ks] -> keys conf cnf M.!? ks
+                                 _         -> Nothing))
+              keyList
+infixl 4 `remapKeysP`
 
 -- |
 -- Remove standard keybindings you're not using. Example use:
@@ -113,6 +152,7 @@ additionalKeysP conf keyList =
 removeKeys :: XConfig a -> [(KeyMask, KeySym)] -> XConfig a
 removeKeys conf keyList =
     conf { keys = \cnf -> foldr M.delete (keys conf cnf) keyList }
+infixl 4 `removeKeys`
 
 -- | Like 'removeKeys', except using short @String@ key descriptors
 --   like @\"M-m\"@ instead of @(modMask, xK_m)@, as described in the
@@ -123,17 +163,20 @@ removeKeys conf keyList =
 
 removeKeysP :: XConfig l -> [String] -> XConfig l
 removeKeysP conf keyList =
-    conf { keys = \cnf -> keys conf cnf `M.difference` mkKeymap cnf (zip keyList $ repeat (return ())) }
+    conf { keys = \cnf -> keys conf cnf `M.difference` mkKeymap cnf (map (, return ()) keyList) }
+infixl 4 `removeKeysP`
 
 -- | Like 'additionalKeys', but for mouse bindings.
 additionalMouseBindings :: XConfig a -> [((ButtonMask, Button), Window -> X ())] -> XConfig a
 additionalMouseBindings conf mouseBindingsList =
     conf { mouseBindings = M.union (M.fromList mouseBindingsList) . mouseBindings conf }
+infixl 4 `additionalMouseBindings`
 
 -- | Like 'removeKeys', but for mouse bindings.
 removeMouseBindings :: XConfig a -> [(ButtonMask, Button)] -> XConfig a
 removeMouseBindings conf mouseBindingList =
     conf { mouseBindings = \cnf -> foldr M.delete (mouseBindings conf cnf) mouseBindingList }
+infixl 4 `removeMouseBindings`
 
 
 --------------------------------------------------------------
@@ -437,7 +480,7 @@ parseModifier c = (string "M-" $> modMask c)
                      return $ indexMod (read [n] - 1)
     where indexMod = (!!) [mod1Mask,mod2Mask,mod3Mask,mod4Mask,mod5Mask]
 
--- | Parse an unmodified basic key, like @\"x\"@, @\"<F1>\"@, etc.
+-- | Parse an unmodified basic key, like @\"x\"@, @\"\<F1\>\"@, etc.
 parseKey :: Parser KeySym
 parseKey = parseSpecial <> parseRegular
 

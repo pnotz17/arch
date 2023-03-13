@@ -49,7 +49,7 @@ import qualified Control.Exception as E
 -- >     , ((modm, xK_F1), manPrompt def)
 --
 -- For detailed instruction on editing the key binding see
--- "XMonad.Doc.Extending#Editing_key_bindings".
+-- <https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial>.
 
 data Man = Man
 
@@ -88,7 +88,7 @@ manCompl c mans s | s == "" || last s == ' ' = return []
 
 -- | Run a command using shell and return its output.
 --
--- XXX Merge into 'XMonad.Util.Run'?
+-- XXX Merge into "XMonad.Util.Run"?
 --
 -- (Ask \"gurus\" whether @evaluate (length ...)@ approach is
 -- better\/more idiomatic.)

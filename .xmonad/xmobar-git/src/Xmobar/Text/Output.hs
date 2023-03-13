@@ -15,13 +15,15 @@
 
 module Xmobar.Text.Output (initLoop, format) where
 
-import Xmobar.Config.Types (Config(textOutputFormat, additionalFonts, font)
-                           , TextOutputFormat(..))
-import Xmobar.Run.Parsers ( Segment
-                          , Widget(..)
-                          , parseString
-                          , tColorsString
-                          , colorComponents)
+import Xmobar.Config.Types ( Config (..)
+                           , TextOutputFormat (..)
+                           , Segment
+                           , Widget (..)
+                           , tColorsString)
+
+
+import Xmobar.Config.Parse (colorComponents)
+import Xmobar.Config.Template (parseString)
 
 import Xmobar.Text.Ansi (withAnsiColor)
 import Xmobar.Text.Pango (withPangoMarkup)
@@ -47,9 +49,9 @@ formatWithColor conf (Hspace n, i, x, y) =
    formatWithColor conf (Text $ replicate (fromIntegral n) ' ', i, x, y)
 formatWithColor _ _ = ""
 
-format :: Config -> String -> IO String
+format :: Config -> String -> String
 format conf s = do
-  segments <- parseString conf s
+  let segments = parseString conf s
   case textOutputFormat conf of
-    Swaybar -> return $ formatSwaybar conf segments
-    _ -> return (concatMap (formatWithColor conf) segments)
+    Swaybar -> formatSwaybar conf segments
+    _ -> concatMap (formatWithColor conf) segments

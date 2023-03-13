@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.Hooks.ManageDebug
--- Description :  A manageHook and associated logHook for debugging "ManageHooks".
+-- Description :  A manageHook and associated logHook for debugging ManageHooks.
 -- Copyright   :  (c) Brandon S Allbery KF8NH, 2014
 -- License     :  BSD3-style (see LICENSE)
 --
@@ -12,7 +12,7 @@
 -- A @manageHook@ and associated @logHook@ for debugging 'ManageHook's.
 -- Simplest usage: wrap your xmonad config in the @debugManageHook@ combinator.
 -- Or use @debugManageHookOn@ for a triggerable version, specifying the
--- triggering key sequence in 'XMonad.Util.EZConfig' syntax. Or use the
+-- triggering key sequence in "XMonad.Util.EZConfig" syntax. Or use the
 -- individual hooks in whatever way you see fit.
 --
 -----------------------------------------------------------------------------
@@ -42,16 +42,16 @@ instance ExtensionClass ManageStackDebug where
 
 -- | A combinator to add full 'ManageHook' debugging in a single operation.
 debugManageHook :: XConfig l -> XConfig l
-debugManageHook cf = cf {logHook    = manageDebugLogHook <+> logHook    cf
-                        ,manageHook = manageDebug        <+> manageHook cf
+debugManageHook cf = cf {logHook    = manageDebugLogHook <> logHook    cf
+                        ,manageHook = manageDebug        <> manageHook cf
                         }
 
 -- | A combinator to add triggerable 'ManageHook' debugging in a single operation.
---   Specify a key sequence as a string in 'XMonad.Util.EZConfig' syntax; press
+--   Specify a key sequence as a string in "XMonad.Util.EZConfig" syntax; press
 --   this key before opening the window to get just that logged.
 debugManageHookOn :: String -> XConfig l -> XConfig l
-debugManageHookOn key cf = cf {logHook    = manageDebugLogHook <+> logHook    cf
-                              ,manageHook = maybeManageDebug   <+> manageHook cf
+debugManageHookOn key cf = cf {logHook    = manageDebugLogHook <> logHook    cf
+                              ,manageHook = maybeManageDebug   <> manageHook cf
                               }
                            `additionalKeysP`
                            [(key,debugNextManagedWindow)]

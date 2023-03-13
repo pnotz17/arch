@@ -1,6 +1,6 @@
 name:               xmobar
-version:            0.43
-homepage:           https://github.com/jaor/xmobar
+version:            0.46
+homepage:           https://codeberg.org/xmobar/xmobar
 synopsis:           A Minimalistic Text Based Status Bar
 description: 	    Xmobar is a minimalistic text based status bar.
                     .
@@ -12,28 +12,28 @@ license:            BSD3
 license-file:       license
 author:             Andrea Rossato and Jose A. Ortega Ruiz
 maintainer:         Jose A. Ortega Ruiz <jao@gnu.org>
-bug-reports:        https://github.com/jaor/xmobar/issues
+bug-reports:        https://codeberg.org/xmobar/xmobar/issues
 cabal-version:      >= 1.10
 build-type:         Simple
 
 extra-source-files: readme.org, changelog.md,
-                    doc/quick-start.org, doc/plugins.org
-                    examples/padding-icon.sh,
-                    examples/xmobar.config,
-                    examples/xmobar.hs,
-                    examples/xmonadpropwrite.hs
+                    doc/quick-start.org,
+                    doc/plugins.org,
+                    doc/compiling.org,
+                    doc/using-haskell.org,
+                    etc/padding-icon.sh,
+                    etc/xmobar.config,
+                    etc/xmobar.hs,
+                    etc/xmonadpropwrite.hs,
+                    etc/xmobar.el
 
 source-repository head
   type:      git
-  location:  git://github.com/jaor/xmobar.git
+  location:  git://codeberg.org/xmobar/xmobar.git
   branch:    master
 
-flag with_xft
-  description: Use Xft to render text. UTF-8 support included.
-  default: False
-
-flag with_utf8
-  description: With UTF-8 support.
+flag with_xrender
+  description: Use XRender for alpha background pseudo-transparency.
   default: True
 
 flag with_inotify
@@ -84,13 +84,13 @@ flag with_rtsopts
   description: Use -with-rtsopts=-V0 to reduce wakeups.
   default: True
 
-flag with_uvmeter
-  description: UVMeter only useful to australians.
-  default: False
-
 flag with_weather
   description: Enable weather plugin.
   default: True
+
+flag with_uvmeter
+  description: UVMeter only useful to australians.
+  default: False
 
 flag with_kraken
   description: Enable Kraken plugin.
@@ -109,14 +109,17 @@ library
     other-modules: Paths_xmobar,
                    Xmobar.Config.Types,
                    Xmobar.Config.Parse,
+                   Xmobar.Config.Template,
                    Xmobar.Run.Types,
                    Xmobar.Run.Timer,
                    Xmobar.Run.Template,
                    Xmobar.Run.Exec,
                    Xmobar.Run.Runnable
                    Xmobar.Run.Actions,
-                   Xmobar.Run.Parsers,
                    Xmobar.Run.Loop,
+                   Xmobar.Draw.Boxes,
+                   Xmobar.Draw.Cairo,
+                   Xmobar.Draw.Types,
                    Xmobar.App.Config,
                    Xmobar.App.Main,
                    Xmobar.App.Opts,
@@ -133,14 +136,15 @@ library
                    Xmobar.Text.Swaybar,
                    Xmobar.Text.SwaybarClicks,
                    Xmobar.Text.Output,
+                   Xmobar.X11.Bitmap,
+                   Xmobar.X11.CairoSurface,
+                   Xmobar.X11.ColorCache,
+                   Xmobar.X11.Draw,
                    Xmobar.X11.Events,
                    Xmobar.X11.Loop,
-                   Xmobar.X11.Types,
                    Xmobar.X11.Text,
-                   Xmobar.X11.Bitmap,
-                   Xmobar.X11.ColorCache,
+                   Xmobar.X11.Types,
                    Xmobar.X11.Window,
-                   Xmobar.X11.Draw,
                    Xmobar.Plugins.Command,
                    Xmobar.Plugins.BufferedPipeReader,
                    Xmobar.Plugins.CommandReader,
@@ -188,17 +192,19 @@ library
     ghc-options: -funbox-strict-fields -Wall -fno-warn-unused-do-bind
 
     build-depends:
-                  X11 >= 1.6.1,
                   aeson >= 1.4.7.1,
                   async,
-                  base >= 4.11.0 && < 4.17,
+                  base >= 4.11.0 && < 4.18,
                   bytestring >= 0.10.8.2,
+                  cairo >= 0.13,
+                  colour >= 2.3.6,
                   containers,
                   directory,
                   extensible-exceptions == 0.1.*,
                   filepath,
                   mtl >= 2.1 && < 2.3,
                   old-locale,
+                  pango >= 0.13,
                   parsec == 3.1.*,
                   parsec-numbers >= 0.1.0,
                   process,
@@ -206,7 +212,9 @@ library
                   stm >= 2.3 && < 2.6,
                   time,
                   transformers,
-                  unix
+                  unix,
+                  utf8-string >= 0.3 && < 1.1,
+                  X11 >= 1.6.1
 
     if impl(ghc < 8.0.2)
        -- Disable building with GHC before 8.0.2.
@@ -218,20 +226,16 @@ library
     if flag(with_threaded)
        -- -threaded is a workaround for 100% CPU busy loop
        -- (http://hackage.haskell.org/trac/ghc/ticket/4934).
-       -- See also comments in https://github.com/jaor/xmobar/pull/36
+       -- See also comments in https://codeberg.org/xmobar/xmobar/pulls/36
        cpp-options: -DTHREADED_RUNTIME
 
     if flag(with_rtsopts)
        cpp-options: -DRTSOPTS
 
-    if flag(with_xft) || flag(all_extensions)
-       build-depends: utf8-string >= 0.3 && < 1.1, X11-xft >= 0.2 && < 0.4
-       other-modules: Xmobar.X11.MinXft
-       cpp-options: -DXFT
-
-    if flag(with_utf8) || flag(all_extensions)
-       build-depends: utf8-string >= 0.3 && < 1.1
-       cpp-options: -DUTF8
+    if flag(with_xrender)
+       build-depends: X11-xft >= 0.2
+       other-modules: Xmobar.X11.XRender
+       cpp-options: -DXRENDER
 
     if flag(with_inotify) || flag(all_extensions)
        build-depends: hinotify >= 0.3 && < 0.5
@@ -260,8 +264,8 @@ library
        build-depends: alsa-mixer >= 0.3 && < 0.4
        build-depends: alsa-core == 0.5.*,
                       process >= 1.4.3.0
-       other-modules: Xmobar.Plugins.Monitors.Volume
-                        Xmobar.Plugins.Monitors.Alsa
+       other-modules: Xmobar.Plugins.Monitors.Volume,
+                      Xmobar.Plugins.Monitors.Alsa
        cpp-options: -DALSA
 
     if flag(with_datezone) || flag(all_extensions)
@@ -334,14 +338,14 @@ executable xmobar
     default-language:   Haskell2010
     hs-source-dirs:     app
     main-is:            Main.hs
-    build-depends:      base,
-                        containers,
+    build-depends:      X11,
                         async,
-                        X11,
+                        base,
+                        containers,
                         directory,
                         filepath,
-                        unix,
                         parsec,
+                        unix,
                         xmobar
 
     ghc-options: -funbox-strict-fields -Wall -fno-warn-unused-do-bind
@@ -350,9 +354,6 @@ executable xmobar
        ghc-options: -with-rtsopts=-V0
 
     if flag(with_threaded)
-       -- -threaded is a workaround for 100% CPU busy loop
-       -- (http://hackage.haskell.org/trac/ghc/ticket/4934).
-       -- See also comments in https://github.com/jaor/xmobar/pull/36
        ghc-options: -threaded
        cpp-options: -DTHREADED_RUNTIME
 
@@ -361,25 +362,25 @@ test-suite XmobarTest
   type:           exitcode-stdio-1.0
   hs-source-dirs: src, test
   main-is:        Spec.hs
-  build-depends: base,
-                 containers,
-                 regex-compat,
-                 process,
-                 old-locale,
+  build-depends: X11,
+                 async,
+                 base,
                  bytestring,
+                 containers,
                  directory,
-                 unix,
-                 time,
                  filepath,
-                 transformers,
-                 X11,
+                 hspec == 2.*,
                  mtl,
+                 old-locale,
                  parsec,
                  parsec-numbers,
+                 process,
+                 regex-compat,
                  stm,
-                 async,
                  temporary,
-                 hspec == 2.*,
+                 time,
+                 transformers,
+                 unix,
                  xmobar
 
   other-modules: Xmobar.Plugins.Monitors.CommonSpec
@@ -416,8 +417,7 @@ test-suite XmobarTest
 benchmark xmobarbench
   type: exitcode-stdio-1.0
   main-is: main.hs
-  hs-source-dirs:
-      bench
+  hs-source-dirs: bench
   ghc-options: -funbox-strict-fields -Wall -fno-warn-unused-do-bind -O2
-  build-depends: base, gauge, xmobar, mtl, time
+  build-depends: base, gauge, mtl, time, xmobar
   default-language: Haskell2010

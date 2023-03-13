@@ -19,9 +19,6 @@
 -- window, and allows you "swallow" that parent window for the time the new
 -- window is running.
 --
--- __NOTE__: This module depends on @pstree@ to analyze the process hierarchy, so make
--- sure that is on your @$PATH@.
---
 -- __NOTE__ that this does not always work perfectly:
 --
 -- - Because window swallowing needs to check the process hierarchy, it requires
@@ -36,7 +33,9 @@
 --   by looking at the window. This requires the @_NET_WM_PID@ X-property to be set.
 --   If any application you want to use this with does not provide the @_NET_WM_PID@,
 --   there is not much you can do except for reaching out to the author of that
---   application and asking them to set that property.
+--   application and asking them to set that property. Additionally,
+--   applications running in their own PID namespace, such as those in
+--   Flatpak, can't set a correct @_NET_WM_PID@ even if they wanted to.
 -----------------------------------------------------------------------------
 module XMonad.Hooks.WindowSwallowing
   ( -- * Usage
@@ -50,8 +49,9 @@ import qualified XMonad.StackSet               as W
 import           XMonad.Layout.SubLayouts
 import qualified XMonad.Util.ExtensibleState   as XS
 import           XMonad.Util.WindowProperties
-import           XMonad.Util.Run                ( runProcessWithInput )
+import           XMonad.Util.Process            ( getPPIDChain )
 import qualified Data.Map.Strict               as M
+import           System.Posix.Types             ( ProcessID )
 
 -- $usage
 -- You can use this module by including  the following in your @~\/.xmonad/xmonad.hs@:
@@ -62,11 +62,11 @@ import qualified Data.Map.Strict               as M
 --
 -- > myHandleEventHook = swallowEventHook (className =? "Alacritty" <||> className =? "Termite") (return True)
 --
--- The variant 'swallowEventHookSub' can be used if a layout from "XMonad.Layouts.SubLayouts" is used;
+-- The variant 'swallowEventHookSub' can be used if a layout from "XMonad.Layout.SubLayouts" is used;
 -- instead of swallowing the window it will merge the child window with the parent. (this does not work with floating windows)
 --
 -- For more information on editing your handleEventHook and key bindings,
--- see "XMonad.Doc.Extending".
+-- see <https://xmonad.org/TUTORIAL.html the tutorial> and "XMonad.Doc.Extending".
 
 -- | Run @action@ iff both parent- and child queries match and the child
 -- is a child by PID.
@@ -98,7 +98,7 @@ handleMapRequestEvent parentQ childQ childWindow action =
       return ()
 
 -- | handleEventHook that will merge child windows via
--- "XMonad.Layouts.SubLayouts" when they are opened from another window.
+-- "XMonad.Layout.SubLayouts" when they are opened from another window.
 swallowEventHookSub
   :: Query Bool -- ^ query the parent window has to match for window swallowing to occur.
                 --   Set this to @return True@ to run swallowing for every parent.
@@ -226,12 +226,10 @@ moveFloatingState from to ws = ws
 -- | check if a given process is a child of another process. This depends on "pstree" being in the PATH
 -- NOTE: this does not work if the child process does any kind of process-sharing.
 isChildOf
-  :: Int -- ^ child PID
-  -> Int -- ^ parent PID
+  :: ProcessID -- ^ child PID
+  -> ProcessID -- ^ parent PID
   -> IO Bool
-isChildOf child parent = do
-  output <- runProcessWithInput "pstree" ["-T", "-p", show parent] ""
-  return $ any (show child `isInfixOf`) $ lines output
+isChildOf child parent = (parent `elem`) <$> getPPIDChain child
 
 data SwallowingState =
   SwallowingState

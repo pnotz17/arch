@@ -1,5 +1,3 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
-
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  XMonad.ManageHook
@@ -8,7 +6,6 @@
 --
 -- Maintainer  :  spencerjanssen@gmail.com
 -- Stability   :  unstable
--- Portability :  not portable, uses cunning newtype deriving
 --
 -- An EDSL for ManageHooks
 --
@@ -61,11 +58,11 @@ infixr 3 <&&>, <||>
 
 -- | '&&' lifted to a 'Monad'.
 (<&&>) :: Monad m => m Bool -> m Bool -> m Bool
-(<&&>) x y = ifM x y (pure False)
+x <&&> y = ifM x y (pure False)
 
 -- | '||' lifted to a 'Monad'.
 (<||>) :: Monad m => m Bool -> m Bool -> m Bool
-(<||>) x y = ifM x (pure True) y
+x <||> y = ifM x (pure True) y
 
 -- | If-then-else lifted to a 'Monad'.
 ifM :: Monad m => m Bool -> m a -> m a -> m a
@@ -83,7 +80,8 @@ title = ask >>= \w -> liftX $ do
                           return $ if null l then "" else head l
     io $ bracket getProp (xFree . tp_value) extract `E.catch` \(SomeException _) -> return ""
 
--- | Return the application name.
+-- | Return the application name; i.e., the /first/ string returned by
+-- @WM_CLASS@.
 appName :: Query String
 appName = ask >>= (\w -> liftX $ withDisplay $ \d -> fmap resName $ io $ getClassHint d w)
 
@@ -91,14 +89,15 @@ appName = ask >>= (\w -> liftX $ withDisplay $ \d -> fmap resName $ io $ getClas
 resource :: Query String
 resource = appName
 
--- | Return the resource class.
+-- | Return the resource class; i.e., the /second/ string returned by
+-- @WM_CLASS@.
 className :: Query String
 className = ask >>= (\w -> liftX $ withDisplay $ \d -> fmap resClass $ io $ getClassHint d w)
 
 -- | A query that can return an arbitrary X property of type 'String',
 --   identified by name.
 stringProperty :: String -> Query String
-stringProperty p = ask >>= (\w -> liftX $ withDisplay $ \d -> fmap (fromMaybe "") $ getStringProperty d w p)
+stringProperty p = ask >>= (\w -> liftX $ withDisplay $ \d -> fromMaybe "" <$> getStringProperty d w p)
 
 getStringProperty :: Display -> Window -> String -> X (Maybe String)
 getStringProperty d w p = do

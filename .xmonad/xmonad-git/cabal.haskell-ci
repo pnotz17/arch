@@ -6,9 +6,13 @@ apt:
   libxss-dev
 
 github-patches:
+  .github/workflows/haskell-ci-dependabot.patch
   .github/workflows/haskell-ci-hackage.patch
 
 raw-project
   optimization: False
   package xmonad
     flags: +pedantic
+
+-- avoid --haddock-all which overwrites *-docs.tar.gz with tests docs
+haddock-components: libs

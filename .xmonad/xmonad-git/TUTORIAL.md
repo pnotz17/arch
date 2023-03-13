@@ -187,8 +187,8 @@ example, but that will change soon enough so it's worth introducing it
 here as well.
 
 What if we wanted to add other keybindings?  Say you also want to bind
-`M-S-z` to lock your screen with the screensaver, `M-S-=` to take a
-snapshot of one window, and `M-]` to spawn Firefox.  This can be
+`M-S-z` to lock your screen with the screensaver, `M-C-s` to take a
+snapshot of one window, and `M-f` to spawn Firefox.  This can be
 achieved with the `additionalKeysP` function from the
 [XMonad.Util.EZConfig] module—luckily we already have it imported!  Our
 config file, starting with `main`, now looks like:
@@ -200,8 +200,8 @@ main = xmonad $ def
     }
   `additionalKeysP`
     [ ("M-S-z", spawn "xscreensaver-command -lock")
-    , ("M-S-=", unGrab *> spawn "scrot -s"        )
-    , ("M-]"  , spawn "firefox"                   )
+    , ("M-C-s", unGrab *> spawn "scrot -s"        )
+    , ("M-f"  , spawn "firefox"                   )
     ]
 ```
 
@@ -313,8 +313,8 @@ main = xmonad $ def
     }
   `additionalKeysP`
     [ ("M-S-z", spawn "xscreensaver-command -lock")
-    , ("M-S-=", unGrab *> spawn "scrot -s"        )
-    , ("M-]"  , spawn "firefox"                   )
+    , ("M-C-s", unGrab *> spawn "scrot -s"        )
+    , ("M-f"  , spawn "firefox"                   )
     ]
 ```
 
@@ -379,11 +379,15 @@ effect (and some applications, like chromium, will misbehave and need
 some [Hacks] to make this work), we will also add the relevant function
 to get "proper" fullscreen behaviour here.
 
+---
+
 _IF YOU ARE ON A VERSION `< 0.17.0`_: The `ewmhFullscreen` function does
   not exist in these versions.  Instead of it, you can try to add
   `fullscreenEventHook` to your `handleEventHook` to achieve similar
   functionality (how to do this is explained in the documentation of
   [XMonad.Hooks.EwmhDesktops]).
+
+---
 
 To use the two combinators, we compose them with the `xmonad` function
 in the following way:
@@ -396,8 +400,8 @@ main = xmonad $ ewmhFullscreen $ ewmh $ def
     }
   `additionalKeysP`
     [ ("M-S-z", spawn "xscreensaver-command -lock")
-    , ("M-S-=", unGrab *> spawn "scrot -s"        )
-    , ("M-]"  , spawn "firefox"                   )
+    , ("M-C-s", unGrab *> spawn "scrot -s"        )
+    , ("M-f"  , spawn "firefox"                   )
     ]
 ```
 
@@ -420,8 +424,8 @@ myConfig = def
     }
   `additionalKeysP`
     [ ("M-S-z", spawn "xscreensaver-command -lock")
-    , ("M-S-=", unGrab *> spawn "scrot -s"        )
-    , ("M-]"  , spawn "firefox"                   )
+    , ("M-C-s", unGrab *> spawn "scrot -s"        )
+    , ("M-f"  , spawn "firefox"                   )
     ]
 ```
 
@@ -430,7 +434,7 @@ Much better!
 ## Make XMonad and Xmobar Talk to Each Other
 
 Onto the main dish.  First, we have to import the necessary modules.
-Add the following to your list of imports:
+Add the following to your list of imports
 
 ``` haskell
 import XMonad.Hooks.DynamicLog
@@ -438,23 +442,27 @@ import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 ```
 
-_IF YOU ARE ON A VERSION `< 0.17.0`_: The `XMonad.Hooks.StatusBar` and
-  `XMonad.Hooks.StatusBar.PP` modules don't exist yet.  You can find
-  everything you need in the `XMonad.Hooks.DynamicLog` module, so remove
-  these two imports.
-
-Replace your `main` function above with:
+and replace your `main` function above with:
 
 ``` haskell
 main :: IO ()
 main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp $ myConfig
 ```
 
-_IF YOU ARE ON A VERSION `< 0.17.0`_: The `xmobarProp` function does not
-  exist in these versions.  Instead of it, use `xmobar` via
-  `main = xmonad . ewmh =<< xmobar myConfig` and carefully read the part
-  about pipes later on (`xmobar` uses pipes to make xmobar talk to
-  xmonad).
+---
+
+_IF YOU ARE ON A VERSION `< 0.17.0`_: The `XMonad.Hooks.StatusBar` and
+  `XMonad.Hooks.StatusBar.PP` modules don't exist yet.  You can find
+  everything you need in the `XMonad.Hooks.DynamicLog` module, so remove
+  these two imports.
+
+  Further, the `xmobarProp` function does not exist in older versions.
+  Instead of it, use `xmobar` via `main = xmonad . ewmh =<< xmobar
+  myConfig` and carefully read the part about pipes later on (`xmobar`
+  uses pipes to make xmobar talk to xmonad).  Do note the lack of
+  `ewmhFullscreen`, as explained above!
+
+---
 
 As a quick side-note, we could have also written
 
@@ -540,10 +548,14 @@ when things are not being read!  For this reason we have to use
 (this is useful, for example, for [XMonad.Util.ClickableWorkspaces],
 which is a new feature in `0.17.0`).
 
+---
+
 _IF YOU ARE ON A VERSION `< 0.17.0`_: As discussed above, the `xmobar`
   function uses pipes, so you actually do want to use the `StdinReader`.
   Simply replace _all_ occurences of `XMonadLog` with `StdinReader`
   below (don't forget the template!)
+
+---
 
 ## Configuring Xmobar
 
@@ -592,14 +604,14 @@ Config { overrideRedirect = False
 ```
 
 First, we set the font to use for the bar, as well as the colors.  The
-position options are documented well on the [xmobar home page] or,
-alternatively, in the [quick-start.org] on GitHub.  The particular
-option of `TopW L 90` says to put the bar in the upper left of the
-screen, and make it consume 90% of the width of the screen (we need to
-leave a little bit of space for `trayer-srg`).  If you're up for it—and
-this really requires more shell-scripting than Haskell knowledge—you can
-also try to seamlessly embed trayer into xmobar by using
-[trayer-padding-icon.sh] and following the advice given in that thread.
+position options are documented well in xmobar's [quick-start.org].  The
+particular option of `TopW L 90` says to put the bar in the upper left
+of the screen, and make it consume 90% of the width of the screen (we
+need to leave a little bit of space for `trayer-srg`).  If you're up for
+it—and this really requires more shell-scripting than Haskell
+knowledge—you can also try to seamlessly embed trayer into xmobar by
+using [trayer-padding-icon.sh] and following the advice given in that
+thread.
 
 In the commands list you, well, define commands.  Commands are the
 pieces that generate the content to be displayed in your bar.  These
@@ -660,6 +672,8 @@ main = xmonad
      $ myConfig
 ```
 
+---
+
 _IF YOU ARE ON A VERSION `< 0.17.0`_: `xmobar` has a similar definition,
   relying on `statusBar` alone: `xmobar = statusBar "xmobar" xmobarPP
     toggleStrutsKey`.  Sadly, the `defToggleStrutsKey` function is not yet
@@ -668,13 +682,14 @@ _IF YOU ARE ON A VERSION `< 0.17.0`_: `xmobar` has a similar definition,
 ``` haskell
 main :: IO ()
 main = xmonad
-     . ewmhFullscreen
      . ewmh
    =<< statusBar "xmobar" def toggleStrutsKey myConfig
   where
     toggleStrutsKey :: XConfig Layout -> (KeyMask, KeySym)
     toggleStrutsKey XConfig{ modMask = m } = (m, xK_b)
 ```
+
+---
 
 The `defToggleStrutsKey` here is just the key with which you can toggle
 the bar; it is bound to `M-b`.  If you want to change this, you can also
@@ -772,12 +787,16 @@ myXmobarPP = def
     lowWhite = xmobarColor "#bbbbbb" ""
 ```
 
+---
+
 _IF YOU ARE ON A VERSION `< 0.17`_: Both `logTitles` and `xmobarBorder`
   are not available yet, so you will have to remove them.  As an
   alternative to `xmobarBorder`, a common way to "mark" the currently
   focused workspace is by using brackets; you can try something like
   `ppCurrent = wrap (blue "[") (blue "]")` and see if you like it.  Also
   read the bit about `ppOrder` further down!
+
+---
 
 That's a lot!  But don't worry, take a deep breath and remind yourself
 of what you read above in the documentation of the [PP record].  Even if
@@ -989,8 +1008,8 @@ myConfig = def
     }
   `additionalKeysP`
     [ ("M-S-z", spawn "xscreensaver-command -lock")
-    , ("M-S-=", unGrab *> spawn "scrot -s"        )
-    , ("M-]"  , spawn "firefox"                   )
+    , ("M-C-s", unGrab *> spawn "scrot -s"        )
+    , ("M-f"  , spawn "firefox"                   )
     ]
 ```
 
@@ -1032,8 +1051,8 @@ myConfig = def
     }
   `additionalKeysP`
     [ ("M-S-z", spawn "xscreensaver-command -lock")
-    , ("M-S-=", unGrab *> spawn "scrot -s"        )
-    , ("M-]"  , spawn "firefox"                   )
+    , ("M-C-s", unGrab *> spawn "scrot -s"        )
+    , ("M-f"  , spawn "firefox"                   )
     ]
 
 myManageHook :: ManageHook
@@ -1121,13 +1140,15 @@ via the property (e.g. have `"<fn=1>\xf120</fn>"` as one of your
 workspace names).
 
 As an example how this would look like in a real configuration, you can
-look at [Liskin's], [slotThe's], or [TheMC47's] xmobar configuration.
-Do note that the last two are Haskell-based and thus may be a little
-hard to understand for newcomers.
+look at [Liskin's old][liskin-xmobarrc-old], [Liskin's current][liskin-xmobarrc],
+[slotThe's][slotThe-xmobarrc], or [TheMC47's][TheMC47-xmobarrc] xmobar
+configuration. Do note that the last three are Haskell-based and thus may
+be a little hard to understand for newcomers.
 
-[Liskin's]: https://github.com/liskin/dotfiles/blob/home/.xmobarrc
-[TheMC47's]: https://github.com/TheMC47/dotfiles/tree/master/xmobar/xmobarrc
-[slotThe's]: https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs
+[liskin-xmobarrc-old]: https://github.com/liskin/dotfiles/blob/75dfc057c33480ee9d3300d4d02fb79a986ef3a5/.xmobarrc
+[liskin-xmobarrc]: https://github.com/liskin/dotfiles/blob/home/.xmonad/xmobar.hs
+[TheMC47-xmobarrc]: https://github.com/TheMC47/dotfiles/tree/master/xmobar/xmobarrc
+[slotThe-xmobarrc]: https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs
 
 ### Renaming Layouts
 
@@ -1230,7 +1251,7 @@ either :)
 [xmonad guided tour]: https://xmonad.org/tour.html
 [xmonad mailing list]: https://mail.haskell.org/mailman/listinfo/xmonad
 [xmonad's GitHub page]: https://github.com/xmonad/xmonad
-[trayer-padding-icon.sh]: https://github.com/jaor/xmobar/issues/239#issuecomment-233206552
+[trayer-padding-icon.sh]: https://codeberg.org/xmobar/xmobar/issues/239#issuecomment-537931
 [xmonad-contrib documentation]: https://hackage.haskell.org/package/xmonad-contrib
 [GNU Image Manipulation Program]: https://www.gimp.org/
 [Basic Desktop Environment Integration]: https://wiki.haskell.org/Xmonad/Basic_Desktop_Environment_Integration
@@ -1250,15 +1271,14 @@ either :)
 [XMonad.Hooks.ManageHelpers]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-ManageHelpers.html
 [XMonad.Util.ClickableWorkspaces]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Util-ClickableWorkspaces.html
 
-[xmobar]: https://xmobar.org/
-[battery]: https://github.com/jaor/xmobar/blob/master/doc/plugins.org#batteryp-dirs-args-refreshrate
-[xmobar.hs]: https://github.com/jaor/xmobar/blob/master/examples/xmobar.hs
+[xmobar]: https://codeberg.org/xmobar/xmobar
+[battery]: https://codeberg.org/xmobar/xmobar/src/branch/master/doc/plugins.org#batteryp-dirs-args-refreshrate
+[xmobar.hs]: https://codeberg.org/xmobar/xmobar/src/branch/master/etc/xmobar.hs
 [Wikipedia page]: https://en.wikipedia.org/wiki/ICAO_airport_code#Prefixes
-[quick-start.org]: https://github.com/jaor/xmobar/blob/master/doc/quick-start.org#configuration-options
+[quick-start.org]: https://codeberg.org/xmobar/xmobar/src/branch/master/doc/quick-start.org#configuration-options
 [jao's xmobar.hs]: https://codeberg.org/jao/xmobar-config
-[weather monitor]: https://github.com/jaor/xmobar/blob/master/doc/plugins.org#weather-monitors
-[xmobar home page]: https://xmobar.org/
-[xmobar's `Installation` section]: https://github.com/jaor/xmobar#installation
+[weather monitor]: https://codeberg.org/xmobar/xmobar/src/branch/master/doc/plugins.org#weather-monitors
+[xmobar's `Installation` section]: https://codeberg.org/xmobar/xmobar#installation
 
 [Haskell]: https://www.haskell.org/
 [trayer-srg]: https://github.com/sargon/trayer-srg

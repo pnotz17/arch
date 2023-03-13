@@ -30,6 +30,7 @@ module XMonad.Prompt.AppendFile (
 
 import XMonad.Core
 import XMonad.Prompt
+import XMonad.Prelude (mkAbsolutePath)
 
 import System.IO
 
@@ -68,7 +69,7 @@ import System.IO
 -- the file too.
 --
 -- For detailed instructions on editing your key bindings, see
--- "XMonad.Doc.Extending#Editing_key_bindings".
+-- <https://xmonad.org/TUTORIAL.html#customizing-xmonad the tutorial>.
 
 newtype AppendFile = AppendFile FilePath
 
@@ -91,4 +92,4 @@ appendFilePrompt' c trans fn = mkXPrompt (AppendFile fn)
 
 -- | Append a string to a file.
 doAppend :: (String -> String) -> FilePath -> String -> X ()
-doAppend trans fn = io . withFile fn AppendMode . flip hPutStrLn . trans
+doAppend trans fn s = mkAbsolutePath fn >>= \f -> (io . withFile f AppendMode . flip hPutStrLn . trans) s
