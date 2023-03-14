@@ -27,30 +27,16 @@ myTerminal           = "st"
 myBorderWidth        = 1
 myFocusFollowsMouse  = True
 myClickJustFocuses   = True
-myNormalBorderColor  = "#B3AFC2"
+myNormalBorderColor  = "#000000"
 myFocusedBorderColor = "#000000"
 windowCount          = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 myWorkspaces = 
   clickable $ 
-  [":01:", 
-   ":02:", 
-   ":03:", 
-   ":04:", 
-   ":05:", 
-   ":06:", 
-   ":07:", 
-   ":08:", 
-   ":09:" ]
- -- [" <icon=terminal.xpm/> ", 
-  -- " <icon=folder.xpm/> ", 
-  -- " <icon=browser.xpm/> ", 
-  -- " <icon=image.xpm/> ", 
-  -- " <icon=camera.xpm/> ", 
-  -- " <icon=credit.xpm/> ", 
-  -- " <icon=hacker.xpm/> ", 
-  -- " <icon=tools.xpm/> ", 
-  -- " <icon=magnet.xpm/> " ]
+  ["01","02","03","04","05","06","07","08","09"]
+  -- ["I","II","III","IV","V","VI","VII","VIII","IX" ]
+  -- ["tty","web","code","sys","dox","msc","msg","grx","tor"] 
+  -- [" <icon=terminal.xpm/> "," <icon=folder.xpm/> "," <icon=browser.xpm/> "," <icon=image.xpm/> "," <icon=camera.xpm/> "," <icon=credit.xpm/> "," <icon=hacker.xpm/> "," <icon=tools.xpm/> "," <icon=magnet.xpm/> " ]
   where                                                                       
   clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l,let n = i ]
 
@@ -70,14 +56,14 @@ myLogHook xmproc = dynamicLogWithPP xmobarPP {
   , ppCurrent         = xmobarColor "#FFFFFF" "" . wrap "[" "]" 
   , ppVisible         = xmobarColor "#B3AFC2" ""                
   , ppHidden          = xmobarColor "#666666" "" . wrap "*" ""   
-  , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""       
+  -- , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""       
   , ppUrgent          = xmobarColor "#C45500" "" . wrap "!" "!" 
   , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60    
   , ppLayout          = xmobarColor "#FF0000" "" 
   , ppSep             = " | "                     
   , ppExtras          = [windowCount]                          
-  , ppOrder           = \(ws:l:t:ex) -> [ws,l]++ex++[t]
-  }
+    , ppOrder  = \(ws:l:t) -> ws:l:t
+      }
 
 myManageHook = composeAll
   [className =? "mpv" --> doFloat]
