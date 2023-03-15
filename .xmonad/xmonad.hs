@@ -31,8 +31,7 @@ myNormalBorderColor  = "#000000"
 myFocusedBorderColor = "#000000"
 windowCount          = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
-myWorkspaces = 
-  clickable $ 
+myWorkspaces = clickable $ 
   ["01","02","03","04","05","06","07","08","09"]
   -- ["I","II","III","IV","V","VI","VII","VIII","IX" ]
   -- ["tty","web","code","sys","dox","msc","msg","grx","tor"] 
@@ -51,19 +50,18 @@ myLayout = renamed [CutWordsLeft 1] $ spacing 1 $ avoidStruts $ smartBorders(
   Circle |||
   noBorders (fullscreenFull Full)
   
-myLogHook xmproc = dynamicLogWithPP xmobarPP { 
-    ppOutput          = hPutStrLn xmproc
-  , ppCurrent         = xmobarColor "#FFFFFF" "" . wrap "[" "]" 
-  , ppVisible         = xmobarColor "#B3AFC2" ""                
-  , ppHidden          = xmobarColor "#666666" "" . wrap "*" ""   
-  -- , ppHiddenNoWindows = xmobarColor "#B3AFC2" ""       
-  , ppUrgent          = xmobarColor "#C45500" "" . wrap "!" "!" 
-  , ppTitle           = xmobarColor "#B3AFC2" "" . shorten 60    
-  , ppLayout          = xmobarColor "#FF0000" "" 
-  , ppSep             = " | "                     
-  , ppExtras          = [windowCount]                          
-    , ppOrder  = \(ws:l:t) -> ws:l:t
-      }
+myLogHook xmproc = dynamicLogWithPP xmobarPP { ppOutput = hPutStrLn xmproc
+ , ppCurrent = xmobarColor "#E6E6FA" "" . wrap "[" "]" 
+ , ppVisible = xmobarColor "#FFFFFF" ""                
+ , ppHidden = xmobarColor "#EE3030" "" . wrap "*" ""   
+ -- , ppHiddenNoWindows = xmobarColor "#8C8C99" ""        
+ , ppTitle = xmobarColor "#D4D4D4" "" . shorten 63    
+ , ppSep = "<fc=#d0d0d0> | </fc>"                     
+ , ppUrgent = xmobarColor "#FF0900" "" . wrap "!" "!"  
+ , ppLayout = xmobarColor "#D4D4D4" "" 
+ , ppExtras = [windowCount]                           
+ , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
+ }
 
 myManageHook = composeAll
   [className =? "mpv" --> doFloat]
