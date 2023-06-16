@@ -6,7 +6,7 @@ static const char selfgcolor[] 	      = "#ffffff";	/* focused tag and tasklist f
 static const char unselbordercolor[]  = "#121213";	/* unfocused window border color*/
 static const char selbordercolor[]    = "#b3afc2";	/* focused window border color*/
 static const unsigned int borderpx    = 1;              /* border pixel of windows */
-static const unsigned int gappx       = 5;             /* gaps between windows */
+static const unsigned int gappx       = 5;              /* gaps between windows */
 static const unsigned int snap        = 33;             /* snap pixel */
 static const int showbar              = 1;              /* 0 means no bar */
 static const int topbar               = 1;              /* 0 means bottom bar */
@@ -23,11 +23,10 @@ static const unsigned int alphas[][3] = {
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
-//static const char *tags[] = {"01","02","03","04","05","06","07","08","09" };
+static const char *tags[] = {"01","02","03","04","05","06","07","08","09" };
 //static const char *tags[] = {"{1}","{2}","{3}","{4}","{5}","{6}","{7}","{8}","{9}"};
 //static const char *tags[] = { "", "", "", "", "", "", "", "", "" }; 
 //static const char *tags[] = { "fm", "www", "sys", "doc", "mis", "mus", "vid", "eml", "gfx" };
-static const char *tags[] = {":{1}:",":{2}:",":{3}:",":{4}:",":{5}:",":{6}:",":{7}:",":{8}:",":{9}:"};
 
 static const Rule rules[] = {
 	{ "mpv",      NULL,       NULL,       0,            1,           -1 },
@@ -66,17 +65,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 static Key keys[] = {
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0} },
-	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY|ControlMask,           XK_b,      togglebar,      {0} },
-	{ MODKEY,             		XK_Return, spawn,          SHCMD("st") },
-	{ MODKEY,             		XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -91,21 +80,24 @@ static Key keys[] = {
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY,                       XK_space,  cyclelayout,    {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_b,      togglebar,      {0} },
+	{ MODKEY|ControlMask,           XK_r,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0} },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("st") },
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY|ShiftMask,		XK_b,	   spawn,	   SHCMD("firefox") },
+	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   SHCMD("spacefm") },
 	{ MODKEY,			XK_p,	   spawn,          SHCMD("~/.local/bin/dm_path") },
-	{ MODKEY,			XK_b,	   spawn,	   SHCMD("firefox") },
-	{ MODKEY,			XK_f,	   spawn,	   SHCMD("spacefm") },
-	{ MODKEY,			XK_g,	   spawn,	   SHCMD("geany") },
-	{ MODKEY,           		XK_r,      quit,           {0} },
-	{ Mod1Mask,			XK_f,      spawn, 	   SHCMD("~/.local/bin/dm_fm") },
-	{ Mod1Mask,			XK_e,      spawn, 	   SHCMD("~/.local/bin/dm_ed")},
 	{ Mod1Mask,			XK_p,      spawn,          SHCMD("~/.local/bin/dm_pass") },
 	{ Mod1Mask,			XK_w,      spawn,          SHCMD("~/.local/bin/dm_wall") },
-	{ Mod1Mask, 	                XK_c,	   spawn,	   SHCMD("~/.local/bin/dm_col") },
-	{ Mod1Mask,			XK_d,      spawn,          SHCMD("~/.local/bin/dm_ytdl") },
-	{ Mod1Mask,		        XK_g,      spawn, 	   SHCMD("~/.local/bin/dm_gs") },
-	{ Mod1Mask,		        XK_n,	   spawn,	   SHCMD("~/.local/bin/dm_nerd") },
+	{ Mod1Mask,                     XK_d,      spawn,          SHCMD("~/.local/bin/dm_ytdl") },
 	{ Mod1Mask,		        XK_q,      spawn, 	   SHCMD("~/.local/bin/dm_power") },
-	{ Mod1Mask,			XK_u,      spawn,          SHCMD("~/.local/bin/dm_uni") },
 	{ 0,                            XK_Print,  spawn,          SHCMD("~/.local/bin/dm_ss") },
 	{ 0,                            XK_F10,	   spawn,          SHCMD("amixer -q set Master toggle") },
 	{ 0,                            XK_F11,	   spawn,          SHCMD("amixer set Master Front 1-") },
